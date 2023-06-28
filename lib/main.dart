@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/app.dart';
+import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 
 void main() {
   Get.put(BottomNavigationbarController());
+  WidgetsFlutterBinding.ensureInitialized();
+  AmplitudeConfig().init();
+  AmplitudeConfig.analytics.logEvent("Main Run");
   runApp(const MyApp());
 }
 
