@@ -8,8 +8,6 @@ import 'package:leporemart/src/screens/mypage.dart';
 import 'package:leporemart/src/screens/shorts.dart';
 
 class App extends GetView<BottomNavigationbarController> {
-  final List<Widget> screens = [Home(), Auction(), Chat(), Shorts(), Mypage()];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +15,14 @@ class App extends GetView<BottomNavigationbarController> {
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
-          children: screens,
+          
+          children: [
+            Home(),
+            Auction(),
+            Chat(),
+            Shorts(),
+            Mypage(),
+          ],
         ),
       ),
       bottomNavigationBar: Obx(

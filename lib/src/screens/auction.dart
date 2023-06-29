@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Auction extends StatelessWidget {
-  const Auction({super.key});
+  Auction({super.key});
 
   @override
   Widget build(BuildContext context) {
