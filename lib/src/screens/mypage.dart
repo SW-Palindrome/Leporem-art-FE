@@ -5,10 +5,8 @@ class Mypage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Mypage Screen'),
-      ),
+    return Center(
+      child: Text('Mypage Screen'),
     );
   }
 }

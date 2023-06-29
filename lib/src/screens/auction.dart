@@ -5,10 +5,8 @@ class Auction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Auction Screen'),
-      ),
+    return Center(
+      child: Text('Auction Screen'),
     );
   }
 }
