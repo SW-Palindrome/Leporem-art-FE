@@ -6,48 +6,27 @@ PODS:
     - Flutter
   - AnalyticsConnector (1.0.1)
   - Flutter (1.0.0)
-  - package_info_plus (0.4.5):
-    - Flutter
-  - Sentry/HybridSDK (8.8.0):
-    - SentryPrivate (= 8.8.0)
-  - sentry_flutter (0.0.1):
-    - Flutter
-    - FlutterMacOS
-    - Sentry/HybridSDK (= 8.8.0)
-  - SentryPrivate (8.8.0)
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - Flutter (from `Flutter`)
-  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
 
 SPEC REPOS:
   trunk:
     - Amplitude
     - AnalyticsConnector
-    - Sentry
-    - SentryPrivate
 
 EXTERNAL SOURCES:
   amplitude_flutter:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
   Flutter:
     :path: Flutter
-  package_info_plus:
-    :path: ".symlinks/plugins/package_info_plus/ios"
-  sentry_flutter:
-    :path: ".symlinks/plugins/sentry_flutter/ios"
 
 SPEC CHECKSUMS:
   Amplitude: fe18b3bbd880f2d9174b8109b79a77cd67687e2d
   amplitude_flutter: 6216e64320d2dbe4e5be2764381d93280499211f
   AnalyticsConnector: eccd7e1cd3dd18e6bd09ac2506e37d4ed43ba3f4
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
-  Sentry: 927dfb29d18a14d924229a59cc2ad149f43349f2
-  sentry_flutter: cf7da03b65520b631330ecb498deb592aa7640be
-  SentryPrivate: 4350d865f898224ab9fa02b37d6ee7fbb623f47e
 
 PODFILE CHECKSUM: 6b9eb94e9f98a329f2ef624b852a6e42d090af2b
 
