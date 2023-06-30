@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:leporemart/firebase_options.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 
