@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
+import 'package:leporemart/main.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 
 class BottomNavigationbarController extends GetxController {
-
   static BottomNavigationbarController get to => Get.find();
 
   // 현재 선택된 탭 아이템 번호 저장
@@ -12,6 +12,26 @@ class BottomNavigationbarController extends GetxController {
   void changeIndex(int index) {
     selectedIndex(index);
     //하단바 선택시 로그
-    AmplitudeConfig.analytics.logEvent("Page View", eventProperties: {"Page Name": index});
+    late String pageStr;
+    switch (index) {
+      case 0:
+        pageStr = "Home";
+        break;
+      case 1:
+        pageStr = "Auction";
+        break;
+      case 2:
+        pageStr = "Chat";
+        break;
+      case 3:
+        pageStr = "Shorts";
+        break;
+      case 4:
+        pageStr = "Mypage";
+        break;
+    }
+    AmplitudeConfig.analytics
+        .logEvent("Page View", eventProperties: {"Page Name": pageStr});
+    MyApp.analytics.logEvent(name: pageStr);
   }
 }

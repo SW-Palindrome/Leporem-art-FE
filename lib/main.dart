@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/firebase_options.dart';
+import 'package:leporemart/src/screens/authentication.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -36,7 +37,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black),
         ),
       ),
-      home: App(),
+      home: Authentication(),
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
