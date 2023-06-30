@@ -1,19 +1,21 @@
 import 'dart:async';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/firebase_options.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 
-Future<void> main() async {
+void main() async {
   Get.put(BottomNavigationbarController());
   WidgetsFlutterBinding.ensureInitialized();
-  AmplitudeConfig().init();
+  await AmplitudeConfig().init();
   AmplitudeConfig.analytics.logEvent("Main Run");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
