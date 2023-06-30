@@ -9,6 +9,8 @@ import 'package:leporemart/src/screens/mypage.dart';
 import 'package:leporemart/src/screens/shorts.dart';
 
 class App extends GetView<BottomNavigationbarController> {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -5,10 +5,8 @@ class Shorts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Shorts Screen'),
-      ),
+    return Center(
+      child: Text('Shorts Screen'),
     );
   }
 }

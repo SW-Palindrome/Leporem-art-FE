@@ -41,6 +41,7 @@ dependencies:
   http: ^1.1.0
   firebase_core: ^2.14.0
   mockito: ^5.4.2
+  firebase_analytics: ^10.4.3
 
 dev_dependencies:
   flutter_test:
