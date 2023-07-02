@@ -25,7 +25,7 @@ class Authentication extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _logEvent('비회원 로그인');
-                Get.to(App());
+                Get.off(App());
               },
               child: Text('비회원 로그인'),
             ),
@@ -33,7 +33,7 @@ class Authentication extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _logEvent('카카오 회원가입 및 로그인');
-                Get.to(App());
+                Get.off(App());
               },
               child: Text('카카오 회원가입 및 로그인'),
             ),
@@ -41,7 +41,7 @@ class Authentication extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _logEvent('구글 회원가입 및 로그인');
-                Get.to(App());
+                Get.off(App());
               },
               child: Text('구글 회원가입 및 로그인'),
             ),
@@ -49,7 +49,7 @@ class Authentication extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _logEvent('애플 회원가입 및 로그인');
-                Get.to(App());
+                Get.off(App());
               },
               child: Text('애플 회원가입 및 로그인'),
             ),
