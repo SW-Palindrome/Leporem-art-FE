@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/main.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/screens/auction.dart';
 import 'package:leporemart/src/screens/chat.dart';
