@@ -6,6 +6,8 @@ import 'package:leporemart/src/screens/chat.dart';
 import 'package:leporemart/src/screens/home.dart';
 import 'package:leporemart/src/screens/mypage.dart';
 import 'package:leporemart/src/screens/shorts.dart';
+import 'package:leporemart/src/widgets/my_app_bar.dart';
+import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
 class App extends GetView<BottomNavigationbarController> {
   const App({super.key});
@@ -13,7 +15,7 @@ class App extends GetView<BottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: MyAppBar(),
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
@@ -26,43 +28,7 @@ class App extends GetView<BottomNavigationbarController> {
           ],
         ),
       ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: controller.selectedIndex.value,
-          elevation: 0,
-          onTap: controller.changeIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'auction',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'chat',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'shorts',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'mypage`',
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: MyBottomNavigationBar(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 
@@ -10,36 +11,64 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
     return Obx(
       () => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: controller.selectedIndex.value,
         elevation: 0,
         onTap: controller.changeIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'home',
+            icon: SvgPicture.asset(
+              'assets/icons/home_off.svg',
+              color: Color(0xffADB3BE),
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/home_off.svg',
+              color: Color(0xff191F28),
+            ),
+            label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'auction',
+            icon: SvgPicture.asset(
+              'assets/icons/auction_off.svg',
+              color: Color(0xffADB3BE),
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/auction_off.svg',
+              color: Color(0xff191F28),
+            ),
+            label: '경매',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'chat',
+            icon: SvgPicture.asset(
+              'assets/icons/chat_off.svg',
+              color: Color(0xffADB3BE),
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/chat_off.svg',
+              color: Color(0xff191F28),
+            ),
+            label: '채팅',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'shorts',
+            icon: SvgPicture.asset(
+              'assets/icons/shorts_off.svg',
+              color: Color(0xffADB3BE),
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/shorts_off.svg',
+              color: Color(0xff191F28),
+            ),
+            label: '쇼츠',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'mypage`',
+            icon: SvgPicture.asset(
+              'assets/icons/mypage_off.svg',
+              color: Color(0xffADB3BE),
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/mypage_off.svg',
+              color: Color(0xff191F28),
+            ),
+            label: '마이페이지',
           ),
         ],
       ),
