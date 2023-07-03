@@ -41,13 +41,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
-          titleTextStyle: TextStyle(color: Colors.black),
+          titleTextStyle: TextStyle(color: Color(0xff191f28)),
         ),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: Authentication(),
       navigatorObservers: [
