@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
 
 class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
   const MyBottomNavigationBar({super.key});
@@ -24,48 +25,49 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
             currentIndex: controller.selectedIndex.value,
             elevation: 0,
             onTap: controller.changeIndex,
+            selectedItemColor: ColorPalette.black,
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/home_off.svg',
-                  color: Color(0xffADB3BE),
+                  color: ColorPalette.grey_4,
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/home_off.svg',
-                  color: Color(0xff191F28),
+                  color: ColorPalette.black,
                 ),
                 label: '홈',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/auction_off.svg',
-                  color: Color(0xffADB3BE),
+                  color: ColorPalette.grey_4,
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/auction_off.svg',
-                  color: Color(0xff191F28),
+                  color: ColorPalette.black,
                 ),
                 label: '경매',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/chat_off.svg',
-                  color: Color(0xffADB3BE),
+                  color: ColorPalette.grey_4,
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/chat_off.svg',
-                  color: Color(0xff191F28),
+                  color: ColorPalette.black,
                 ),
                 label: '채팅',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/shorts_off.svg',
-                  color: Color(0xffADB3BE),
+                  color: ColorPalette.grey_4,
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/shorts_off.svg',
-                  color: Color(0xff191F28),
+                  color: ColorPalette.black,
                 ),
                 label: '쇼츠',
               ),
@@ -76,7 +78,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/mypage_off.svg',
-                  color: Color(0xff191F28),
+                  color: ColorPalette.black,
                 ),
                 label: '마이페이지',
               ),

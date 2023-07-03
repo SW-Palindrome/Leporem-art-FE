@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/main.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -30,8 +31,10 @@ class BottomNavigationbarController extends GetxController {
         pageStr = "Mypage";
         break;
     }
-    AmplitudeConfig.analytics
-        .logEvent("Page View", eventProperties: {"Page Name": pageStr});
-    MyApp.analytics.logEvent(name: pageStr);
+    if (kDebugMode) {
+      AmplitudeConfig.analytics
+          .logEvent("Page View", eventProperties: {"Page Name": pageStr});
+      MyApp.analytics.logEvent(name: pageStr);
+    }
   }
 }

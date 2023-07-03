@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/main.dart';
@@ -24,7 +25,7 @@ class Authentication extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                _logEvent('비회원 로그인');
+                if (!kDebugMode) _logEvent('비회원 로그인');
                 Get.off(App());
               },
               child: Text('비회원 로그인'),
