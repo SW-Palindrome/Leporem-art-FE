@@ -1,6 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/main.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
+import 'package:leporemart/src/configs/firebase_config.dart';
 
 class BottomNavigationbarController extends GetxController {
   static BottomNavigationbarController get to => Get.find();
@@ -21,17 +22,19 @@ class BottomNavigationbarController extends GetxController {
         pageStr = "Auction";
         break;
       case 2:
-        pageStr = "Chat";
+        pageStr = "Shorts";
         break;
       case 3:
-        pageStr = "Shorts";
+        pageStr = "Chat";
         break;
       case 4:
         pageStr = "Mypage";
         break;
     }
-    AmplitudeConfig.analytics
-        .logEvent("Page View", eventProperties: {"Page Name": pageStr});
-    MyApp.analytics.logEvent(name: pageStr);
+    if (!kDebugMode) {
+      AmplitudeConfig.analytics
+          .logEvent("Page View", eventProperties: {"Page Name": pageStr});
+      FirebaseConfig.analytics.logEvent(name: pageStr);
+    }
   }
 }

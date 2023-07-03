@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
 
 class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
   const MyBottomNavigationBar({super.key});
@@ -8,40 +10,81 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: controller.selectedIndex.value,
-        elevation: 0,
-        onTap: controller.changeIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'home',
+      () => Container(
+        decoration: BoxDecoration(
+          boxShadow: [BoxShadow(color: Color(0x11000000), blurRadius: 10)],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'auction',
+          child: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: controller.selectedIndex.value,
+            elevation: 0,
+            onTap: controller.changeIndex,
+            selectedItemColor: ColorPalette.black,
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/home_off.svg',
+                  color: ColorPalette.grey_4,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/home_off.svg',
+                  color: ColorPalette.black,
+                ),
+                label: '홈',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/auction_off.svg',
+                  color: ColorPalette.grey_4,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/auction_off.svg',
+                  color: ColorPalette.black,
+                ),
+                label: '경매',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/chat_off.svg',
+                  color: ColorPalette.grey_4,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/chat_off.svg',
+                  color: ColorPalette.black,
+                ),
+                label: '채팅',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/shorts_off.svg',
+                  color: ColorPalette.grey_4,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/shorts_off.svg',
+                  color: ColorPalette.black,
+                ),
+                label: '쇼츠',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/mypage_off.svg',
+                  color: Color(0xffADB3BE),
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/icons/mypage_off.svg',
+                  color: ColorPalette.black,
+                ),
+                label: '마이페이지',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'shorts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home_filled),
-            label: 'mypage`',
-          ),
-        ],
+        ),
       ),
     );
   }
