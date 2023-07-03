@@ -1,10 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/firebase_options.dart';
+import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -17,10 +16,9 @@ void main() async {
 
   Get.put(BottomNavigationbarController());
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  if (!kDebugMode) {
-    await AmplitudeConfig().init();
-    AmplitudeConfig.analytics.logEvent("Main Run");
+  if (kDebugMode) {
+    AmplitudeConfig.init();
+    FirebaseConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
     await SentryFlutter.init(
       (options) {
@@ -37,8 +35,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -47,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: Authentication(),
       navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
+        FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );
   }

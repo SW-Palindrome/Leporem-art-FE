@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/main.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
+import 'package:leporemart/src/configs/firebase_config.dart';
 
 class Authentication extends StatelessWidget {
   const Authentication({super.key});
 
   void _logEvent(String eventName) async {
     await AmplitudeConfig.analytics.logEvent("Login");
-    await MyApp.analytics.logLogin();
+    await FirebaseConfig.analytics.logLogin();
   }
 
   @override

@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
                 'https://image.idus.com/image/files/9fde7b8f5ae443188843ceef0678df41_320.jpg',
                 '홍준식',
                 '가로등 빛 받은 나뭇잎 컵',
-                10000,
+                '10,000',
                 true,
                 100,
               ),
@@ -82,7 +82,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column _itemWidget(String imageUrl, String name, String title, int price,
+  Column _itemWidget(String imageUrl, String name, String title, String price,
       bool isLiked, int heartCount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
