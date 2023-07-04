@@ -104,13 +104,15 @@ class Home extends StatelessWidget {
                       'assets/icons/heart.svg',
                       height: 24,
                       width: 24,
-                      color: ColorPalette.red,
+                      colorFilter:
+                          ColorFilter.mode(ColorPalette.red, BlendMode.srcIn),
                     )
                   : SvgPicture.asset(
                       'assets/icons/heart.svg',
                       height: 24,
                       width: 24,
-                      color: ColorPalette.grey_4,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_4, BlendMode.srcIn),
                     ),
             ),
           ],
@@ -147,7 +149,8 @@ class Home extends StatelessWidget {
               'assets/icons/heart.svg',
               height: 12,
               width: 12,
-              color: ColorPalette.grey_4,
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
             ),
             Text(
               '$heartCount',
@@ -177,7 +180,7 @@ class Home extends StatelessWidget {
             'assets/icons/arrow_down.svg',
             height: 10,
             width: 10,
-            color: ColorPalette.grey_4,
+            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
           ),
         ],
       ),

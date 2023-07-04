@@ -30,55 +30,65 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/home.svg',
-                  color: ColorPalette.grey_4,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/home.svg',
-                  color: ColorPalette.black,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '홈',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/auction.svg',
-                  color: ColorPalette.grey_4,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/auction.svg',
-                  color: ColorPalette.black,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '경매',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/chat.svg',
-                  color: ColorPalette.grey_4,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/chat.svg',
-                  color: ColorPalette.black,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '채팅',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/shorts.svg',
-                  color: ColorPalette.grey_4,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/shorts.svg',
-                  color: ColorPalette.black,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '쇼츠',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/mypage.svg',
-                  color: Color(0xffADB3BE),
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/icons/mypage.svg',
-                  color: ColorPalette.black,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '마이페이지',
               ),

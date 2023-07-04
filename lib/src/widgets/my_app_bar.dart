@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {},
           icon: SvgPicture.asset(
             './assets/icons/search.svg',
-            color: ColorPalette.grey_4,
+            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
           ),
         ),
         Padding(
@@ -26,7 +26,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {},
             icon: SvgPicture.asset(
               './assets/icons/notice.svg',
-              color: ColorPalette.grey_4,
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
             ),
           ),
         ),
