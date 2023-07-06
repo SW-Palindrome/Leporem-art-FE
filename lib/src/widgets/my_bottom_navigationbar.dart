@@ -29,56 +29,66 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/home_off.svg',
-                  color: ColorPalette.grey_4,
+                  'assets/icons/home.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/home_off.svg',
-                  color: ColorPalette.black,
+                  'assets/icons/home.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '홈',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/auction_off.svg',
-                  color: ColorPalette.grey_4,
+                  'assets/icons/auction.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/auction_off.svg',
-                  color: ColorPalette.black,
+                  'assets/icons/auction.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '경매',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/chat_off.svg',
-                  color: ColorPalette.grey_4,
+                  'assets/icons/chat.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/chat_off.svg',
-                  color: ColorPalette.black,
+                  'assets/icons/chat.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '채팅',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/shorts_off.svg',
-                  color: ColorPalette.grey_4,
+                  'assets/icons/shorts.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/shorts_off.svg',
-                  color: ColorPalette.black,
+                  'assets/icons/shorts.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '쇼츠',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/mypage_off.svg',
-                  color: Color(0xffADB3BE),
+                  'assets/icons/mypage.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/mypage_off.svg',
-                  color: ColorPalette.black,
+                  'assets/icons/mypage.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
                 label: '마이페이지',
               ),
