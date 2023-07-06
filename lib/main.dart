@@ -19,7 +19,7 @@ void main() async {
 
   Get.put(BottomNavigationbarController());
   WidgetsFlutterBinding.ensureInitialized();
-  if (kDebugMode) {
+  if (!kDebugMode) {
     AmplitudeConfig.init();
     FirebaseConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
@@ -48,7 +48,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: LoginScreen(),
       navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        if (!kDebugMode)
+          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );
   }
