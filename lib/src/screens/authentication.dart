@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/screens/kakao_screen.dart';
 
 class Authentication extends StatelessWidget {
   const Authentication({super.key});
@@ -24,7 +26,8 @@ class Authentication extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                print(await getIDToken());
                 if (!kDebugMode) _logEvent('비회원 로그인');
                 Get.off(App());
               },
@@ -34,7 +37,7 @@ class Authentication extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _logEvent('카카오 회원가입 및 로그인');
-                Get.off(App());
+                Get.off(KakaoScreen());
               },
               child: Text('카카오 회원가입 및 로그인'),
             ),

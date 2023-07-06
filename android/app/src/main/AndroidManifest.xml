@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.art.leporem.leporemart">
     <application
         android:label="leporemart"
         android:name="${applicationName}"
@@ -22,6 +23,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 -->
+                <data android:scheme="kakao8aeac9bb18f42060a2332885577b8cb9" android:host="oauth"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

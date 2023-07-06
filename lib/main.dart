@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -20,7 +21,9 @@ void main() async {
     AmplitudeConfig.init();
     FirebaseConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
-    await SentryFlutter.init(
+
+    KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
+    SentryFlutter.init(
       (options) {
         options.dsn = dotenv.get('GLITCHTIP_DSN');
         options.attachStacktrace = true;
