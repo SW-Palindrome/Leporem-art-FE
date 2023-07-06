@@ -28,6 +28,15 @@ void get_kakao_user_info() async {
   }
 }
 
+Future<bool> is_login_proceed() async {
+  try {
+    User user = await UserApi.instance.me();
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 Future<dynamic> fn_loginWithKakaoAccount() async {
   try {
     OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
@@ -49,7 +58,7 @@ Future<void> kakaoLogin() async {
     get_kakao_user_info();
   } catch (error) {
     print('액세스 토큰이 존재하지 않습니다. 로그인을 시도합니다.');
-    OAuthToken token = await fn_loginWithKakaoAccount();
+    OAuthToken? token = await fn_loginWithKakaoAccount();
     if (token != null) {
       get_kakao_user_info();
     }
