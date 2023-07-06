@@ -72,13 +72,14 @@ class LoginScreen extends StatelessWidget {
                 fontSize: 16.0,
               ),
             ),
-            Positioned(
-              left: 24,
-              child: SvgPicture.asset(
-                'assets/icons/$icon.svg',
-                width: 24,
+            if (!isGuest)
+              Positioned(
+                left: 24,
+                child: Image.asset(
+                  'assets/icons/$icon.png',
+                  width: 24,
+                ),
               ),
-            ),
           ],
         ),
       ),
