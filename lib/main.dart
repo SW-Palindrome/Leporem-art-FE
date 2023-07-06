@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/kakao_screen.dart';
 import 'package:leporemart/src/screens/login_screen.dart';
@@ -19,26 +21,29 @@ void main() async {
 
   Get.put(BottomNavigationbarController());
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseConfig.init();
+  KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
+
+  bool isLoginProceed = await is_login_proceed();
   if (!kDebugMode) {
     AmplitudeConfig.init();
-    FirebaseConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
 
-    KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
     SentryFlutter.init(
       (options) {
         options.dsn = dotenv.get('GLITCHTIP_DSN');
         options.attachStacktrace = true;
       },
-      appRunner: () => runApp(MyApp()),
+      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
     );
   } else {
-    runApp(MyApp());
+    runApp(MyApp(isLoginProceed: isLoginProceed));
   }
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  final bool isLoginProceed;
+  MyApp({super.key, required this.isLoginProceed});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: LoginScreen(),
+      home: isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),

@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
       onTap: () async {
         switch (icon) {
           case 'kakao':
-            kakaoLogin();
+            await kakaoLogin();
             break;
           case 'naver':
             break;
