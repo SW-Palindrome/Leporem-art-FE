@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/app.dart';
+import 'package:leporemart/src/configs/amplitude_config.dart';
+import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+
+  void _logEvent(String eventName) async {
+    await AmplitudeConfig.analytics.logEvent("Login");
+    await FirebaseConfig.analytics.logLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,39 +56,59 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Container _loginButton(String? icon, String text, int backgroundColor,
-      int mainColor, bool isGuest) {
-    return Container(
-      height: 54,
-      decoration: BoxDecoration(
-        color: Color(backgroundColor),
-        borderRadius: BorderRadius.circular(10),
-        border:
-            isGuest ? Border.all(color: Color(0xff191f28), width: 0.1) : null,
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Text(
-              text,
-              style: TextStyle(
-                color: Color(mainColor),
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0,
-              ),
-            ),
-            if (!isGuest)
-              Positioned(
-                left: 24,
-                child: Image.asset(
-                  'assets/icons/$icon.png',
-                  width: 24,
+  GestureDetector _loginButton(
+    String? icon,
+    String text,
+    int backgroundColor,
+    int mainColor,
+    bool isGuest,
+  ) {
+    return GestureDetector(
+      onTap: () async {
+        switch (icon) {
+          case 'kakao':
+            kakaoLogin();
+            break;
+          case 'naver':
+            break;
+          case 'apple':
+            break;
+        }
+        _logEvent('$icon 회원가입 및 로그인');
+        Get.to(App());
+      },
+      child: Container(
+        height: 54,
+        decoration: BoxDecoration(
+          color: Color(backgroundColor),
+          borderRadius: BorderRadius.circular(10),
+          border:
+              isGuest ? Border.all(color: Color(0xff191f28), width: 0.1) : null,
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: Color(mainColor),
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
                 ),
               ),
-          ],
+              if (!isGuest)
+                Positioned(
+                  left: 24,
+                  child: Image.asset(
+                    'assets/icons/$icon.png',
+                    width: 24,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

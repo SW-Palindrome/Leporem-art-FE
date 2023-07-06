@@ -5,6 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/screens/authentication.dart';
+import 'package:leporemart/src/screens/kakao_screen.dart';
 import 'package:leporemart/src/screens/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
