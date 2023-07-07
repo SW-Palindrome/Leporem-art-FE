@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class AccountType extends StatelessWidget {
+class AccountType extends GetView<AccountTypeController> {
   const AccountType({super.key});
 
   @override
@@ -39,60 +40,84 @@ class AccountType extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               SizedBox(height: Get.height * 0.05),
-              Container(
-                alignment: Alignment.center,
-                width: Get.width,
-                padding: EdgeInsets.symmetric(vertical: 32),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    width: 1,
-                    color: true ? ColorPalette.purple : ColorPalette.grey_3,
-                  ),
-                  color: true
-                      ? ColorPalette.purple.withAlpha(10)
-                      : ColorPalette.white,
-                ),
-                child: Text(
-                  "구매자",
-                  style: TextStyle(
-                    color: ColorPalette.purple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+              Obx(
+                () => InkWell(
+                  onTap: () {
+                    controller.selectType(0);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: Get.width,
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 1,
+                        color: controller.typeList[0]
+                            ? ColorPalette.purple
+                            : ColorPalette.grey_3,
+                      ),
+                      color: controller.typeList[0]
+                          ? ColorPalette.purple.withAlpha(10)
+                          : ColorPalette.white,
+                    ),
+                    child: Text(
+                      "구매자",
+                      style: TextStyle(
+                        color: controller.typeList[0]
+                            ? ColorPalette.purple
+                            : ColorPalette.grey_6,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: Get.height * 0.01),
-              Container(
-                alignment: Alignment.center,
-                width: Get.width,
-                padding: EdgeInsets.symmetric(vertical: 32),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    width: 1,
-                    color: true ? ColorPalette.purple : ColorPalette.grey_3,
-                  ),
-                  color: true
-                      ? ColorPalette.purple.withAlpha(10)
-                      : ColorPalette.white,
-                ),
-                child: Text(
-                  "학생 판매자",
-                  style: TextStyle(
-                    color: ColorPalette.purple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+              Obx(
+                () => InkWell(
+                  onTap: () {
+                    controller.selectType(1);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: Get.width,
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 1,
+                        color: controller.typeList[1]
+                            ? ColorPalette.purple
+                            : ColorPalette.grey_3,
+                      ),
+                      color: controller.typeList[1]
+                          ? ColorPalette.purple.withAlpha(10)
+                          : ColorPalette.white,
+                    ),
+                    child: Text(
+                      "학생 판매자",
+                      style: TextStyle(
+                        color: controller.typeList[1]
+                            ? ColorPalette.purple
+                            : ColorPalette.grey_6,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
               ),
               Spacer(),
-              NextButton(
-                "다음",
-                value: true,
-                onTap: () {
-                  Get.to(AccountType());
-                },
+              Obx(
+                () => NextButton(
+                  "다음",
+                  value: controller.isSelect.value,
+                  onTap: () {
+                    Get.to(AccountType());
+                  },
+                ),
               ),
             ],
           ),
