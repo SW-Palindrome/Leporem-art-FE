@@ -82,12 +82,23 @@ class Agreement extends GetView<AgreementController> {
                     margin: EdgeInsets.only(bottom: 20),
                     width: Get.width,
                     height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: controller.isNextButtonEnabled
-                          ? ColorPalette.purple
-                          : ColorPalette.grey_3,
-                    ),
+                    decoration: controller.allAgreed.value
+                        ? ShapeDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(1.00, -0.07),
+                              end: Alignment(-1, 0.07),
+                              colors: [Color(0xFF594BF8), Color(0xFF9C00E6)],
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          )
+                        : BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: controller.isNextButtonEnabled
+                                ? ColorPalette.purple
+                                : ColorPalette.grey_3,
+                          ),
                     child: Center(
                       child: Text(
                         "다음",
