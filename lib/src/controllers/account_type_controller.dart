@@ -5,9 +5,14 @@ class AccountTypeController extends GetxController {
   RxBool isSelect = false.obs;
   RxList<bool> typeList = [false, false].obs;
 
-  void toggleSelect(int index) {
+  void selectType(int index) {
     isSelect.value = true;
-    typeList[index] = !typeList[index];
-    typeList.refresh();
+    for (int i = 0; i < typeList.length; i++) {
+      if (i == index) {
+        typeList[i] = true;
+      } else {
+        typeList[i] = false;
+      }
+    }
   }
 }
