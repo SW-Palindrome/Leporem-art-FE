@@ -7,6 +7,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/screens/agreement.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/kakao_screen.dart';
@@ -21,6 +22,7 @@ void main() async {
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
 
   Get.put(BottomNavigationbarController());
+  Get.put(AgreementController());
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
