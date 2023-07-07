@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/next_button.dart';
 
 class Agreement extends GetView<AgreementController> {
   const Agreement({super.key});
@@ -27,91 +29,59 @@ class Agreement extends GetView<AgreementController> {
                 textAlign: TextAlign.left,
               ),
               SizedBox(height: Get.height * 0.05),
-              Obx(() => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        width: 1,
-                        color: controller.allAgreed.value
-                            ? ColorPalette.purple
-                            : ColorPalette.grey_3,
-                      ),
+              Obx(
+                () => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 1,
                       color: controller.allAgreed.value
-                          ? ColorPalette.purple.withAlpha(10)
-                          : ColorPalette.white,
+                          ? ColorPalette.purple
+                          : ColorPalette.grey_3,
                     ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          padding: EdgeInsets.all(12),
-                          constraints: BoxConstraints(),
-                          onPressed: () {
-                            controller.toggleAllAgreed();
-                          },
-                          icon: SvgPicture.asset(
-                            controller.allAgreed.value
-                                ? 'assets/icons/checkbox_select.svg'
-                                : 'assets/icons/checkbox_unselect.svg',
-                            width: 24,
-                          ),
+                    color: controller.allAgreed.value
+                        ? ColorPalette.purple.withAlpha(10)
+                        : ColorPalette.white,
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.all(12),
+                        constraints: BoxConstraints(),
+                        onPressed: () {
+                          controller.toggleAllAgreed();
+                        },
+                        icon: SvgPicture.asset(
+                          controller.allAgreed.value
+                              ? 'assets/icons/checkbox_select.svg'
+                              : 'assets/icons/checkbox_unselect.svg',
+                          width: 24,
                         ),
-                        Text(
-                          "모두 동의합니다.",
-                          style: TextStyle(
-                            color: Color(0xff515A68),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
+                      ),
+                      Text(
+                        "모두 동의합니다.",
+                        style: TextStyle(
+                          color: Color(0xff515A68),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
-                      ],
-                    ),
-                  )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(height: Get.height * 0.01),
               agreeRow("공예쁨 이용약관 동의", true, 0),
               agreeRow("개인정보 수집 및 이용 동의", true, 1),
               agreeRow("마케팅 수신 동의", false, 2),
               Spacer(),
               Obx(
-                () => InkWell(
-                  onTap: controller.isNextButtonEnabled
-                      ? () {
-                          // 다음 페이지로 이동하는 로직 추가
-                        }
-                      : null,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    width: Get.width,
-                    height: 48,
-                    decoration: controller.allAgreed.value
-                        ? ShapeDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment(1.00, -0.07),
-                              end: Alignment(-1, 0.07),
-                              colors: [Color(0xFF594BF8), Color(0xFF9C00E6)],
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          )
-                        : BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: controller.isNextButtonEnabled
-                                ? ColorPalette.purple
-                                : ColorPalette.grey_3,
-                          ),
-                    child: Center(
-                      child: Text(
-                        "다음",
-                        style: TextStyle(
-                          color: controller.isNextButtonEnabled
-                              ? ColorPalette.white
-                              : ColorPalette.grey_4,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
+                () => NextButton(
+                  "다음",
+                  value: controller.isNextButtonEnabled,
+                  onTap: () {
+                    Get.to(AccountType());
+                  },
                 ),
               ),
             ],
@@ -167,16 +137,39 @@ class Agreement extends GetView<AgreementController> {
           ),
         ),
         Spacer(),
-        Padding(
-          padding: EdgeInsets.only(right: 8.0),
-          child: RichText(
-            text: TextSpan(
-              text: '보기',
-              style: TextStyle(
-                color: Color(0xffadb3be),
-                fontWeight: FontWeight.w400,
-                fontSize: 14.0,
-                decoration: TextDecoration.underline,
+        InkWell(
+          onTap: () {
+            Get.bottomSheet(
+              Container(
+                child: Column(
+                  children: [
+                    Text("약관동의"),
+                    Text("약관동의"),
+                    Text("약관동의"),
+                  ],
+                ),
+              ),
+              enableDrag: false,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+              ),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: RichText(
+              text: TextSpan(
+                text: '보기',
+                style: TextStyle(
+                  color: Color(0xffadb3be),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.0,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
           ),
