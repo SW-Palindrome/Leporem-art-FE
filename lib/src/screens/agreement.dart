@@ -140,14 +140,46 @@ class Agreement extends GetView<AgreementController> {
         InkWell(
           onTap: () {
             Get.bottomSheet(
-              Container(
-                child: Column(
-                  children: [
-                    Text("약관동의"),
-                    Text("약관동의"),
-                    Text("약관동의"),
-                  ],
-                ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24, left: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "개인정보 수집 및 이용 동의",
+                          style: const TextStyle(
+                            color: const Color(0xff191f28),
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 18,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            Get.back(); // bottomSheet 닫기
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 24, right: 24),
+                    child: Text(
+                        "공예쁨은 귀하의 개인정보를 중요시하며, 『정보통신망 이용촉진 및 정보보호 등에 관한 법률』, 『개인정보 보호법』, 『통신비밀보호법』, 『전기통신사업법』 등 정보통신 서비스 제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하고 있습니다. 회사는 본 개인정보취급방침을 통하여 귀하가 회사에 제공하는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 회사가 개인정보보호를 위해 어떠한 조치룰 취하고 있는지 알려드립니다.\n\n회사의 개인정보취급방침은 정부정책, 관련 법령 및 회사 내부 방침 변경 등 사회적 필요와 변화에 따라 수시로 변경될 수 있고, 회사는 이에 따른 개인정보취급방침의 지속적인 개선을 위하여 필요한 절차를 정하고 있습니다. 개인정보취급방침을 개정하는 경우 회사는 그 개정사항을 홈페이지에 게시하여 귀하가 개정된 사항을 쉽게 확인할 수 있도록 하고 있습니다.",
+                        style: const TextStyle(
+                            color: const Color(0xff191f28),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 13),
+                        textAlign: TextAlign.left),
+                  ),
+                ],
               ),
               enableDrag: false,
               backgroundColor: Colors.white,
