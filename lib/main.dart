@@ -7,6 +7,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/screens/agreement.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/kakao_screen.dart';
 import 'package:leporemart/src/screens/login_screen.dart';
@@ -24,6 +25,9 @@ void main() async {
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
+  getIDToken().then((value) {
+    print(value);
+  });
   bool isLoginProceed = await is_login_proceed();
   if (!kDebugMode) {
     AmplitudeConfig.init();
@@ -51,7 +55,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: isLoginProceed ? App() : LoginScreen(),
+      home: Agreement(), //isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),

@@ -11,6 +11,8 @@ class AppTheme {
         color: ColorPalette.red,
       ),
     ),
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
   );
 }
 
