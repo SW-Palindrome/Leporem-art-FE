@@ -24,7 +24,6 @@ class Agreement extends GetView<AgreementController> {
             Get.back();
           },
         ),
-        title: Text('Agreement'),
       ),
       body: SafeArea(
         child: Padding(
@@ -32,7 +31,7 @@ class Agreement extends GetView<AgreementController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: Get.height * 0.15),
+              SizedBox(height: Get.height * 0.1),
               Text(
                 "개인정보 약관 동의 후\n서비스를 이용할 수 있어요.",
                 style: TextStyle(
