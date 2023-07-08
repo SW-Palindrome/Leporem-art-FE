@@ -90,7 +90,7 @@ class Agreement extends GetView<AgreementController> {
               Spacer(),
               Obx(
                 () => NextButton(
-                  "다음",
+                  text: "다음",
                   value: controller.isNextButtonEnabled,
                   onTap: () {
                     Get.to(AccountType());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
+import 'package:leporemart/src/screens/email.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -112,10 +113,13 @@ class AccountType extends GetView<AccountTypeController> {
               Spacer(),
               Obx(
                 () => NextButton(
-                  "다음",
+                  text: "다음",
                   value: controller.isSelect.value,
                   onTap: () {
-                    Get.to(AccountType());
+                    //Email에 EmailController가 바인딩 되도록하며 Email()로 이동
+                    Get.to(() => Email(), binding: BindingsBuilder(() {
+                      Get.put(AccountTypeController());
+                    }));
                   },
                 ),
               ),

@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton(
-    String text, {
+  const NextButton({
     super.key,
+    required this.text,
     required this.value,
     required this.onTap,
   });
 
+  final String text;
   final bool value;
   final Function() onTap;
 
@@ -38,7 +39,7 @@ class NextButton extends StatelessWidget {
               ),
         child: Center(
           child: Text(
-            "다음",
+            text,
             style: TextStyle(
               color: value ? ColorPalette.white : ColorPalette.grey_4,
               fontWeight: FontWeight.w600,
