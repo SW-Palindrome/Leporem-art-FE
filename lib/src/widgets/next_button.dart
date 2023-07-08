@@ -30,12 +30,12 @@ class NextButton extends StatelessWidget {
                   colors: [Color(0xFF594BF8), Color(0xFF9C00E6)],
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               )
             : BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: value ? ColorPalette.purple : ColorPalette.grey_3,
+                color: ColorPalette.grey_3,
               ),
         child: Center(
           child: Text(
