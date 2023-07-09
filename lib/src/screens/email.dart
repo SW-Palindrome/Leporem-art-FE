@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
@@ -59,7 +60,7 @@ class Email extends GetView<EmailController> {
                         labelStyle: TextStyle(
                           color: controller.isCodeError.value
                               ? ColorPalette.red
-                              : ColorPalette.grey_3,
+                              : ColorPalette.grey_6,
                           fontSize: 11,
                         ),
                         hintText: "000000",
@@ -115,8 +116,8 @@ class Email extends GetView<EmailController> {
                       labelStyle: TextStyle(
                         color: controller.isDisplayError.value
                             ? ColorPalette.red
-                            : ColorPalette.grey_3,
-                        fontSize: 11,
+                            : ColorPalette.grey_6,
+                        fontSize: 12,
                       ),
                       hintText: "example@abc.ac.kr",
                       hintStyle: TextStyle(
@@ -163,7 +164,12 @@ class Email extends GetView<EmailController> {
                                 title: "인증 성공",
                                 description:
                                     "학교 메일 인증에 성공했습니다.\n공예쁨에서 상상의 나래를 펼쳐주세요!",
-                                height: Get.height * 0.2,
+                                height: Get.height * 0.3,
+                                buttonType: BottomSheetType.oneButton,
+                                leftButtonText: "공예쁨 시작하기",
+                                onLeftButtonPressed: () {
+                                  Get.off(App());
+                                },
                               ),
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
