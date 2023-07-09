@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: Email(), //isLoginProceed ? App() : LoginScreen(),
+      home: LoginScreen(), //isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
