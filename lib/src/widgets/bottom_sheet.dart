@@ -6,17 +6,18 @@ enum BottomSheetType { noneButton, oneButton, twoButton }
 
 class MyBottomSheet extends StatelessWidget {
   const MyBottomSheet({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     this.descriptionFontSize = 16,
     required this.height,
     required this.buttonType,
+    required this.onCloseButtonPressed,
     this.leftButtonText,
     this.rightButtonText,
     this.onLeftButtonPressed,
     this.onRightButtonPressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final String description;
@@ -25,8 +26,9 @@ class MyBottomSheet extends StatelessWidget {
   final BottomSheetType buttonType;
   final String? leftButtonText;
   final String? rightButtonText;
+  final Function() onCloseButtonPressed;
   final Function()? onLeftButtonPressed;
-  final VoidCallback? onRightButtonPressed;
+  final Function()? onRightButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,7 @@ class MyBottomSheet extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: () {
-                    Get.back(); // bottomSheet 닫기
-                  },
+                  onPressed: onCloseButtonPressed,
                 ),
               ],
             ),

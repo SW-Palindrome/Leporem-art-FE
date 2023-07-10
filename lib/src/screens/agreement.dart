@@ -160,6 +160,9 @@ class Agreement extends GetView<AgreementController> {
                 descriptionFontSize: 12.0,
                 height: Get.height * 0.4,
                 buttonType: BottomSheetType.noneButton,
+                onCloseButtonPressed: () {
+                  Get.back();
+                },
               ),
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(

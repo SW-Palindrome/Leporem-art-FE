@@ -49,6 +49,7 @@ class Email extends GetView<EmailController> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
+                      controller: controller.codeController,
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
                       style: TextStyle(
@@ -88,9 +89,6 @@ class Email extends GetView<EmailController> {
                           ),
                         ),
                       ),
-                      onChanged: (text) {
-                        controller.setCode(text);
-                      },
                     ),
                   ),
                 ),
@@ -105,6 +103,7 @@ class Email extends GetView<EmailController> {
                 },
                 child: Obx(
                   () => TextFormField(
+                    controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
@@ -155,9 +154,9 @@ class Email extends GetView<EmailController> {
                 () => controller.isSendClicked.value
                     ? NextButton(
                         text: "인증하기",
-                        value: controller.code.value.length == 6,
+                        value: controller.codeController.text.length == 6,
                         onTap: () {
-                          controller.checkCode();
+                          controller.checkCode(controller.codeController.text);
                           if (controller.isCodeError.value == false) {
                             Get.bottomSheet(
                               MyBottomSheet(
@@ -167,6 +166,9 @@ class Email extends GetView<EmailController> {
                                 height: Get.height * 0.3,
                                 buttonType: BottomSheetType.oneButton,
                                 leftButtonText: "공예쁨 시작하기",
+                                onCloseButtonPressed: () {
+                                  Get.off(App());
+                                },
                                 onLeftButtonPressed: () {
                                   Get.off(App());
                                 },

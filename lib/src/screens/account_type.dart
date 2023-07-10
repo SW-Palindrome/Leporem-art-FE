@@ -116,10 +116,7 @@ class AccountType extends GetView<AccountTypeController> {
                   text: "다음",
                   value: controller.isSelect.value,
                   onTap: () {
-                    //Email에 EmailController가 바인딩 되도록하며 Email()로 이동
-                    Get.to(() => Email(), binding: BindingsBuilder(() {
-                      Get.put(AccountTypeController());
-                    }));
+                    Get.to(Email());
                   },
                 ),
               ),

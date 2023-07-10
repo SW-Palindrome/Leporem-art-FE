@@ -1,14 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class EmailController extends GetxController {
   static EmailController get to => Get.find();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   Rx<bool> isEmailValid = false.obs;
   Rx<bool> isDisplayError = false.obs;
   Rx<bool> isFocused = false.obs;
   Rx<bool> isSendClicked = false.obs;
 
-  Rx<String> code = "".obs;
   Rx<bool> isCodeError = false.obs;
 
   void checkEmail(String value) {
@@ -28,11 +31,7 @@ class EmailController extends GetxController {
     isSendClicked.value = clicked;
   }
 
-  void setCode(String value) {
-    code.value = value;
-  }
-
-  void checkCode() {
-    isCodeError.value = code.value != "123456";
+  void checkCode(String code) {
+    isCodeError.value = code != "123456";
   }
 }
