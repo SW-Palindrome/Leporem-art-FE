@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/screens/email.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/bottom_sheet.dart';
+import 'package:leporemart/src/widgets/next_button.dart';
 
 class Nickname extends GetView<NicknameController> {
   const Nickname({super.key});
@@ -96,6 +100,58 @@ class Nickname extends GetView<NicknameController> {
                 ),
               ),
               Spacer(),
+              Obx(
+                () => NextButton(
+                  text: "인증하기",
+                  value: !controller.isDisplayError.value &&
+                      controller.isNicknameValid.value,
+                  onTap: () {
+                    bool isDuplicate = controller
+                        .isDuplicate(controller.nicknameController.text);
+                    if (!isDuplicate) {
+                      Get.bottomSheet(
+                        MyBottomSheet(
+                          title: "가입 성공",
+                          description: "회원 가입에 성공했습니다.\n공예쁨에서 상상의 나래를 펼쳐주세요!",
+                          height: Get.height * 0.3,
+                          buttonType: BottomSheetType.oneButton,
+                          leftButtonText: "공예쁨 시작하기",
+                          onCloseButtonPressed: () {
+                            Get.off(Email());
+                          },
+                          onLeftButtonPressed: () {
+                            Get.off(Email());
+                          },
+                        ),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(30.0),
+                          ),
+                        ),
+                      );
+                    } else {
+                      Get.bottomSheet(
+                        MyBottomSheet(
+                          title: "닉네임 중복",
+                          description: "이미 사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요.",
+                          height: Get.height * 0.3,
+                          buttonType: BottomSheetType.noneButton,
+                          onCloseButtonPressed: () {
+                            Get.back();
+                          },
+                        ),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(30.0),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

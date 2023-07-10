@@ -15,6 +15,10 @@ class NicknameController extends GetxController {
     isNicknameValid.value = regExp.hasMatch(value);
   }
 
+  bool isDuplicate(String value) {
+    return value == "중복";
+  }
+
   void setDisplayError(bool display) {
     isDisplayError.value = display;
   }
