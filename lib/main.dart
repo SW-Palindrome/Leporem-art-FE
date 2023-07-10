@@ -11,6 +11,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/agreement.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/email.dart';
@@ -34,6 +35,7 @@ void main() async {
   Get.put(AgreementController());
   Get.put(AccountTypeController());
   Get.put(EmailController());
+  Get.put(NicknameController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
