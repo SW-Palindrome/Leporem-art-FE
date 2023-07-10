@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/screens/email.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -14,15 +15,6 @@ class AccountType extends GetView<AccountTypeController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/arrow_left.svg',
-            width: 24,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -112,13 +104,21 @@ class AccountType extends GetView<AccountTypeController> {
               ),
               Spacer(),
               Obx(
-                () => NextButton(
-                  text: "다음",
-                  value: controller.isSelect.value,
-                  onTap: () {
-                    Get.to(Email());
-                  },
-                ),
+                () => controller.typeList.value.first
+                    ? NextButton(
+                        text: "공예쁨 시작하기",
+                        value: controller.isSelect.value,
+                        onTap: () {
+                          Get.offAll(App());
+                        },
+                      )
+                    : NextButton(
+                        text: "다음",
+                        value: controller.isSelect.value,
+                        onTap: () {
+                          Get.offAll(Email());
+                        },
+                      ),
               ),
             ],
           ),

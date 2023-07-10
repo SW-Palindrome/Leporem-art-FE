@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/screens/email.dart';
+import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -111,16 +110,16 @@ class Nickname extends GetView<NicknameController> {
                     if (!isDuplicate) {
                       Get.bottomSheet(
                         MyBottomSheet(
-                          title: "가입 성공",
-                          description: "회원 가입에 성공했습니다.\n공예쁨에서 상상의 나래를 펼쳐주세요!",
+                          title: "계정 생성 완료",
+                          description: "계정 생성이 거의 마무리 되었습니다.\n계정의 종류를 선택해주세요.",
                           height: Get.height * 0.3,
                           buttonType: BottomSheetType.oneButton,
-                          leftButtonText: "공예쁨 시작하기",
+                          leftButtonText: "계정종류 선택하기",
                           onCloseButtonPressed: () {
-                            Get.off(Email());
+                            Get.offAll(AccountType());
                           },
                           onLeftButtonPressed: () {
-                            Get.off(Email());
+                            Get.offAll(AccountType());
                           },
                         ),
                         backgroundColor: Colors.white,
