@@ -119,6 +119,7 @@ class Nickname extends GetView<NicknameController> {
                             Get.offAll(AccountType());
                           },
                           onLeftButtonPressed: () {
+                            controller.signup();
                             Get.offAll(AccountType());
                           },
                         ),

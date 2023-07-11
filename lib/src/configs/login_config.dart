@@ -1,6 +1,4 @@
-import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/app.dart';
 
 enum LoginPlatform {
   facebook,
