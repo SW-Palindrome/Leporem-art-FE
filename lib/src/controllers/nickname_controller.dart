@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class NicknameController extends GetxController {
@@ -33,21 +31,25 @@ class NicknameController extends GetxController {
 
   Future<bool> signup() async {
     String? idToken = await getIDToken();
-    DioSingleton.dio.post("/users/signup/kakao", data: {
-      "id_token": idToken,
-      "nickname": nicknameController.text,
-      "is_agree_privacy": true,
-      "is_agree_ads": true,
-    }).then((response) {
-      print("회원가입 성공 ${response.data}");
-      return true;
-    }).catchError((error) {
-      if (error.response.statusCode == 400) {
-        Get.snackbar("회원가입 실패", "잘못된 요청입니다. 다시시도해주세요.");
-      } else {
-        Get.snackbar("회원가입 실패", "이미 가입하신 계정입니다.");
+    try {
+      final response =
+          await DioSingleton.dio.post("/users/signup/kakao", data: {
+        "id_token": idToken,
+        "nickname": nicknameController.text,
+        "is_agree_privacy": true,
+        "is_agree_ads": true,
+      });
+      if (response.statusCode == 201) {
+        print("회원가입 성공 ${response.data}");
+        return true;
       }
-    });
-    return false;
+      if (response.statusCode == 400) {
+        Get.snackbar("회원가입 실패", "잘못된 요청입니다. 다시시도해주세요.");
+      }
+      return false;
+    } catch (e) {
+      Get.snackbar("서버 오류", "요청중 오류가 발생했습니다. 다시시도해주세요.");
+      return false;
+    }
   }
 }
