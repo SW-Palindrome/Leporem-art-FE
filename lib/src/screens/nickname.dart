@@ -133,6 +133,7 @@ class Nickname extends GetView<NicknameController> {
                               top: Radius.circular(30.0),
                             ),
                           ),
+                          isDismissible: false,
                         );
                       }
                     } else {
