@@ -16,6 +16,7 @@ import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/screens/agreement.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/email.dart';
+import 'package:leporemart/src/screens/item_detail.dart';
 import 'package:leporemart/src/screens/kakao_screen.dart';
 import 'package:leporemart/src/screens/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';

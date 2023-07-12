@@ -15,7 +15,7 @@ class App extends GetView<BottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(appBarType: AppBarType.mainPageAppBar),
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
