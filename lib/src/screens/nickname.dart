@@ -104,38 +104,43 @@ class Nickname extends GetView<NicknameController> {
                   text: "인증하기",
                   value: !controller.isDisplayError.value &&
                       controller.isNicknameValid.value,
-                  onTap: () {
+                  onTap: () async {
                     bool isDuplicate = controller
                         .isDuplicate(controller.nicknameController.text);
+                    bool isSignupSuccess = await controller.signup();
+                    print(
+                        "isDuplicate: $isDuplicate isSignupSuccess: $isSignupSuccess");
                     if (!isDuplicate) {
-                      Get.bottomSheet(
-                        MyBottomSheet(
-                          title: "계정 생성 완료",
-                          description: "계정 생성이 거의 마무리 되었습니다.\n계정의 종류를 선택해주세요.",
-                          height: Get.height * 0.3,
-                          buttonType: BottomSheetType.oneButton,
-                          leftButtonText: "계정종류 선택하기",
-                          onCloseButtonPressed: () {
-                            Get.offAll(AccountType());
-                          },
-                          onLeftButtonPressed: () {
-                            controller.signup();
-                            Get.offAll(AccountType());
-                          },
-                        ),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(30.0),
+                      if (isSignupSuccess) {
+                        Get.bottomSheet(
+                          MyBottomSheet(
+                            title: "계정 생성 완료",
+                            description:
+                                "계정 생성이 거의 마무리 되었습니다.\n계정의 종류를 선택해주세요.",
+                            height: Get.height * 0.3,
+                            buttonType: BottomSheetType.oneButton,
+                            leftButtonText: "계정종류 선택하기",
+                            onCloseButtonPressed: () {
+                              Get.offAll(AccountType());
+                            },
+                            onLeftButtonPressed: () {
+                              Get.offAll(AccountType());
+                            },
                           ),
-                        ),
-                      );
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(30.0),
+                            ),
+                          ),
+                        );
+                      }
                     } else {
                       Get.bottomSheet(
                         MyBottomSheet(
                           title: "닉네임 중복",
                           description: "이미 사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요.",
-                          height: Get.height * 0.3,
+                          height: Get.height * 0.2,
                           buttonType: BottomSheetType.noneButton,
                           onCloseButtonPressed: () {
                             Get.back();

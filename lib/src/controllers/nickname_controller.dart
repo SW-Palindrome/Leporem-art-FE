@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class NicknameController extends GetxController {
@@ -30,25 +31,23 @@ class NicknameController extends GetxController {
     isFocused.value = focused;
   }
 
-  void signup() async {
-    Dio dio = DioSingleton.dio;
+  Future<bool> signup() async {
     String? idToken = await getIDToken();
-    if (idToken == null) {
-      // ID Token을 가져오는 데 실패한 경우 처리
-      return;
-    }
-
-    dio.post("users/signup/kakao", data: {
+    DioSingleton.dio.post("/users/signup/kakao", data: {
       "id_token": idToken,
       "nickname": nicknameController.text,
-      "is_agreed_privacy": true,
-      "is_agreed_ads": true,
+      "is_agree_privacy": true,
+      "is_agree_ads": true,
     }).then((response) {
-      // 요청에 대한 처리
       print(response.data);
+      return true;
     }).catchError((error) {
-      // 오류 처리
-      print(error);
+      if (error.response.statusCode == 400) {
+        Get.snackbar("회원가입 실패", "잘못된 요청입니다. 다시시도해주세요.");
+      } else {
+        Get.snackbar("회원가입 실패", "이미 가입하신 계정입니다.");
+      }
     });
+    return false;
   }
 }

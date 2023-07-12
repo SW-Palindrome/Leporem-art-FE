@@ -49,6 +49,9 @@ class Email extends GetView<EmailController> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
+                      onChanged: (text) {
+                        controller.isCodeValidated(text);
+                      },
                       controller: controller.codeController,
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
@@ -93,16 +96,17 @@ class Email extends GetView<EmailController> {
                   ),
                 ),
               ),
-              Focus(
-                onFocusChange: (focused) {
-                  controller.setFocus(focused);
-                  if (!focused) {
-                    controller.setDisplayError(!controller.isEmailValid.value);
-                    print(controller.isDisplayError.value);
-                  }
-                },
-                child: Obx(
-                  () => TextFormField(
+              Obx(
+                () => Focus(
+                  onFocusChange: (focused) {
+                    controller.setFocus(focused);
+                    if (!focused) {
+                      controller
+                          .setDisplayError(!controller.isEmailValid.value);
+                      print(controller.isDisplayError.value);
+                    }
+                  },
+                  child: TextFormField(
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
@@ -154,7 +158,7 @@ class Email extends GetView<EmailController> {
                 () => controller.isSendClicked.value
                     ? NextButton(
                         text: "인증하기",
-                        value: controller.codeController.text.length == 6,
+                        value: controller.isCodeValid.value,
                         onTap: () {
                           controller.checkCode(controller.codeController.text);
                           if (controller.isCodeError.value == false) {
@@ -188,6 +192,7 @@ class Email extends GetView<EmailController> {
                         value: !controller.isDisplayError.value &&
                             controller.isEmailValid.value,
                         onTap: () {
+                          controller.sendEmail();
                           controller.setSendClicked(true);
                         },
                       ),

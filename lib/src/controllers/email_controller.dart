@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class EmailController extends GetxController {
   static EmailController get to => Get.find();
@@ -13,6 +16,7 @@ class EmailController extends GetxController {
   Rx<bool> isSendClicked = false.obs;
 
   Rx<bool> isCodeError = false.obs;
+  Rx<bool> isCodeValid = false.obs;
 
   void checkEmail(String value) {
     RegExp regExp = RegExp(r'^[a-zA-Z0-99+\-_.]+@([a-zA-Z0-9]+\.)+(ac\.kr)$');
@@ -31,7 +35,49 @@ class EmailController extends GetxController {
     isSendClicked.value = clicked;
   }
 
-  void checkCode(String code) {
+  void isCodeValidated(String value) {
+    isCodeValid.value = value.length == 6;
+  }
+
+  void checkCode(String code) async {
     isCodeError.value = code != "123456";
+    Dio dio = DioSingleton.dio;
+    String? idToken = await getIDToken();
+    dio
+        .post("/sellers/verify",
+            data: {
+              "verify_code": codeController.text,
+            },
+            options: Options(headers: {"Authorization": "Palindrome $idToken"}))
+        .then((response) {
+      // 요청에 대한 처리
+      print(response.data);
+      isCodeError.value = false;
+    }).catchError((error) {
+      // 오류 처리
+      print(error);
+      isCodeError.value = true;
+    });
+  }
+
+  void sendEmail() async {
+    Dio dio = DioSingleton.dio;
+    String? idToken = await getIDToken();
+    if (idToken == null) {
+      // ID Token을 가져오는 데 실패한 경우 처리
+      return;
+    }
+
+    dio
+        .post("/sellers/register",
+            data: {"email": emailController.text},
+            options: Options(headers: {"Authorization": "Palindrome $idToken"}))
+        .then((response) {
+      // 요청에 대한 처리
+      print(response.data);
+    }).catchError((error) {
+      // 오류 처리
+      print(error);
+    });
   }
 }

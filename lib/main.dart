@@ -12,6 +12,7 @@ import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/screens/account_type.dart';
 import 'package:leporemart/src/screens/agreement.dart';
 import 'package:leporemart/src/screens/authentication.dart';
 import 'package:leporemart/src/screens/email.dart';

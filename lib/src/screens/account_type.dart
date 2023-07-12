@@ -15,6 +15,15 @@ class AccountType extends GetView<AccountTypeController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/arrow_left.svg',
+            width: 24,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       body: SafeArea(
         child: Padding(
