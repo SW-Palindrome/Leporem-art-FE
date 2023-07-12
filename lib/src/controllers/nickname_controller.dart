@@ -39,7 +39,7 @@ class NicknameController extends GetxController {
       "is_agree_privacy": true,
       "is_agree_ads": true,
     }).then((response) {
-      print(response.data);
+      print("회원가입 성공 ${response.data}");
       return true;
     }).catchError((error) {
       if (error.response.statusCode == 400) {

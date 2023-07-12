@@ -30,9 +30,17 @@ class ItemDetail extends StatelessWidget {
                 width: Get.width,
                 color: Colors.red,
               ),
-              SizedBox(height: 24),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
+              Container(
+                decoration: BoxDecoration(
+                  border: //아래에만 테두리
+                      Border(
+                    bottom: BorderSide(
+                      width: 1,
+                      color: ColorPalette.grey_2,
+                    ),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Column(
                   children: [
                     Row(
@@ -95,58 +103,45 @@ class ItemDetail extends StatelessWidget {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Container(
-                          height: 24,
-                          width: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              width: 1,
-                              color: ColorPalette.grey_3,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "컵",
-                              style: TextStyle(
-                                color: Color(0xff191f28),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "PretendardVariable",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 24,
-                          width: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              width: 1,
-                              color: ColorPalette.grey_3,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "채색컵",
-                              style: TextStyle(
-                                color: Color(0xff191f28),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "PretendardVariable",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ),
-                        ),
+                        _categoryWidget('컵'),
+                        _categoryWidget('머그컵'),
                       ],
                     )
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _categoryWidget(String category) {
+    return Padding(
+      padding: EdgeInsets.only(right: 8.0),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 4,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            width: 1,
+            color: ColorPalette.grey_3,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            category,
+            style: TextStyle(
+              color: Color(0xff191f28),
+              fontWeight: FontWeight.w400,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 12.0,
+            ),
           ),
         ),
       ),
