@@ -1,4 +1,5 @@
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 
 enum LoginPlatform {
   facebook,
@@ -14,7 +15,7 @@ Future<String?> getIDToken() async {
   return token?.idToken;
 }
 
-void get_kakao_user_info() async {
+void getKakaoUserInfo() async {
   try {
     User user = await UserApi.instance.me();
     print('사용자 정보 요청 성공'
@@ -26,16 +27,22 @@ void get_kakao_user_info() async {
   }
 }
 
-Future<bool> is_login_proceed() async {
+Future<bool> isSignup() async {
   try {
-    User user = await UserApi.instance.me();
-    return true;
-  } catch (error) {
+    final response = await DioSingleton.dio.get("/users/login/kakao", data: {
+      "id_token": await getIDToken(),
+    });
+    print(response);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  } catch (e) {
     return false;
   }
 }
 
-Future<dynamic> fn_loginWithKakaoAccount() async {
+Future<dynamic> fnLoginWithKakaoAccount() async {
   try {
     OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
     print("token : " + token.toString());
@@ -53,12 +60,12 @@ Future<void> kakaoLogin() async {
     AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
 
     print('이미 액세스 토큰이 존재하므로 로그인을 시도하지 않습니다.');
-    get_kakao_user_info();
+    getKakaoUserInfo();
   } catch (error) {
     print('액세스 토큰이 존재하지 않습니다. 로그인을 시도합니다.');
-    OAuthToken? token = await fn_loginWithKakaoAccount();
+    OAuthToken? token = await fnLoginWithKakaoAccount();
     if (token != null) {
-      get_kakao_user_info();
+      getKakaoUserInfo();
     }
   }
 }
