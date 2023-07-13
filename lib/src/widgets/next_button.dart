@@ -8,11 +8,13 @@ class NextButton extends StatelessWidget {
     required this.text,
     required this.value,
     required this.onTap,
+    this.width = double.infinity,
   });
 
   final String text;
   final bool value;
   final Function() onTap;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class NextButton extends StatelessWidget {
       onTap: value ? onTap : null,
       child: Container(
         margin: EdgeInsets.only(bottom: 20),
-        width: Get.width,
+        width: width,
         height: 48,
         decoration: value
             ? ShapeDecoration(
