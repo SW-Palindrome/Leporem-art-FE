@@ -25,94 +25,102 @@ class ItemDetail extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: Get.width,
-                width: Get.width,
-                color: Colors.red,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 1,
-                      color: ColorPalette.grey_2,
-                    ),
-                  ),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          "홍준식(준식이가준비한식사)",
-                          style: const TextStyle(
-                            color: ColorPalette.black,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          "매너온도 추가",
-                          style: const TextStyle(
-                            color: const Color(0xfff04452),
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "가로등 빛 받은 나뭇잎 컵",
-                          style: const TextStyle(
-                            color: const Color(0xff191f28),
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        Text(
-                          "잔여 3점",
-                          style: const TextStyle(
-                            color: const Color(0xff594bf8),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        _categoryWidget('컵'),
-                        _categoryWidget('머그컵'),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              _itemThumbnail(),
+              _itemTitle(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Container _itemTitle() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: ColorPalette.grey_2,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                color: Colors.blue,
+              ),
+              SizedBox(width: 8),
+              Text(
+                "홍준식(준식이가준비한식사)",
+                style: const TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                "매너온도 추가",
+                style: const TextStyle(
+                  color: const Color(0xfff04452),
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "가로등 빛 받은 나뭇잎 컵",
+                style: const TextStyle(
+                  color: const Color(0xff191f28),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 18.0,
+                ),
+              ),
+              Text(
+                "잔여 3점",
+                style: const TextStyle(
+                  color: const Color(0xff594bf8),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              _categoryWidget('컵'),
+              _categoryWidget('머그컵'),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container _itemThumbnail() {
+    return Container(
+      height: Get.width,
+      width: Get.width,
+      color: Colors.red,
     );
   }
 
