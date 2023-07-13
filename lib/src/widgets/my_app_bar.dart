@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 enum AppBarType {
-  mainPageAppBar,
+  buyerMainPageAppBar,
+  buyerItemDetailAppBar,
+  sellerMainPageAppBar,
+  sellerItemDetailAppBar,
   backAppBar,
   searchAppBar,
-  none,
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,6 +18,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.firstActionIcon,
     this.secondActionIcon,
+    this.onTapLeadingIcon,
     this.onTapFirstActionIcon,
     this.onTapSecondActionIcon,
   });
@@ -24,6 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? firstActionIcon;
   final Widget? secondActionIcon;
+  final Function()? onTapLeadingIcon;
   final Function()? onTapFirstActionIcon;
   final Function()? onTapSecondActionIcon;
 
@@ -33,8 +37,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     switch (appBarType) {
-      case AppBarType.mainPageAppBar:
-        return _mainPageAppBar();
+      case AppBarType.buyerMainPageAppBar:
+        return _buyerMainPageAppBar();
+      case AppBarType.buyerItemDetailAppBar:
+        return _buyerItemDetailAppBar();
       // case AppBarType.backAppBar:
       //   return _backAppBar();
       // case AppBarType.searchAppBar:
@@ -42,16 +48,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       // case AppBarType.none:
       //   return _noneAppBar();
       default:
-        return _mainPageAppBar();
+        return _buyerMainPageAppBar();
     }
   }
 
-  Widget _mainPageAppBar() {
+  Widget _buyerMainPageAppBar() {
     return AppBar(
       elevation: 0,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: onTapFirstActionIcon,
           icon: SvgPicture.asset(
             './assets/icons/search.svg',
             colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
@@ -60,7 +66,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 24),
           child: IconButton(
-            onPressed: () {},
+            onPressed: onTapSecondActionIcon,
             icon: SvgPicture.asset(
               './assets/icons/notice.svg',
               colorFilter:
@@ -72,26 +78,29 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _backAppBar() {
+  Widget _buyerItemDetailAppBar() {
     return AppBar(
       elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          width: 24,
+        ),
+        onPressed: onTapLeadingIcon,
+      ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: onTapFirstActionIcon,
           icon: SvgPicture.asset(
-            './assets/icons/search.svg',
-            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
+            'assets/icons/notice.svg',
+            width: 24,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 24),
-          child: IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              './assets/icons/notice.svg',
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
-            ),
+        IconButton(
+          onPressed: onTapSecondActionIcon,
+          icon: SvgPicture.asset(
+            'assets/icons/share.svg',
+            width: 24,
           ),
         ),
       ],
