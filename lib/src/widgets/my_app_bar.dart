@@ -126,7 +126,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       title: Text(
-        title!,
+        title ?? '',
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
