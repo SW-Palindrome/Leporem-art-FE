@@ -32,8 +32,7 @@ class ItemDetail extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  border: //아래에만 테두리
-                      Border(
+                  border: Border(
                     bottom: BorderSide(
                       width: 1,
                       color: ColorPalette.grey_2,
