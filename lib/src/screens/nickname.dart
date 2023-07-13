@@ -17,9 +17,7 @@ class Nickname extends GetView<NicknameController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        onTapLeadingIcon: () {
-          Get.back();
-        },
+        onTapLeadingIcon: () => Get.back(),
       ),
       body: SafeArea(
         child: Padding(
