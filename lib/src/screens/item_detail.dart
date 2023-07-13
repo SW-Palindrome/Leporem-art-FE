@@ -119,8 +119,8 @@ class ItemDetail extends StatelessWidget {
             children: [
               Text(
                 "가로등 빛 받은 나뭇잎 컵",
-                style: const TextStyle(
-                  color: const Color(0xff191f28),
+                style: TextStyle(
+                  color: Color(0xff191f28),
                   fontWeight: FontWeight.w600,
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
@@ -129,8 +129,8 @@ class ItemDetail extends StatelessWidget {
               ),
               Text(
                 "잔여 3점",
-                style: const TextStyle(
-                  color: const Color(0xff594bf8),
+                style: TextStyle(
+                  color: Color(0xff594bf8),
                   fontWeight: FontWeight.w400,
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
