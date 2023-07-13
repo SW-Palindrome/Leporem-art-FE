@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/next_button.dart';
 
 class ItemDetail extends StatelessWidget {
   const ItemDetail({super.key});
@@ -33,6 +34,7 @@ class ItemDetail extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        margin: EdgeInsets.only(bottom: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -54,9 +56,15 @@ class ItemDetail extends StatelessWidget {
                     fontStyle: FontStyle.normal,
                     fontSize: 18.0,
                   ),
-                )
+                ),
               ],
-            )
+            ),
+            NextButton(
+              text: "채팅하기",
+              value: true,
+              onTap: () {},
+              width: Get.width * 0.35,
+            ),
           ],
         ),
       ),
