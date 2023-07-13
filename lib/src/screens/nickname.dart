@@ -103,7 +103,7 @@ class Nickname extends GetView<NicknameController> {
                         .isDuplicate(controller.nicknameController.text);
                     bool isSignupSuccessed = await controller.signup();
                     print(
-                        "isDuplicate: $isDuplicate isSignupSuccess: ${isSignupSuccessed}");
+                        "isDuplicate: $isDuplicate isSignupSuccess: $isSignupSuccessed");
                     if (!isDuplicate) {
                       if (isSignupSuccessed) {
                         Get.bottomSheet(
