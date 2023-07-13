@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 enum AppBarType {
@@ -35,8 +36,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     switch (appBarType) {
       case AppBarType.mainPageAppBar:
         return _mainPageAppBar();
-      // case AppBarType.backAppBar:
-      //   return _backAppBar();
+      case AppBarType.backAppBar:
+        return _backAppBar();
       // case AppBarType.searchAppBar:
       //   return _searchAppBar();
       // case AppBarType.none:
@@ -75,26 +76,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _backAppBar() {
     return AppBar(
       elevation: 0,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            './assets/icons/search.svg',
-            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
-          ),
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          width: 24,
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 24),
-          child: IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              './assets/icons/notice.svg',
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
-            ),
-          ),
-        ),
-      ],
+        onPressed: () {
+          Get.back();
+        },
+      ),
     );
   }
 }
