@@ -38,6 +38,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         return _buyerMainPageAppBar();
       case AppBarType.buyerItemDetailAppBar:
         return _buyerItemDetailAppBar();
+      case AppBarType.backAppBar:
+        return _backAppBar();
       case AppBarType.none:
         return _noneAppBar();
       // case AppBarType.backAppBar:
@@ -103,6 +105,19 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _backAppBar() {
+    return AppBar(
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          width: 24,
+        ),
+        onPressed: onTapLeadingIcon,
+      ),
     );
   }
 
