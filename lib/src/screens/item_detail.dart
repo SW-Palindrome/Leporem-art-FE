@@ -25,9 +25,11 @@ class ItemDetail extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _itemThumbnail(),
               _itemTitle(),
+              _itemDescription(),
             ],
           ),
         ),
@@ -200,5 +202,21 @@ class ItemDetail extends StatelessWidget {
         padding: EdgeInsets.only(right: 8.0),
       );
     }
+  }
+
+  Container _itemDescription() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Text(
+        "#감성 #채색 #유화 #도자기 #컵\n가로등 빛 받은 나뭇잎을 표현해보았습니다.\n우리 소마 생활도 항상 빛과 가득하길.",
+        style: TextStyle(
+          color: Color(0xff191f28),
+          fontWeight: FontWeight.w400,
+          fontFamily: "PretendardVariable",
+          fontStyle: FontStyle.normal,
+          fontSize: 13.0,
+        ),
+      ),
+    );
   }
 }
