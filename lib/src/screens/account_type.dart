@@ -116,7 +116,7 @@ class AccountType extends GetView<AccountTypeController> {
                         text: "다음",
                         value: controller.isSelect.value,
                         onTap: () {
-                          Get.offAll(Email());
+                          Get.to(Email());
                         },
                       ),
               ),
