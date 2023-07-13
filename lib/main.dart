@@ -12,7 +12,12 @@ import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/screens/account_type.dart';
+import 'package:leporemart/src/screens/agreement.dart';
+import 'package:leporemart/src/screens/authentication.dart';
+import 'package:leporemart/src/screens/email.dart';
 import 'package:leporemart/src/screens/item_detail.dart';
+import 'package:leporemart/src/screens/kakao_screen.dart';
 import 'package:leporemart/src/screens/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -66,7 +71,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: ItemDetail(), // isLoginProceed ? App() : LoginScreen(),
+      home: LoginScreen(), // isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),

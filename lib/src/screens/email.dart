@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
+import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class Email extends GetView<EmailController> {
@@ -14,17 +14,9 @@ class Email extends GetView<EmailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/arrow_left.svg',
-            width: 24,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
+      appBar: MyAppBar(
+        appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () => Get.back(),
       ),
       body: SafeArea(
         child: Padding(

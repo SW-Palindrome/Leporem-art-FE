@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/screens/email.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class AccountType extends GetView<AccountTypeController> {
@@ -13,17 +13,8 @@ class AccountType extends GetView<AccountTypeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/arrow_left.svg',
-            width: 24,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
+      appBar: MyAppBar(
+        appBarType: AppBarType.none,
       ),
       body: SafeArea(
         child: Padding(
