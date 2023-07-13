@@ -21,7 +21,6 @@ class NextButton extends StatelessWidget {
     return InkWell(
       onTap: value ? onTap : null,
       child: Container(
-        margin: EdgeInsets.only(bottom: 20),
         width: width,
         height: 48,
         decoration: value
