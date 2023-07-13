@@ -205,35 +205,4 @@ class ItemDetail extends StatelessWidget {
       ),
     );
   }
-
-  Padding _categoryWidget(String category) {
-    return Padding(
-      padding: EdgeInsets.only(right: 8.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 4,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            width: 1,
-            color: ColorPalette.grey_3,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            category,
-            style: TextStyle(
-              color: Color(0xff191f28),
-              fontWeight: FontWeight.w400,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 12.0,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
