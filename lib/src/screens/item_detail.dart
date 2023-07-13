@@ -32,41 +32,45 @@ class ItemDetail extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        margin: EdgeInsets.only(bottom: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/heart.svg',
-                  width: 30,
-                  colorFilter:
-                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
+      bottomNavigationBar: _itemBottomNavigationBar(),
+    );
+  }
+
+  Container _itemBottomNavigationBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      margin: EdgeInsets.only(bottom: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/heart.svg',
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
+              ),
+              SizedBox(width: 10),
+              Text(
+                "10,000원",
+                style: const TextStyle(
+                  color: const Color(0xff191f28),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 18.0,
                 ),
-                SizedBox(width: 10),
-                Text(
-                  "10,000원",
-                  style: const TextStyle(
-                    color: const Color(0xff191f28),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "PretendardVariable",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
-            ),
-            NextButton(
-              text: "채팅하기",
-              value: true,
-              onTap: () {},
-              width: Get.width * 0.35,
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          NextButton(
+            text: "채팅하기",
+            value: true,
+            onTap: () {},
+            width: Get.width * 0.35,
+          ),
+        ],
       ),
     );
   }
