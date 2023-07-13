@@ -196,12 +196,6 @@ class ItemDetail extends StatelessWidget {
         ),
       ),
     );
-
-    Container _itemBottomNavigationBar() {
-      return Container(
-        padding: EdgeInsets.only(right: 8.0),
-      );
-    }
   }
 
   Container _itemDescription() {
