@@ -31,6 +31,35 @@ class ItemDetail extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/heart.svg',
+                  width: 30,
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "10,000원",
+                  style: const TextStyle(
+                    color: const Color(0xff191f28),
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0,
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -153,5 +182,11 @@ class ItemDetail extends StatelessWidget {
         ),
       ),
     );
+
+    Container _itemBottomNavigationBar() {
+      return Container(
+        padding: EdgeInsets.only(right: 8.0),
+      );
+    }
   }
 }
