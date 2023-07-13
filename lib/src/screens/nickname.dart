@@ -101,11 +101,11 @@ class Nickname extends GetView<NicknameController> {
                   onTap: () async {
                     bool isDuplicate = controller
                         .isDuplicate(controller.nicknameController.text);
-                    bool isSignupSuccess = await controller.signup();
+                    bool isSignupSuccessed = await controller.signup();
                     print(
-                        "isDuplicate: $isDuplicate isSignupSuccess: $isSignupSuccess");
+                        "isDuplicate: $isDuplicate isSignupSuccess: ${isSignupSuccessed}");
                     if (!isDuplicate) {
-                      if (isSignupSuccess) {
+                      if (isSignupSuccessed) {
                         Get.bottomSheet(
                           MyBottomSheet(
                             title: "계정 생성 완료",
@@ -127,6 +127,7 @@ class Nickname extends GetView<NicknameController> {
                               top: Radius.circular(30.0),
                             ),
                           ),
+                          isDismissible: false,
                         );
                       }
                     } else {

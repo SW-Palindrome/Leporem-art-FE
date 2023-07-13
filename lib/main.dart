@@ -44,7 +44,7 @@ void main() async {
   getIDToken().then((value) {
     print(value);
   });
-  bool isLoginProceed = await is_login_proceed();
+  bool isLoginProceed = await isSignup();
   if (!kDebugMode) {
     AmplitudeConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: ItemDetail(), //isLoginProceed ? App() : LoginScreen(),
+      home: LoginScreen(), // isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
