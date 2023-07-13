@@ -9,6 +9,7 @@ enum AppBarType {
   sellerItemDetailAppBar,
   backAppBar,
   searchAppBar,
+  none,
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,8 +17,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.appBarType,
     this.title,
-    this.firstActionIcon,
-    this.secondActionIcon,
     this.onTapLeadingIcon,
     this.onTapFirstActionIcon,
     this.onTapSecondActionIcon,
@@ -25,8 +24,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final AppBarType appBarType;
   final String? title;
-  final Widget? firstActionIcon;
-  final Widget? secondActionIcon;
   final Function()? onTapLeadingIcon;
   final Function()? onTapFirstActionIcon;
   final Function()? onTapSecondActionIcon;
@@ -41,6 +38,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         return _buyerMainPageAppBar();
       case AppBarType.buyerItemDetailAppBar:
         return _buyerItemDetailAppBar();
+      case AppBarType.none:
+        return _noneAppBar();
       // case AppBarType.backAppBar:
       //   return _backAppBar();
       // case AppBarType.searchAppBar:
@@ -104,6 +103,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _noneAppBar() {
+    return AppBar(
+      elevation: 0,
+      title: Text(
+        title!,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: ColorPalette.black,
+        ),
+      ),
     );
   }
 }
