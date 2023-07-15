@@ -8,8 +8,8 @@ import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class Email extends GetView<EmailController> {
-  const Email({super.key});
+class EmailScreen extends GetView<EmailController> {
+  const EmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/screens/agreement.dart';
+import 'package:leporemart/src/screens/agreement_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
             break;
         }
         _logEvent('$icon 회원가입 및 로그인');
-        Get.to(Agreement());
+        Get.to(AgreementScreen());
       },
       child: Container(
         height: 54,

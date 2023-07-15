@@ -8,8 +8,8 @@ import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:video_player/video_player.dart';
 
-class ItemDetail extends GetView<ItemDetailController> {
-  const ItemDetail({Key? key}) : super(key: key);
+class ItemDetailScreen extends GetView<ItemDetailController> {
+  const ItemDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

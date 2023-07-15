@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Chat extends StatelessWidget {
-  Chat({super.key});
+class AuctionScreen extends StatelessWidget {
+  AuctionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Chat Screen'),
+      child: Text('Auction Screen'),
     );
   }
 }

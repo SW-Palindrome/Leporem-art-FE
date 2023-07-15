@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
-import 'package:leporemart/src/screens/nickname.dart';
+import 'package:leporemart/src/screens/nickname_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class Agreement extends GetView<AgreementController> {
-  const Agreement({super.key});
+class AgreementScreen extends GetView<AgreementController> {
+  const AgreementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class Agreement extends GetView<AgreementController> {
                   text: "다음",
                   value: controller.isNextButtonEnabled,
                   onTap: () {
-                    Get.to(Nickname());
+                    Get.to(NicknameScreen());
                   },
                 ),
               ),

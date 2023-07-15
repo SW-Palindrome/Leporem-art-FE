@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
-import 'package:leporemart/src/screens/item_detail.dart';
+import 'package:leporemart/src/screens/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-class Home extends GetView<HomeController> {
-  Home({super.key});
+class HomeScreen extends GetView<HomeController> {
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class Home extends GetView<HomeController> {
   Widget _itemWidget(Item item) {
     return GestureDetector(
       onTap: () {
-        Get.to(ItemDetail());
+        Get.to(ItemDetailScreen());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
