@@ -47,6 +47,7 @@ dependencies:
   kakao_flutter_sdk: ^1.4.3
   dio: ^5.2.1+1
   carousel_slider: ^4.0.0
+  video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:
