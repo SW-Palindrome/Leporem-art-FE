@@ -56,6 +56,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buyerMainPageAppBar() {
     return AppBar(
+      backgroundColor: ColorPalette.grey_1,
       elevation: 0,
       actions: [
         IconButton(

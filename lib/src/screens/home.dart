@@ -4,15 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/screens/item_detail.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class Home extends GetView<HomeController> {
-  Home({Key? key}) : super(key: key);
+  Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+    return Container(
+      decoration: BoxDecoration(color: ColorPalette.grey_1),
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
           Row(
@@ -44,85 +46,101 @@ class Home extends GetView<HomeController> {
     );
   }
 
-  Column _itemWidget(Item item) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
+  Widget _itemWidget(Item item) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(ItemDetail());
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: ExtendedImage.network(
-                item.thumbnailUrl,
-                cache: true,
-              ),
+            Stack(
+              children: [
+                ExtendedImage.network(
+                  item.thumbnailUrl,
+                  cache: true,
+                ),
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: item.isLiked
+                      ? SvgPicture.asset(
+                          'assets/icons/heart_fill.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: ColorFilter.mode(
+                              ColorPalette.purple, BlendMode.srcIn),
+                        )
+                      : SvgPicture.asset(
+                          'assets/icons/heart_outline.svg',
+                          height: 24,
+                          width: 24,
+                          colorFilter: ColorFilter.mode(
+                              ColorPalette.white, BlendMode.srcIn),
+                        ),
+                ),
+              ],
             ),
-            Positioned(
-              bottom: 10,
-              right: 10,
-              child: item.isLiked
-                  ? SvgPicture.asset(
-                      'assets/icons/heart.svg',
-                      height: 24,
-                      width: 24,
-                      colorFilter:
-                          ColorFilter.mode(ColorPalette.red, BlendMode.srcIn),
-                    )
-                  : SvgPicture.asset(
-                      'assets/icons/heart.svg',
-                      height: 24,
-                      width: 24,
-                      colorFilter: ColorFilter.mode(
-                          ColorPalette.grey_4, BlendMode.srcIn),
+            Container(
+              decoration: BoxDecoration(
+                  color: ColorPalette.white,
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(10))),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.creator,
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontSize: 10,
                     ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10),
-        Text(
-          item.creator,
-          style: TextStyle(
-            color: ColorPalette.grey_4,
-            fontSize: 10,
-          ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          item.name,
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontSize: 13,
-          ),
-        ),
-        SizedBox(height: 10),
-        Text(
-          '${item.price}원',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: ColorPalette.black,
-            fontSize: 13,
-          ),
-        ),
-        SizedBox(height: 10),
-        Row(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/heart.svg',
-              height: 12,
-              width: 12,
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
-            ),
-            Text(
-              '${item.likes}',
-              style: TextStyle(
-                color: ColorPalette.grey_5,
-                fontSize: 10,
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    item.name,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '${item.price}원',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: ColorPalette.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/heart_fill.svg',
+                        height: 12,
+                        width: 12,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.purple, BlendMode.srcIn),
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        '${item.likes}',
+                        style: TextStyle(
+                          color: ColorPalette.purple,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 

@@ -16,6 +16,9 @@ class ItemDetail extends GetView<ItemDetailController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.buyerItemDetailAppBar,
+        onTapLeadingIcon: () {
+          Get.back();
+        },
       ),
       body: SafeArea(
         child: SingleChildScrollView(
