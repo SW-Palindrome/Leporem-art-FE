@@ -9,10 +9,10 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await fetchItems();
+    await fetch();
   }
 
-  Future<void> fetchItems() async {
+  Future<void> fetch() async {
     try {
       final List<Item> fetchedItems = await _homeRepository.fetchItems();
       items.assignAll(fetchedItems);

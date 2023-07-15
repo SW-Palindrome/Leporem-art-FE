@@ -9,7 +9,7 @@ import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:video_player/video_player.dart';
 
 class ItemDetail extends GetView<ItemDetailController> {
-  const ItemDetail({super.key});
+  const ItemDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,22 @@ class ItemDetail extends GetView<ItemDetailController> {
           Row(
             children: [
               SvgPicture.asset(
-                'assets/icons/heart.svg',
+                controller.itemDetail.isLiked
+                    ? 'assets/icons/heart_fill.svg'
+                    : 'assets/icons/heart_outline.svg',
                 width: 30,
-                colorFilter:
-                    ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    controller.itemDetail.isLiked
+                        ? ColorPalette.purple
+                        : ColorPalette.grey_4,
+                    BlendMode.srcIn),
               ),
               SizedBox(width: 10),
               Text(
-                "10,000원",
+                '${controller.itemDetail.price.toString().replaceAllMapped(
+                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},',
+                    )}원',
                 style: TextStyle(
                   color: Color(0xff191f28),
                   fontWeight: FontWeight.w600,
@@ -96,14 +104,14 @@ class ItemDetail extends GetView<ItemDetailController> {
                   height: 40,
                   width: 40,
                   child: Image.network(
-                    'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',
+                    controller.itemDetail.profileImageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               SizedBox(width: 8),
               Text(
-                "홍준식(준식이가준비한식사)",
+                controller.itemDetail.creator,
                 style: TextStyle(
                   color: ColorPalette.black,
                   fontWeight: FontWeight.w500,
@@ -114,7 +122,7 @@ class ItemDetail extends GetView<ItemDetailController> {
               ),
               SizedBox(width: 8),
               Text(
-                "매너온도 추가",
+                controller.itemDetail.temperature.toString(),
                 style: TextStyle(
                   color: Color(0xfff04452),
                   fontWeight: FontWeight.w500,
@@ -130,7 +138,7 @@ class ItemDetail extends GetView<ItemDetailController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "가로등 빛 받은 나뭇잎 컵",
+                controller.itemDetail.name,
                 style: TextStyle(
                   color: Color(0xff191f28),
                   fontWeight: FontWeight.w600,
@@ -140,7 +148,7 @@ class ItemDetail extends GetView<ItemDetailController> {
                 ),
               ),
               Text(
-                "잔여 3점",
+                "잔여 ${controller.itemDetail.remainAmount}점",
                 style: TextStyle(
                   color: Color(0xff594bf8),
                   fontWeight: FontWeight.w400,
@@ -154,10 +162,10 @@ class ItemDetail extends GetView<ItemDetailController> {
           SizedBox(height: 8),
           Row(
             children: [
-              _categoryWidget('컵'),
-              _categoryWidget('머그컵'),
+              for (String tag in controller.itemDetail.tags)
+                _categoryWidget(tag),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -176,18 +184,11 @@ class ItemDetail extends GetView<ItemDetailController> {
             },
           ),
           items: [
-            Image.network(
-              'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/rs_quotation_api/ytqc8cje/b0bc8fe9d933474ba5824e2c6b08b935.jpg',
-              fit: BoxFit.cover,
-            ),
-            Image.network(
-              'https://thumbnail9.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/2020/10/27/12/7/6a8098ac-d89a-4846-aff4-c9bd6f43d507.jpg',
-              fit: BoxFit.cover,
-            ),
-            Image.network(
-              'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/vendor_inventory/7ee6/f53d1c2ed2ed6746c5f394e232c429cc62401523cf894e715cca84605c04.jpg',
-              fit: BoxFit.cover,
-            ),
+            for (String imageUrl in controller.itemDetail.imagesUrl)
+              Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+              ),
             Stack(
               children: [
                 GestureDetector(
@@ -248,7 +249,9 @@ class ItemDetail extends GetView<ItemDetailController> {
                 Obx(
                   () => Row(
                     children: [
-                      for (int i = 0; i < 3; i++)
+                      for (int i = 0;
+                          i < controller.itemDetail.imagesUrl.length;
+                          i++)
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 4),
                           width: 8,
@@ -266,7 +269,8 @@ class ItemDetail extends GetView<ItemDetailController> {
                         height: 8,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: controller.index.value == 3
+                          color: controller.index.value ==
+                                  controller.itemDetail.imagesUrl.length
                               ? ColorPalette.purple
                               : ColorPalette.purple.withOpacity(0.5),
                         ),
@@ -317,7 +321,7 @@ class ItemDetail extends GetView<ItemDetailController> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Text(
-        "#감성 #채색 #유화 #도자기 #컵\n가로등 빛 받은 나뭇잎을 표현해보았습니다.\n우리 소마 생활도 항상 빛과 가득하길.",
+        controller.itemDetail.description,
         style: TextStyle(
           color: Color(0xff191f28),
           fontWeight: FontWeight.w400,

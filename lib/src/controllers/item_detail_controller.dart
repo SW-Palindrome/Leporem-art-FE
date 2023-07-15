@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:leporemart/src/models/item_detail.dart';
+import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:video_player/video_player.dart';
 
 class ItemDetailController extends GetxController {
@@ -8,11 +10,14 @@ class ItemDetailController extends GetxController {
   Rx<bool> isPlaying = false.obs;
   Rx<bool> isIconVisible = false.obs;
 
+  final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
+  late ItemDetail itemDetail;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    videoPlayerController = VideoPlayerController.network(
-        'https://leporem-art-fe-test.s3.ap-northeast-2.amazonaws.com/test.mp4')
+    await fetch();
+    videoPlayerController = VideoPlayerController.network(itemDetail.videoUrl)
       ..initialize().then((_) {
         videoPlayerController.setLooping(true);
       });
@@ -20,8 +25,9 @@ class ItemDetailController extends GetxController {
 
   void changeIndex(int newIndex) {
     index.value = newIndex;
-    if (index.value == 3) {
+    if (index.value == itemDetail.imagesUrl.length) {
       videoPlayerController.play();
+      isPlaying.value = true;
     } else {
       videoPlayerController.pause();
     }
@@ -48,5 +54,15 @@ class ItemDetailController extends GetxController {
     Future.delayed(Duration(milliseconds: 1000), () {
       isIconVisible.value = false;
     });
+  }
+
+  Future<void> fetch() async {
+    try {
+      itemDetail = await _itemDetailRepository.fetchItemDetail();
+    } catch (e) {
+      // 에러 처리
+      print('Error fetching item detail: $e');
+      // 목업 데이터 사용 또는 에러 처리 로직 추가
+    }
   }
 }
