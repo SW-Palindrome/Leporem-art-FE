@@ -279,6 +279,14 @@ class ItemDetail extends GetView<ItemDetailController> {
     );
   }
 
+  Container _itemThumbnail() {
+    return Container(
+      height: Get.width,
+      width: Get.width,
+      color: Colors.red,
+    );
+  }
+
   Padding _categoryWidget(String category) {
     return Padding(
       padding: EdgeInsets.only(right: 8.0),
