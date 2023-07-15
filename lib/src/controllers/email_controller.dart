@@ -39,45 +39,57 @@ class EmailController extends GetxController {
     isCodeValid.value = value.length == 6;
   }
 
-  void checkCode(String code) async {
-    isCodeError.value = code != "123456";
-    Dio dio = DioSingleton.dio;
+  Future<void> checkCode() async {
     String? idToken = await getIDToken();
-    dio
-        .post("/sellers/verify",
-            data: {
-              "verify_code": codeController.text,
-            },
-            options: Options(headers: {"Authorization": "Palindrome $idToken"}))
-        .then((response) {
-      // 요청에 대한 처리
-      print(response.data);
-      isCodeError.value = false;
-    }).catchError((error) {
-      // 오류 처리
-      print(error);
+    try {
+      final response = await DioSingleton.dio.post(
+        "/sellers/verify",
+        data: {
+          "verify_code": codeController.text,
+        },
+        options: Options(
+          headers: {"Authorization": "Palindrome $idToken"},
+        ),
+      );
+      if (response.statusCode == 200) {
+        if (response.data["message"] == "success") {
+          print("코드 확인 성공");
+          isCodeError.value = false;
+        } else {
+          print("코드 확인 실패");
+          isCodeError.value = true;
+        }
+      }
+      if (response.statusCode == 400) {
+        print("코드 확인 실패400");
+        isCodeError.value = true;
+      }
+    } catch (e) {
+      print("코드 확인 실패 에러");
       isCodeError.value = true;
-    });
+    }
   }
 
   void sendEmail() async {
-    Dio dio = DioSingleton.dio;
     String? idToken = await getIDToken();
-    if (idToken == null) {
-      // ID Token을 가져오는 데 실패한 경우 처리
-      return;
+    try {
+      final response = await DioSingleton.dio.post(
+        "/sellers/register",
+        data: {
+          "email": emailController.text,
+        },
+        options: Options(
+          headers: {"Authorization": "Palindrome $idToken"},
+        ),
+      );
+      if (response.statusCode == 200) {
+        print("이메일 전송 성공");
+      }
+      if (response.statusCode == 400) {
+        print("이메일 전송 실패");
+      }
+    } catch (e) {
+      print("이메일 전송 실패");
     }
-
-    dio
-        .post("/sellers/register",
-            data: {"email": emailController.text},
-            options: Options(headers: {"Authorization": "Palindrome $idToken"}))
-        .then((response) {
-      // 요청에 대한 처리
-      print(response.data);
-    }).catchError((error) {
-      // 오류 처리
-      print(error);
-    });
   }
 }

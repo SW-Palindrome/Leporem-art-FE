@@ -151,8 +151,8 @@ class Email extends GetView<EmailController> {
                     ? NextButton(
                         text: "인증하기",
                         value: controller.isCodeValid.value,
-                        onTap: () {
-                          controller.checkCode(controller.codeController.text);
+                        onTap: () async {
+                          await controller.checkCode();
                           if (controller.isCodeError.value == false) {
                             Get.bottomSheet(
                               MyBottomSheet(

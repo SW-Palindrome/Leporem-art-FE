@@ -77,7 +77,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                   colorFilter:
                       ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                 ),
-                label: '쇼츠',
+                label: '플롭',
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
