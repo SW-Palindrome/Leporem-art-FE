@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
+import 'package:video_player/video_player.dart';
 
 class ItemDetail extends GetView<ItemDetailController> {
   const ItemDetail({super.key});
@@ -50,8 +51,8 @@ class ItemDetail extends GetView<ItemDetailController> {
               SizedBox(width: 10),
               Text(
                 "10,000원",
-                style: const TextStyle(
-                  color: const Color(0xff191f28),
+                style: TextStyle(
+                  color: Color(0xff191f28),
                   fontWeight: FontWeight.w600,
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
@@ -86,10 +87,16 @@ class ItemDetail extends GetView<ItemDetailController> {
         children: [
           Row(
             children: [
-              Container(
-                height: 40,
-                width: 40,
-                color: Colors.blue,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.network(
+                    'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SizedBox(width: 8),
               Text(
@@ -154,7 +161,6 @@ class ItemDetail extends GetView<ItemDetailController> {
   }
 
   Widget _itemThumbnail() {
-    // 가로세로가 Get.width크기인 배경이 빨강, 초록, 파랑인 컨테이너를 좌우로 슬라이드하며 보여주는 위젯을 return 합니다. 그리고 몇번째 인덱스인지에대해 점으로 표시하며, 마지막 점은 ColorPalette.purple 로 표시합니다.
     return Stack(
       children: [
         CarouselSlider(
@@ -179,7 +185,52 @@ class ItemDetail extends GetView<ItemDetailController> {
               'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/vendor_inventory/7ee6/f53d1c2ed2ed6746c5f394e232c429cc62401523cf894e715cca84605c04.jpg',
               fit: BoxFit.cover,
             ),
-            Text('동영상추가'),
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: controller.togglePlay,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      VideoPlayer(controller.videoPlayerController),
+                      Obx(
+                        () => AnimatedOpacity(
+                          opacity: controller.isIconVisible.value ? 1.0 : 0.0,
+                          duration: Duration(milliseconds: 500),
+                          child: controller.isPlaying.value
+                              ? Icon(
+                                  Icons.play_arrow,
+                                  size: 50,
+                                  color: Colors.white,
+                                )
+                              : Icon(
+                                  Icons.pause,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: GestureDetector(
+                    onTap: controller.toggleVolume,
+                    child: Obx(
+                      () => Icon(
+                        controller.isMuted.value
+                            ? Icons.volume_off
+                            : Icons.volume_up,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         Positioned(
