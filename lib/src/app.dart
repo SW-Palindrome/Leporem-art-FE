@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
-import 'package:leporemart/src/screens/auction.dart';
-import 'package:leporemart/src/screens/chat.dart';
-import 'package:leporemart/src/screens/home.dart';
-import 'package:leporemart/src/screens/mypage.dart';
-import 'package:leporemart/src/screens/shorts.dart';
+import 'package:leporemart/src/screens/auction_screen.dart';
+import 'package:leporemart/src/screens/chat_screen.dart';
+import 'package:leporemart/src/screens/home_screen.dart';
+import 'package:leporemart/src/screens/mypage_screen.dart';
+import 'package:leporemart/src/screens/shorts_screen.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
@@ -20,11 +20,11 @@ class App extends GetView<BottomNavigationbarController> {
         () => IndexedStack(
           index: controller.selectedIndex.value,
           children: [
-            Home(),
-            Auction(),
-            Chat(),
-            Shorts(),
-            Mypage(),
+            HomeScreen(),
+            AuctionScreen(),
+            ChatScreen(),
+            ShortsScreen(),
+            MypageScreen(),
           ],
         ),
       ),
