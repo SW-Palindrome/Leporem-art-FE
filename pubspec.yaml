@@ -48,6 +48,9 @@ dependencies:
   dio: ^5.2.1+1
   carousel_slider: ^4.0.0
   video_player: ^2.7.0
+  dotted_border: ^2.0.0
+  image_picker: ^1.0.1
+  video_thumbnail: ^0.5.3
 
 dev_dependencies:
   flutter_test:
