@@ -15,6 +15,9 @@ class ItemCreateScreen extends StatelessWidget {
         isWhite: false,
         appBarType: AppBarType.backAppBar,
         title: '작품 등록',
+        onTapLeadingIcon: () {
+          Get.back();
+        },
       ),
       body: Container(
         color: ColorPalette.grey_1,
