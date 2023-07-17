@@ -84,8 +84,10 @@ class ItemCreateDetailController extends GetxController {
   bool isValidCreate() {
     return images.length >= 3 &&
         images.length <= 10 &&
+        videos.length == 1 &&
         titleController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty &&
-        priceController.text.isNotEmpty;
+        priceController.text.isNotEmpty &&
+        amount.value > 0;
   }
 }
