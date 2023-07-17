@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -9,6 +10,14 @@ class ItemCreateDetailController extends GetxController {
   RxList<File> images = RxList<File>([]);
   RxList<File> videos = RxList<File>([]);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
+  Rx<int> amount = Rx<int>(0);
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController widthController = TextEditingController();
+  TextEditingController depthController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
 
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage(
@@ -58,5 +67,25 @@ class ItemCreateDetailController extends GetxController {
     if (index >= 0 && index < videos.length) {
       videos.removeAt(index);
     }
+  }
+
+  void decreaseQuantity() {
+    if (amount.value > 0) {
+      amount.value--;
+    }
+  }
+
+  void increaseQuantity() {
+    if (amount.value < 99) {
+      amount.value++;
+    }
+  }
+
+  bool isValidCreate() {
+    return images.length >= 3 &&
+        images.length <= 10 &&
+        titleController.text.isNotEmpty &&
+        descriptionController.text.isNotEmpty &&
+        priceController.text.isNotEmpty;
   }
 }

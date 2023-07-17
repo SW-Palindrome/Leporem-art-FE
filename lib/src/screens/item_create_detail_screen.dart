@@ -1,11 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
+import 'package:leporemart/src/widgets/next_button.dart';
 
 class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
   const ItemCreateDetailScreen({Key? key}) : super(key: key);
@@ -21,18 +21,29 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         },
         isWhite: false,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        color: ColorPalette.grey_1,
-        child: Column(
-          children: [
-            _mediaInput(),
-            // _categoryInput(),
-            // _titleInput(),
-            // _descriptionInput(),
-            // _sizeInput(),
-            // _sellTypeInput(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          color: ColorPalette.grey_1,
+          child: Column(
+            children: [
+              _mediaInput(),
+              SizedBox(height: 20),
+              _categoryInput(),
+              SizedBox(height: 20),
+              _titleInput(),
+              SizedBox(height: 20),
+              _descriptionInput(),
+              SizedBox(height: 20),
+              _sizeInput(),
+              SizedBox(height: 20),
+              _priceInput(),
+              SizedBox(height: 20),
+              _amountInput(),
+              SizedBox(height: 20),
+              NextButton(text: "작품 등록하기", value: true, onTap: () {}),
+            ],
+          ),
         ),
       ),
     );
@@ -122,6 +133,13 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                         height: Get.width * 0.2,
                         width: Get.width * 0.2,
                         decoration: BoxDecoration(
+                          border: i == 0
+                              ? Border.all(
+                                  color: ColorPalette.purple,
+                                  width: 1,
+                                )
+                              : null,
+                          borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                             image: FileImage(controller.images[i]),
                             fit: BoxFit.cover,
@@ -129,21 +147,48 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                         ),
                       ),
                       Positioned(
-                        top: 5,
-                        right: 5,
+                        top: 10,
+                        right: 10,
                         child: GestureDetector(
-                          onTap: () => controller.removeImage(i),
+                          onTap: () => controller.removeVideo(i),
                           child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 12,
-                            child: Icon(
-                              Icons.close,
-                              size: 16,
-                              color: Colors.red,
+                            backgroundColor: ColorPalette.black,
+                            radius: 10,
+                            child: SvgPicture.asset(
+                              'assets/icons/cancle.svg',
+                              colorFilter: ColorFilter.mode(
+                                ColorPalette.white,
+                                BlendMode.srcIn,
+                              ),
+                              width: 20,
                             ),
                           ),
                         ),
                       ),
+                      if (i == 0)
+                        Positioned(
+                          bottom: 10,
+                          left: 10,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorPalette.purple,
+                            ),
+                            child: Text(
+                              '썸네일',
+                              style: TextStyle(
+                                color: ColorPalette.white,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: "PretendardVariable",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 10.0,
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
               ],
@@ -201,25 +246,31 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       margin: EdgeInsets.all(8),
                       height: Get.width * 0.2,
                       width: Get.width * 0.2,
-                      child: Image.memory(
-                        controller.thumbnail.value!,
-                        fit: BoxFit.cover,
-                        height: Get.width * 0.2,
-                        width: Get.width * 0.2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.memory(
+                          controller.thumbnail.value!,
+                          fit: BoxFit.cover,
+                          height: Get.width * 0.2,
+                          width: Get.width * 0.2,
+                        ),
                       ),
                     ),
                     Positioned(
-                      top: 5,
-                      right: 5,
+                      top: 10,
+                      right: 10,
                       child: GestureDetector(
                         onTap: () => controller.removeVideo(i),
                         child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 12,
-                          child: Icon(
-                            Icons.close,
-                            size: 16,
-                            color: Colors.red,
+                          backgroundColor: ColorPalette.black,
+                          radius: 10,
+                          child: SvgPicture.asset(
+                            'assets/icons/cancle.svg',
+                            colorFilter: ColorFilter.mode(
+                              ColorPalette.white,
+                              BlendMode.srcIn,
+                            ),
+                            width: 20,
                           ),
                         ),
                       ),
@@ -228,6 +279,493 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                 ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  _categoryInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              Text(
+                '작품의 카테고리를 알려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Get.width),
+            border: Border.all(
+              color: ColorPalette.grey_4,
+              width: 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '카테고리 선택',
+                style: TextStyle(
+                  color: ColorPalette.grey_6,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 12.0,
+                ),
+              ),
+              SizedBox(width: Get.width * 0.02),
+              SvgPicture.asset(
+                'assets/icons/arrow_down.svg',
+                colorFilter: ColorFilter.mode(
+                  ColorPalette.grey_4,
+                  BlendMode.srcIn,
+                ),
+                width: 10,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  _titleInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              Text(
+                '작품의 이름을 알려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: ColorPalette.grey_4,
+                width: 1,
+              ),
+            ),
+          ),
+          child: TextField(
+            controller: controller.titleController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: '이름',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _descriptionInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              Text(
+                '작품에 대한 설명을 알려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          height: Get.height * 0.2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: ColorPalette.grey_4,
+              width: 1,
+            ),
+          ),
+          child: TextField(
+            maxLength: 255,
+            maxLines: null,
+            controller: controller.descriptionController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: '작품에 대한 상세한 설명을 적어주세요.',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _sizeInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              Text(
+                '작품의 크기를 알려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '(선택)',
+                style: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '가로',
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: ColorPalette.grey_4,
+                        width: 1,
+                      ),
+                    ),
+                    child: TextField(
+                      controller: controller.widthController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '0',
+                        hintStyle: TextStyle(
+                          color: ColorPalette.grey_4,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                        suffixText: 'cm',
+                        suffixStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: Get.width * 0.02),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '세로',
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: ColorPalette.grey_4,
+                        width: 1,
+                      ),
+                    ),
+                    child: TextField(
+                      controller: controller.depthController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '0',
+                        hintStyle: TextStyle(
+                          color: ColorPalette.grey_4,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                        suffixText: 'cm',
+                        suffixStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: Get.width * 0.02),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '높이',
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: ColorPalette.grey_4,
+                        width: 1,
+                      ),
+                    ),
+                    child: TextField(
+                      controller: controller.heightController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '0',
+                        hintStyle: TextStyle(
+                          color: ColorPalette.grey_4,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                        suffixText: 'cm',
+                        suffixStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  _priceInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              Text(
+                '가격을 알려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: ColorPalette.grey_4,
+                  width: 1,
+                ),
+              ),
+            ),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              controller: controller.priceController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '판매가 입력',
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+            )),
+      ],
+    );
+  }
+
+  _amountInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Text(
+            '수량',
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () => controller.decreaseQuantity(),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorPalette.grey_2,
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/minus.svg',
+                  colorFilter: ColorFilter.mode(
+                    ColorPalette.grey_6,
+                    BlendMode.srcIn,
+                  ),
+                  width: 16.0,
+                ),
+              ),
+            ),
+            SizedBox(width: Get.width * 0.02),
+            Container(
+              height: Get.width * 0.1,
+              width: Get.width * 0.2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: ColorPalette.grey_4,
+                  width: 1,
+                ),
+              ),
+              child: Obx(
+                () => Center(
+                  child: Text(
+                    '${controller.amount.value}',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: Get.width * 0.02),
+            GestureDetector(
+              onTap: () => controller.increaseQuantity(),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorPalette.grey_2,
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/plus.svg',
+                  colorFilter: ColorFilter.mode(
+                    ColorPalette.grey_6,
+                    BlendMode.srcIn,
+                  ),
+                  width: 16.0,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
