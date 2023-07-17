@@ -45,9 +45,12 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
               SizedBox(height: 20),
               Obx(
                 () => NextButton(
-                    text: "작품 등록하기",
-                    value: controller.isValidCreate(),
-                    onTap: () {}),
+                  text: "작품 등록하기",
+                  value: controller.isValidCreate(),
+                  onTap: () async {
+                    await controller.createItem();
+                  },
+                ),
               ),
             ],
           ),
