@@ -1,9 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -655,30 +657,44 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
           ),
         ),
         Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: ColorPalette.grey_4,
-                  width: 1,
-                ),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: ColorPalette.grey_4,
+                width: 1,
               ),
             ),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              controller: controller.priceController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: '판매가 입력',
-                hintStyle: TextStyle(
-                  color: ColorPalette.grey_4,
-                  fontWeight: FontWeight.w600,
+          ),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            controller: controller.priceController,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CurrencyFormatter(), // 사용자 정의 CurrencyFormatter 적용
+            ],
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              suffix: Text(
+                '원',
+                style: TextStyle(
+                  color: Colors.black,
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0,
                 ),
               ),
-            )),
+              hintText: '판매가 입력',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
