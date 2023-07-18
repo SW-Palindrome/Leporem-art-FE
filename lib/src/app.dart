@@ -4,6 +4,7 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/screens/auction_screen.dart';
 import 'package:leporemart/src/screens/chat_screen.dart';
 import 'package:leporemart/src/screens/home_screen.dart';
+import 'package:leporemart/src/screens/item_search_screen.dart';
 import 'package:leporemart/src/screens/mypage_screen.dart';
 import 'package:leporemart/src/screens/shorts_screen.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -15,7 +16,12 @@ class App extends GetView<BottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.buyerMainPageAppBar),
+      appBar: MyAppBar(
+        appBarType: AppBarType.buyerMainPageAppBar,
+        onTapFirstActionIcon: () {
+          Get.to(ItemSearchScreen());
+        },
+      ),
       body: Obx(
         () => IndexedStack(
           index: controller.selectedIndex.value,
