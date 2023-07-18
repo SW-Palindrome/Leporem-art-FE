@@ -30,24 +30,24 @@ class ItemCreateScreen extends StatelessWidget {
                   width: 24,
                 ),
                 '인스타그램에서 가져오기',
-                ItemCreateDetailScreen()),
+                '/seller/create/instagram'),
             _itemCreateIconButton(
                 SvgPicture.asset(
                   'assets/icons/edit.svg',
                   width: 24,
                 ),
                 '직접 작성하기',
-                ItemCreateDetailScreen()),
+                '/seller/create/self'),
           ],
         ),
       ),
     );
   }
 
-  Widget _itemCreateIconButton(Widget icon, String text, Widget nextWidget) {
+  Widget _itemCreateIconButton(Widget icon, String text, String nextWidget) {
     return GestureDetector(
       onTap: () {
-        Get.to(nextWidget);
+        Get.toNamed(nextWidget);
       },
       child: Container(
         decoration: BoxDecoration(

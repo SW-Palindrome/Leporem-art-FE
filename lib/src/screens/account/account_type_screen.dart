@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/app.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
-import 'package:leporemart/src/screens/email_screen.dart';
+import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -109,7 +109,7 @@ class AccountType extends GetView<AccountTypeController> {
                         text: "공예쁨 시작하기",
                         value: controller.isSelect.value,
                         onTap: () {
-                          Get.offAll(App());
+                          Get.offAllNamed('/buyer');
                         },
                       )
                     : NextButton(

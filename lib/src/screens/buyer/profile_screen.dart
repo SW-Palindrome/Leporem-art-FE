@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Chat Screen'),
+      child: Text('Profile Screen'),
     );
   }
 }

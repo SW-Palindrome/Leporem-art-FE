@@ -4,12 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
-import 'package:leporemart/src/screens/item_detail_screen.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  HomeScreen({super.key});
+class BuyerHomeScreen extends GetView<HomeController> {
+  BuyerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class HomeScreen extends GetView<HomeController> {
   _itemWidget(Item item) {
     return GestureDetector(
       onTap: () {
-        Get.to(ItemDetailScreen());
+        Get.toNamed('/buyer/item');
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

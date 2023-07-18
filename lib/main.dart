@@ -16,7 +16,16 @@ import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/screens/login_screen.dart';
+import 'package:leporemart/src/screens/buyer/auction_screen.dart';
+import 'package:leporemart/src/screens/buyer/flop_screen.dart';
+import 'package:leporemart/src/screens/buyer/home_screen.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
+import 'package:leporemart/src/screens/account/login_screen.dart';
+import 'package:leporemart/src/screens/buyer/item_search_screen.dart';
+import 'package:leporemart/src/screens/buyer/message_screen.dart';
+import 'package:leporemart/src/screens/buyer/profile_screen.dart';
+import 'package:leporemart/src/screens/item_create_detail_screen.dart';
+import 'package:leporemart/src/screens/item_create_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -73,11 +82,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: isLoginProceed ? App() : LoginScreen(),
+      home: isLoginProceed ? BuyerApp() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/buyer': (context) => BuyerApp(),
+        '/buyer/search': (context) => ItemSearchScreen(),
+        '/buyer/item': (context) => BuyerItemDetailScreen(),
+        '/seller/create': (context) => ItemCreateScreen(),
+        '/seller/create/self': (context) => ItemCreateDetailScreen(),
+      },
     );
   }
 }
