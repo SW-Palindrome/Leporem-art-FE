@@ -163,10 +163,10 @@ class EmailScreen extends GetView<EmailController> {
                                 buttonType: BottomSheetType.oneButton,
                                 leftButtonText: "공예쁨 시작하기",
                                 onCloseButtonPressed: () {
-                                  Get.off(App());
+                                  Get.offNamed('/buyer');
                                 },
                                 onLeftButtonPressed: () {
-                                  Get.off(App());
+                                  Get.offNamed('/buyer');
                                 },
                               ),
                               backgroundColor: Colors.white,
