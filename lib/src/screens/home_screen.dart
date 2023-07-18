@@ -20,11 +20,11 @@ class HomeScreen extends GetView<HomeController> {
         children: [
           Row(
             children: [
-              _filterDropDown('최신순'),
+              _searchDropDown(SearchType.sort),
               SizedBox(width: 10),
-              _filterDropDown('작품 종류'),
+              _searchDropDown(SearchType.category),
               SizedBox(width: 10),
-              _filterDropDown('가격대'),
+              _searchDropDown(SearchType.price),
             ],
           ),
           SizedBox(height: 20),
@@ -45,7 +45,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _itemWidget(Item item) {
+  _itemWidget(Item item) {
     return GestureDetector(
       onTap: () {
         Get.to(ItemDetailScreen());
@@ -143,129 +143,134 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  GestureDetector _filterDropDown(String text) {
-    return GestureDetector(
-      onTap: () {
-        switch (text) {
-          case '최신순':
+  _searchDropDown(SearchType searchType) {
+    switch (searchType) {
+      case SearchType.sort:
+        return GestureDetector(
+          onTap: () {
             controller.changeSelectedSearchType(0);
-            break;
-          case '작품 종류':
-            controller.changeSelectedSearchType(1);
-            break;
-          case '가격대':
-            controller.changeSelectedSearchType(2);
-            break;
-        }
-        Get.bottomSheet(
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Obx(
-              () => Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => controller.changeSelectedSearchType(0),
-                          child: Text(
-                            '정렬',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: controller.selectedSearchType.value == 0
-                                  ? ColorPalette.black
-                                  : ColorPalette.grey_4,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () => controller.changeSelectedSearchType(1),
-                          child: Text(
-                            '작품 종류',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: controller.selectedSearchType.value == 1
-                                  ? ColorPalette.black
-                                  : ColorPalette.grey_4,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () => controller.changeSelectedSearchType(2),
-                          child: Text(
-                            '가격대',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: controller.selectedSearchType.value == 2
-                                  ? ColorPalette.black
-                                  : ColorPalette.grey_4,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: SvgPicture.asset(
-                            'assets/icons/cancle.svg',
-                            height: 24,
-                            width: 24,
-                            colorFilter: ColorFilter.mode(
-                                ColorPalette.black, BlendMode.srcIn),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Get.width * 0.1),
-                    Obx(
-                      () => IndexedStack(
-                          index: controller.selectedSearchType.value,
-                          children: [
-                            _sortModal(),
-                            _categoryModal(),
-                            _priceModal(),
-                          ]),
-                    ),
-                    SizedBox(height: Get.width * 0.1),
-                    _searchModalBottom(),
-                  ],
+            Get.bottomSheet(
+              _searchSheetWidget(),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.0),
                 ),
+              ),
+            );
+          },
+          child: _sortDropDown(),
+        );
+      case SearchType.category:
+        return GestureDetector(
+          onTap: () {
+            controller.changeSelectedSearchType(1);
+            Get.bottomSheet(
+              _searchSheetWidget(),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.0),
+                ),
+              ),
+            );
+          },
+          child: _categoryDropDown(),
+        );
+      case SearchType.price:
+        return GestureDetector(
+          onTap: () {
+            controller.changeSelectedSearchType(2);
+            Get.bottomSheet(
+              _searchSheetWidget(),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.0),
+                ),
+              ),
+            );
+          },
+          child: _priceDropDown(),
+        );
+    }
+  }
+
+  _sortDropDown() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorPalette.grey_3),
+        borderRadius: BorderRadius.circular(20),
+        color: ColorPalette.white,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Row(
+        children: [
+          Obx(
+            () => Text(
+              controller.sortTypes[controller.selectedSortType.value],
+              style: TextStyle(
+                fontSize: 12,
+                color: ColorPalette.grey_6,
               ),
             ),
           ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30.0),
+          SizedBox(width: 5),
+          SvgPicture.asset(
+            'assets/icons/arrow_down.svg',
+            height: 10,
+            width: 10,
+            colorFilter: ColorFilter.mode(
+              ColorPalette.grey_4,
+              BlendMode.srcIn,
             ),
           ),
-        );
-      },
-      child: Container(
+        ],
+      ),
+    );
+  }
+
+  _categoryDropDown() {
+    return Obx(
+      () => Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xffe6e7ec)),
+          border: Border.all(
+              color: controller.selectCategoryType.value == -1
+                  ? ColorPalette.grey_3
+                  : ColorPalette.purple),
           borderRadius: BorderRadius.circular(20),
+          color: controller.selectCategoryType.value == -1
+              ? ColorPalette.white
+              : ColorPalette.purple,
         ),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Row(
           children: [
-            Text(text, style: TextStyle(fontSize: 12)),
+            Text(
+              controller.selectCategoryType.value == -1
+                  ? '작품 종류'
+                  : (controller
+                      .categoryTypes[controller.selectCategoryType.value]),
+              style: TextStyle(
+                fontSize: 12,
+                color: controller.selectCategoryType.value == -1
+                    ? ColorPalette.grey_6
+                    : ColorPalette.white,
+              ),
+            ),
             SizedBox(width: 5),
             SvgPicture.asset(
-              'assets/icons/arrow_down.svg',
+              controller.selectCategoryType.value == -1
+                  ? 'assets/icons/arrow_down.svg'
+                  : 'assets/icons/cancle.svg',
               height: 10,
               width: 10,
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                controller.selectCategoryType.value == -1
+                    ? ColorPalette.grey_4
+                    : ColorPalette.white,
+                BlendMode.srcIn,
+              ),
             ),
           ],
         ),
@@ -273,7 +278,146 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Column _sortModal() {
+  _priceDropDown() {
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: controller.selectedPriceRange.value == RangeValues(0, 36)
+                  ? ColorPalette.grey_3
+                  : ColorPalette.purple),
+          borderRadius: BorderRadius.circular(20),
+          color: controller.selectedPriceRange.value == RangeValues(0, 36)
+              ? ColorPalette.white
+              : ColorPalette.purple,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Row(
+          children: [
+            Text(
+              controller.selectedPriceRange.value == RangeValues(0, 36)
+                  ? '가격대'
+                  : '${controller.priceRange[controller.selectedPriceRange.value.start.toInt()].toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},',
+                      )}원 ~ ${controller.priceRange[controller.selectedPriceRange.value.end.toInt()].toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},',
+                      )}원',
+              style: TextStyle(
+                fontSize: 12,
+                color: controller.selectedPriceRange.value == RangeValues(0, 36)
+                    ? ColorPalette.grey_6
+                    : ColorPalette.white,
+              ),
+            ),
+            SizedBox(width: 5),
+            SvgPicture.asset(
+              controller.selectedPriceRange.value == RangeValues(0, 36)
+                  ? 'assets/icons/arrow_down.svg'
+                  : 'assets/icons/cancle.svg',
+              height: 10,
+              width: 10,
+              colorFilter: ColorFilter.mode(
+                controller.selectedPriceRange.value == RangeValues(0, 36)
+                    ? ColorPalette.grey_4
+                    : ColorPalette.white,
+                BlendMode.srcIn,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _searchSheetWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Obx(
+        () => Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => controller.changeSelectedSearchType(0),
+                    child: Text(
+                      '정렬',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: controller.selectedSearchType.value == 0
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => controller.changeSelectedSearchType(1),
+                    child: Text(
+                      '작품 종류',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: controller.selectedSearchType.value == 1
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => controller.changeSelectedSearchType(2),
+                    child: Text(
+                      '가격대',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: controller.selectedSearchType.value == 2
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/cancle.svg',
+                      height: 24,
+                      width: 24,
+                      colorFilter:
+                          ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: Get.width * 0.1),
+              IndexedStack(
+                index: controller.selectedSearchType.value,
+                children: [
+                  _sortModal(),
+                  _categoryModal(),
+                  _priceModal(),
+                ],
+              ),
+              SizedBox(height: Get.width * 0.1),
+              _searchModalBottom(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _sortModal() {
     return Column(
       children: [
         GestureDetector(
@@ -439,7 +583,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Row _searchModalBottom() {
+  _searchModalBottom() {
     return Row(
       children: [
         Expanded(
@@ -503,7 +647,14 @@ class HomeScreen extends GetView<HomeController> {
     return Column(
       children: [
         Text(
-          '${controller.priceRange[controller.selectedPriceRange.value.start.toInt()]}원 ~ ${controller.priceRange[controller.selectedPriceRange.value.end.toInt()]}원',
+          //int a = 10000 일때 10,000원으로 표시하기 위해 000단위마다 ,를 찍어줌
+          '${controller.priceRange[controller.selectedPriceRange.value.start.toInt()].toString().replaceAllMapped(
+                RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                (Match m) => '${m[1]},',
+              )}원 ~ ${controller.priceRange[controller.selectedPriceRange.value.end.toInt()].toString().replaceAllMapped(
+                RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                (Match m) => '${m[1]},',
+              )}원',
           style: TextStyle(
             color: ColorPalette.black,
             fontWeight: FontWeight.w600,
@@ -534,4 +685,10 @@ class HomeScreen extends GetView<HomeController> {
       ],
     );
   }
+}
+
+enum SearchType {
+  sort,
+  category,
+  price,
 }

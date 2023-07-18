@@ -6,10 +6,12 @@ import 'package:leporemart/src/repositories/home_repository.dart';
 class HomeController extends GetxController {
   final HomeRepository _homeRepository = HomeRepository();
   RxList<Item> items = <Item>[].obs;
-  Rx<int> selectedSearchType = 0.obs; //0 정렬, 1 작품 종류, 2 가격대
-  Rx<int> selectedSortType = 0.obs; //0 최신순, 1 인기순, 2 가격 낮은 순, 3 가격 높은 순
-  Rx<int> selectCategoryType =
-      (-1).obs; //0 머그컵, 1 술잔, 2 화병, 3 오브제, 4 그릇, 5 기타, -1 아무것도 선택하지 않은 상태
+  List<String> searchTypes = ['정렬', '작품 종류', '가격대'];
+  Rx<int> selectedSearchType = 0.obs;
+  List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
+  Rx<int> selectedSortType = 0.obs;
+  List<String> categoryTypes = ['머그컵', '술잔', '화병', '오브제', '그릇', '기타'];
+  Rx<int> selectCategoryType = (-1).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
   List<int> priceRange = [
     1000,
