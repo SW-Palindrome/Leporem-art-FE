@@ -12,8 +12,10 @@ import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
+import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/screens/item_create_screen.dart';
 import 'package:leporemart/src/screens/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -35,6 +37,7 @@ void main() async {
   Get.put(EmailController());
   Get.put(NicknameController());
   Get.put(ItemDetailController());
+  Get.put(ItemCreateDetailController());
   Get.put(HomeController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: App(), // isLoginProceed ? App() : LoginScreen(),
+      home: ItemCreateScreen(), // isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class HomeRepository {
-  final Dio _dio = Dio();
+  final Dio _dio = DioSingleton.dio;
 
   Future<List<Item>> fetchItems() async {
     try {

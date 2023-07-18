@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 enum AppBarType {
@@ -17,6 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
     required this.appBarType,
+    this.isWhite = true,
     this.title,
     this.onTapLeadingIcon,
     this.onTapFirstActionIcon,
@@ -24,6 +24,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final AppBarType appBarType;
+  final bool isWhite;
   final String? title;
   final Function()? onTapLeadingIcon;
   final Function()? onTapFirstActionIcon;
@@ -56,7 +57,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buyerMainPageAppBar() {
     return AppBar(
-      backgroundColor: ColorPalette.grey_1,
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
       actions: [
         IconButton(
@@ -83,6 +84,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buyerItemDetailAppBar() {
     return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset(
@@ -112,7 +114,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _backAppBar() {
     return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
+      title: Text(
+        title ?? '',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: ColorPalette.black,
+        ),
+      ),
       leading: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/arrow_left.svg',
@@ -125,6 +136,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _noneAppBar() {
     return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
       title: Text(
         title ?? '',
