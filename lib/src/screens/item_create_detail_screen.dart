@@ -386,6 +386,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
           ),
           child: TextField(
             controller: controller.titleController,
+            maxLength: 46,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '이름',
@@ -396,6 +397,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                 fontStyle: FontStyle.normal,
                 fontSize: 16.0,
               ),
+              counterText: '',
             ),
           ),
         ),
