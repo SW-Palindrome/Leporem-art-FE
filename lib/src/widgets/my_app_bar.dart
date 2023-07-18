@@ -16,7 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
     required this.appBarType,
-    this.isWhite = true,
+    this.isWhite = false,
     this.title,
     this.onTapLeadingIcon,
     this.onTapFirstActionIcon,
@@ -31,7 +31,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onTapSecondActionIcon;
 
   @override
-  Size get preferredSize => Size.fromHeight(40);
+  Size get preferredSize => AppBar().preferredSize;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         return _noneAppBar();
       // case AppBarType.backAppBar:
       //   return _backAppBar();
-      // case AppBarType.searchAppBar:
-      //   return _searchAppBar();
+      case AppBarType.searchAppBar:
+        return _searchAppBar();
       // case AppBarType.none:
       //   return _noneAppBar();
       default:
@@ -64,7 +64,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onTapFirstActionIcon,
           icon: SvgPicture.asset(
             './assets/icons/search.svg',
-            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
           ),
         ),
         Padding(
@@ -74,7 +74,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: SvgPicture.asset(
               './assets/icons/notice.svg',
               colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
+                  ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
             ),
           ),
         ),
@@ -144,6 +144,41 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: ColorPalette.black,
+        ),
+      ),
+    );
+  }
+
+  Widget _searchAppBar() {
+    return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          width: 24,
+        ),
+        onPressed: onTapLeadingIcon,
+      ),
+      title: Container(
+        height: 36,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: ColorPalette.grey_2,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: TextField(
+            decoration: InputDecoration.collapsed(
+              hintText: '작품명 또는 작가명을 검색해주세요.',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+              ),
+            ),
+            style: TextStyle(
+              color: ColorPalette.black,
+            ),
+          ),
         ),
       ),
     );

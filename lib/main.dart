@@ -15,8 +15,7 @@ import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/screens/item_create_screen.dart';
-import 'package:leporemart/src/screens/item_detail_screen.dart';
+import 'package:leporemart/src/screens/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: ItemCreateScreen(), // isLoginProceed ? App() : LoginScreen(),
+      home: isLoginProceed ? App() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),

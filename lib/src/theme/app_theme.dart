@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
-    primaryColor: ColorPalette.white,
-    scaffoldBackgroundColor: ColorPalette.white,
+    primaryColor: ColorPalette.grey_1,
+    scaffoldBackgroundColor: ColorPalette.grey_1,
     appBarTheme: AppBarTheme(
-      color: ColorPalette.white,
+      color: ColorPalette.grey_1,
       actionsIconTheme: IconThemeData(
         size: 24,
         color: ColorPalette.red,

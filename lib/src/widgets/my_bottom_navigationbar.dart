@@ -25,7 +25,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
             currentIndex: controller.selectedIndex.value,
             elevation: 0,
             onTap: controller.changeIndex,
-            selectedItemColor: ColorPalette.black,
+            selectedItemColor: ColorPalette.purple,
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -36,7 +36,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 activeIcon: SvgPicture.asset(
                   'assets/icons/home.svg',
                   colorFilter:
-                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
                 label: '홈',
               ),
@@ -49,7 +49,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 activeIcon: SvgPicture.asset(
                   'assets/icons/auction.svg',
                   colorFilter:
-                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
                 label: '경매',
               ),
@@ -62,7 +62,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 activeIcon: SvgPicture.asset(
                   'assets/icons/chat.svg',
                   colorFilter:
-                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
                 label: '채팅',
               ),
@@ -75,7 +75,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 activeIcon: SvgPicture.asset(
                   'assets/icons/shorts.svg',
                   colorFilter:
-                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
                 label: '플롭',
               ),
@@ -88,7 +88,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                 activeIcon: SvgPicture.asset(
                   'assets/icons/mypage.svg',
                   colorFilter:
-                      ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                      ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
                 label: '마이페이지',
               ),
