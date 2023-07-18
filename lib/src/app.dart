@@ -24,7 +24,9 @@ class App extends GetView<BottomNavigationbarController> {
               final selectedIndex = controller.selectedIndex.value;
               switch (selectedIndex) {
                 case 0:
-                  return MyAppBar(appBarType: AppBarType.buyerMainPageAppBar);
+                  return MyAppBar(
+                      appBarType: AppBarType.buyerMainPageAppBar,
+                      onTapFirstActionIcon: () => Get.to(ItemSearchScreen()));
                 case 1:
                   return MyAppBar(appBarType: AppBarType.none);
                 case 2:

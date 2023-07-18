@@ -31,7 +31,6 @@ class PlantTemperature extends StatelessWidget {
     }
     return Column(
       children: [
-        //assets/images/1.png를 가져오고 아래에 controller.itemDetail.temperature를 int로해 넣어주면 될듯
         Image.asset(
           imageSrc!,
           width: 42,
