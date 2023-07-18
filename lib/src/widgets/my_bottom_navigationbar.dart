@@ -55,12 +55,12 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/chat.svg',
+                  'assets/icons/message_fill.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/chat.svg',
+                  'assets/icons/message_fill.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
@@ -68,12 +68,12 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/shorts.svg',
+                  'assets/icons/flop.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/shorts.svg',
+                  'assets/icons/flop.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
@@ -81,12 +81,12 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/icons/mypage.svg',
+                  'assets/icons/profile.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/icons/mypage.svg',
+                  'assets/icons/profile.svg',
                   colorFilter:
                       ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
                 ),
