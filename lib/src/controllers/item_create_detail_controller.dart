@@ -12,6 +12,12 @@ class ItemCreateDetailController extends GetxController {
   RxList<File> images = RxList<File>([]);
   RxList<File> videos = RxList<File>([]);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
+  Rx<String> title = Rx<String>('');
+  Rx<String> description = Rx<String>('');
+  Rx<double> width = Rx<double>(0);
+  Rx<double> depth = Rx<double>(0);
+  Rx<double> height = Rx<double>(0);
+  Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(0);
 
   TextEditingController titleController = TextEditingController();
@@ -20,6 +26,29 @@ class ItemCreateDetailController extends GetxController {
   TextEditingController depthController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+
+  @override
+  void onInit() {
+    super.onInit();
+    titleController.addListener(() {
+      title.value = titleController.text;
+    });
+    descriptionController.addListener(() {
+      description.value = descriptionController.text;
+    });
+    widthController.addListener(() {
+      width.value = double.parse(widthController.text);
+    });
+    depthController.addListener(() {
+      depth.value = double.parse(depthController.text);
+    });
+    heightController.addListener(() {
+      height.value = double.parse(heightController.text);
+    });
+    priceController.addListener(() {
+      price.value = int.parse(priceController.text.replaceAll(',', ''));
+    });
+  }
 
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
@@ -85,11 +114,10 @@ class ItemCreateDetailController extends GetxController {
 
   bool isValidCreate() {
     return images.length >= 3 &&
-        images.length <= 10 &&
         videos.length == 1 &&
-        titleController.text.isNotEmpty &&
-        descriptionController.text.isNotEmpty &&
-        priceController.text.isNotEmpty &&
+        title.value.isNotEmpty &&
+        description.value.isNotEmpty &&
+        price.value > 0 &&
         amount.value > 0;
   }
 

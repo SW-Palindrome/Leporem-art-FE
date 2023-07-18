@@ -160,7 +160,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                         top: 10,
                         right: 10,
                         child: GestureDetector(
-                          onTap: () => controller.removeVideo(i),
+                          onTap: () => controller.removeImage(i),
                           child: CircleAvatar(
                             backgroundColor: ColorPalette.black,
                             radius: 10,
