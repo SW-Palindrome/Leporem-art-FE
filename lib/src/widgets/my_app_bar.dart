@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/item_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 enum AppBarType {
@@ -149,6 +151,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _searchAppBar() {
+    final itemSearchController = Get.find<ItemSearchController>();
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -168,6 +171,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Center(
           child: TextField(
+            onSubmitted: (value) {
+              itemSearchController.addRecentSearch(value);
+            },
             decoration: InputDecoration.collapsed(
               hintText: '작품명 또는 작가명을 검색해주세요.',
               hintStyle: TextStyle(
