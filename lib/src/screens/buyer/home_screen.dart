@@ -107,7 +107,10 @@ class BuyerHomeScreen extends GetView<HomeController> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    '${item.price}원',
+                    '${item.price.toString().toString().replaceAllMapped(
+                          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                          (Match m) => '${m[1]},',
+                        )}원',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.black,
