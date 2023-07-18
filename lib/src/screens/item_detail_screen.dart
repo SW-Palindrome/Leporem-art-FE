@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
+import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
 class ItemDetailScreen extends GetView<ItemDetailController> {
@@ -25,8 +26,8 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _itemThumbnail(),
               _itemTitle(),
+              _itemThumbnail(),
               _itemDescription(),
             ],
           ),
@@ -95,75 +96,49 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
       ),
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Image.network(
-                    controller.itemDetail.profileImageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(width: 8),
-              Text(
-                controller.itemDetail.creator,
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-              SizedBox(width: 8),
-              Text(
-                controller.itemDetail.temperature.toString(),
-                style: TextStyle(
-                  color: Color(0xfff04452),
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
+          Text(
+            controller.itemDetail.name,
+            style: TextStyle(
+              color: Color(0xff191f28),
+              fontWeight: FontWeight.w600,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 18.0,
+            ),
           ),
           SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                controller.itemDetail.name,
-                style: TextStyle(
-                  color: Color(0xff191f28),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 18.0,
-                ),
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.network(
+                        controller.itemDetail.profileImageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    controller.itemDetail.creator,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                "잔여 ${controller.itemDetail.remainAmount}점",
-                style: TextStyle(
-                  color: Color(0xff594bf8),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            children: [
-              for (String tag in controller.itemDetail.tags)
-                _categoryWidget(tag),
+              PlantTemperature(temperature: controller.itemDetail.temperature),
             ],
           ),
         ],
@@ -286,49 +261,74 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Padding _categoryWidget(String category) {
-    return Padding(
-      padding: EdgeInsets.only(right: 8.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 4,
+  Container _categoryWidget(String category) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 8,
+      ),
+      margin: EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(
+          width: 1,
+          color: ColorPalette.grey_3,
         ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            width: 1,
-            color: ColorPalette.grey_3,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            category,
-            style: TextStyle(
-              color: Color(0xff191f28),
-              fontWeight: FontWeight.w400,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 12.0,
-            ),
+      ),
+      child: Center(
+        child: Text(
+          category,
+          style: TextStyle(
+            color: Color(0xff191f28),
+            fontWeight: FontWeight.w400,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 12.0,
           ),
         ),
       ),
     );
   }
 
-  Container _itemDescription() {
-    return Container(
+  Padding _itemDescription() {
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Text(
-        controller.itemDetail.description,
-        style: TextStyle(
-          color: Color(0xff191f28),
-          fontWeight: FontWeight.w400,
-          fontFamily: "PretendardVariable",
-          fontStyle: FontStyle.normal,
-          fontSize: 13.0,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  for (String tag in controller.itemDetail.tags)
+                    _categoryWidget(tag),
+                ],
+              ),
+              Text(
+                "잔여 ${controller.itemDetail.remainAmount}점",
+                style: TextStyle(
+                  color: Color(0xff594bf8),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Text(
+            controller.itemDetail.description,
+            style: TextStyle(
+              color: Color(0xff191f28),
+              fontWeight: FontWeight.w400,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 13.0,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 enum BottomSheetType { noneButton, oneButton, twoButton }

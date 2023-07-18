@@ -20,6 +20,11 @@ class ColorPalette {
   static const Color purple = Color(0xff594bf8);
   static const Color red = Color(0xfff04452);
   static const Color yellow = Color(0xffffc164);
+  static const Color orange = Color(0xffff847c);
+  static const Color green = Color(0xff41d9a2);
+  static const Color blue = Color(0xff4a9dff);
+  static const Color pink = Color(0xfffa9ae5);
+  static const Color viloet = Color(0xff9d00e7);
   static const Color black = Color(0xff191f28);
   static const Color grey_7 = Color(0xff333d4b);
   static const Color grey_6 = Color(0xff515a68);

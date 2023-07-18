@@ -67,15 +67,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 24),
-          child: IconButton(
-            onPressed: onTapSecondActionIcon,
-            icon: SvgPicture.asset(
-              './assets/icons/notice.svg',
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
-            ),
+        IconButton(
+          onPressed: onTapSecondActionIcon,
+          icon: SvgPicture.asset(
+            './assets/icons/notice.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
           ),
         ),
       ],
@@ -89,6 +85,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/arrow_left.svg',
+          colorFilter: ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
           width: 24,
         ),
         onPressed: onTapLeadingIcon,
@@ -98,6 +95,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onTapFirstActionIcon,
           icon: SvgPicture.asset(
             'assets/icons/notice.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
             width: 24,
           ),
         ),
@@ -105,6 +103,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onTapSecondActionIcon,
           icon: SvgPicture.asset(
             'assets/icons/share.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
             width: 24,
           ),
         ),
