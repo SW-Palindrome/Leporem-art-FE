@@ -22,7 +22,7 @@ class NextButton extends StatelessWidget {
       onTap: value ? onTap : null,
       child: Container(
         width: width,
-        height: 48,
+        height: Get.height * 0.06,
         decoration: value
             ? ShapeDecoration(
                 gradient: LinearGradient(
