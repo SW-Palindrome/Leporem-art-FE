@@ -9,7 +9,7 @@ class HomeController extends GetxController {
   Rx<int> selectedSearchType = 0.obs; //0 정렬, 1 작품 종류, 2 가격대
   Rx<int> selectedSortType = 0.obs; //0 최신순, 1 인기순, 2 가격 낮은 순, 3 가격 높은 순
   Rx<int> selectCategoryType =
-      0.obs; //0 머그컵, 1 술잔, 2 화병, 3 오브제, 4 그릇, 5 기타, -1 아무것도 없을e
+      (-1).obs; //0 머그컵, 1 술잔, 2 화병, 3 오브제, 4 그릇, 5 기타, -1 아무것도 선택하지 않은 상태
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
   List<int> priceRange = [
     1000,
@@ -75,6 +75,10 @@ class HomeController extends GetxController {
   }
 
   void changeSelectedCategoryType(int index) {
+    if (selectCategoryType.value == index) {
+      selectCategoryType.value = -1;
+      return;
+    }
     selectCategoryType.value = index;
   }
 
@@ -84,13 +88,13 @@ class HomeController extends GetxController {
 
   void resetSelected() {
     selectedSortType.value = 0;
-    selectCategoryType.value = 0;
+    selectCategoryType.value = -1;
     selectedPriceRange.value = RangeValues(0, 36);
   }
 
   bool isResetValid() {
     return selectedSortType.value != 0 ||
-        selectCategoryType.value != 0 ||
+        selectCategoryType.value != -1 ||
         selectedPriceRange.value != RangeValues(0, 36);
   }
 }

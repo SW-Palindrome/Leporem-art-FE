@@ -404,6 +404,7 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   _categoryModal() {
+    List<String> categories = ['머그컵', '술잔', '화병', '오브제', '그릇'];
     return Wrap(
       spacing: 10,
       runSpacing: 10,
@@ -424,7 +425,7 @@ class HomeScreen extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Text(
-                '머그컵',
+                categories[i],
                 style: TextStyle(
                   color: controller.selectCategoryType.value == i
                       ? Colors.white
@@ -433,7 +434,7 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ),
             ),
-          )
+          ),
       ],
     );
   }
