@@ -19,13 +19,14 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
-      id: json['id'],
-      name: json['name'],
-      creator: json['creator'],
+      id: json['item_id'],
+      name: json['title'],
+      creator: json['nickname'],
       price: json['price'],
-      thumbnailUrl: json['thumbnailUrl'],
+      thumbnailUrl: json['thumbnail_image'],
       likes: json['likes'],
-      isLiked: json['isLiked'],
+      //TODO: isLiked 좋아요했는지 여부 추후 구현
+      isLiked: json['isLiked'] ?? false,
     );
   }
 }

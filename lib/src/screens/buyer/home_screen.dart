@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
-import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -29,15 +28,33 @@ class BuyerHomeScreen extends GetView<HomeController> {
           ),
           SizedBox(height: 20),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                childAspectRatio: 0.6,
+            child: Obx(
+              () => NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo is ScrollEndNotification &&
+                      controller.scrollController.position.extentAfter == 0) {
+                    controller.fetch();
+                  }
+                  return false;
+                },
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    childAspectRatio: 3 / 5,
+                  ),
+                  controller: controller.scrollController,
+                  itemCount: controller.items.length,
+                  itemBuilder: (context, index) {
+                    if (index < controller.items.length) {
+                      return _itemWidget(controller.items[index]);
+                    } else {
+                      // Show a loading indicator at the end of the grid
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
               ),
-              itemCount: controller.items.length,
-              itemBuilder: (context, index) =>
-                  _itemWidget(controller.items[index]),
             ),
           ),
         ],
@@ -54,32 +71,38 @@ class BuyerHomeScreen extends GetView<HomeController> {
         borderRadius: BorderRadius.circular(10),
         child: Column(
           children: [
-            Stack(
-              children: [
-                ExtendedImage.network(
-                  item.thumbnailUrl,
-                  cache: true,
-                ),
-                Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: item.isLiked
-                      ? SvgPicture.asset(
-                          'assets/icons/heart_fill.svg',
-                          height: 24,
-                          width: 24,
-                          colorFilter: ColorFilter.mode(
-                              ColorPalette.purple, BlendMode.srcIn),
-                        )
-                      : SvgPicture.asset(
-                          'assets/icons/heart_outline.svg',
-                          height: 24,
-                          width: 24,
-                          colorFilter: ColorFilter.mode(
-                              ColorPalette.white, BlendMode.srcIn),
-                        ),
-                ),
-              ],
+            AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                children: [
+                  ExtendedImage.network(
+                    item.thumbnailUrl,
+                    fit: BoxFit.cover,
+                    width: Get.width * 0.5,
+                    height: Get.width * 0.5,
+                    cache: true,
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: item.isLiked
+                        ? SvgPicture.asset(
+                            'assets/icons/heart_fill.svg',
+                            height: 24,
+                            width: 24,
+                            colorFilter: ColorFilter.mode(
+                                ColorPalette.purple, BlendMode.srcIn),
+                          )
+                        : SvgPicture.asset(
+                            'assets/icons/heart_outline.svg',
+                            height: 24,
+                            width: 24,
+                            colorFilter: ColorFilter.mode(
+                                ColorPalette.white, BlendMode.srcIn),
+                          ),
+                  ),
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(
