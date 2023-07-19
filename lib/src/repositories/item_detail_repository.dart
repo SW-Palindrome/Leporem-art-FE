@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:leporemart/src/models/item_detail.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class ItemDetailRepository {
-  final Dio _dio = Dio();
+  final Dio _dio = DioSingleton.dio;
 
   Future<ItemDetail> fetchItemDetail() async {
     try {
@@ -16,7 +17,7 @@ class ItemDetailRepository {
       return itemDetail;
     } catch (e) {
       // 에러 처리
-      print('Error fetching items in repository: $e');
+      print('Error fetching item detail in repository: $e');
       // 목업 데이터 반환
       return mockItemDetail;
     }
@@ -27,8 +28,8 @@ final mockItemDetail = ItemDetail(
   id: 1,
   profileImageUrl:
       'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',
-  creator: '제작자 1',
-  temperature: 36.5,
+  creator: '불타는 효자',
+  temperature: 95,
   name: '상품 1',
   description: '상품 설명',
   price: 10000,

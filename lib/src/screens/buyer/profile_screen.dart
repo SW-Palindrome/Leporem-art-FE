@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends GetView<BuyerProfileController> {
   ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    if (!controller.initialized) {
+      return CircularProgressIndicator();
+    }
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -80,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(Get.width * 0.1),
                 child: Image.network(
-                  'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
+                  controller.buyerProfile.profileImageUrl,
                   width: Get.width * 0.2,
                   height: Get.width * 0.2,
                   fit: BoxFit.cover,
@@ -138,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                '이름',
+                controller.buyerProfile.nickname,
                 style: TextStyle(
                   color: ColorPalette.black,
                   fontWeight: FontWeight.bold,
