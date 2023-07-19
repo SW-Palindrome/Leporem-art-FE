@@ -148,13 +148,18 @@ class BuyerHomeScreen extends GetView<HomeController> {
                         height: 12,
                         width: 12,
                         colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
+                            item.likes != 0
+                                ? ColorPalette.purple
+                                : Colors.transparent,
+                            BlendMode.srcIn),
                       ),
                       SizedBox(width: 2),
                       Text(
                         '${item.likes}',
                         style: TextStyle(
-                          color: ColorPalette.purple,
+                          color: item.likes != 0
+                              ? ColorPalette.purple
+                              : Colors.transparent,
                           fontSize: 10,
                         ),
                       ),
