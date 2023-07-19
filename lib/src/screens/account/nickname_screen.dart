@@ -47,7 +47,7 @@ class NicknameScreen extends GetView<NicknameController> {
                 child: Obx(
                   () => TextFormField(
                     controller: controller.nicknameController,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
                       color: ColorPalette.black,
