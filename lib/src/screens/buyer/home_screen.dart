@@ -290,17 +290,22 @@ class BuyerHomeScreen extends GetView<HomeController> {
               ),
             ),
             SizedBox(width: 5),
-            SvgPicture.asset(
-              controller.selectCategoryType.value == -1
-                  ? 'assets/icons/arrow_down.svg'
-                  : 'assets/icons/cancle.svg',
-              height: 10,
-              width: 10,
-              colorFilter: ColorFilter.mode(
+            GestureDetector(
+              onTap: () {
+                controller.changeSelectedCategoryType(-1);
+              },
+              child: SvgPicture.asset(
                 controller.selectCategoryType.value == -1
-                    ? ColorPalette.grey_4
-                    : ColorPalette.white,
-                BlendMode.srcIn,
+                    ? 'assets/icons/arrow_down.svg'
+                    : 'assets/icons/cancle.svg',
+                height: 10,
+                width: 10,
+                colorFilter: ColorFilter.mode(
+                  controller.selectCategoryType.value == -1
+                      ? ColorPalette.grey_4
+                      : ColorPalette.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ],
@@ -343,17 +348,22 @@ class BuyerHomeScreen extends GetView<HomeController> {
               ),
             ),
             SizedBox(width: 5),
-            SvgPicture.asset(
-              controller.selectedPriceRange.value == RangeValues(0, 36)
-                  ? 'assets/icons/arrow_down.svg'
-                  : 'assets/icons/cancle.svg',
-              height: 10,
-              width: 10,
-              colorFilter: ColorFilter.mode(
+            GestureDetector(
+              onTap: () {
+                controller.changeSelectedPriceRange(RangeValues(0, 36));
+              },
+              child: SvgPicture.asset(
                 controller.selectedPriceRange.value == RangeValues(0, 36)
-                    ? ColorPalette.grey_4
-                    : ColorPalette.white,
-                BlendMode.srcIn,
+                    ? 'assets/icons/arrow_down.svg'
+                    : 'assets/icons/cancle.svg',
+                height: 10,
+                width: 10,
+                colorFilter: ColorFilter.mode(
+                  controller.selectedPriceRange.value == RangeValues(0, 36)
+                      ? ColorPalette.grey_4
+                      : ColorPalette.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ],
