@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 enum LoginPlatform {
@@ -12,6 +15,7 @@ enum LoginPlatform {
 
 Future<String?> getIDToken() async {
   OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
+  print('origin: ${await KakaoSdk.origin}');
   return token?.idToken;
 }
 
@@ -42,30 +46,39 @@ Future<bool> isSignup() async {
   }
 }
 
-Future<dynamic> fnLoginWithKakaoAccount() async {
-  try {
-    OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-    print("token : " + token.toString());
-    return token;
-  } catch (e) {
-    print("로그인 실패 " + e.toString());
-
-    return null;
-  }
-}
-
 Future<void> kakaoLogin() async {
-  //true는 액세스 토큰이 이미 존재(최초 회원가입을 진행했을때)
-  try {
-    AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
+  print('testtestdsf${await isKakaoTalkInstalled()}');
+  if (await isKakaoTalkInstalled()) {
+    try {
+      await UserApi.instance.loginWithKakaoTalk();
+      print('카카오톡으로 로그인 성공');
+      await isSignup() ? Get.offAllNamed('/buyer') : Get.to(AgreementScreen());
+    } catch (error) {
+      print('카카오톡으로 로그인 실패 $error');
 
-    print('이미 액세스 토큰이 존재하므로 로그인을 시도하지 않습니다.');
-    getKakaoUserInfo();
-  } catch (error) {
-    print('액세스 토큰이 존재하지 않습니다. 로그인을 시도합니다.');
-    OAuthToken? token = await fnLoginWithKakaoAccount();
-    if (token != null) {
-      getKakaoUserInfo();
+      // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+      // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+      if (error is PlatformException && error.code == 'CANCELED') {
+        return;
+      }
+      // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+      try {
+        await UserApi.instance.loginWithKakaoAccount();
+        print('카카오계정으로 로그인 성공');
+        await isSignup()
+            ? Get.offAllNamed('/buyer')
+            : Get.to(AgreementScreen());
+      } catch (error) {
+        print('카카오계정으로 로그인 실패 $error');
+      }
+    }
+  } else {
+    try {
+      await UserApi.instance.loginWithKakaoAccount();
+      print('카카오계정으로 로그인 성공');
+      await isSignup() ? Get.offAllNamed('/buyer') : Get.to(AgreementScreen());
+    } catch (error) {
+      print('카카오계정으로 로그인 실패 $error');
     }
   }
 }

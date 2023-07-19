@@ -24,7 +24,7 @@ class ColorPalette {
   static const Color green = Color(0xff41d9a2);
   static const Color blue = Color(0xff4a9dff);
   static const Color pink = Color(0xfffa9ae5);
-  static const Color viloet = Color(0xff9d00e7);
+  static const Color violet = Color(0xff9d00e7);
   static const Color black = Color(0xff191f28);
   static const Color grey_7 = Color(0xff333d4b);
   static const Color grey_6 = Color(0xff515a68);
@@ -34,4 +34,14 @@ class ColorPalette {
   static const Color grey_2 = Color(0xfff4f5f6);
   static const Color grey_1 = Color(0xfffafafa);
   static const Color white = Color(0xffffffff);
+  //gradient: LinearGradient(
+//                   begin: Alignment(1.00, -0.07),
+//                   end: Alignment(-1, 0.07),
+//                   colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
+//                 ), 와 같은 색깔을 정의
+  static const LinearGradient gradientPurple = LinearGradient(
+    begin: Alignment(1.00, -0.07),
+    end: Alignment(-1, 0.07),
+    colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
+  );
 }
