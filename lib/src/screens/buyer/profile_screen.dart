@@ -43,7 +43,7 @@ class ProfileScreen extends GetView<BuyerProfileController> {
 
   _titleRow() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
