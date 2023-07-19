@@ -6,6 +6,7 @@ import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
@@ -68,6 +69,7 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
 
   Widget _profileScaffold() {
     return Scaffold(
+      backgroundColor: ColorPalette.white,
       body: SafeArea(child: ProfileScreen()),
       bottomNavigationBar: MyBottomNavigationBar(),
     );
