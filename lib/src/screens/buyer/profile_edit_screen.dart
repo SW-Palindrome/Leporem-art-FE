@@ -53,6 +53,7 @@ class ProfileEditScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 30),
             Stack(
               children: [
                 ClipRRect(
