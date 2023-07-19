@@ -31,9 +31,14 @@ class BuyerHomeScreen extends GetView<HomeController> {
             child: Obx(
               () => NotificationListener<ScrollNotification>(
                 onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo is ScrollEndNotification &&
-                      controller.scrollController.position.extentAfter == 0) {
-                    controller.fetch();
+                  if (scrollInfo is ScrollEndNotification) {
+                    if (controller.scrollController.position.extentAfter == 0) {
+                      controller.fetch();
+                    }
+                    if (controller.scrollController.position.extentBefore ==
+                        0) {
+                      controller.pageReset();
+                    }
                   }
                   return false;
                 },

@@ -106,4 +106,11 @@ class HomeController extends GetxController {
         selectCategoryType.value != -1 ||
         selectedPriceRange.value != RangeValues(0, 36);
   }
+
+  void pageReset() {
+    items.clear();
+    resetSelected();
+    currentPage = 1;
+    fetch();
+  }
 }
