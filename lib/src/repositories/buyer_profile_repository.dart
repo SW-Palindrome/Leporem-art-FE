@@ -8,7 +8,7 @@ class BuyerProfileRepository {
 
   Future<BuyerProfile> fetchBuyerProfile() async {
     try {
-      String? idToken = await getIDToken();
+      String? idToken = await getOAuthToken().then((value) => value!.idToken);
       // API 요청
       final response = await _dio.get(
         '/buyers/my',

@@ -41,7 +41,7 @@ class EmailController extends GetxController {
 
   Future<void> checkCode() async {
     try {
-      String? idToken = await getIDToken();
+      String? idToken = await getOAuthToken().then((value) => value!.idToken);
       final response = await DioSingleton.dio.post(
         "/sellers/verify",
         data: {
@@ -72,7 +72,7 @@ class EmailController extends GetxController {
 
   void sendEmail() async {
     try {
-      String? idToken = await getIDToken();
+      String? idToken = await getOAuthToken().then((value) => value!.idToken);
       final response = await DioSingleton.dio.post(
         "/sellers/register",
         data: {
