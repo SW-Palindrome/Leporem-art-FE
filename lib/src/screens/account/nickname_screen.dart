@@ -99,7 +99,7 @@ class NicknameScreen extends GetView<NicknameController> {
                   value: !controller.isDisplayError.value &&
                       controller.isNicknameValid.value,
                   onTap: () async {
-                    bool isDuplicate = controller
+                    bool isDuplicate = await controller
                         .isDuplicate(controller.nicknameController.text);
                     bool isSignupSuccessed = await controller.signup();
                     print(

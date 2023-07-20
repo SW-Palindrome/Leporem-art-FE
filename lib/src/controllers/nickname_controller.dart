@@ -17,8 +17,17 @@ class NicknameController extends GetxController {
     isNicknameValid.value = regExp.hasMatch(value);
   }
 
-  bool isDuplicate(String value) {
-    return value == "중복";
+  Future<bool> isDuplicate(String value) async {
+    try {
+      final response =
+          await DioSingleton.dio.post("/users/validate/nickname/$value");
+      if (response.statusCode != 200) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void setDisplayError(bool display) {
