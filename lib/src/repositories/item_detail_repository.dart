@@ -1,14 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class ItemDetailRepository {
-  final Dio _dio = DioSingleton.dio;
-
   Future<ItemDetail> fetchItemDetail() async {
     try {
       // API 요청
-      final response = await _dio.get('https://api.example.com/item/1');
+      final response =
+          await DioSingleton.dio.get('https://api.example.com/item/1');
       final data = response.data;
 
       // API 응답을 Item 모델로 변환
@@ -30,8 +28,9 @@ final mockItemDetail = ItemDetail(
       'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',
   creator: '불타는 효자',
   temperature: 95,
-  name: '상품 1',
-  description: '상품 설명',
+  name: '구름이 이쁜 멋진 상품',
+  description:
+      '상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명\n상품 설명',
   price: 10000,
   tags: ['태그 1', '태그 2'],
   remainAmount: 5,

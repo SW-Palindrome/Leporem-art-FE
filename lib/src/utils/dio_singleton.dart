@@ -3,7 +3,6 @@ import 'package:leporemart/src/configs/login_config.dart';
 
 class DioSingleton {
   static Dio? _dioInstance;
-  static bool _isPermission = false;
 
   static Dio get dio {
     if (_dioInstance == null) {
@@ -12,36 +11,44 @@ class DioSingleton {
       _dioInstance!.options.validateStatus = (status) {
         return status! < 500;
       };
-      _dioInstance!.interceptors.add(InterceptorsWrapper(
-        onRequest: (request, handler) async {
-          if (_isPermission) {
-            final idToken =
-                await getOAuthToken().then((value) => value!.idToken);
-            request.headers['Authorization'] = 'Palindrome $idToken';
-            return handler.next(request);
-          }
-        },
-        onResponse: (response, handler) async {
-          if (response.statusCode == 401) {
-            Exception("토큰이 만료되었습니다. 토큰을 갱신합니다.");
-            await refreshIDToken();
-            final idToken =
-                await getOAuthToken().then((value) => value!.idToken);
-            response.requestOptions.headers['Authorization'] =
-                'Palindrome $idToken';
-            return handler.next(response);
-          }
-          if (response.statusCode == 403) {
-            Exception("계정의 권한이 없습니다.");
-          }
-        },
-        onError: (error, handler) async {},
-      ));
-    }
-    return _dioInstance!;
-  }
+      _dioInstance!.interceptors.add(
+        InterceptorsWrapper(
+          onResponse: (response, handler) async {
+            if (response.statusCode == 401) {
+              Exception('401: Unauthorized');
+            } else if (response.statusCode == 403) {
+              await refreshOAuthToken();
+              // 재발급된 토큰을 헤더에 추가
+              final idToken =
+                  await getOAuthToken().then((value) => value!.idToken);
+              response.requestOptions.headers['Authorization'] =
+                  'Palindrome $idToken';
 
-  static void setPermission(bool value) {
-    _isPermission = value;
+              // 원래의 요청을 다시 실행
+              try {
+                print('재발급 후 원래의 요청을 다시 실행합니다.');
+                return handler.next(await _dioInstance!.request(
+                  response.requestOptions.path,
+                  options: Options(
+                    method: response.requestOptions.method,
+                    headers: response.requestOptions.headers,
+                    receiveTimeout: response.requestOptions.receiveTimeout,
+                    sendTimeout: response.requestOptions.sendTimeout,
+                    responseType: response.requestOptions.responseType,
+                    extra: response.requestOptions.extra,
+                    validateStatus: response.requestOptions.validateStatus,
+                  ),
+                ));
+              } catch (e) {
+                throw Exception('재발급 후 원래의 요청을 다시 실행하는데 실패했습니다.');
+              }
+            }
+            return handler.next(response);
+          },
+        ),
+      );
+    }
+
+    return _dioInstance!;
   }
 }

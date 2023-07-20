@@ -41,12 +41,17 @@ class EmailController extends GetxController {
 
   Future<void> checkCode() async {
     try {
-      DioSingleton.setPermission(true);
       final response = await DioSingleton.dio.post(
         "/sellers/verify",
         data: {
           "verify_code": codeController.text,
         },
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
       );
       if (response.statusCode == 200) {
         if (response.data["message"] == "success") {
@@ -69,12 +74,17 @@ class EmailController extends GetxController {
 
   void sendEmail() async {
     try {
-      DioSingleton.setPermission(false);
       final response = await DioSingleton.dio.post(
         "/sellers/register",
         data: {
           "email": emailController.text,
         },
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
       );
       if (response.statusCode == 200) {
         print("이메일 전송 성공");

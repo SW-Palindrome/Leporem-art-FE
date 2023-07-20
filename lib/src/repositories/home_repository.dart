@@ -1,14 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class HomeRepository {
-  final Dio _dio = DioSingleton.dio;
-
   Future<List<Item>> fetchItems(int page) async {
     try {
-      final response =
-          await _dio.get('/items/buyers/main', queryParameters: {'page': page});
+      final response = await DioSingleton.dio
+          .get('/items/buyers/main', queryParameters: {'page': page});
       final data = response.data;
       //items를 리스트에 넣고 파싱
       final List<dynamic> itemsData = data['items'];

@@ -4,11 +4,17 @@ import 'package:leporemart/src/models/buyer_profile.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class BuyerProfileRepository {
-  final Dio _dio = DioSingleton.dio;
-
   Future<BuyerProfile> fetchBuyerProfile() async {
     try {
-      final response = await _dio.get('/buyers/my');
+      final response = await DioSingleton.dio.get(
+        '/buyers/my',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
       final data = response.data;
       final BuyerProfile buyerProfile = BuyerProfile.fromJson(data);
       return buyerProfile;

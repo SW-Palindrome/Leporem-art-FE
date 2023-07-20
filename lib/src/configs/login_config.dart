@@ -24,7 +24,7 @@ Future<OAuthToken?> getOAuthToken() async {
 }
 
 // 만료된 ID 토큰을 갱신하는 함수
-Future<OAuthToken> refreshIDToken() async {
+Future<OAuthToken> refreshOAuthToken() async {
   try {
     OAuthToken? token = await getOAuthToken();
 
@@ -52,11 +52,12 @@ void getKakaoUserInfo() async {
 
 Future<bool> isSignup() async {
   try {
-    DioSingleton.setPermission(false);
-    final response = await DioSingleton.dio.get("/users/login/kakao", data: {
-      "id_token": await getOAuthToken().then((value) => value!.idToken),
-    });
-    print(response);
+    final response = await DioSingleton.dio.get(
+      "/users/login/kakao",
+      data: {
+        "id_token": await getOAuthToken().then((value) => value!.idToken),
+      },
+    );
     if (response.statusCode == 200) {
       return true;
     }
