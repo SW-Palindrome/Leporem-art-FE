@@ -160,37 +160,38 @@ class ProfileScreen extends GetView<BuyerProfileController> {
             ],
           ),
           Spacer(),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: ColorPalette.grey_2,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    '판매자로 바꾸기',
-                    style: TextStyle(
-                      color: ColorPalette.grey_7,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.0,
+          if (controller.buyerProfile.isSeller)
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: ColorPalette.grey_2,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      '판매자로 바꾸기',
+                      style: TextStyle(
+                        color: ColorPalette.grey_7,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.0,
+                      ),
                     ),
-                  ),
-                  SvgPicture.asset(
-                    'assets/icons/arrow_right.svg',
-                    width: 12,
-                    height: 12,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalette.grey_5,
-                      BlendMode.srcIn,
+                    SvgPicture.asset(
+                      'assets/icons/arrow_right.svg',
+                      width: 12,
+                      height: 12,
+                      colorFilter: ColorFilter.mode(
+                        ColorPalette.grey_5,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
