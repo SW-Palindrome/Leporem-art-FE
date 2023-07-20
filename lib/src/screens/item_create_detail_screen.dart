@@ -225,7 +225,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       Positioned(
                         top: Get.height * 0.025,
                         child: SvgPicture.asset(
-                          'assets/icons/shorts.svg',
+                          'assets/icons/flop.svg',
                           colorFilter: ColorFilter.mode(
                             ColorPalette.grey_4,
                             BlendMode.srcIn,
