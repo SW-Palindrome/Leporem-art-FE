@@ -32,6 +32,7 @@ class NicknameController extends GetxController {
   Future<bool> signup() async {
     try {
       String? idToken = await getOAuthToken().then((value) => value!.idToken);
+      DioSingleton.setPermission(false);
       final response =
           await DioSingleton.dio.post("/users/signup/kakao", data: {
         "id_token": idToken,

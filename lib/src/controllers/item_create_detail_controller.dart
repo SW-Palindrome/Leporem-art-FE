@@ -158,6 +158,7 @@ class ItemCreateDetailController extends GetxController {
       ),
     });
     try {
+      DioSingleton.setPermission(true);
       final response = await DioSingleton.dio.post(
         '/sellers/items',
         data: formData,

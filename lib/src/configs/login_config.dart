@@ -52,6 +52,7 @@ void getKakaoUserInfo() async {
 
 Future<bool> isSignup() async {
   try {
+    DioSingleton.setPermission(false);
     final response = await DioSingleton.dio.get("/users/login/kakao", data: {
       "id_token": await getOAuthToken().then((value) => value!.idToken),
     });
