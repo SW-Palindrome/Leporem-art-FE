@@ -104,15 +104,15 @@ class ItemCreateDetailController extends GetxController {
   Future<void> selectVideo() async {
     final pickedFile = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
-      maxDuration: const Duration(seconds: 60),
+      maxDuration: const Duration(seconds: 15),
     );
     if (pickedFile != null) {
-      videos.assignAll([File((pickedFile).path)]);
       thumbnail.value = await VideoThumbnail.thumbnailData(
         video: pickedFile.path,
         imageFormat: ImageFormat.PNG,
         quality: 5,
       );
+      videos.assignAll([File((pickedFile).path)]);
     }
   }
 
