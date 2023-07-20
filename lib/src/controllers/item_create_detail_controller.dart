@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
@@ -51,6 +52,15 @@ class ItemCreateDetailController extends GetxController {
     });
   }
 
+  Future<Uint8List?> compressImage(XFile imageFile) async {
+    final File file = File(imageFile.path);
+    final result = await FlutterImageCompress.compressWithFile(
+      file.absolute.path,
+      quality: 0, // 이미지 품질 설정 (0 ~ 100, 기본값은 80)
+    );
+    return result;
+  }
+
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     if (pickedFiles.length > 10) {
@@ -69,8 +79,19 @@ class ItemCreateDetailController extends GetxController {
       );
       return;
     }
-    if (pickedFiles != null) {
-      images.assignAll(pickedFiles.map((file) => File(file.path)).toList());
+
+    List<File> compressedImages = [];
+    for (final imageFile in pickedFiles) {
+      final compressedImage = await compressImage(imageFile);
+      if (compressedImage != null) {
+        final compressedFile = File('${imageFile.path}.compressed.jpg')
+          ..writeAsBytesSync(compressedImage);
+        compressedImages.add(compressedFile);
+      }
+    }
+
+    if (compressedImages != null) {
+      images.assignAll(compressedImages);
     }
   }
 
