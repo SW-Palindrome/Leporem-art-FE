@@ -19,17 +19,23 @@ class DioSingleton {
         },
         onResponse: (response, handler) async {
           if (response.statusCode == 401) {
+            Exception("토큰이 만료되었습니다. 토큰을 갱신합니다.");
             await refreshIDToken();
             final idToken =
                 await getOAuthToken().then((value) => value!.idToken);
             response.requestOptions.headers['Authorization'] =
                 'Palindrome $idToken';
             return handler.next(response);
-          } else {
-            return handler.next(response);
+          }
+          if (response.statusCode == 403) {
+            Exception("계정의 권한이 없습니다.");
           }
         },
-        onError: (error, handler) async {},
+        onError: (error, handler) async {
+          if (error.response!.statusCode == 500) {
+            Exception("서버에 오류가 발생했습니다.");
+          }
+        },
       ));
     }
     return _dioInstance!;
