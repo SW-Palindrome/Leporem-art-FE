@@ -54,8 +54,11 @@ void main() async {
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
-  getIDToken().then((value) {
-    print(value);
+  getOAuthToken().then((value) async {
+    if (value != null) {
+      print(
+          'idToken: ${value.idToken}\naccess token: ${value.accessToken}\nrefresh token: ${value.refreshToken}');
+    }
   });
   bool isLoginProceed = await isSignup();
   if (!kDebugMode) {

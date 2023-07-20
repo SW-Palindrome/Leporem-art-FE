@@ -13,9 +13,29 @@ enum LoginPlatform {
   none, // logout
 }
 
-Future<String?> getIDToken() async {
-  OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
-  return token?.idToken;
+// 로그인 시 받은 accessToken으로 ID 토큰을 얻어옵니다.
+Future<OAuthToken?> getOAuthToken() async {
+  try {
+    OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
+    return token;
+  } catch (e) {
+    return null;
+  }
+}
+
+// 만료된 ID 토큰을 갱신하는 함수
+Future<OAuthToken> refreshOAuthToken() async {
+  try {
+    OAuthToken? token = await getOAuthToken();
+
+    if (token != null) {
+      return await AuthApi.instance.refreshToken(oldToken: token);
+    } else {
+      throw ("refreshToken is null");
+    }
+  } catch (e) {
+    rethrow;
+  }
 }
 
 void getKakaoUserInfo() async {
@@ -32,10 +52,12 @@ void getKakaoUserInfo() async {
 
 Future<bool> isSignup() async {
   try {
-    final response = await DioSingleton.dio.get("/users/login/kakao", data: {
-      "id_token": await getIDToken(),
-    });
-    print(response);
+    final response = await DioSingleton.dio.get(
+      "/users/login/kakao",
+      data: {
+        "id_token": await getOAuthToken().then((value) => value!.idToken),
+      },
+    );
     if (response.statusCode == 200) {
       return true;
     }

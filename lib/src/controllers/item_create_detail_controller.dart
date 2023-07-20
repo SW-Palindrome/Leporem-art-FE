@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -161,7 +162,13 @@ class ItemCreateDetailController extends GetxController {
       final response = await DioSingleton.dio.post(
         '/sellers/items',
         data: formData,
-        options: Options(contentType: 'multipart/form-data'),
+        options: Options(
+          contentType: 'multipart/form-data',
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
       );
 
       if (response.statusCode == 200) {

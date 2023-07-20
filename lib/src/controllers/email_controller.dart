@@ -41,14 +41,16 @@ class EmailController extends GetxController {
 
   Future<void> checkCode() async {
     try {
-      String? idToken = await getIDToken();
       final response = await DioSingleton.dio.post(
         "/sellers/verify",
         data: {
           "verify_code": codeController.text,
         },
         options: Options(
-          headers: {"Authorization": "Palindrome $idToken"},
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
         ),
       );
       if (response.statusCode == 200) {
@@ -72,14 +74,16 @@ class EmailController extends GetxController {
 
   void sendEmail() async {
     try {
-      String? idToken = await getIDToken();
       final response = await DioSingleton.dio.post(
         "/sellers/register",
         data: {
           "email": emailController.text,
         },
         options: Options(
-          headers: {"Authorization": "Palindrome $idToken"},
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
         ),
       );
       if (response.statusCode == 200) {
