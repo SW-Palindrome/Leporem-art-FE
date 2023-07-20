@@ -8,14 +8,7 @@ class BuyerProfileRepository {
 
   Future<BuyerProfile> fetchBuyerProfile() async {
     try {
-      String? idToken = await getOAuthToken().then((value) => value!.idToken);
-      // API 요청
-      final response = await _dio.get(
-        '/buyers/my',
-        options: Options(
-          headers: {"Authorization": "Palindrome $idToken"},
-        ),
-      );
+      final response = await _dio.get('/buyers/my');
       final data = response.data;
       final BuyerProfile buyerProfile = BuyerProfile.fromJson(data);
       return buyerProfile;

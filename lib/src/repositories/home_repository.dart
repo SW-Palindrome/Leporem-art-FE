@@ -7,14 +7,9 @@ class HomeRepository {
 
   Future<List<Item>> fetchItems(int page) async {
     try {
-      print('현재페이지: $page');
-      // API 요청
       final response =
           await _dio.get('/items/buyers/main', queryParameters: {'page': page});
       final data = response.data;
-      if (response.statusCode == 400) {
-        throw Exception('잘못된 요청입니다.');
-      }
       //items를 리스트에 넣고 파싱
       final List<dynamic> itemsData = data['items'];
 
