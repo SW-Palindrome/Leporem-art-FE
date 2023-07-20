@@ -35,12 +35,19 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.only(right: 20),
-                child: Text(
-                  '완료',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: ColorPalette.purple,
+                child: Obx(
+                  () => Text(
+                    '완료',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: controller.isNicknameValid.value &&
+                              (controller.isNicknameChanged.value ||
+                                  controller.isProfileImageChanged.value ||
+                                  controller.isDescriptionChanged.value)
+                          ? ColorPalette.purple
+                          : ColorPalette.purple.withOpacity(0.5),
+                    ),
                   ),
                 ),
               ),
@@ -94,21 +101,23 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
             ),
           ),
           child: TextFormField(
-            initialValue: controller.buyerProfileEdit.description,
-            maxLength: 60,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '자신에 대한 설명을 적어주세요.',
-              hintStyle: TextStyle(
-                color: ColorPalette.grey_4,
-                fontWeight: FontWeight.w600,
-                fontFamily: "PretendardVariable",
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0,
+              controller: controller.descriptionController,
+              maxLength: 60,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '자신에 대한 설명을 적어주세요.',
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
               ),
-            ),
-          ),
+              onChanged: (text) {
+                controller.isDescriptionChanged.value = true;
+              }),
         ),
       ],
     );
@@ -133,34 +142,49 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
           ],
         ),
         SizedBox(height: 10),
-        TextFormField(
-          initialValue: controller.buyerProfileEdit.nickname,
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontSize: 18,
-            height: 1,
-          ),
-          decoration: InputDecoration(
-            hintText: "한글, 영어, 숫자 _, - 2~10자 이내",
-            hintStyle: TextStyle(
-              color: ColorPalette.grey_3,
-              fontSize: 20,
-            ),
-            errorText: "올바른 양식의 닉네임을 입력해주세요.",
-            errorStyle: TextStyle(
-              color: ColorPalette.red,
-              fontSize: 11,
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: ColorPalette.grey_4,
+        Obx(
+          () => Focus(
+            onFocusChange: (focused) {
+              controller.setFocus(focused);
+              if (!focused) {
+                controller.checkNickname(controller.nicknameController.text);
+              }
+            },
+            child: TextFormField(
+              controller: controller.nicknameController,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontSize: 18,
+                height: 1,
               ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: ColorPalette.purple,
+              decoration: InputDecoration(
+                hintText: "한글, 영어, 숫자 _, - 2~10자 이내",
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_3,
+                  fontSize: 18,
+                ),
+                errorText: !controller.isNicknameValid.value
+                    ? "올바른 양식의 닉네임을 입력해주세요."
+                    : null,
+                errorStyle: TextStyle(
+                  color: ColorPalette.red,
+                  fontSize: 11,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorPalette.grey_4,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorPalette.purple,
+                  ),
+                ),
               ),
+              onChanged: (text) {
+                controller.isNicknameValid.value = true;
+              },
             ),
           ),
         ),
@@ -171,13 +195,22 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
   Stack _imageEdit() {
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(Get.width * 0.15),
-          child: Image.network(
-            controller.buyerProfileEdit.profileImageUrl,
-            width: Get.width * 0.3,
-            height: Get.width * 0.3,
-            fit: BoxFit.cover,
+        Obx(
+          () => ClipRRect(
+            borderRadius: BorderRadius.circular(Get.width * 0.15),
+            child: controller.isProfileImageChanged.value
+                ? Image(
+                    image: FileImage(controller.profileImage.value),
+                    width: Get.width * 0.3,
+                    height: Get.width * 0.3,
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    controller.buyerProfileEdit.profileImageUrl,
+                    width: Get.width * 0.3,
+                    height: Get.width * 0.3,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
         Positioned(
@@ -185,7 +218,7 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
           right: 0,
           child: GestureDetector(
             onTap: () {
-              Get.to(() => ProfileEditScreen());
+              controller.selectImage();
             },
             child: Container(
               width: 32,

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/models/buyer_profile_edit.dart';
 import 'package:leporemart/src/repositories/buyer_profile_edit_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
@@ -10,6 +13,11 @@ class BuyerProfileEditController extends GetxController {
 
   Rx<bool> isNicknameValid = false.obs;
   Rx<bool> isNicknameDuplicate = false.obs;
+  Rx<bool> isNicknameFocused = false.obs;
+  Rx<bool> isNicknameChanged = false.obs;
+  Rx<File> profileImage = File('').obs;
+  Rx<bool> isProfileImageChanged = false.obs;
+  Rx<bool> isDescriptionChanged = false.obs;
 
   final BuyerProfileEditRepository _buyerProfileEditRepository =
       BuyerProfileEditRepository();
@@ -23,6 +31,8 @@ class BuyerProfileEditController extends GetxController {
   @override
   void onInit() async {
     await fetch();
+    nicknameController.text = buyerProfileEdit.nickname ?? '';
+    descriptionController.text = buyerProfileEdit.description ?? '';
     super.onInit();
   }
 
@@ -34,6 +44,15 @@ class BuyerProfileEditController extends GetxController {
       // 에러 처리
       print('Error fetching buyer profile edit: $e');
       // 목업 데이터 사용 또는 에러 처리 로직 추가
+    }
+  }
+
+  Future<void> selectImage() async {
+    final XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage.value = File(pickedFile.path);
+      isProfileImageChanged.value = true;
     }
   }
 
@@ -53,5 +72,11 @@ class BuyerProfileEditController extends GetxController {
     } catch (e) {
       isNicknameDuplicate.value = false;
     }
+  }
+
+  void editProfile() async {}
+
+  void setFocus(bool focused) {
+    isNicknameFocused.value = focused;
   }
 }
