@@ -55,8 +55,10 @@ void main() async {
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
   getOAuthToken().then((value) async {
-    print(
-        'idToken: ${value!.idToken}\naccess token: ${value.accessToken}\nrefresh token: ${value.refreshToken}');
+    if (value != null) {
+      print(
+          'idToken: ${value.idToken}\naccess token: ${value.accessToken}\nrefresh token: ${value.refreshToken}');
+    }
   });
   bool isLoginProceed = await isSignup();
   if (!kDebugMode) {
