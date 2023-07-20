@@ -3,6 +3,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 
 class DioSingleton {
   static Dio? _dioInstance;
+  static bool _isPermission = false;
 
   static Dio get dio {
     if (_dioInstance == null) {
@@ -13,9 +14,12 @@ class DioSingleton {
       };
       _dioInstance!.interceptors.add(InterceptorsWrapper(
         onRequest: (request, handler) async {
-          final idToken = await getOAuthToken().then((value) => value!.idToken);
-          request.headers['Authorization'] = 'Palindrome $idToken';
-          return handler.next(request);
+          if (_isPermission) {
+            final idToken =
+                await getOAuthToken().then((value) => value!.idToken);
+            request.headers['Authorization'] = 'Palindrome $idToken';
+            return handler.next(request);
+          }
         },
         onResponse: (response, handler) async {
           if (response.statusCode == 401) {
@@ -31,13 +35,13 @@ class DioSingleton {
             Exception("계정의 권한이 없습니다.");
           }
         },
-        onError: (error, handler) async {
-          if (error.response!.statusCode == 500) {
-            Exception("서버에 오류가 발생했습니다.");
-          }
-        },
+        onError: (error, handler) async {},
       ));
     }
     return _dioInstance!;
+  }
+
+  static void setPermission(bool value) {
+    _isPermission = value;
   }
 }
