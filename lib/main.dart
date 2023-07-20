@@ -50,7 +50,7 @@ void main() async {
   Get.put(ItemCreateDetailController());
   Get.put(ItemSearchController());
   Get.put(HomeController());
-  Get.lazyPut(() => BuyerProfileController());
+  Get.put(BuyerProfileController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 

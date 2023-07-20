@@ -7,6 +7,9 @@ class DioSingleton {
     if (_dioInstance == null) {
       _dioInstance = Dio();
       _dioInstance!.options.baseUrl = "https://dev.leporem.art";
+      _dioInstance!.options.validateStatus = (status) {
+        return status! < 500;
+      };
     }
     return _dioInstance!;
   }

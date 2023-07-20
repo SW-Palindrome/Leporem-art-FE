@@ -15,7 +15,6 @@ enum LoginPlatform {
 
 Future<String?> getIDToken() async {
   OAuthToken? token = await TokenManagerProvider.instance.manager.getToken();
-  print('origin: ${await KakaoSdk.origin}');
   return token?.idToken;
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class ProfileScreen extends GetView<BuyerProfileController> {
@@ -43,7 +44,7 @@ class ProfileScreen extends GetView<BuyerProfileController> {
 
   _titleRow() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -93,25 +94,30 @@ class ProfileScreen extends GetView<BuyerProfileController> {
               Positioned(
                 bottom: 0,
                 right: 0,
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    color: ColorPalette.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: ColorPalette.grey_2,
-                      width: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => ProfileEditScreen());
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: ColorPalette.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: ColorPalette.grey_2,
+                        width: 1,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/edit.svg',
-                      width: 16,
-                      height: 16,
-                      colorFilter: ColorFilter.mode(
-                        ColorPalette.grey_5,
-                        BlendMode.srcIn,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/icons/edit.svg',
+                        width: 16,
+                        height: 16,
+                        colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_5,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ),
@@ -169,8 +175,6 @@ class ProfileScreen extends GetView<BuyerProfileController> {
                     style: TextStyle(
                       color: ColorPalette.grey_7,
                       fontWeight: FontWeight.w500,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
                       fontSize: 12.0,
                     ),
                   ),

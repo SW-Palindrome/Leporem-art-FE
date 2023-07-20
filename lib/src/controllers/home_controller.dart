@@ -52,6 +52,11 @@ class HomeController extends GetxController {
     900000,
     1000000
   ];
+
+  // 페이지네이션을 위한 페이지변수와 스크롤 컨트롤러
+  int currentPage = 1;
+  ScrollController scrollController = ScrollController();
+
   @override
   void onInit() async {
     super.onInit();
@@ -60,8 +65,10 @@ class HomeController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      final List<Item> fetchedItems = await _homeRepository.fetchItems();
-      items.assignAll(fetchedItems);
+      final List<Item> fetchedItems =
+          await _homeRepository.fetchItems(currentPage);
+      items.addAll(fetchedItems);
+      currentPage++;
     } catch (e) {
       // 에러 처리
       print('Error fetching items in controller: $e');
@@ -98,5 +105,12 @@ class HomeController extends GetxController {
     return selectedSortType.value != 0 ||
         selectCategoryType.value != -1 ||
         selectedPriceRange.value != RangeValues(0, 36);
+  }
+
+  void pageReset() {
+    items.clear();
+    resetSelected();
+    currentPage = 1;
+    fetch();
   }
 }
