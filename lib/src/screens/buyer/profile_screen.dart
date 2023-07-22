@@ -5,8 +5,8 @@ import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-class ProfileScreen extends GetView<BuyerProfileController> {
-  ProfileScreen({super.key});
+class BuyerProfileScreen extends GetView<BuyerProfileController> {
+  BuyerProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

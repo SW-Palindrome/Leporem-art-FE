@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/app.dart';
+import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
           case 'apple':
             break;
           case null:
-            Get.offAll(BuyerApp());
+            Get.offAll(BuyerBuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');
       },

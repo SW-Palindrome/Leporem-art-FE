@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/app.dart';
+import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
@@ -89,14 +89,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: isLoginProceed ? BuyerApp() : LoginScreen(),
+      home: isLoginProceed ? BuyerBuyerApp() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
       routes: {
         '/login': (context) => LoginScreen(),
-        '/buyer': (context) => BuyerApp(),
+        '/buyer': (context) => BuyerBuyerApp(),
         '/buyer/search': (context) => ItemSearchScreen(),
         '/buyer/item': (context) => BuyerItemDetailScreen(),
         '/seller/create': (context) => ItemCreateScreen(),

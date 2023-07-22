@@ -74,7 +74,7 @@ class BuyerBuyerApp extends GetView<BottomNavigationbarController> {
   Widget _profileScaffold() {
     return Scaffold(
       backgroundColor: ColorPalette.white,
-      body: SafeArea(child: ProfileScreen()),
+      body: SafeArea(child: BuyerProfileScreen()),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
