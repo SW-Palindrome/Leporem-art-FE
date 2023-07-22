@@ -10,46 +10,44 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
-class SellerBuyerApp extends GetView<BottomNavigationbarController> {
-  const SellerBuyerApp({super.key});
+class SellerApp extends GetView<BottomNavigationbarController> {
+  const SellerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       switch (controller.selectedIndex.value) {
         case 0:
-          return _homeScaffold();
+          return _listScaffold();
         case 1:
-          return _auctionScaffold();
+          return _customOrderScaffold();
         case 2:
           return _messageScaffold();
-        case 3:
-          return _flopScaffold();
         case 4:
           return _profileScaffold();
         default:
-          return _homeScaffold();
+          return _listScaffold();
       }
     });
   }
 
-  Scaffold _homeScaffold() {
+  Scaffold _listScaffold() {
     return Scaffold(
       appBar: MyAppBar(
           appBarType: AppBarType.buyerMainPageAppBar,
           onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
       body: BuyerHomeScreen(),
       bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );
   }
 
-  Widget _auctionScaffold() {
+  Widget _customOrderScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: AuctionScreen(),
       bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );
   }
 
@@ -58,25 +56,16 @@ class SellerBuyerApp extends GetView<BottomNavigationbarController> {
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: MessageScreen(),
       bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
-    );
-  }
-
-  Widget _flopScaffold() {
-    return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: FlopScreen(),
-      bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );
   }
 
   Widget _profileScaffold() {
     return Scaffold(
       backgroundColor: ColorPalette.white,
-      body: SafeArea(child: BuyerProfileScreen()),
+      body: SafeArea(child: SellerProfileScreen()),
       bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );
   }
 }
