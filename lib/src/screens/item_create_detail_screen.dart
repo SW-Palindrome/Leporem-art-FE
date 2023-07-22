@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,71 +138,80 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   ),
                 ),
                 for (var i = 0; i < controller.images.length; i++)
-                  Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(8),
-                        height: Get.width * 0.2,
-                        width: Get.width * 0.2,
-                        decoration: BoxDecoration(
-                          border: i == 0
-                              ? Border.all(
-                                  color: ColorPalette.purple,
-                                  width: 1,
-                                )
-                              : null,
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                            image: FileImage(controller.images[i]),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: GestureDetector(
-                          onTap: () => controller.removeImage(i),
-                          child: CircleAvatar(
-                            backgroundColor: ColorPalette.black,
-                            radius: 10,
-                            child: SvgPicture.asset(
-                              'assets/icons/cancle.svg',
-                              colorFilter: ColorFilter.mode(
-                                ColorPalette.white,
-                                BlendMode.srcIn,
-                              ),
-                              width: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (i == 0)
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorPalette.purple,
-                            ),
-                            child: Text(
-                              '썸네일',
-                              style: TextStyle(
-                                color: ColorPalette.white,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "PretendardVariable",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 10.0,
+                  controller.isImagesLoading[i] == true
+                      ? SizedBox(
+                          height: Get.width * 0.2,
+                          width: Get.width * 0.2,
+                          child: Center(
+                            child: SizedBox(
+                              height: Get.width * 0.1,
+                              width: Get.width * 0.1,
+                              child: CircularProgressIndicator(
+                                color: ColorPalette.grey_3,
                               ),
                             ),
                           ),
+                        )
+                      : Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(8),
+                              height: Get.width * 0.2,
+                              width: Get.width * 0.2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                  image: FileImage(controller.images[i]),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: GestureDetector(
+                                onTap: () => controller.removeImage(i),
+                                child: CircleAvatar(
+                                  backgroundColor: ColorPalette.black,
+                                  radius: 10,
+                                  child: SvgPicture.asset(
+                                    'assets/icons/cancle.svg',
+                                    colorFilter: ColorFilter.mode(
+                                      ColorPalette.white,
+                                      BlendMode.srcIn,
+                                    ),
+                                    width: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (i == 0)
+                              Positioned(
+                                top: 10,
+                                left: 10,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: ColorPalette.black.withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    '대표 이미지',
+                                    style: TextStyle(
+                                      color: ColorPalette.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "PretendardVariable",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 8,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
-                  ),
               ],
             ),
           ),
@@ -249,44 +260,59 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   ),
                 ),
               ),
-              for (var i = 0; i < controller.videos.length; i++)
-                Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(8),
+              controller.isVideoLoading.value == true
+                  ? SizedBox(
                       height: Get.width * 0.2,
                       width: Get.width * 0.2,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.memory(
-                          controller.thumbnail.value!,
-                          fit: BoxFit.cover,
-                          height: Get.width * 0.2,
-                          width: Get.width * 0.2,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: GestureDetector(
-                        onTap: () => controller.removeVideo(i),
-                        child: CircleAvatar(
-                          backgroundColor: ColorPalette.black,
-                          radius: 10,
-                          child: SvgPicture.asset(
-                            'assets/icons/cancle.svg',
-                            colorFilter: ColorFilter.mode(
-                              ColorPalette.white,
-                              BlendMode.srcIn,
-                            ),
-                            width: 20,
+                      child: Center(
+                        child: SizedBox(
+                          height: Get.width * 0.1,
+                          width: Get.width * 0.1,
+                          child: CircularProgressIndicator(
+                            color: ColorPalette.grey_3,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    )
+                  : (controller.thumbnail.value != null)
+                      ? Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(8),
+                              height: Get.width * 0.2,
+                              width: Get.width * 0.2,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.memory(
+                                  controller.thumbnail.value!,
+                                  fit: BoxFit.cover,
+                                  height: Get.width * 0.2,
+                                  width: Get.width * 0.2,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: GestureDetector(
+                                onTap: () => controller.removeVideo(0),
+                                child: CircleAvatar(
+                                  backgroundColor: ColorPalette.black,
+                                  radius: 10,
+                                  child: SvgPicture.asset(
+                                    'assets/icons/cancle.svg',
+                                    colorFilter: ColorFilter.mode(
+                                      ColorPalette.white,
+                                      BlendMode.srcIn,
+                                    ),
+                                    width: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
             ],
           ),
         ),
@@ -514,6 +540,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       ),
                     ),
                     child: TextField(
+                      keyboardType: TextInputType.number,
                       controller: controller.widthController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -564,6 +591,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       ),
                     ),
                     child: TextField(
+                      keyboardType: TextInputType.number,
                       controller: controller.depthController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -614,6 +642,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       ),
                     ),
                     child: TextField(
+                      keyboardType: TextInputType.number,
                       controller: controller.heightController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
