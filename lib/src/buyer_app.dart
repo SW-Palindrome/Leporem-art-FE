@@ -10,8 +10,8 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
-class BuyerApp extends GetView<BottomNavigationbarController> {
-  const BuyerApp({super.key});
+class BuyerBuyerApp extends GetView<BottomNavigationbarController> {
+  const BuyerBuyerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,8 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
           appBarType: AppBarType.buyerMainPageAppBar,
           onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
       body: BuyerHomeScreen(),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar:
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
   }
 
@@ -47,7 +48,8 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: AuctionScreen(),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar:
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
   }
 
@@ -55,7 +57,8 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: MessageScreen(),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar:
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
   }
 
@@ -63,7 +66,8 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: FlopScreen(),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar:
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
   }
 
@@ -71,7 +75,8 @@ class BuyerApp extends GetView<BottomNavigationbarController> {
     return Scaffold(
       backgroundColor: ColorPalette.white,
       body: SafeArea(child: ProfileScreen()),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar:
+          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
   }
 }
