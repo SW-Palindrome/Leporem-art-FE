@@ -6,7 +6,7 @@ import 'package:leporemart/src/theme/app_theme.dart';
 
 enum MyBottomNavigationBarType { buyer, seller }
 
-class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
+class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
   const MyBottomNavigationBar({super.key, required this.type});
 
   final MyBottomNavigationBarType type;

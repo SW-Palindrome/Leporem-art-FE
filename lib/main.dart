@@ -42,7 +42,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  Get.put(BottomNavigationbarController());
+  Get.put(MyBottomNavigationbarController());
   Get.put(AgreementController());
   Get.put(AccountTypeController());
   Get.put(EmailController());
