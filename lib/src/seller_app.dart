@@ -17,7 +17,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      switch (controller.selectedIndex.value) {
+      switch (controller.selectedSellerIndex.value) {
         case 0:
           return _listScaffold();
         case 1:

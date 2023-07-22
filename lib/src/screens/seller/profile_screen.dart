@@ -166,7 +166,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
           if (controller.buyerProfile.isSeller)
             GestureDetector(
               onTap: () {
-                MyBottomNavigationbarController.to.changeIndex(4);
+                MyBottomNavigationbarController.to.changeBuyerIndex(4);
                 Get.offAll(BuyerApp());
               },
               child: Container(

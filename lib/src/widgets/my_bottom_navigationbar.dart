@@ -26,9 +26,13 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
           child: BottomNavigationBar(
             backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
-            currentIndex: controller.selectedIndex.value,
+            currentIndex: type == MyBottomNavigationBarType.buyer
+                ? controller.selectedBuyerIndex.value
+                : controller.selectedSellerIndex.value,
             elevation: 0,
-            onTap: controller.changeIndex,
+            onTap: type == MyBottomNavigationBarType.buyer
+                ? controller.changeBuyerIndex
+                : controller.changeSellerIndex,
             selectedItemColor: ColorPalette.purple,
             items: type == MyBottomNavigationBarType.buyer
                 ? [
