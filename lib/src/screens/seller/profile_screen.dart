@@ -375,15 +375,20 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
               ),
               child: Transform.scale(
                 scale: 0.6,
-                child: ShaderMask(
-                  blendMode: BlendMode.srcIn,
-                  shaderCallback: (Rect bounds) {
-                    return ColorPalette.gradientPurple.createShader(bounds);
-                  },
-                  child: SvgPicture.asset(
-                    'assets/icons/$icon.svg',
-                  ),
-                ),
+                child: icon == 'instagram'
+                    ? Image.asset(
+                        'assets/icons/$icon.png',
+                      )
+                    : ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (Rect bounds) {
+                          return ColorPalette.gradientPurple
+                              .createShader(bounds);
+                        },
+                        child: SvgPicture.asset(
+                          'assets/icons/$icon.svg',
+                        ),
+                      ),
               ),
             ),
             SizedBox(width: Get.width * 0.03),
