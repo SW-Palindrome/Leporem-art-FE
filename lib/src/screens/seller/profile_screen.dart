@@ -7,6 +7,7 @@ import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/plant_temperature.dart';
 
 class SellerProfileScreen extends GetView<BuyerProfileController> {
   SellerProfileScreen({super.key});
@@ -24,21 +25,31 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
           _profileRow(),
           Divider(color: ColorPalette.grey_2, thickness: 10),
           _menuColumn(
-            title: '작품관리',
-            contents: ['주문 내역', '관심 작품', '최근 본 작품'],
+            title: '작품 관리',
+            contents: ['판매 관리'],
             icons: ['list', 'heart_outline', 'history'],
+            gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
           ),
           Divider(color: ColorPalette.grey_2, thickness: 10),
           _menuColumn(
             title: '커뮤니티 관리',
-            contents: ['팔로잉 목록', '차단 목록'],
-            icons: ['followers', 'block'],
+            contents: ['차단 목록'],
+            icons: ['block'],
+            gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
           ),
           Divider(color: ColorPalette.grey_2, thickness: 10),
           _menuColumn(
-            title: '판매자 인증',
-            contents: ['학교 이메일 인증'],
-            icons: ['mail'],
+            title: 'SNS 연동',
+            contents: ['인스타그램 연동'],
+            icons: ['instagram'],
+            gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
+          ),
+          Divider(color: ColorPalette.grey_2, thickness: 10),
+          _menuColumn(
+            title: '기타 기능',
+            contents: ['요금 플랜 가입하기', '포트폴리오'],
+            icons: ['plan', 'portfolio'],
+            gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
           ),
         ],
       ),
@@ -81,123 +92,229 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
   _profileRow() {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
+          Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(Get.width * 0.1),
-                child: Image.network(
-                  controller.buyerProfile.profileImageUrl,
-                  width: Get.width * 0.2,
-                  height: Get.width * 0.2,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.to(() => ProfileEditScreen());
-                  },
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: ColorPalette.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: ColorPalette.grey_2,
-                        width: 1,
-                      ),
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(Get.width * 0.1),
+                    child: Image.network(
+                      controller.buyerProfile.profileImageUrl,
+                      width: Get.width * 0.2,
+                      height: Get.width * 0.2,
+                      fit: BoxFit.cover,
                     ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/icons/edit.svg',
-                        width: 16,
-                        height: 16,
-                        colorFilter: ColorFilter.mode(
-                          ColorPalette.grey_5,
-                          BlendMode.srcIn,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => ProfileEditScreen());
+                      },
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: ColorPalette.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: ColorPalette.grey_2,
+                            width: 1,
+                          ),
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/icons/edit.svg',
+                            width: 16,
+                            height: 16,
+                            colorFilter: ColorFilter.mode(
+                              ColorPalette.grey_5,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorPalette.purple,
-                ),
-                child: Text(
-                  '구매자',
-                  style: TextStyle(
-                    color: ColorPalette.white,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "PretendardVariable",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 12,
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: ColorPalette.purple,
+                    ),
+                    child: Text(
+                      '판매자',
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    controller.buyerProfile.nickname,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              if (controller.buyerProfile.isSeller)
+                GestureDetector(
+                  onTap: () {
+                    MyBottomNavigationbarController.to.changeBuyerIndex(4);
+                    Get.offAll(BuyerApp());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: ColorPalette.grey_2,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '구매자로 바꾸기',
+                          style: TextStyle(
+                            color: ColorPalette.grey_7,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/arrow_right.svg',
+                          width: 12,
+                          height: 12,
+                          colorFilter: ColorFilter.mode(
+                            ColorPalette.grey_5,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 5),
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Text(
-                controller.buyerProfile.nickname,
+                '성장률',
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
-                  fontSize: 18.0,
+                  fontSize: 16.0,
+                ),
+              ),
+              Transform.scale(
+                scale: 1.2,
+                child: PlantTemperature(
+                  temperature: 60,
+                  type: PlantTemperatureType.text,
                 ),
               ),
             ],
           ),
-          Spacer(),
-          if (controller.buyerProfile.isSeller)
-            GestureDetector(
-              onTap: () {
-                MyBottomNavigationbarController.to.changeBuyerIndex(4);
-                Get.offAll(BuyerApp());
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Transform.scale(
+                scale: 1.5,
+                child: PlantTemperature(
+                    temperature: 60, type: PlantTemperatureType.image),
+              ),
+              Spacer(),
+              Container(
+                width: Get.width * 0.35,
+                padding: EdgeInsets.symmetric(vertical: 20),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorPalette.grey_2,
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorPalette.grey_1,
                 ),
-                child: Row(
+                child: Column(
                   children: [
                     Text(
-                      '구매자로 바꾸기',
+                      '재구매희망률',
                       style: TextStyle(
-                        color: ColorPalette.grey_7,
-                        fontWeight: FontWeight.w500,
+                        color: ColorPalette.grey_6,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
                         fontSize: 12.0,
                       ),
                     ),
-                    SvgPicture.asset(
-                      'assets/icons/arrow_right.svg',
-                      width: 12,
-                      height: 12,
-                      colorFilter: ColorFilter.mode(
-                        ColorPalette.grey_5,
-                        BlendMode.srcIn,
+                    SizedBox(height: 5),
+                    Text(
+                      '86%',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
                       ),
                     ),
                   ],
                 ),
               ),
-            )
+              SizedBox(width: 10),
+              Container(
+                width: Get.width * 0.35,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorPalette.grey_1,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '거래횟수',
+                      style: TextStyle(
+                        color: ColorPalette.grey_6,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '32회',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -207,6 +324,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
     required String title,
     required List<String> contents,
     required List<String> icons,
+    required List<Widget> gotoWidgets,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -228,48 +346,58 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
             _menuColumnItem(
               content: contents[i],
               icon: icons[i],
+              gotoWidget: gotoWidgets[i],
             ),
         ],
       ),
     );
   }
 
-  _menuColumnItem({required String content, required String icon}) {
+  _menuColumnItem({
+    required String content,
+    required String icon,
+    required Widget gotoWidget,
+  }) {
     return Container(
       margin: EdgeInsets.only(bottom: Get.height * 0.013),
-      child: Row(
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: ColorPalette.grey_2,
-            ),
-            child: Transform.scale(
-              scale: 0.6,
-              child: ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (Rect bounds) {
-                  return ColorPalette.gradientPurple.createShader(bounds);
-                },
-                child: SvgPicture.asset(
-                  'assets/icons/$icon.svg',
+      child: GestureDetector(
+        onTap: () {
+          Get.to(gotoWidget);
+        },
+        child: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: ColorPalette.grey_2,
+              ),
+              child: Transform.scale(
+                scale: 0.6,
+                child: ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (Rect bounds) {
+                    return ColorPalette.gradientPurple.createShader(bounds);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/$icon.svg',
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(width: Get.width * 0.03),
-          Text(
-            content,
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0,
+            SizedBox(width: Get.width * 0.03),
+            Text(
+              content,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
