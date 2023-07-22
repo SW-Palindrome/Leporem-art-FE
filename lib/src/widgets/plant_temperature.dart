@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
+enum PlantTemperatureType { all, image, text }
+
 class PlantTemperature extends StatelessWidget {
   const PlantTemperature({
     super.key,
     required this.temperature,
+    this.type = PlantTemperatureType.all,
   });
 
   final double temperature;
+  final PlantTemperatureType type;
 
   @override
   Widget build(BuildContext context) {
@@ -31,28 +35,32 @@ class PlantTemperature extends StatelessWidget {
     }
     return Column(
       children: [
-        Image.asset(
-          imageSrc!,
-          width: 42,
-          height: 48,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: temperatureColor,
-          ),
-          child: Text(
-            "${temperature.toInt()}%",
-            style: TextStyle(
-              color: ColorPalette.white,
-              fontWeight: FontWeight.bold,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 12.0,
-            ),
-          ),
-        ),
+        PlantTemperatureType.all == type || PlantTemperatureType.image == type
+            ? Image.asset(
+                imageSrc!,
+                width: 42,
+                height: 48,
+              )
+            : Container(),
+        PlantTemperatureType.all == type || PlantTemperatureType.text == type
+            ? Container(
+                padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: temperatureColor,
+                ),
+                child: Text(
+                  "${temperature.toInt()}%",
+                  style: TextStyle(
+                    color: ColorPalette.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 12.0,
+                  ),
+                ),
+              )
+            : Container(),
       ],
     );
   }
