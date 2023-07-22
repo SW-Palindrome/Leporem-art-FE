@@ -6,11 +6,12 @@ import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
+import 'package:leporemart/src/screens/seller/profile_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
-class SellerApp extends GetView<BottomNavigationbarController> {
+class SellerApp extends GetView<MyBottomNavigationbarController> {
   const SellerApp({super.key});
 
   @override
@@ -23,7 +24,7 @@ class SellerApp extends GetView<BottomNavigationbarController> {
           return _customOrderScaffold();
         case 2:
           return _messageScaffold();
-        case 4:
+        case 3:
           return _profileScaffold();
         default:
           return _listScaffold();

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 
-class BottomNavigationbarController extends GetxController {
-  static BottomNavigationbarController get to => Get.find();
+class MyBottomNavigationbarController extends GetxController {
+  static MyBottomNavigationbarController get to => Get.find();
 
   // 현재 선택된 탭 아이템 번호 저장
   final RxInt selectedIndex = 0.obs;
