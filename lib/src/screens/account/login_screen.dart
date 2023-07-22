@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
           case 'apple':
             break;
           case null:
-            Get.offAll(BuyerBuyerApp());
+            Get.offAll(BuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');
       },

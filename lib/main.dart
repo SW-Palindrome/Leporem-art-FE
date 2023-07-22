@@ -89,14 +89,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: isLoginProceed ? BuyerBuyerApp() : LoginScreen(),
+      home: isLoginProceed ? BuyerApp() : LoginScreen(),
       navigatorObservers: [
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
       routes: {
         '/login': (context) => LoginScreen(),
-        '/buyer': (context) => BuyerBuyerApp(),
+        '/buyer': (context) => BuyerApp(),
         '/buyer/search': (context) => ItemSearchScreen(),
         '/buyer/item': (context) => BuyerItemDetailScreen(),
         '/seller/create': (context) => ItemCreateScreen(),

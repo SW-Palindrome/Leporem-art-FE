@@ -10,8 +10,8 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
-class BuyerBuyerApp extends GetView<BottomNavigationbarController> {
-  const BuyerBuyerApp({super.key});
+class BuyerApp extends GetView<BottomNavigationbarController> {
+  const BuyerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
