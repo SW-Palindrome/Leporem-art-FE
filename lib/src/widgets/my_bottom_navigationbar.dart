@@ -110,7 +110,7 @@ class MyBottomNavigationBar extends GetView<BottomNavigationbarController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       ),
-                      label: '작품 등록',
+                      label: '작품목록',
                     ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
