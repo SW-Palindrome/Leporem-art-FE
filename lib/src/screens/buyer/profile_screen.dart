@@ -162,7 +162,9 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
           Spacer(),
           if (controller.buyerProfile.isSeller)
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.offAll(SellerApp());
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
