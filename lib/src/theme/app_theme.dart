@@ -5,6 +5,7 @@ class AppTheme {
     primaryColor: ColorPalette.grey_1,
     scaffoldBackgroundColor: ColorPalette.grey_1,
     appBarTheme: AppBarTheme(
+      centerTitle: true,
       color: ColorPalette.grey_1,
       actionsIconTheme: IconThemeData(
         size: 24,
