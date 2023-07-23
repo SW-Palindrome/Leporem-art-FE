@@ -37,7 +37,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Container _itemBottomNavigationBar() {
+  _itemBottomNavigationBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       margin: EdgeInsets.only(bottom: 16),
@@ -84,7 +84,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Container _itemTitle() {
+  _itemTitle() {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -146,7 +146,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Widget _itemThumbnail() {
+  _itemThumbnail() {
     return Stack(
       children: [
         CarouselSlider(
@@ -261,7 +261,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Container _categoryWidget(String category) {
+  _categoryWidget(String category) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 10,
@@ -290,7 +290,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
     );
   }
 
-  Padding _itemDescription() {
+  _itemDescription() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(

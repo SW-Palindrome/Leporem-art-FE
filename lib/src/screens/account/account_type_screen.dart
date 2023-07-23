@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';

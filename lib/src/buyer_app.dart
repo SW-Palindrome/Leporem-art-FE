@@ -33,7 +33,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     });
   }
 
-  Scaffold _homeScaffold() {
+  _homeScaffold() {
     return Scaffold(
       appBar: MyAppBar(
           appBarType: AppBarType.buyerMainPageAppBar,
@@ -44,7 +44,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _auctionScaffold() {
+  _auctionScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: AuctionScreen(),
@@ -53,7 +53,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _messageScaffold() {
+  _messageScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: MessageScreen(),
@@ -62,7 +62,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _flopScaffold() {
+  _flopScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: FlopScreen(),
@@ -71,7 +71,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _profileScaffold() {
+  _profileScaffold() {
     return Scaffold(
       backgroundColor: ColorPalette.white,
       body: SafeArea(child: BuyerProfileScreen()),
