@@ -46,7 +46,7 @@ class BuyerHomeScreen extends GetView<HomeController> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15,
-                    childAspectRatio: 3 / 5,
+                    childAspectRatio: 4 / 7,
                   ),
                   controller: controller.scrollController,
                   itemCount: controller.items.length,
@@ -126,14 +126,19 @@ class BuyerHomeScreen extends GetView<HomeController> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    item.name,
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontSize: 13,
+                  SizedBox(
+                    height: Get.height * 0.04,
+                    child: Text(
+                      item.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Text(
                     '${item.price.toString().toString().replaceAllMapped(
                           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
