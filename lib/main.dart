@@ -5,19 +5,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/app.dart';
+import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
@@ -42,7 +44,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  Get.put(BottomNavigationbarController());
+  Get.put(MyBottomNavigationbarController());
   Get.put(AgreementController());
   Get.put(AccountTypeController());
   Get.put(EmailController());
@@ -53,6 +55,8 @@ void main() async {
   Get.put(HomeController());
   Get.put(BuyerProfileController());
   Get.put(BuyerProfileEditController());
+  Get.put(SellerProfileController());
+  Get.put(SellerProfileEditController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 

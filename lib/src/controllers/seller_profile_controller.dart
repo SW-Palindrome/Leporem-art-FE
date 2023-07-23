@@ -2,13 +2,15 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 
-class BuyerProfileController extends GetxController {
+class SellerProfileController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
-  BuyerProfile buyerProfile = BuyerProfile(
+  SellerProfile sellerProfile = SellerProfile(
     nickname: '불건전한 소환사명',
     profileImageUrl:
         'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
-    isSeller: true,
+    itemCount: 22,
+    temperature: 36.5,
+    description: '안녕하세요. 불건전한 소환사명입니다.',
   );
 
   @override
@@ -19,10 +21,10 @@ class BuyerProfileController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      buyerProfile = await _profileRepository.fetchBuyerProfile();
+      sellerProfile = await _profileRepository.fetchSellerProfile();
     } catch (e) {
       // 에러 처리
-      print('Error fetching buyer profile: $e');
+      print('Error fetching seller profile: $e');
       // 목업 데이터 사용 또는 에러 처리 로직 추가
     }
   }
