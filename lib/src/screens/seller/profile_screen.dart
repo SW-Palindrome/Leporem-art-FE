@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
-class SellerProfileScreen extends GetView<BuyerProfileController> {
+class SellerProfileScreen extends GetView<SellerProfileController> {
   SellerProfileScreen({super.key});
 
   @override
@@ -102,7 +103,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(Get.width * 0.1),
                     child: Image.network(
-                      controller.buyerProfile.profileImageUrl,
+                      controller.sellerProfile.profileImageUrl,
                       width: Get.width * 0.2,
                       height: Get.width * 0.2,
                       fit: BoxFit.cover,
@@ -165,7 +166,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    controller.buyerProfile.nickname,
+                    controller.sellerProfile.nickname,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontWeight: FontWeight.bold,
@@ -177,41 +178,40 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
                 ],
               ),
               Spacer(),
-              if (controller.buyerProfile.isSeller)
-                GestureDetector(
-                  onTap: () {
-                    MyBottomNavigationbarController.to.changeBuyerIndex(4);
-                    Get.offAll(BuyerApp());
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: ColorPalette.grey_2,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          '구매자로 바꾸기',
-                          style: TextStyle(
-                            color: ColorPalette.grey_7,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0,
-                          ),
+              GestureDetector(
+                onTap: () {
+                  MyBottomNavigationbarController.to.changeBuyerIndex(4);
+                  Get.offAll(BuyerApp());
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: ColorPalette.grey_2,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '구매자로 바꾸기',
+                        style: TextStyle(
+                          color: ColorPalette.grey_7,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.0,
                         ),
-                        SvgPicture.asset(
-                          'assets/icons/arrow_right.svg',
-                          width: 12,
-                          height: 12,
-                          colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_5,
-                            BlendMode.srcIn,
-                          ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/arrow_right.svg',
+                        width: 12,
+                        height: 12,
+                        colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_5,
+                          BlendMode.srcIn,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
             ],
           ),
           SizedBox(height: 20),
@@ -231,7 +231,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
               Transform.scale(
                 scale: 1.2,
                 child: PlantTemperature(
-                  temperature: 60,
+                  temperature: controller.sellerProfile.temperature,
                   type: PlantTemperatureType.text,
                 ),
               ),
@@ -243,7 +243,8 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
               Transform.scale(
                 scale: 1.5,
                 child: PlantTemperature(
-                    temperature: 60, type: PlantTemperatureType.image),
+                    temperature: controller.sellerProfile.temperature,
+                    type: PlantTemperatureType.image),
               ),
               Spacer(),
               Container(
@@ -301,7 +302,7 @@ class SellerProfileScreen extends GetView<BuyerProfileController> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      '32회',
+                      '${controller.sellerProfile.itemCount}회',
                       style: TextStyle(
                         color: ColorPalette.black,
                         fontWeight: FontWeight.bold,

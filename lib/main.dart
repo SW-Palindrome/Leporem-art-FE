@@ -18,6 +18,7 @@ import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
@@ -53,6 +54,7 @@ void main() async {
   Get.put(HomeController());
   Get.put(BuyerProfileController());
   Get.put(BuyerProfileEditController());
+  Get.put(SellerProfileController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
