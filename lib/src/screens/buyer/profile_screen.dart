@@ -181,7 +181,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 child: Row(
                   children: [
                     Text(
-                      '판매자로 바꾸기',
+                      '판매자 전환',
                       style: TextStyle(
                         color: ColorPalette.grey_7,
                         fontWeight: FontWeight.w500,

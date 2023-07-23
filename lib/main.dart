@@ -11,6 +11,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/home_controller.dart';
@@ -53,8 +54,9 @@ void main() async {
   Get.put(ItemSearchController());
   Get.put(HomeController());
   Get.put(BuyerProfileController());
-  Get.put(SellerProfileEditController());
+  Get.put(BuyerProfileEditController());
   Get.put(SellerProfileController());
+  Get.put(SellerProfileEditController());
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
