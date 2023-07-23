@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-class ProfileEditScreen extends GetView<BuyerProfileEditController> {
+class ProfileEditScreen extends GetView<SellerProfileEditController> {
   const ProfileEditScreen({super.key});
 
   @override
@@ -43,7 +43,8 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
                       fontWeight: FontWeight.w600,
                       color: controller.isNicknameValid.value &&
                               (controller.isNicknameChanged.value ||
-                                  controller.isProfileImageChanged.value)
+                                  controller.isProfileImageChanged.value ||
+                                  controller.isDescriptionChanged.value)
                           ? ColorPalette.purple
                           : ColorPalette.purple.withOpacity(0.5),
                     ),
@@ -63,13 +64,66 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
             _imageEdit(),
             SizedBox(height: 30),
             _nicknameEdit(),
+            SizedBox(height: 30),
+            _descriptionEdit(),
           ],
         ),
       ),
     );
   }
 
-  _nicknameEdit() {
+  Column _descriptionEdit() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              '설명',
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontWeight: FontWeight.w500,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0,
+              ),
+            ),
+            Spacer()
+          ],
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: ColorPalette.grey_4,
+              width: 1,
+            ),
+          ),
+          child: TextFormField(
+              controller: controller.descriptionController,
+              maxLength: 60,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '자신에 대한 설명을 적어주세요.',
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+              onChanged: (text) {
+                controller.isDescriptionChanged.value = true;
+              }),
+        ),
+      ],
+    );
+  }
+
+  Column _nicknameEdit() {
     return Column(
       children: [
         Row(
@@ -138,7 +192,7 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
     );
   }
 
-  _imageEdit() {
+  Stack _imageEdit() {
     return Stack(
       children: [
         Obx(
@@ -152,7 +206,7 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
                     fit: BoxFit.cover,
                   )
                 : Image.network(
-                    controller.buyerProfileEdit.profileImageUrl,
+                    controller.sellerProfileEdit.profileImageUrl,
                     width: Get.width * 0.3,
                     height: Get.width * 0.3,
                     fit: BoxFit.cover,

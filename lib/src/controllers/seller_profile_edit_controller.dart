@@ -7,8 +7,9 @@ import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/repositories/profile_edit_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
-class BuyerProfileEditController extends GetxController {
+class SellerProfileEditController extends GetxController {
   TextEditingController nicknameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   Rx<bool> isNicknameValid = false.obs;
   Rx<bool> isNicknameDuplicate = false.obs;
@@ -16,27 +17,30 @@ class BuyerProfileEditController extends GetxController {
   Rx<bool> isNicknameChanged = false.obs;
   Rx<File> profileImage = File('').obs;
   Rx<bool> isProfileImageChanged = false.obs;
+  Rx<bool> isDescriptionChanged = false.obs;
 
   final ProfileEditRepository _profileEditRepository = ProfileEditRepository();
-  BuyerProfileEdit buyerProfileEdit = BuyerProfileEdit(
+  SellerProfileEdit sellerProfileEdit = SellerProfileEdit(
     nickname: '불건전한 소환사명',
     profileImageUrl:
         'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
+    description: '설명\n설명\n설명\n설명\n설명\n설명\n',
   );
 
   @override
   void onInit() async {
     await fetch();
-    nicknameController.text = buyerProfileEdit.nickname ?? '';
+    nicknameController.text = sellerProfileEdit.nickname ?? '';
+    descriptionController.text = sellerProfileEdit.description ?? '';
     super.onInit();
   }
 
   Future<void> fetch() async {
     try {
-      buyerProfileEdit = await _profileEditRepository.fetchBuyerProfileEdit();
+      sellerProfileEdit = await _profileEditRepository.fetchSellerProfileEdit();
     } catch (e) {
       // 에러 처리
-      print('Error fetching buyer profile edit: $e');
+      print('Error fetching seller profile edit: $e');
       // 목업 데이터 사용 또는 에러 처리 로직 추가
     }
   }
