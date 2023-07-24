@@ -13,40 +13,88 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorPalette.grey_1,
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
+      children: [
+        Container(
+          color: ColorPalette.grey_1,
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
             children: [
-              _searchDropDown(),
-              Text(
-                '총 27개',
-                style: TextStyle(
-                  color: ColorPalette.grey_5,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12.0,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _searchDropDown(),
+                  Text(
+                    '총 ${controller.items.length}개',
+                    style: TextStyle(
+                      color: ColorPalette.grey_5,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: Get.height * 0.02),
+              Expanded(
+                child: Obx(
+                  () => ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.items.length,
+                    itemBuilder: (context, index) {
+                      return _itemWidget(controller.items[index]);
+                    },
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: Get.height * 0.02),
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: controller.items.length,
-                itemBuilder: (context, index) {
-                  return _itemWidget(controller.items[index]);
-                },
+        ),
+        Positioned(
+          bottom: Get.width * 0.05,
+          right: Get.width * 0.05,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/seller/create');
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: ShapeDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(1.00, -0.07),
+                  end: Alignment(-1, 0.07),
+                  colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/plus.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter:
+                        ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    '작품등록',
+                    style: TextStyle(
+                      color: ColorPalette.white,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 17.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
