@@ -13,7 +13,7 @@ class BuyerHomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: ColorPalette.grey_1),
+      color: ColorPalette.grey_1,
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
