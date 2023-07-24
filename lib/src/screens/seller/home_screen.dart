@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
+import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class SellerHomeScreen extends GetView<SellerHomeController> {
@@ -17,6 +19,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _searchDropDown(),
               Text(
@@ -29,6 +32,18 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 ),
               ),
             ],
+          ),
+          SizedBox(height: Get.height * 0.02),
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: controller.items.length,
+                itemBuilder: (context, index) {
+                  return _itemWidget(controller.items[index]);
+                },
+              ),
+            ),
           ),
         ],
       ),
@@ -298,6 +313,163 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
             colorFilter: ColorFilter.mode(
               ColorPalette.grey_4,
               BlendMode.srcIn,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _itemWidget(SellerHomeItem item) {
+    return Container(
+      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: ColorPalette.white,
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              item.thumbnailUrl,
+              height: Get.width * 0.25,
+              width: Get.width * 0.25,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      item.name,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/star_fill.svg',
+                          height: 12,
+                          width: 12,
+                          colorFilter: ColorFilter.mode(
+                              ColorPalette.yellow, BlendMode.srcIn),
+                        ),
+                        SizedBox(width: 2),
+                        Text(
+                          item.star.toString(),
+                          style: TextStyle(
+                            color: ColorPalette.yellow,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 15.0,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '잔여 ${item.remainAmount}점',
+                  style: TextStyle(
+                    color: ColorPalette.grey_5,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 12.0,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        item.likes != 0
+                            ? Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/heart_fill.svg',
+                                    height: 12,
+                                    width: 12,
+                                    colorFilter: ColorFilter.mode(
+                                        ColorPalette.purple, BlendMode.srcIn),
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    item.likes.toString(),
+                                    style: TextStyle(
+                                      color: ColorPalette.purple,
+                                      fontFamily: "PretendardVariable",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 11.0,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : SizedBox(),
+                        SizedBox(width: 5),
+                        item.messages != 0
+                            ? Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/message_fill.svg',
+                                    height: 12,
+                                    width: 12,
+                                    colorFilter: ColorFilter.mode(
+                                        ColorPalette.purple, BlendMode.srcIn),
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    item.messages.toString(),
+                                    style: TextStyle(
+                                      color: ColorPalette.purple,
+                                      fontFamily: "PretendardVariable",
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 11.0,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                    Text(
+                      item.timeAgo,
+                      style: TextStyle(
+                        color: ColorPalette.grey_4,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 11.0,
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
         ],

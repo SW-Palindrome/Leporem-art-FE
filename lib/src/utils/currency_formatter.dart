@@ -24,4 +24,10 @@ class CurrencyFormatter extends TextInputFormatter {
       selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
+
+  String numberToCurrency(int number) {
+    final formatter = NumberFormat('#,###');
+    final formattedText = formatter.format(number);
+    return formattedText;
+  }
 }
