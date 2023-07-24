@@ -11,7 +11,7 @@ class HomeController extends GetxController {
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
   List<String> categoryTypes = ['머그컵', '술잔', '화병', '오브제', '그릇', '기타'];
-  Rx<int> selectCategoryType = (-1).obs;
+  RxList<bool> selectedCategoryType = List.generate(6, (index) => false).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
   List<int> priceRange = [
     1000,
@@ -84,11 +84,11 @@ class HomeController extends GetxController {
   }
 
   void changeSelectedCategoryType(int index) {
-    if (selectCategoryType.value == index) {
-      selectCategoryType.value = -1;
-      return;
-    }
-    selectCategoryType.value = index;
+    selectedCategoryType[index] = !selectedCategoryType[index];
+  }
+
+  void resetSelectedCategoryType() {
+    selectedCategoryType.value = List.generate(6, (index) => false);
   }
 
   void changeSelectedPriceRange(RangeValues range) {
@@ -97,13 +97,13 @@ class HomeController extends GetxController {
 
   void resetSelected() {
     selectedSortType.value = 0;
-    selectCategoryType.value = -1;
+    resetSelectedCategoryType();
     selectedPriceRange.value = RangeValues(0, 36);
   }
 
   bool isResetValid() {
     return selectedSortType.value != 0 ||
-        selectCategoryType.value != -1 ||
+        selectedCategoryType.value.contains(true) ||
         selectedPriceRange.value != RangeValues(0, 36);
   }
 
