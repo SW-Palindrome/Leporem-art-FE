@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
-import 'package:leporemart/src/repositories/profile_edit_repository.dart';
+import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class BuyerProfileEditController extends GetxController {
+  final ProfileRepository _profileRepository = ProfileRepository();
   TextEditingController nicknameController = TextEditingController();
 
   Rx<bool> isNicknameValid = false.obs;
@@ -17,23 +19,25 @@ class BuyerProfileEditController extends GetxController {
   Rx<File> profileImage = File('').obs;
   Rx<bool> isProfileImageChanged = false.obs;
 
-  final ProfileEditRepository _profileEditRepository = ProfileEditRepository();
   BuyerProfileEdit buyerProfileEdit = BuyerProfileEdit(
-    nickname: '불건전한 소환사명',
-    profileImageUrl:
-        'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
+    nickname: '',
+    profileImageUrl: '',
   );
 
   @override
   void onInit() async {
     await fetch();
-    nicknameController.text = buyerProfileEdit.nickname ?? '';
+    nicknameController.text = buyerProfileEdit.nickname;
     super.onInit();
   }
 
   Future<void> fetch() async {
     try {
-      buyerProfileEdit = await _profileEditRepository.fetchBuyerProfileEdit();
+      BuyerProfile buyerProfile = await _profileRepository.fetchBuyerProfile();
+      buyerProfileEdit = BuyerProfileEdit(
+        nickname: buyerProfile.nickname,
+        profileImageUrl: buyerProfile.profileImageUrl,
+      );
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer profile edit: $e');

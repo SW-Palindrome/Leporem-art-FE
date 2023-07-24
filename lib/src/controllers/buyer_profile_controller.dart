@@ -5,7 +5,7 @@ import 'package:leporemart/src/repositories/profile_repository.dart';
 class BuyerProfileController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
   BuyerProfile buyerProfile = BuyerProfile(
-    nickname: '불건전한 소환사명',
+    nickname: '불건전한소환사명',
     profileImageUrl:
         'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
     isSeller: true,
