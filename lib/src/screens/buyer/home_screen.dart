@@ -46,7 +46,7 @@ class BuyerHomeScreen extends GetView<HomeController> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15,
-                    childAspectRatio: 3 / 5,
+                    childAspectRatio: 4 / 7,
                   ),
                   controller: controller.scrollController,
                   itemCount: controller.items.length,
@@ -126,14 +126,19 @@ class BuyerHomeScreen extends GetView<HomeController> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    item.name,
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontSize: 13,
+                  SizedBox(
+                    height: Get.height * 0.04,
+                    child: Text(
+                      item.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   Text(
                     '${item.price.toString().toString().replaceAllMapped(
                           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
@@ -271,11 +276,12 @@ class BuyerHomeScreen extends GetView<HomeController> {
       () => Container(
         decoration: BoxDecoration(
           border: Border.all(
-              color: controller.selectCategoryType.value == -1
-                  ? ColorPalette.grey_3
-                  : ColorPalette.purple),
+              color:
+                  controller.selectedCategoryType.value.contains(true) == false
+                      ? ColorPalette.grey_3
+                      : ColorPalette.purple),
           borderRadius: BorderRadius.circular(20),
-          color: controller.selectCategoryType.value == -1
+          color: controller.selectedCategoryType.value.contains(true) == false
               ? ColorPalette.white
               : ColorPalette.purple,
         ),
@@ -283,13 +289,22 @@ class BuyerHomeScreen extends GetView<HomeController> {
         child: Row(
           children: [
             Text(
-              controller.selectCategoryType.value == -1
+              controller.selectedCategoryType.value.contains(true) == false
                   ? '작품 종류'
-                  : (controller
-                      .categoryTypes[controller.selectCategoryType.value]),
+                  : (controller.selectedCategoryType.value
+                              .where((element) => element == true)
+                              .length ==
+                          1
+                      ? controller.categoryTypes[
+                          controller.selectedCategoryType.value.indexOf(true)]
+                      : controller.selectedCategoryType.value
+                          .where((element) => element == true)
+                          .length
+                          .toString()),
               style: TextStyle(
                 fontSize: 12,
-                color: controller.selectCategoryType.value == -1
+                color: controller.selectedCategoryType.value.contains(true) ==
+                        false
                     ? ColorPalette.grey_6
                     : ColorPalette.white,
               ),
@@ -297,16 +312,16 @@ class BuyerHomeScreen extends GetView<HomeController> {
             SizedBox(width: 5),
             GestureDetector(
               onTap: () {
-                controller.changeSelectedCategoryType(-1);
+                controller.resetSelectedCategoryType();
               },
               child: SvgPicture.asset(
-                controller.selectCategoryType.value == -1
+                controller.selectedCategoryType.value.contains(true) == false
                     ? 'assets/icons/arrow_down.svg'
                     : 'assets/icons/cancle.svg',
                 height: 10,
                 width: 10,
                 colorFilter: ColorFilter.mode(
-                  controller.selectCategoryType.value == -1
+                  controller.selectedCategoryType.value.contains(true) == false
                       ? ColorPalette.grey_4
                       : ColorPalette.white,
                   BlendMode.srcIn,
@@ -594,30 +609,29 @@ class BuyerHomeScreen extends GetView<HomeController> {
   }
 
   _categoryModal() {
-    List<String> categories = ['머그컵', '술잔', '화병', '오브제', '그릇'];
     return Wrap(
       spacing: 10,
       runSpacing: 10,
       children: [
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
           GestureDetector(
             onTap: () => controller.changeSelectedCategoryType(i),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: controller.selectCategoryType.value == i
+                color: controller.selectedCategoryType.value[i]
                     ? ColorPalette.purple
                     : Colors.white,
                 border: Border.all(
-                    color: controller.selectCategoryType.value == i
+                    color: controller.selectedCategoryType.value[i]
                         ? ColorPalette.purple
                         : ColorPalette.grey_3),
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Text(
-                categories[i],
+                controller.categoryTypes[i],
                 style: TextStyle(
-                  color: controller.selectCategoryType.value == i
+                  color: controller.selectedCategoryType.value[i]
                       ? Colors.white
                       : ColorPalette.black,
                   fontSize: 14,
@@ -713,7 +727,6 @@ class BuyerHomeScreen extends GetView<HomeController> {
           values: controller.selectedPriceRange.value,
           min: 0,
           max: controller.priceRange.length - 1,
-          divisions: controller.priceRange.length - 1,
           onChanged: (RangeValues newRange) {
             controller.changeSelectedPriceRange(newRange);
           },

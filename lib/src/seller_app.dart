@@ -4,8 +4,6 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
-import 'package:leporemart/src/screens/buyer/profile_screen.dart';
-import 'package:leporemart/src/screens/buyer/flop_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -32,7 +30,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     });
   }
 
-  Scaffold _listScaffold() {
+  _listScaffold() {
     return Scaffold(
       appBar: MyAppBar(
           appBarType: AppBarType.buyerMainPageAppBar,
@@ -43,7 +41,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _customOrderScaffold() {
+  _customOrderScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: AuctionScreen(),
@@ -52,7 +50,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _messageScaffold() {
+  _messageScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: MessageScreen(),
@@ -61,7 +59,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  Widget _profileScaffold() {
+  _profileScaffold() {
     return Scaffold(
       backgroundColor: ColorPalette.white,
       body: SafeArea(child: SellerProfileScreen()),

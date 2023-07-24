@@ -57,7 +57,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
   }
 
-  Widget _buyerMainPageAppBar() {
+  _buyerMainPageAppBar() {
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -80,7 +80,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buyerItemDetailAppBar() {
+  _buyerItemDetailAppBar() {
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -113,7 +113,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _backAppBar() {
+  _backAppBar() {
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -135,7 +135,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _noneAppBar() {
+  _noneAppBar() {
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -150,7 +150,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _searchAppBar() {
+  _searchAppBar() {
     final itemSearchController = Get.find<ItemSearchController>();
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,

@@ -3,11 +3,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/repositories/profile_edit_repository.dart';
+import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class SellerProfileEditController extends GetxController {
+  final ProfileRepository _profileRepository = ProfileRepository();
+
   TextEditingController nicknameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
@@ -21,23 +25,28 @@ class SellerProfileEditController extends GetxController {
 
   final ProfileEditRepository _profileEditRepository = ProfileEditRepository();
   SellerProfileEdit sellerProfileEdit = SellerProfileEdit(
-    nickname: '불건전한 소환사명',
-    profileImageUrl:
-        'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
-    description: '설명\n설명\n설명\n설명\n설명\n설명\n',
+    nickname: '',
+    profileImageUrl: '',
+    description: '',
   );
 
   @override
   void onInit() async {
     await fetch();
-    nicknameController.text = sellerProfileEdit.nickname ?? '';
-    descriptionController.text = sellerProfileEdit.description ?? '';
+    nicknameController.text = sellerProfileEdit.nickname;
+    descriptionController.text = sellerProfileEdit.description;
     super.onInit();
   }
 
   Future<void> fetch() async {
     try {
-      sellerProfileEdit = await _profileEditRepository.fetchSellerProfileEdit();
+      SellerProfile sellerProfile =
+          await _profileRepository.fetchSellerProfile();
+      sellerProfileEdit = SellerProfileEdit(
+        nickname: sellerProfile.nickname,
+        profileImageUrl: sellerProfile.profileImageUrl,
+        description: sellerProfile.description,
+      );
     } catch (e) {
       // 에러 처리
       print('Error fetching seller profile edit: $e');

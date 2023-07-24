@@ -4,7 +4,6 @@ import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -57,7 +56,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _loginButton(
+  _loginButton(
     String? icon,
     String text,
     int backgroundColor,

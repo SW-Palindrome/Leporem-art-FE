@@ -52,8 +52,8 @@ class SellerProfile extends Profile {
       profileImageUrl: json['profile_image'] ??
           'https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg',
       itemCount: json['item_count'],
-      temperature: json['temperature'],
-      description: json['description'],
+      temperature: json['temperature'] ?? 36.5,
+      description: json['description'] ?? '',
     );
   }
 }

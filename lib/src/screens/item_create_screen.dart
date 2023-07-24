@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/screens/item_create_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
@@ -44,7 +43,7 @@ class ItemCreateScreen extends StatelessWidget {
     );
   }
 
-  Widget _itemCreateIconButton(Widget icon, String text, String nextWidget) {
+  _itemCreateIconButton(Widget icon, String text, String nextWidget) {
     return GestureDetector(
       onTap: () {
         Get.toNamed(nextWidget);

@@ -72,7 +72,7 @@ class ProfileEditScreen extends GetView<SellerProfileEditController> {
     );
   }
 
-  Column _descriptionEdit() {
+  _descriptionEdit() {
     return Column(
       children: [
         Row(
@@ -123,7 +123,7 @@ class ProfileEditScreen extends GetView<SellerProfileEditController> {
     );
   }
 
-  Column _nicknameEdit() {
+  _nicknameEdit() {
     return Column(
       children: [
         Row(
@@ -192,7 +192,7 @@ class ProfileEditScreen extends GetView<SellerProfileEditController> {
     );
   }
 
-  Stack _imageEdit() {
+  _imageEdit() {
     return Stack(
       children: [
         Obx(

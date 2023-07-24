@@ -7,7 +7,7 @@ class ProfileRepository {
   Future<BuyerProfile> fetchBuyerProfile() async {
     try {
       final response = await DioSingleton.dio.get(
-        '/buyers/my',
+        '/buyers/info',
         options: Options(
           headers: {
             "Authorization":
@@ -29,7 +29,7 @@ class ProfileRepository {
   Future<SellerProfile> fetchSellerProfile() async {
     try {
       final response = await DioSingleton.dio.get(
-        '/buyers/my',
+        '/sellers/info',
         options: Options(
           headers: {
             "Authorization":
