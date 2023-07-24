@@ -29,7 +29,7 @@ class ProfileRepository {
   Future<SellerProfile> fetchSellerProfile() async {
     try {
       final response = await DioSingleton.dio.get(
-        '/buyers/info',
+        '/sellers/info',
         options: Options(
           headers: {
             "Authorization":
