@@ -718,7 +718,6 @@ class BuyerHomeScreen extends GetView<HomeController> {
           values: controller.selectedPriceRange.value,
           min: 0,
           max: controller.priceRange.length - 1,
-          divisions: controller.priceRange.length - 1,
           onChanged: (RangeValues newRange) {
             controller.changeSelectedPriceRange(newRange);
           },
