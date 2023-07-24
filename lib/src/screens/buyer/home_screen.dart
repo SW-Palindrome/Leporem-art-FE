@@ -2,12 +2,12 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class BuyerHomeScreen extends GetView<HomeController> {
+class BuyerHomeScreen extends GetView<BuyerHomeController> {
   BuyerHomeScreen({super.key});
 
   @override
@@ -67,7 +67,7 @@ class BuyerHomeScreen extends GetView<HomeController> {
     );
   }
 
-  _itemWidget(Item item) {
+  _itemWidget(BuyerHomeItem item) {
     return GestureDetector(
       onTap: () {
         Get.toNamed('/buyer/item');
