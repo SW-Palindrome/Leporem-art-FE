@@ -94,6 +94,8 @@ class BuyerHomeController extends GetxController {
       }
       String price =
           '${priceRange[displayedPriceRange.value.start.toInt()]},${priceRange[displayedPriceRange.value.end.toInt()]}';
+
+      if (isPagination!) currentPage++;
       final List<BuyerHomeItem> fetchedItems =
           await _homeRepository.fetchBuyerHomeItems(
         currentPage,
@@ -101,9 +103,9 @@ class BuyerHomeController extends GetxController {
         price: price,
         category: category,
         ordering: ordering,
+        isPagination: isPagination,
       );
       items.addAll(fetchedItems);
-      if (isPagination!) currentPage++;
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer home items in controller: $e');
@@ -125,6 +127,7 @@ class BuyerHomeController extends GetxController {
   void resetSelectedCategoryType() {
     selectedCategoryType.value = List.generate(6, (index) => false);
     displayedCategoryType.value = List.generate(6, (index) => false);
+    pageReset();
   }
 
   void changeSelectedPriceRange(RangeValues range) {
@@ -134,6 +137,7 @@ class BuyerHomeController extends GetxController {
   void resetSelectedPriceRange() {
     selectedPriceRange.value = RangeValues(0, 36);
     displayedPriceRange.value = RangeValues(0, 36);
+    pageReset();
   }
 
   Future<void> resetSelected() async {
@@ -168,6 +172,5 @@ class BuyerHomeController extends GetxController {
     displayedCategoryType.value = selectedCategoryType.value;
     displayedPriceRange.value = selectedPriceRange.value;
     await pageReset();
-    update();
   }
 }

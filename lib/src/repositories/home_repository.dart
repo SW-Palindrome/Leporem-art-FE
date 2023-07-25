@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -8,10 +10,9 @@ class HomeRepository {
     String? ordering,
     String? category,
     String? price,
+    isPagination = false,
   }) async {
     try {
-      print(
-          '현재 페이지: $page\n현재 검색어 : $keyword\n현재 카테고리: $category\n현재 정렬: $ordering\n현재 가격: $price');
       final response =
           await DioSingleton.dio.get('/items/filter', queryParameters: {
         'page': page,
@@ -20,6 +21,11 @@ class HomeRepository {
         'category': category,
         'price': price,
       });
+      //rseponse의 message가 EmptyPage라면 데이터가 없는 것이므로 빈 리스트를 반환, 또한 pagination용 요청이면 currentPage를 1 감소시킴
+      if (response.data['message'] == 'EmptyPage') {
+        if (isPagination) Get.find<BuyerHomeController>().currentPage--;
+        return [];
+      }
       final data = response.data;
       //items를 리스트에 넣고 파싱
       final List<dynamic> itemsData = data['items'];
