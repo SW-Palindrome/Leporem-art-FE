@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
-import 'package:leporemart/src/widgets/my_app_bar.dart';
 
-import '../../widgets/my_bottom_navigationbar.dart';
-
-class MessageScreen extends StatelessWidget {
+class MessageScreen extends GetView<BuyerMessageController> {
   MessageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return _emptyItemListWidget();
+    return Obx(() {
+        if (controller.chatRoomList.isEmpty) {
+          return _emptyItemListWidget();
+        }
+        return _chatRoomListWidget();
+      }
+    );
   }
 
   _emptyItemListWidget() {
@@ -34,5 +39,9 @@ class MessageScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _chatRoomListWidget() {
+    return TextField('무엇이지');
   }
 }
