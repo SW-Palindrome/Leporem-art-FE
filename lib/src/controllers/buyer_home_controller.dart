@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 
@@ -10,9 +11,10 @@ class BuyerHomeController extends GetxController {
   Rx<int> selectedSearchType = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
-  List<String> categoryTypes = ['머그컵', '술잔', '화병', '오브제', '그릇', '기타'];
-  RxList<bool> selectedCategoryType = List.generate(6, (index) => false).obs;
+  List<String> categoryTypes = ['그릇', '컵', '접시', '그릇', '기타'];
+  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
+
   List<int> priceRange = [
     1000,
     2000,
@@ -65,8 +67,37 @@ class BuyerHomeController extends GetxController {
 
   Future<void> fetch() async {
     try {
+      String category = '';
+      for (int i = 0; i < categoryTypes.length; i++) {
+        if (selectedCategoryType[i]) {
+          category += '${categoryTypes[i]},';
+        }
+      }
+      String ordering = '';
+      switch (selectedSortType.value) {
+        case 0:
+          ordering = 'recent';
+          break;
+        case 1:
+          ordering = 'likes';
+          break;
+        case 2:
+          ordering = 'price_low';
+          break;
+        case 3:
+          ordering = 'price_hight';
+          break;
+      }
+      String price =
+          '${priceRange[selectedPriceRange.value.start.toInt()]},${priceRange[selectedPriceRange.value.end.toInt()]}';
       final List<BuyerHomeItem> fetchedItems =
-          await _homeRepository.fetchBuyerHomeItems(currentPage);
+          await _homeRepository.fetchBuyerHomeItems(
+        currentPage,
+        keyword: Get.find<BuyerSearchController>().searchController.text,
+        price: price,
+        category: category,
+        ordering: ordering,
+      );
       items.addAll(fetchedItems);
       currentPage++;
     } catch (e) {
@@ -112,5 +143,17 @@ class BuyerHomeController extends GetxController {
     resetSelected();
     currentPage = 1;
     await fetch();
+  }
+
+  void search(String keyword) async {
+    String category = '';
+    String ordering = '';
+    String price =
+        '${selectedPriceRange.value.start.toString()},${selectedPriceRange.value.end.toString()}';
+    for (int i = 0; i < categoryTypes.length; i++) {
+      if (selectedCategoryType[i]) {
+        category += '${categoryTypes[i]},';
+      }
+    }
   }
 }

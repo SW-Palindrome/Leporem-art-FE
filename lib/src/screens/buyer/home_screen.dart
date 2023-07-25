@@ -613,7 +613,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
       spacing: 10,
       runSpacing: 10,
       children: [
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < controller.categoryTypes.length; i++)
           GestureDetector(
             onTap: () => controller.changeSelectedCategoryType(i),
             child: Container(

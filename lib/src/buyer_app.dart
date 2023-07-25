@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
@@ -35,9 +37,21 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
 
   _homeScaffold() {
     return Scaffold(
-      appBar: MyAppBar(
-          appBarType: AppBarType.mainPageAppBar,
-          onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
+      appBar: Get.find<BuyerSearchController>().isSearching.value
+          ? MyAppBar(
+              appBarType: AppBarType.buyerSearchAppBar,
+              onTapLeadingIcon: () async {
+                Get.find<BuyerSearchController>().isSearching.value = false;
+                Get.find<BuyerSearchController>().searchController.clear();
+                Get.find<BuyerHomeController>().items.clear();
+                Get.find<BuyerHomeController>().currentPage = 1;
+                await Get.find<BuyerHomeController>().fetch();
+                Get.back();
+              },
+            )
+          : MyAppBar(
+              appBarType: AppBarType.mainPageAppBar,
+              onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
       body: BuyerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
