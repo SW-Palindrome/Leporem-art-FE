@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:intl/intl.dart';
 import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+
+import '../../models/message.dart';
 
 class MessageScreen extends GetView<BuyerMessageController> {
   MessageScreen({super.key});
@@ -42,6 +45,41 @@ class MessageScreen extends GetView<BuyerMessageController> {
   }
 
   _chatRoomListWidget() {
-    return TextField('무엇이지');
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          mainAxisSpacing: 16,
+        ),
+        itemCount: controller.chatRoomList.length,
+        itemBuilder: (_, index) {
+          return _chatRoomWidget(controller.chatRoomList[index]);
+        }
+    );
+  }
+
+  _chatRoomWidget(ChatRoom chatRoom) {
+    return SizedBox(
+      height: 72,
+      child: Row(
+        children: [
+          SizedBox(width: 12),
+          Image.network(chatRoom.profileImageUrl, width: 48, height: 48),
+          SizedBox(width: 8),
+          Column(
+            children: [
+              SizedBox(height: 12),
+              Row(
+                children: [
+                  Text(chatRoom.nickname),
+                  Text(DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime)),
+                ],
+              ),
+              SizedBox(height: 8),
+              Text(chatRoom.lastChatMessage),
+            ],
+          )
+        ]
+      ),
+    );
   }
 }
