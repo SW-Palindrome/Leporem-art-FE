@@ -59,8 +59,6 @@ class HomeRepository {
   }
 }
 
-final List<BuyerHomeItem> mockBuyerHomeItems = [];
-
 final List<SellerHomeItem> mockSellerHomeItems = [
   for (int i = 0; i < 10; i++)
     SellerHomeItem(
