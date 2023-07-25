@@ -15,6 +15,10 @@ class BuyerHomeController extends GetxController {
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
 
+  Rx<int> displayedSortType = 0.obs;
+  RxList<bool> displayedCategoryType = List.generate(5, (index) => false).obs;
+  Rx<RangeValues> displayedPriceRange = RangeValues(0, 36).obs;
+
   List<int> priceRange = [
     1000,
     2000,
@@ -120,16 +124,24 @@ class BuyerHomeController extends GetxController {
 
   void resetSelectedCategoryType() {
     selectedCategoryType.value = List.generate(6, (index) => false);
+    displayedCategoryType.value = List.generate(6, (index) => false);
   }
 
   void changeSelectedPriceRange(RangeValues range) {
     selectedPriceRange.value = range;
   }
 
+  void resetSelectedPriceRange() {
+    selectedPriceRange.value = RangeValues(0, 36);
+    displayedPriceRange.value = RangeValues(0, 36);
+  }
+
   void resetSelected() {
     selectedSortType.value = 0;
+    displayedSortType.value = 0;
     resetSelectedCategoryType();
-    selectedPriceRange.value = RangeValues(0, 36);
+    resetSelectedPriceRange();
+    applyFilter();
   }
 
   bool isResetValid() {
@@ -138,11 +150,30 @@ class BuyerHomeController extends GetxController {
         selectedPriceRange.value != RangeValues(0, 36);
   }
 
+  bool isApplyValid() {
+    return selectedSortType.value != displayedSortType.value ||
+        selectedCategoryType.value.contains(true) ||
+        selectedPriceRange.value != displayedPriceRange.value;
+  }
+
   void pageReset() async {
     items.clear();
     resetSelected();
     currentPage = 1;
     await fetch();
+  }
+
+  void applyFilter() {
+    displayedSortType.value = selectedSortType.value;
+    displayedCategoryType.value = selectedCategoryType.value;
+    displayedPriceRange.value = selectedPriceRange.value;
+    print('정렬: ${selectedSortType.value}\n'
+        '카테고리: ${selectedCategoryType.value}\n'
+        '가격: ${selectedPriceRange.value}');
+    print('적용된 정렬: ${displayedSortType.value}\n'
+        '적용된 카테고리: ${displayedCategoryType.value}\n'
+        '적용된 가격: ${displayedPriceRange.value}');
+    update();
   }
 
   void search(String keyword) async {

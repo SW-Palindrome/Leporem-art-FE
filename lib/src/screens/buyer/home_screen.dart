@@ -249,7 +249,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         children: [
           Obx(
             () => Text(
-              controller.sortTypes[controller.selectedSortType.value],
+              controller.sortTypes[controller.displayedSortType.value],
               style: TextStyle(
                 fontSize: 12,
                 color: ColorPalette.grey_6,
@@ -277,11 +277,11 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         decoration: BoxDecoration(
           border: Border.all(
               color:
-                  controller.selectedCategoryType.value.contains(true) == false
+                  controller.displayedCategoryType.value.contains(true) == false
                       ? ColorPalette.grey_3
                       : ColorPalette.purple),
           borderRadius: BorderRadius.circular(20),
-          color: controller.selectedCategoryType.value.contains(true) == false
+          color: controller.displayedCategoryType.value.contains(true) == false
               ? ColorPalette.white
               : ColorPalette.purple,
         ),
@@ -289,21 +289,21 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         child: Row(
           children: [
             Text(
-              controller.selectedCategoryType.value.contains(true) == false
+              controller.displayedCategoryType.value.contains(true) == false
                   ? '작품 종류'
-                  : (controller.selectedCategoryType.value
+                  : (controller.displayedCategoryType
                               .where((element) => element == true)
                               .length ==
                           1
                       ? controller.categoryTypes[
-                          controller.selectedCategoryType.value.indexOf(true)]
-                      : controller.selectedCategoryType.value
+                          controller.displayedCategoryType.value.indexOf(true)]
+                      : controller.displayedCategoryType.value
                           .where((element) => element == true)
                           .length
                           .toString()),
               style: TextStyle(
                 fontSize: 12,
-                color: controller.selectedCategoryType.value.contains(true) ==
+                color: controller.displayedCategoryType.value.contains(true) ==
                         false
                     ? ColorPalette.grey_6
                     : ColorPalette.white,
@@ -315,13 +315,13 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 controller.resetSelectedCategoryType();
               },
               child: SvgPicture.asset(
-                controller.selectedCategoryType.value.contains(true) == false
+                controller.displayedCategoryType.value.contains(true) == false
                     ? 'assets/icons/arrow_down.svg'
                     : 'assets/icons/cancle.svg',
                 height: 10,
                 width: 10,
                 colorFilter: ColorFilter.mode(
-                  controller.selectedCategoryType.value.contains(true) == false
+                  controller.displayedCategoryType.value.contains(true) == false
                       ? ColorPalette.grey_4
                       : ColorPalette.white,
                   BlendMode.srcIn,
@@ -339,11 +339,11 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
       () => Container(
         decoration: BoxDecoration(
           border: Border.all(
-              color: controller.selectedPriceRange.value == RangeValues(0, 36)
+              color: controller.displayedPriceRange.value == RangeValues(0, 36)
                   ? ColorPalette.grey_3
                   : ColorPalette.purple),
           borderRadius: BorderRadius.circular(20),
-          color: controller.selectedPriceRange.value == RangeValues(0, 36)
+          color: controller.displayedPriceRange.value == RangeValues(0, 36)
               ? ColorPalette.white
               : ColorPalette.purple,
         ),
@@ -351,35 +351,36 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         child: Row(
           children: [
             Text(
-              controller.selectedPriceRange.value == RangeValues(0, 36)
+              controller.displayedPriceRange.value == RangeValues(0, 36)
                   ? '가격대'
-                  : '${controller.priceRange[controller.selectedPriceRange.value.start.toInt()].toString().replaceAllMapped(
+                  : '${controller.priceRange[controller.displayedPriceRange.value.start.toInt()].toString().replaceAllMapped(
                         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                         (Match m) => '${m[1]},',
-                      )}원 ~ ${controller.priceRange[controller.selectedPriceRange.value.end.toInt()].toString().replaceAllMapped(
+                      )}원 ~ ${controller.priceRange[controller.displayedPriceRange.value.end.toInt()].toString().replaceAllMapped(
                         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                         (Match m) => '${m[1]},',
                       )}원',
               style: TextStyle(
                 fontSize: 12,
-                color: controller.selectedPriceRange.value == RangeValues(0, 36)
-                    ? ColorPalette.grey_6
-                    : ColorPalette.white,
+                color:
+                    controller.displayedPriceRange.value == RangeValues(0, 36)
+                        ? ColorPalette.grey_6
+                        : ColorPalette.white,
               ),
             ),
             SizedBox(width: 5),
             GestureDetector(
               onTap: () {
-                controller.changeSelectedPriceRange(RangeValues(0, 36));
+                controller.resetSelectedPriceRange();
               },
               child: SvgPicture.asset(
-                controller.selectedPriceRange.value == RangeValues(0, 36)
+                controller.displayedPriceRange.value == RangeValues(0, 36)
                     ? 'assets/icons/arrow_down.svg'
                     : 'assets/icons/cancle.svg',
                 height: 10,
                 width: 10,
                 colorFilter: ColorFilter.mode(
-                  controller.selectedPriceRange.value == RangeValues(0, 36)
+                  controller.displayedPriceRange.value == RangeValues(0, 36)
                       ? ColorPalette.grey_4
                       : ColorPalette.white,
                   BlendMode.srcIn,
@@ -695,8 +696,11 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         SizedBox(width: 10),
         NextButton(
           text: '적용하기',
-          value: controller.isResetValid(),
-          onTap: () => Get.back(),
+          value: controller.isApplyValid(),
+          onTap: () {
+            controller.applyFilter();
+            Get.back();
+          },
           width: Get.width * 0.5,
         ),
       ],
