@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 
@@ -10,9 +11,14 @@ class BuyerHomeController extends GetxController {
   Rx<int> selectedSearchType = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
-  List<String> categoryTypes = ['머그컵', '술잔', '화병', '오브제', '그릇', '기타'];
-  RxList<bool> selectedCategoryType = List.generate(6, (index) => false).obs;
+  List<String> categoryTypes = ['그릇', '컵', '접시', '그릇', '기타'];
+  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
+
+  Rx<int> displayedSortType = 0.obs;
+  RxList<bool> displayedCategoryType = List.generate(5, (index) => false).obs;
+  Rx<RangeValues> displayedPriceRange = RangeValues(0, 36).obs;
+
   List<int> priceRange = [
     1000,
     2000,
@@ -63,12 +69,43 @@ class BuyerHomeController extends GetxController {
     await fetch();
   }
 
-  Future<void> fetch() async {
+  Future<void> fetch({bool isPagination = false}) async {
     try {
+      String category = '';
+      for (int i = 0; i < categoryTypes.length; i++) {
+        if (displayedCategoryType[i]) {
+          category += '${categoryTypes[i]},';
+        }
+      }
+      String ordering = '';
+      switch (displayedSortType.value) {
+        case 0:
+          ordering = 'recent';
+          break;
+        case 1:
+          ordering = 'likes';
+          break;
+        case 2:
+          ordering = 'price_low';
+          break;
+        case 3:
+          ordering = 'price_high';
+          break;
+      }
+      String price =
+          '${priceRange[displayedPriceRange.value.start.toInt()]},${priceRange[displayedPriceRange.value.end.toInt()]}';
+
+      if (isPagination!) currentPage++;
       final List<BuyerHomeItem> fetchedItems =
-          await _homeRepository.fetchBuyerHomeItems(currentPage);
+          await _homeRepository.fetchBuyerHomeItems(
+        currentPage,
+        keyword: Get.find<BuyerSearchController>().searchController.text,
+        price: price,
+        category: category,
+        ordering: ordering,
+        isPagination: isPagination,
+      );
       items.addAll(fetchedItems);
-      currentPage++;
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer home items in controller: $e');
@@ -89,16 +126,27 @@ class BuyerHomeController extends GetxController {
 
   void resetSelectedCategoryType() {
     selectedCategoryType.value = List.generate(6, (index) => false);
+    displayedCategoryType.value = List.generate(6, (index) => false);
+    pageReset();
   }
 
   void changeSelectedPriceRange(RangeValues range) {
     selectedPriceRange.value = range;
   }
 
-  void resetSelected() {
-    selectedSortType.value = 0;
-    resetSelectedCategoryType();
+  void resetSelectedPriceRange() {
     selectedPriceRange.value = RangeValues(0, 36);
+    displayedPriceRange.value = RangeValues(0, 36);
+    pageReset();
+  }
+
+  Future<void> resetSelected() async {
+    selectedSortType.value = 0;
+    displayedSortType.value = 0;
+    resetSelectedCategoryType();
+    resetSelectedPriceRange();
+    await fetch();
+    await applyFilter();
   }
 
   bool isResetValid() {
@@ -107,10 +155,22 @@ class BuyerHomeController extends GetxController {
         selectedPriceRange.value != RangeValues(0, 36);
   }
 
-  void pageReset() async {
+  bool isApplyValid() {
+    return selectedSortType.value != displayedSortType.value ||
+        selectedCategoryType.value.contains(true) ||
+        selectedPriceRange.value != displayedPriceRange.value;
+  }
+
+  Future<void> pageReset() async {
     items.clear();
-    resetSelected();
     currentPage = 1;
     await fetch();
+  }
+
+  Future<void> applyFilter() async {
+    displayedSortType.value = selectedSortType.value;
+    displayedCategoryType.value = selectedCategoryType.value;
+    displayedPriceRange.value = selectedPriceRange.value;
+    await pageReset();
   }
 }

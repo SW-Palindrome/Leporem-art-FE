@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
@@ -157,7 +158,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   _buyerSearchAppBar() {
-    final buyerSearchController = Get.find<BuyerSearchController>();
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -177,8 +177,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Center(
           child: TextField(
-            onSubmitted: (value) {
-              buyerSearchController.addRecentSearch(value);
+            controller: Get.find<BuyerSearchController>().searchController,
+            onSubmitted: (value) async {
+              Get.find<BuyerSearchController>().addRecentSearch(value);
+              Get.find<BuyerSearchController>().isSearching.value = true;
+              Get.find<BuyerHomeController>().items.clear();
+              Get.find<BuyerHomeController>().currentPage = 1;
+              await Get.find<BuyerHomeController>().fetch();
+              Get.back();
             },
             decoration: InputDecoration.collapsed(
               hintText: '작품명 또는 작가명을 검색해주세요.',
