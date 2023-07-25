@@ -69,16 +69,16 @@ class BuyerHomeController extends GetxController {
     await fetch();
   }
 
-  Future<void> fetch() async {
+  Future<void> fetch({bool isPagination = false}) async {
     try {
       String category = '';
       for (int i = 0; i < categoryTypes.length; i++) {
-        if (selectedCategoryType[i]) {
+        if (displayedCategoryType[i]) {
           category += '${categoryTypes[i]},';
         }
       }
       String ordering = '';
-      switch (selectedSortType.value) {
+      switch (displayedSortType.value) {
         case 0:
           ordering = 'recent';
           break;
@@ -89,11 +89,11 @@ class BuyerHomeController extends GetxController {
           ordering = 'price_low';
           break;
         case 3:
-          ordering = 'price_hight';
+          ordering = 'price_high';
           break;
       }
       String price =
-          '${priceRange[selectedPriceRange.value.start.toInt()]},${priceRange[selectedPriceRange.value.end.toInt()]}';
+          '${priceRange[displayedPriceRange.value.start.toInt()]},${priceRange[displayedPriceRange.value.end.toInt()]}';
       final List<BuyerHomeItem> fetchedItems =
           await _homeRepository.fetchBuyerHomeItems(
         currentPage,
@@ -103,7 +103,7 @@ class BuyerHomeController extends GetxController {
         ordering: ordering,
       );
       items.addAll(fetchedItems);
-      currentPage++;
+      if (isPagination!) currentPage++;
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer home items in controller: $e');
@@ -136,12 +136,13 @@ class BuyerHomeController extends GetxController {
     displayedPriceRange.value = RangeValues(0, 36);
   }
 
-  void resetSelected() {
+  Future<void> resetSelected() async {
     selectedSortType.value = 0;
     displayedSortType.value = 0;
     resetSelectedCategoryType();
     resetSelectedPriceRange();
-    applyFilter();
+    await fetch();
+    await applyFilter();
   }
 
   bool isResetValid() {
@@ -156,35 +157,17 @@ class BuyerHomeController extends GetxController {
         selectedPriceRange.value != displayedPriceRange.value;
   }
 
-  void pageReset() async {
+  Future<void> pageReset() async {
     items.clear();
-    resetSelected();
     currentPage = 1;
     await fetch();
   }
 
-  void applyFilter() {
+  Future<void> applyFilter() async {
     displayedSortType.value = selectedSortType.value;
     displayedCategoryType.value = selectedCategoryType.value;
     displayedPriceRange.value = selectedPriceRange.value;
-    print('정렬: ${selectedSortType.value}\n'
-        '카테고리: ${selectedCategoryType.value}\n'
-        '가격: ${selectedPriceRange.value}');
-    print('적용된 정렬: ${displayedSortType.value}\n'
-        '적용된 카테고리: ${displayedCategoryType.value}\n'
-        '적용된 가격: ${displayedPriceRange.value}');
+    await pageReset();
     update();
-  }
-
-  void search(String keyword) async {
-    String category = '';
-    String ordering = '';
-    String price =
-        '${selectedPriceRange.value.start.toString()},${selectedPriceRange.value.end.toString()}';
-    for (int i = 0; i < categoryTypes.length; i++) {
-      if (selectedCategoryType[i]) {
-        category += '${categoryTypes[i]},';
-      }
-    }
   }
 }

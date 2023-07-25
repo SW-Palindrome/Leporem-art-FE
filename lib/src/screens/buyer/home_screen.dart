@@ -33,7 +33,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 onNotification: (ScrollNotification scrollInfo) {
                   if (scrollInfo is ScrollEndNotification) {
                     if (controller.scrollController.position.extentAfter == 0) {
-                      controller.fetch();
+                      controller.fetch(isPagination: true);
                     }
                     if (controller.scrollController.position.extentBefore ==
                         0) {
@@ -649,8 +649,9 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              controller.resetSelected();
+            onTap: () async {
+              await controller.resetSelected();
+              Get.back();
             },
             child: Container(
               height: Get.height * 0.06,
