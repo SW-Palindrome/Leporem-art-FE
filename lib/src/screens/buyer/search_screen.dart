@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/item_search_controller.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
-class ItemSearchScreen extends GetView<ItemSearchController> {
-  const ItemSearchScreen({super.key});
+class BuyerSearchScreen extends GetView<BuyerSearchController> {
+  const BuyerSearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        appBarType: AppBarType.searchAppBar,
+        appBarType: AppBarType.buyerSearchAppBar,
         onTapLeadingIcon: () {
           Get.back();
         },

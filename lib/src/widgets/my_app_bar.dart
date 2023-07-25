@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/item_search_controller.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
+import '../controllers/seller_search_controller.dart';
+
 enum AppBarType {
-  buyerMainPageAppBar,
+  mainPageAppBar,
+  buyerSearchAppBar,
   buyerItemDetailAppBar,
-  sellerMainPageAppBar,
+  sellerSearchAppBar,
   sellerItemDetailAppBar,
   backAppBar,
-  searchAppBar,
   none,
 }
 
@@ -38,18 +40,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     switch (appBarType) {
-      case AppBarType.buyerMainPageAppBar:
+      case AppBarType.mainPageAppBar:
         return _buyerMainPageAppBar();
+      case AppBarType.buyerSearchAppBar:
+        return _buyerSearchAppBar();
       case AppBarType.buyerItemDetailAppBar:
         return _buyerItemDetailAppBar();
+      case AppBarType.sellerSearchAppBar:
+        return _sellerSearchAppBar();
+      case AppBarType.sellerItemDetailAppBar:
+        return _sellerItemDetailAppBar();
       case AppBarType.backAppBar:
         return _backAppBar();
       case AppBarType.none:
         return _noneAppBar();
       // case AppBarType.backAppBar:
       //   return _backAppBar();
-      case AppBarType.searchAppBar:
-        return _searchAppBar();
       // case AppBarType.none:
       //   return _noneAppBar();
       default:
@@ -150,8 +156,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  _searchAppBar() {
-    final itemSearchController = Get.find<ItemSearchController>();
+  _buyerSearchAppBar() {
+    final buyerSearchController = Get.find<BuyerSearchController>();
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -172,10 +178,51 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Center(
           child: TextField(
             onSubmitted: (value) {
-              itemSearchController.addRecentSearch(value);
+              buyerSearchController.addRecentSearch(value);
             },
             decoration: InputDecoration.collapsed(
               hintText: '작품명 또는 작가명을 검색해주세요.',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+              ),
+            ),
+            style: TextStyle(
+              color: ColorPalette.black,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _sellerItemDetailAppBar() {}
+
+  _sellerSearchAppBar() {
+    final sellerSearchController = Get.find<SellerSearchController>();
+    return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          width: 24,
+        ),
+        onPressed: onTapLeadingIcon,
+      ),
+      title: Container(
+        height: 36,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: ColorPalette.grey_2,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: TextField(
+            onSubmitted: (value) {
+              sellerSearchController.addRecentSearch(value);
+            },
+            decoration: InputDecoration.collapsed(
+              hintText: '작품명을 검색해주세요.',
               hintStyle: TextStyle(
                 color: ColorPalette.grey_4,
               ),
