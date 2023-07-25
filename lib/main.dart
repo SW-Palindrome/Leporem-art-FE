@@ -12,19 +12,23 @@ import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
-import 'package:leporemart/src/controllers/home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
-import 'package:leporemart/src/controllers/item_search_controller.dart';
+import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
-import 'package:leporemart/src/screens/buyer/item_search_screen.dart';
+import 'package:leporemart/src/screens/buyer/search_screen.dart';
 import 'package:leporemart/src/screens/item_create_detail_screen.dart';
 import 'package:leporemart/src/screens/item_create_screen.dart';
+import 'package:leporemart/src/screens/seller/search_screen.dart';
+import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -46,10 +50,12 @@ void main() async {
   Get.put(NicknameController());
   Get.put(ItemDetailController());
   Get.put(ItemCreateDetailController());
-  Get.put(ItemSearchController());
-  Get.put(HomeController());
+  Get.put(BuyerSearchController());
+  Get.put(BuyerHomeController());
   Get.put(BuyerProfileController());
   Get.put(BuyerProfileEditController());
+  Get.put(SellerHomeController());
+  Get.put(SellerSearchController());
   Get.put(SellerProfileController());
   Get.put(SellerProfileEditController());
   FirebaseConfig.init();
@@ -96,8 +102,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/buyer': (context) => BuyerApp(),
-        '/buyer/search': (context) => ItemSearchScreen(),
+        '/buyer/search': (context) => BuyerSearchScreen(),
         '/buyer/item': (context) => BuyerItemDetailScreen(),
+        '/seller': (context) => SellerApp(),
+        '/seller/search': (context) => SellerSearchScreen(),
         '/seller/create': (context) => ItemCreateScreen(),
         '/seller/create/self': (context) => ItemCreateDetailScreen(),
       },

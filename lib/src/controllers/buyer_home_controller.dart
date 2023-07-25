@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 
-class HomeController extends GetxController {
+class BuyerHomeController extends GetxController {
   final HomeRepository _homeRepository = HomeRepository();
-  RxList<Item> items = <Item>[].obs;
+  RxList<BuyerHomeItem> items = <BuyerHomeItem>[].obs;
   List<String> searchTypes = ['정렬', '작품 종류', '가격대'];
   Rx<int> selectedSearchType = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
@@ -65,13 +65,13 @@ class HomeController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      final List<Item> fetchedItems =
-          await _homeRepository.fetchItems(currentPage);
+      final List<BuyerHomeItem> fetchedItems =
+          await _homeRepository.fetchBuyerHomeItems(currentPage);
       items.addAll(fetchedItems);
       currentPage++;
     } catch (e) {
       // 에러 처리
-      print('Error fetching items in controller: $e');
+      print('Error fetching buyer home items in controller: $e');
     }
   }
 
@@ -107,10 +107,10 @@ class HomeController extends GetxController {
         selectedPriceRange.value != RangeValues(0, 36);
   }
 
-  void pageReset() {
+  void pageReset() async {
     items.clear();
     resetSelected();
     currentPage = 1;
-    fetch();
+    await fetch();
   }
 }

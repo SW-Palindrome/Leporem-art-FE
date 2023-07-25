@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemSearchController extends GetxController {
+class BuyerSearchController extends GetxController {
   RxList<String> recentSearches = <String>[].obs;
 
   @override
@@ -32,21 +32,21 @@ class ItemSearchController extends GetxController {
   void saveRecentSearches() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setStringList('recent_searches', recentSearches);
+      await prefs.setStringList('recent_buyer_searches', recentSearches);
     } catch (e) {
-      print('Failed to save recent searches: $e');
+      print('Failed to save recent buyer searches: $e');
     }
   }
 
   void loadRecentSearches() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final searches = prefs.getStringList('recent_searches');
+      final searches = prefs.getStringList('recent_buyer_searches');
       if (searches != null) {
         recentSearches.assignAll(searches);
       }
     } catch (e) {
-      print('Failed to load recent searches: $e');
+      print('Failed to load recent buyer searches: $e');
     }
   }
 }

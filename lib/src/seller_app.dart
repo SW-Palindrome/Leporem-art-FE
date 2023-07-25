@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
-import 'package:leporemart/src/screens/buyer/home_screen.dart';
+import 'package:leporemart/src/screens/seller/home_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -17,7 +17,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     return Obx(() {
       switch (controller.selectedSellerIndex.value) {
         case 0:
-          return _listScaffold();
+          return _homeScaffold();
         case 1:
           return _customOrderScaffold();
         case 2:
@@ -25,17 +25,17 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
         case 3:
           return _profileScaffold();
         default:
-          return _listScaffold();
+          return _homeScaffold();
       }
     });
   }
 
-  _listScaffold() {
+  _homeScaffold() {
     return Scaffold(
       appBar: MyAppBar(
-          appBarType: AppBarType.buyerMainPageAppBar,
-          onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
-      body: BuyerHomeScreen(),
+          appBarType: AppBarType.mainPageAppBar,
+          onTapFirstActionIcon: () => Get.toNamed('/seller/search')),
+      body: SellerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );

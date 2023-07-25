@@ -36,7 +36,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
   _homeScaffold() {
     return Scaffold(
       appBar: MyAppBar(
-          appBarType: AppBarType.buyerMainPageAppBar,
+          appBarType: AppBarType.mainPageAppBar,
           onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
       body: BuyerHomeScreen(),
       bottomNavigationBar:
