@@ -181,9 +181,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             onSubmitted: (value) async {
               Get.find<BuyerSearchController>().addRecentSearch(value);
               Get.find<BuyerSearchController>().isSearching.value = true;
-              Get.find<BuyerHomeController>().items.clear();
-              Get.find<BuyerHomeController>().currentPage = 1;
-              await Get.find<BuyerHomeController>().fetch();
+              await Get.find<BuyerHomeController>().pageReset();
               Get.back();
             },
             decoration: InputDecoration.collapsed(
