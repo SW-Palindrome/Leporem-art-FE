@@ -18,7 +18,7 @@ class ItemCreateDetailController extends GetxController {
   RxList<File> videos = RxList<File>([]);
   Rx<bool> isVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
-  List<String> categoryTypes = ['그릇', '컵', '접시', '그릇', '기타'];
+  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> title = Rx<String>('');
   Rx<String> description = Rx<String>('');
@@ -58,6 +58,7 @@ class ItemCreateDetailController extends GetxController {
     return result;
   }
 
+//TODO:
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
@@ -71,7 +72,10 @@ class ItemCreateDetailController extends GetxController {
     }
     // 이미지 개수만큼 isImagesLoading을 true로 변경
     isImagesLoading.assignAll(List.generate(pickedFiles.length, (_) => true));
+    // 압축한 이미지를 저장할 공간
     List<File> compressedImages = [];
+    // 이미지를 추가하기전 기존의 이미지리스트를 초기화
+    images.clear();
     int index = 0;
     // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
     for (final imageFile in pickedFiles) {
@@ -243,7 +247,7 @@ class ItemCreateDetailController extends GetxController {
     // 선택된 카테고리 타입을 formData에 추가
     for (int i = 0; i < selectedCategoryType.length; i++) {
       if (selectedCategoryType[i]) {
-        categoryList.add(MapEntry('categories', i.toString()));
+        categoryList.add(MapEntry('categories', (i + 1).toString()));
       }
     }
     formData.fields.addAll(categoryList);

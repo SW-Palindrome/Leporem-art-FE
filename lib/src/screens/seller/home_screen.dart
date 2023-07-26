@@ -86,7 +86,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       fontWeight: FontWeight.bold,
                       fontFamily: "PretendardVariable",
                       fontStyle: FontStyle.normal,
-                      fontSize: 17.0,
+                      fontSize: 14.0,
                     ),
                   ),
                 ],
