@@ -47,13 +47,11 @@ class MessageScreen extends GetView<BuyerMessageController> {
   }
 
   _chatRoomListWidget() {
-    return Container(
-      child: Column(
-        children: [
-          for (final chatRoom in controller.chatRoomList)
-            _chatRoomWidget(chatRoom)
-        ],
-      ),
+    return Column(
+      children: [
+        for (final chatRoom in controller.chatRoomList)
+          _chatRoomWidget(chatRoom)
+      ],
     );
   }
 
@@ -66,72 +64,92 @@ class MessageScreen extends GetView<BuyerMessageController> {
         borderRadius: BorderRadius.circular(12),
         child: Slidable(
           endActionPane: ActionPane(
-            extentRatio: 0.36,
+            extentRatio: 0.36,  // Slide 된 위젯 사이즈
             motion: ScrollMotion(),
             children: [
-              CustomSlidableAction(
-                onPressed: (BuildContext context) {},
-                backgroundColor: ColorPalette.grey_3,
-                child: Text(
-                  '알림끄기',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontFamily: "PretendardVariable",
-                  )
-                ),
-              ),
-              CustomSlidableAction(
-                onPressed: (BuildContext context) {},
-                backgroundColor: ColorPalette.red,
-                child: Text(
-                    '나가기',
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontFamily: "PretendardVariable",
-                    )
-                ),
-              ),
+              _turnOffAlarmWidget(),
+              _leaveChatRoomWidget(),
             ],
           ),
-          child: Row(
-            children: [
-              SizedBox(width: 12),
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(Get.width * 0.1),
-                  child: Image.network(
-                    chatRoom.profileImageUrl,
-                    width: 48,
-                    height: 48,
-                  ),
-              ),
-              Container(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        chatRoom.nickname,
-                        style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
-                        style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    chatRoom.lastChatMessage,
-                    style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
-                  ),
-                ],
-              )
-            ]
-          ),
+          child: _chatRoomInfoWidget(chatRoom),
         ),
+      ),
+    );
+  }
+
+  _chatRoomInfoWidget(ChatRoom chatRoom) {
+    return Row(
+        children: [
+          SizedBox(width: 12),
+          _profileImageWidget(chatRoom),
+          SizedBox(width: 8),
+          _profileDetailInfoWidget(chatRoom),
+        ]
+    );
+  }
+
+  _profileImageWidget(ChatRoom chatRoom) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(Get.width * 0.1),
+      child: Image.network(
+        chatRoom.profileImageUrl,
+        width: 48,
+        height: 48,
+      ),
+    );
+  }
+
+  _turnOffAlarmWidget() {
+    return CustomSlidableAction(
+      onPressed: (BuildContext context) {},
+      backgroundColor: ColorPalette.grey_3,
+      child: Text(
+          '알림끄기',
+          style: TextStyle(
+            fontSize: 11,
+            fontFamily: "PretendardVariable",
+          )
+      ),
+    );
+  }
+
+  _profileDetailInfoWidget(ChatRoom chatRoom) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Text(
+                chatRoom.nickname,
+                style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
+            ),
+            SizedBox(width: 6),
+            Text(
+                DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
+                style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
+            ),
+          ],
+        ),
+        SizedBox(height: 8),
+        Text(
+            chatRoom.lastChatMessage,
+            style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
+        ),
+      ],
+    );
+  }
+
+  _leaveChatRoomWidget() {
+    return CustomSlidableAction(
+      onPressed: (BuildContext context) {},
+      backgroundColor: ColorPalette.red,
+      child: Text(
+          '나가기',
+          style: TextStyle(
+            fontSize: 11,
+            fontFamily: "PretendardVariable",
+          )
       ),
     );
   }
