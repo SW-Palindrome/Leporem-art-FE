@@ -18,11 +18,13 @@ class ItemCreateDetailController extends GetxController {
   RxList<File> videos = RxList<File>([]);
   Rx<bool> isVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
+  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
+  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> title = Rx<String>('');
   Rx<String> description = Rx<String>('');
-  Rx<double> width = Rx<double>(0);
-  Rx<double> depth = Rx<double>(0);
-  Rx<double> height = Rx<double>(0);
+  Rx<String> width = Rx<String>('');
+  Rx<String> depth = Rx<String>('');
+  Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(0);
 
@@ -42,15 +44,6 @@ class ItemCreateDetailController extends GetxController {
     descriptionController.addListener(() {
       description.value = descriptionController.text;
     });
-    widthController.addListener(() {
-      width.value = double.parse(widthController.text);
-    });
-    depthController.addListener(() {
-      depth.value = double.parse(depthController.text);
-    });
-    heightController.addListener(() {
-      height.value = double.parse(heightController.text);
-    });
     priceController.addListener(() {
       price.value = int.parse(priceController.text.replaceAll(',', ''));
     });
@@ -65,6 +58,7 @@ class ItemCreateDetailController extends GetxController {
     return result;
   }
 
+//TODO:
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
@@ -76,18 +70,12 @@ class ItemCreateDetailController extends GetxController {
       );
       return;
     }
-    // 이미지 개수가 3개 미만이면 에러 메시지를 표시하고 리턴
-    if (pickedFiles.length < 3) {
-      Get.snackbar(
-        '이미지 선택',
-        '이미지는 최소 3장 이상 선택해야 합니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
     // 이미지 개수만큼 isImagesLoading을 true로 변경
     isImagesLoading.assignAll(List.generate(pickedFiles.length, (_) => true));
+    // 압축한 이미지를 저장할 공간
     List<File> compressedImages = [];
+    // 이미지를 추가하기전 기존의 이미지리스트를 초기화
+    images.clear();
     int index = 0;
     // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
     for (final imageFile in pickedFiles) {
@@ -98,10 +86,10 @@ class ItemCreateDetailController extends GetxController {
         final compressedFile = File('${imageFile.path}.compressed.jpg')
           ..writeAsBytesSync(compressedImage);
         compressedImages.add(compressedFile);
-        print('original image length: ${File(imageFile.path).lengthSync()}');
-        print('original image path: ${imageFile.path}');
-        print('compressed image length: ${compressedFile.lengthSync()}');
-        print('compressed image path: ${compressedFile.path}');
+        // print('original image length: ${File(imageFile.path).lengthSync()}');
+        // print('original image path: ${imageFile.path}');
+        // print('compressed image length: ${compressedFile.lengthSync()}');
+        // print('compressed image path: ${compressedFile.path}');
 
         // // 압축한 이미지를 폰에 저장시키기
         // final result = await ImageGallerySaver.saveFile(
@@ -153,10 +141,10 @@ class ItemCreateDetailController extends GetxController {
       videos.clear();
       videos.add(originalFile);
       isVideoLoading.value = false;
-      print('original video length: ${originalFile.lengthSync()}');
-      print('original video path: ${originalFile.path}');
-      print('compressed video length: ${compressedFile.lengthSync()}');
-      print('compressed video path: ${compressedFile.path}');
+      // print('original video length: ${originalFile.lengthSync()}');
+      // print('original video path: ${originalFile.path}');
+      // print('compressed video length: ${compressedFile.lengthSync()}');
+      // print('compressed video path: ${compressedFile.path}');
       // // 압축한 비디오를 폰에 저장시키기
       // final result = await ImageGallerySaver.saveFile(
       //   info.path!,
@@ -175,6 +163,14 @@ class ItemCreateDetailController extends GetxController {
     }
   }
 
+  void changeSelectedCategoryType(int index) {
+    selectedCategoryType[index] = !selectedCategoryType[index];
+  }
+
+  void resetSelectedCategoryType() {
+    selectedCategoryType.value = List.generate(5, (index) => false);
+  }
+
   void decreaseQuantity() {
     if (amount.value > 0) {
       amount.value--;
@@ -188,11 +184,12 @@ class ItemCreateDetailController extends GetxController {
   }
 
   bool isValidCreate() {
-    return images.length >= 3 &&
+    return images.isNotEmpty &&
         images.length <= 10 &&
         title.value.isNotEmpty &&
         description.value.isNotEmpty &&
-        price.value > 0 &&
+        price.value >= 1000 &&
+        price.value <= 1000000 &&
         amount.value > 0;
   }
 
@@ -210,9 +207,9 @@ class ItemCreateDetailController extends GetxController {
     // 데이터 모델에서 필요한 정보 가져오기
     String title = titleController.text;
     String description = descriptionController.text;
-    double width = double.tryParse(widthController.text) ?? 0.0;
-    double depth = double.tryParse(depthController.text) ?? 0.0;
-    double height = double.tryParse(heightController.text) ?? 0.0;
+    String width = widthController.text;
+    String depth = depthController.text;
+    String height = heightController.text;
     int price = int.tryParse(priceController.text.replaceAll(',', '')) ?? 0;
     int amount = this.amount.value;
     final formData = FormData.fromMap({
@@ -228,10 +225,35 @@ class ItemCreateDetailController extends GetxController {
         filename: images.first.path.split('/').last,
       ),
       'shorts': await MultipartFile.fromFile(
-        videos.value[0].path,
-        filename: videos.value[0].path.split('/').last,
+        videos.first.path,
+        filename: videos.first.path.split('/').last,
       ),
     });
+    //images에서 1번인덱스부터 끝까지의 이미지를 리스트에 넣고 formData에 추가
+
+    List<MapEntry<String, MultipartFile>> imageList = [];
+    for (int i = 1; i < images.length; i++) {
+      imageList.add(MapEntry(
+        'images',
+        await MultipartFile.fromFile(
+          images[i].path,
+          filename: images[i].path.split('/').last,
+        ),
+      ));
+    }
+    formData.files.addAll(imageList);
+
+    List<MapEntry<String, String>> categoryList = [];
+    // 선택된 카테고리 타입을 formData에 추가
+    for (int i = 0; i < selectedCategoryType.length; i++) {
+      if (selectedCategoryType[i]) {
+        categoryList.add(MapEntry('categories', (i + 1).toString()));
+      }
+    }
+    formData.fields.addAll(categoryList);
+
+    print(formData.files);
+    print(formData.fields);
     try {
       final response = await DioSingleton.dio.post(
         '/sellers/items',
@@ -253,6 +275,7 @@ class ItemCreateDetailController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       } else {
+        clearForm();
         Get.snackbar(
           '작품 등록 실패',
           '작품 등록에 실패하였습니다. 다시 시도해주세요.',
@@ -261,6 +284,7 @@ class ItemCreateDetailController extends GetxController {
       }
     } catch (error) {
       print(error);
+      clearForm();
       Get.snackbar(
         '작품 등록 실패',
         '작품 등록 중 오류가 발생하였습니다. 다시 시도해주세요.',
@@ -273,6 +297,7 @@ class ItemCreateDetailController extends GetxController {
     images.clear();
     videos.clear();
     thumbnail.value = null;
+    resetSelectedCategoryType();
     titleController.clear();
     descriptionController.clear();
     widthController.clear();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
@@ -20,6 +21,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         title: '작품 등록',
         onTapLeadingIcon: () {
           Get.back();
+          controller.clearForm();
         },
         isWhite: false,
       ),
@@ -49,6 +51,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   value: controller.isValidCreate(),
                   onTap: () async {
                     await controller.createItem();
+                    Get.offAllNamed('/seller');
                   },
                 ),
               ),
@@ -65,29 +68,15 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Row(
-            children: [
-              Text(
-                '사진과 플롭영상을 올려주세요.',
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0,
-                ),
-              ),
-              Text(
-                '(최소 3장)',
-                style: TextStyle(
-                  color: ColorPalette.grey_4,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
+          child: Text(
+            '사진과 플롭영상을 올려주세요.',
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0,
+            ),
           ),
         ),
         Obx(
@@ -339,40 +328,167 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Get.width),
-            border: Border.all(
-              color: ColorPalette.grey_4,
-              width: 1,
+        GestureDetector(
+          onTap: () {
+            Get.bottomSheet(
+              _searchSheetWidget(),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.0),
+                ),
+              ),
+            );
+          },
+          child: Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                    color:
+                        controller.selectedCategoryType.value.contains(true) ==
+                                false
+                            ? ColorPalette.grey_3
+                            : ColorPalette.purple),
+                borderRadius: BorderRadius.circular(20),
+                color: controller.selectedCategoryType.value.contains(true) ==
+                        false
+                    ? ColorPalette.white
+                    : ColorPalette.purple,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    controller.selectedCategoryType.value.contains(true) ==
+                            false
+                        ? '카테고리 선택'
+                        : (controller.selectedCategoryType
+                                    .where((element) => element == true)
+                                    .length ==
+                                1
+                            ? controller.categoryTypes[controller
+                                .selectedCategoryType.value
+                                .indexOf(true)]
+                            : controller.selectedCategoryType.value
+                                .where((element) => element == true)
+                                .length
+                                .toString()),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: controller.selectedCategoryType.value
+                                  .contains(true) ==
+                              false
+                          ? ColorPalette.grey_6
+                          : ColorPalette.white,
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      controller.resetSelectedCategoryType();
+                    },
+                    child: SvgPicture.asset(
+                      controller.selectedCategoryType.value.contains(true) ==
+                              false
+                          ? 'assets/icons/arrow_down.svg'
+                          : 'assets/icons/cancle.svg',
+                      height: 10,
+                      width: 10,
+                      colorFilter: ColorFilter.mode(
+                        controller.selectedCategoryType.value.contains(true) ==
+                                false
+                            ? ColorPalette.grey_4
+                            : ColorPalette.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          child: Row(
+        ),
+      ],
+    );
+  }
+
+  _searchSheetWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Obx(
+        () => Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '카테고리 선택',
-                style: TextStyle(
-                  color: ColorPalette.grey_6,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12.0,
-                ),
+              Row(
+                children: [
+                  Text(
+                    '작품 종류',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: ColorPalette.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/cancle.svg',
+                      height: 24,
+                      width: 24,
+                      colorFilter:
+                          ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: Get.width * 0.02),
-              SvgPicture.asset(
-                'assets/icons/arrow_down.svg',
-                colorFilter: ColorFilter.mode(
-                  ColorPalette.grey_4,
-                  BlendMode.srcIn,
-                ),
-                width: 10,
-              ),
+              SizedBox(height: Get.width * 0.1),
+              _categoryModal(),
+              SizedBox(height: Get.width * 0.1),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _categoryModal() {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: [
+        for (int i = 0; i < controller.categoryTypes.length; i++)
+          GestureDetector(
+            onTap: () => controller.changeSelectedCategoryType(i),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: controller.selectedCategoryType.value[i]
+                    ? ColorPalette.purple
+                    : Colors.white,
+                border: Border.all(
+                    color: controller.selectedCategoryType.value[i]
+                        ? ColorPalette.purple
+                        : ColorPalette.grey_3),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                controller.categoryTypes[i],
+                style: TextStyle(
+                  color: controller.selectedCategoryType.value[i]
+                      ? Colors.white
+                      : ColorPalette.black,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -538,8 +654,60 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       ),
                     ),
                     child: TextField(
-                      keyboardType: TextInputType.number,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
                       controller: controller.widthController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.widthController.value = TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.widthController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',
@@ -591,6 +759,57 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.depthController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.depthController.value = TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.depthController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',
@@ -642,6 +861,58 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.heightController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.heightController.value =
+                                TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.heightController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',
@@ -688,6 +959,16 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   fontFamily: "PretendardVariable",
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '(1,000~1,000,000원)',
+                style: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
                 ),
               ),
             ],

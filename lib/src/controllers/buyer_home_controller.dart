@@ -11,7 +11,7 @@ class BuyerHomeController extends GetxController {
   Rx<int> selectedSearchType = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
-  List<String> categoryTypes = ['그릇', '컵', '접시', '그릇', '기타'];
+  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<RangeValues> selectedPriceRange = RangeValues(0, 36).obs;
 
