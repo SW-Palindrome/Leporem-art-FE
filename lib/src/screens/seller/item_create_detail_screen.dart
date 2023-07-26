@@ -21,6 +21,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         title: '작품 등록',
         onTapLeadingIcon: () {
           Get.back();
+          controller.clearForm();
         },
         isWhite: false,
       ),
@@ -449,6 +450,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
               ),
               SizedBox(height: Get.width * 0.1),
               _categoryModal(),
+              SizedBox(height: Get.width * 0.1),
             ],
           ),
         ),

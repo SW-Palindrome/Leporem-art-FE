@@ -275,6 +275,7 @@ class ItemCreateDetailController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       } else {
+        clearForm();
         Get.snackbar(
           '작품 등록 실패',
           '작품 등록에 실패하였습니다. 다시 시도해주세요.',
@@ -283,6 +284,7 @@ class ItemCreateDetailController extends GetxController {
       }
     } catch (error) {
       print(error);
+      clearForm();
       Get.snackbar(
         '작품 등록 실패',
         '작품 등록 중 오류가 발생하였습니다. 다시 시도해주세요.',
