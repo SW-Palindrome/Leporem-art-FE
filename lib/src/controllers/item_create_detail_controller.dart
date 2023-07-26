@@ -82,10 +82,10 @@ class ItemCreateDetailController extends GetxController {
         final compressedFile = File('${imageFile.path}.compressed.jpg')
           ..writeAsBytesSync(compressedImage);
         compressedImages.add(compressedFile);
-        print('original image length: ${File(imageFile.path).lengthSync()}');
-        print('original image path: ${imageFile.path}');
-        print('compressed image length: ${compressedFile.lengthSync()}');
-        print('compressed image path: ${compressedFile.path}');
+        // print('original image length: ${File(imageFile.path).lengthSync()}');
+        // print('original image path: ${imageFile.path}');
+        // print('compressed image length: ${compressedFile.lengthSync()}');
+        // print('compressed image path: ${compressedFile.path}');
 
         // // 압축한 이미지를 폰에 저장시키기
         // final result = await ImageGallerySaver.saveFile(
@@ -137,10 +137,10 @@ class ItemCreateDetailController extends GetxController {
       videos.clear();
       videos.add(originalFile);
       isVideoLoading.value = false;
-      print('original video length: ${originalFile.lengthSync()}');
-      print('original video path: ${originalFile.path}');
-      print('compressed video length: ${compressedFile.lengthSync()}');
-      print('compressed video path: ${compressedFile.path}');
+      // print('original video length: ${originalFile.lengthSync()}');
+      // print('original video path: ${originalFile.path}');
+      // print('compressed video length: ${compressedFile.lengthSync()}');
+      // print('compressed video path: ${compressedFile.path}');
       // // 압축한 비디오를 폰에 저장시키기
       // final result = await ImageGallerySaver.saveFile(
       //   info.path!,
