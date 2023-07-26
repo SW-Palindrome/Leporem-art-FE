@@ -24,6 +24,7 @@ import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
+import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
 import 'package:leporemart/src/screens/buyer/search_screen.dart';
