@@ -46,3 +46,7 @@ class ColorPalette {
     colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
   );
 }
+
+class FontPalette {
+  static const String pretenderd = "PretendardVariable";
+}

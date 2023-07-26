@@ -14,6 +14,7 @@ enum AppBarType {
   sellerSearchAppBar,
   sellerItemDetailAppBar,
   backAppBar,
+  noticeAppBar,
   none,
 }
 
@@ -57,6 +58,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         return _noneAppBar();
       // case AppBarType.backAppBar:
       //   return _backAppBar();
+      case AppBarType.noticeAppBar:
+        return _noticeAppBar();
       // case AppBarType.none:
       //   return _noneAppBar();
       default:
@@ -237,6 +240,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _noticeAppBar() {
+    return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
+      elevation: 0,
+      actions: [
+        IconButton(
+          onPressed: onTapSecondActionIcon,
+          icon: SvgPicture.asset(
+            './assets/icons/notice.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+          ),
+        ),
+      ],
     );
   }
 }
