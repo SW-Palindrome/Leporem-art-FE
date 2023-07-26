@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
@@ -15,7 +16,10 @@ class EmailScreen extends GetView<EmailController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        onTapLeadingIcon: () => Get.back(),
+        onTapLeadingIcon: () {
+          Get.back();
+          controller.reset();
+        },
       ),
       body: SafeArea(
         child: Padding(
@@ -101,6 +105,7 @@ class EmailScreen extends GetView<EmailController> {
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
+                    enabled: !controller.isSendClicked.value,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontSize: 20,

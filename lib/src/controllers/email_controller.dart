@@ -96,4 +96,15 @@ class EmailController extends GetxController {
       print("이메일 전송 실패");
     }
   }
+
+  void reset() {
+    emailController.clear();
+    codeController.clear();
+    isEmailValid.value = false;
+    isDisplayError.value = false;
+    isFocused.value = false;
+    isSendClicked.value = false;
+    isCodeError.value = false;
+    isCodeValid.value = false;
+  }
 }
