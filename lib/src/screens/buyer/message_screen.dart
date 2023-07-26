@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:intl/intl.dart';
@@ -45,37 +46,58 @@ class MessageScreen extends GetView<BuyerMessageController> {
   }
 
   _chatRoomListWidget() {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          mainAxisSpacing: 16,
-        ),
-        itemCount: controller.chatRoomList.length,
-        itemBuilder: (_, index) {
-          return _chatRoomWidget(controller.chatRoomList[index]);
-        }
+    return Container(
+      child: Column(
+        children: [
+          for (final chatRoom in controller.chatRoomList)
+            _chatRoomWidget(chatRoom)
+        ],
+      ),
     );
   }
 
   _chatRoomWidget(ChatRoom chatRoom) {
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: ColorPalette.white,
+      ),
       height: 72,
+      margin: EdgeInsets.all(16),
       child: Row(
         children: [
           SizedBox(width: 12),
-          Image.network(chatRoom.profileImageUrl, width: 48, height: 48),
-          SizedBox(width: 8),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(Get.width * 0.1),
+              child: Image.network(
+                chatRoom.profileImageUrl,
+                width: 48,
+                height: 48,
+              ),
+          ),
+          Container(width: 8),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 12),
               Row(
                 children: [
-                  Text(chatRoom.nickname),
-                  Text(DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime)),
+                  Text(
+                    chatRoom.nickname,
+                    style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
+                  ),
+                  SizedBox(width: 6),
+                  Text(
+                    DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
+                    style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
+                  ),
                 ],
               ),
               SizedBox(height: 8),
-              Text(chatRoom.lastChatMessage),
+              Text(
+                chatRoom.lastChatMessage,
+                style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
+              ),
             ],
           )
         ]
