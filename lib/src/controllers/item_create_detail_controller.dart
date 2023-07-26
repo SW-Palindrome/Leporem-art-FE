@@ -78,15 +78,6 @@ class ItemCreateDetailController extends GetxController {
       );
       return;
     }
-    // 이미지 개수가 3개 미만이면 에러 메시지를 표시하고 리턴
-    if (pickedFiles.length < 3) {
-      Get.snackbar(
-        '이미지 선택',
-        '이미지는 최소 3장 이상 선택해야 합니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
     // 이미지 개수만큼 isImagesLoading을 true로 변경
     isImagesLoading.assignAll(List.generate(pickedFiles.length, (_) => true));
     List<File> compressedImages = [];

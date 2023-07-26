@@ -66,29 +66,15 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Row(
-            children: [
-              Text(
-                '사진과 플롭영상을 올려주세요.',
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0,
-                ),
-              ),
-              Text(
-                '(최소 3장)',
-                style: TextStyle(
-                  color: ColorPalette.grey_4,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
+          child: Text(
+            '사진과 플롭영상을 올려주세요.',
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: "PretendardVariable",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0,
+            ),
           ),
         ),
         Obx(
