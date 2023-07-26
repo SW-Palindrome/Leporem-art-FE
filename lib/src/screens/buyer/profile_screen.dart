@@ -5,6 +5,7 @@ import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -35,15 +36,17 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             title: '커뮤니티 관리',
             contents: ['팔로잉 목록', '차단 목록'],
             icons: ['followers', 'block'],
-            gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
+            gotoWidgets: [BuyerApp(), BuyerApp()],
           ),
-          Divider(color: ColorPalette.grey_2, thickness: 10),
-          _menuColumn(
-            title: '판매자 인증',
-            contents: ['학교 이메일 인증'],
-            icons: ['mail'],
-            gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
-          ),
+          if (!controller.buyerProfile.isSeller)
+            Divider(color: ColorPalette.grey_2, thickness: 10),
+          if (!controller.buyerProfile.isSeller)
+            _menuColumn(
+              title: '판매자 인증',
+              contents: ['학교 이메일 인증'],
+              icons: ['mail'],
+              gotoWidgets: [EmailScreen()],
+            ),
         ],
       ),
     );
