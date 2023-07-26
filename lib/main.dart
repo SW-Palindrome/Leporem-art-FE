@@ -54,12 +54,12 @@ void main() async {
   Get.put(ItemCreateDetailController());
   Get.put(BuyerSearchController());
   Get.put(BuyerHomeController());
-  Get.put(BuyerProfileController());
-  Get.put(BuyerProfileEditController());
+  Get.lazyPut(() => BuyerProfileController());
+  Get.lazyPut(() => BuyerProfileEditController());
   Get.put(SellerHomeController());
   Get.put(SellerSearchController());
-  Get.put(SellerProfileController());
-  Get.put(SellerProfileEditController());
+  Get.lazyPut(() => SellerProfileController());
+  Get.lazyPut(() => SellerProfileEditController());
   Get.put(BuyerMessageController());
 
   await initializeDateFormatting();
