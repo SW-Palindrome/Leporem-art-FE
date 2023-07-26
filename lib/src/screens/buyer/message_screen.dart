@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -58,49 +59,79 @@ class MessageScreen extends GetView<BuyerMessageController> {
 
   _chatRoomWidget(ChatRoom chatRoom) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: ColorPalette.white,
-      ),
+      color: ColorPalette.white,
       height: 72,
       margin: EdgeInsets.all(16),
-      child: Row(
-        children: [
-          SizedBox(width: 12),
-          ClipRRect(
-              borderRadius: BorderRadius.circular(Get.width * 0.1),
-              child: Image.network(
-                chatRoom.profileImageUrl,
-                width: 48,
-                height: 48,
-              ),
-          ),
-          Container(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Slidable(
+          endActionPane: ActionPane(
+            extentRatio: 0.36,
+            motion: ScrollMotion(),
             children: [
-              Row(
-                children: [
-                  Text(
-                    chatRoom.nickname,
-                    style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
-                  ),
-                  SizedBox(width: 6),
-                  Text(
-                    DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
-                    style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
-                  ),
-                ],
+              CustomSlidableAction(
+                onPressed: (BuildContext context) {},
+                backgroundColor: ColorPalette.grey_3,
+                child: Text(
+                  '알림끄기',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontFamily: "PretendardVariable",
+                  )
+                ),
               ),
-              SizedBox(height: 8),
-              Text(
-                chatRoom.lastChatMessage,
-                style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
+              CustomSlidableAction(
+                onPressed: (BuildContext context) {},
+                backgroundColor: ColorPalette.red,
+                child: Text(
+                    '나가기',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontFamily: "PretendardVariable",
+                    )
+                ),
               ),
             ],
-          )
-        ]
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: 12),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(Get.width * 0.1),
+                  child: Image.network(
+                    chatRoom.profileImageUrl,
+                    width: 48,
+                    height: 48,
+                  ),
+              ),
+              Container(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        chatRoom.nickname,
+                        style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
+                        style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    chatRoom.lastChatMessage,
+                    style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
+                  ),
+                ],
+              )
+            ]
+          ),
+        ),
       ),
     );
   }
