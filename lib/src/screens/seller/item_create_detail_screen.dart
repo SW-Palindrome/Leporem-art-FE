@@ -355,11 +355,12 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     controller.selectedCategoryType.value.contains(true) ==
                             false
-                        ? '작품 종류'
+                        ? '카테고리 선택'
                         : (controller.selectedCategoryType
                                     .where((element) => element == true)
                                     .length ==
@@ -383,7 +384,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   SizedBox(width: 5),
                   GestureDetector(
                     onTap: () {
-                      controller.selectedCategoryType();
+                      controller.resetSelectedCategoryType();
                     },
                     child: SvgPicture.asset(
                       controller.selectedCategoryType.value.contains(true) ==

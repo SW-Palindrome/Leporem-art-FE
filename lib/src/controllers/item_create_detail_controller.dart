@@ -172,6 +172,10 @@ class ItemCreateDetailController extends GetxController {
     selectedCategoryType[index] = !selectedCategoryType[index];
   }
 
+  void resetSelectedCategoryType() {
+    selectedCategoryType.value = List.generate(5, (index) => false);
+  }
+
   void decreaseQuantity() {
     if (amount.value > 0) {
       amount.value--;
