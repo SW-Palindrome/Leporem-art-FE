@@ -38,7 +38,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
             style: TextStyle(
               fontSize: 16,
               color: ColorPalette.grey_5,
-              fontFamily: "PretendardVariable",
+              fontFamily: FontPalette.pretenderd,
             )
           ),
         ],
@@ -107,7 +107,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
           '알림끄기',
           style: TextStyle(
             fontSize: 11,
-            fontFamily: "PretendardVariable",
+            fontFamily: FontPalette.pretenderd,
           )
       ),
     );
@@ -122,19 +122,19 @@ class MessageScreen extends GetView<BuyerMessageController> {
           children: [
             Text(
                 chatRoom.nickname,
-                style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", fontWeight: FontWeight.w700)
+                style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, fontWeight: FontWeight.w700)
             ),
             SizedBox(width: 6),
             Text(
                 DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
-                style: TextStyle(fontSize: 11, fontFamily: "PretendardVariable", color: ColorPalette.grey_4)
+                style: TextStyle(fontSize: 11, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_4)
             ),
           ],
         ),
         SizedBox(height: 8),
         Text(
             chatRoom.lastChatMessage,
-            style: TextStyle(fontSize: 12, fontFamily: "PretendardVariable", color: ColorPalette.grey_6)
+            style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_6)
         ),
       ],
     );
@@ -148,7 +148,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
           '나가기',
           style: TextStyle(
             fontSize: 11,
-            fontFamily: "PretendardVariable",
+            fontFamily: FontPalette.pretenderd,
           )
       ),
     );
