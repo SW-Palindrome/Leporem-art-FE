@@ -49,6 +49,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   value: controller.isValidCreate(),
                   onTap: () async {
                     await controller.createItem();
+                    Get.offAllNamed('/seller');
                   },
                 ),
               ),
@@ -339,40 +340,165 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Get.width),
-            border: Border.all(
-              color: ColorPalette.grey_4,
-              width: 1,
+        GestureDetector(
+          onTap: () {
+            Get.bottomSheet(
+              _searchSheetWidget(),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.0),
+                ),
+              ),
+            );
+          },
+          child: Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                    color:
+                        controller.selectedCategoryType.value.contains(true) ==
+                                false
+                            ? ColorPalette.grey_3
+                            : ColorPalette.purple),
+                borderRadius: BorderRadius.circular(20),
+                color: controller.selectedCategoryType.value.contains(true) ==
+                        false
+                    ? ColorPalette.white
+                    : ColorPalette.purple,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                children: [
+                  Text(
+                    controller.selectedCategoryType.value.contains(true) ==
+                            false
+                        ? '작품 종류'
+                        : (controller.selectedCategoryType
+                                    .where((element) => element == true)
+                                    .length ==
+                                1
+                            ? controller.categoryTypes[controller
+                                .selectedCategoryType.value
+                                .indexOf(true)]
+                            : controller.selectedCategoryType.value
+                                .where((element) => element == true)
+                                .length
+                                .toString()),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: controller.selectedCategoryType.value
+                                  .contains(true) ==
+                              false
+                          ? ColorPalette.grey_6
+                          : ColorPalette.white,
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      controller.selectedCategoryType();
+                    },
+                    child: SvgPicture.asset(
+                      controller.selectedCategoryType.value.contains(true) ==
+                              false
+                          ? 'assets/icons/arrow_down.svg'
+                          : 'assets/icons/cancle.svg',
+                      height: 10,
+                      width: 10,
+                      colorFilter: ColorFilter.mode(
+                        controller.selectedCategoryType.value.contains(true) ==
+                                false
+                            ? ColorPalette.grey_4
+                            : ColorPalette.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          child: Row(
+        ),
+      ],
+    );
+  }
+
+  _searchSheetWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Obx(
+        () => Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '카테고리 선택',
-                style: TextStyle(
-                  color: ColorPalette.grey_6,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 12.0,
-                ),
+              Row(
+                children: [
+                  Text(
+                    '작품 종류',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: ColorPalette.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/cancle.svg',
+                      height: 24,
+                      width: 24,
+                      colorFilter:
+                          ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: Get.width * 0.02),
-              SvgPicture.asset(
-                'assets/icons/arrow_down.svg',
-                colorFilter: ColorFilter.mode(
-                  ColorPalette.grey_4,
-                  BlendMode.srcIn,
-                ),
-                width: 10,
-              ),
+              SizedBox(height: Get.width * 0.1),
+              _categoryModal(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _categoryModal() {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: [
+        for (int i = 0; i < controller.categoryTypes.length; i++)
+          GestureDetector(
+            onTap: () => controller.changeSelectedCategoryType(i),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: controller.selectedCategoryType.value[i]
+                    ? ColorPalette.purple
+                    : Colors.white,
+                border: Border.all(
+                    color: controller.selectedCategoryType.value[i]
+                        ? ColorPalette.purple
+                        : ColorPalette.grey_3),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                controller.categoryTypes[i],
+                style: TextStyle(
+                  color: controller.selectedCategoryType.value[i]
+                      ? Colors.white
+                      : ColorPalette.black,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

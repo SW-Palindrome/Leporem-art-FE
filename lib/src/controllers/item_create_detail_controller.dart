@@ -18,6 +18,8 @@ class ItemCreateDetailController extends GetxController {
   RxList<File> videos = RxList<File>([]);
   Rx<bool> isVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
+  List<String> categoryTypes = ['그릇', '컵', '접시', '그릇', '기타'];
+  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> title = Rx<String>('');
   Rx<String> description = Rx<String>('');
   Rx<double> width = Rx<double>(0);
@@ -175,6 +177,10 @@ class ItemCreateDetailController extends GetxController {
     }
   }
 
+  void changeSelectedCategoryType(int index) {
+    selectedCategoryType[index] = !selectedCategoryType[index];
+  }
+
   void decreaseQuantity() {
     if (amount.value > 0) {
       amount.value--;
@@ -228,10 +234,26 @@ class ItemCreateDetailController extends GetxController {
         filename: images.first.path.split('/').last,
       ),
       'shorts': await MultipartFile.fromFile(
-        videos.value[0].path,
-        filename: videos.value[0].path.split('/').last,
+        videos.first.path,
+        filename: videos.first.path.split('/').last,
       ),
     });
+    //images에서 1번인덱스부터 끝까지의 이미지를 리스트에 넣고 formData에 추가
+    for (int i = 1; i < images.length; i++) {
+      formData.files.add(MapEntry(
+        'images[]',
+        await MultipartFile.fromFile(
+          images[i].path,
+          filename: images[i].path.split('/').last,
+        ),
+      ));
+    }
+    // 선택된 카테고리 타입을 formData에 추가
+    for (int i = 0; i < selectedCategoryType.length; i++) {
+      if (selectedCategoryType[i]) {
+        formData.fields.add(MapEntry('tag[]', i.toString()));
+      }
+    }
     try {
       final response = await DioSingleton.dio.post(
         '/sellers/items',
