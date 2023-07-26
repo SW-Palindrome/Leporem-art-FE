@@ -184,7 +184,8 @@ class ItemCreateDetailController extends GetxController {
         images.length <= 10 &&
         title.value.isNotEmpty &&
         description.value.isNotEmpty &&
-        price.value > 0 &&
+        price.value >= 1000 &&
+        price.value <= 1000000 &&
         amount.value > 0;
   }
 
@@ -290,6 +291,7 @@ class ItemCreateDetailController extends GetxController {
     images.clear();
     videos.clear();
     thumbnail.value = null;
+    resetSelectedCategoryType();
     titleController.clear();
     descriptionController.clear();
     widthController.clear();

@@ -959,6 +959,16 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   fontSize: 16.0,
                 ),
               ),
+              Text(
+                '(1,000~1,000,000원)',
+                style: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
             ],
           ),
         ),
