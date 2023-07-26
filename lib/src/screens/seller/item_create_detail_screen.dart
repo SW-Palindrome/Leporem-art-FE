@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
@@ -651,8 +652,60 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       ),
                     ),
                     child: TextField(
-                      keyboardType: TextInputType.number,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
                       controller: controller.widthController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.widthController.value = TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.widthController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',
@@ -704,6 +757,57 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.depthController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.depthController.value = TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.depthController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',
@@ -755,6 +859,58 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.heightController,
+                      onChanged: (value) {
+                        // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
+                        String integerPart = '';
+                        String decimalPart = '';
+
+                        if (value.isNotEmpty) {
+                          // 입력값이 비어있지 않은 경우, '.' 기준으로 정수 부분과 소수 부분으로 분리합니다.
+                          if (value.contains('.')) {
+                            List<String> parts = value.split('.');
+                            integerPart = parts[0];
+                            if (parts.length > 1) {
+                              decimalPart = parts[1];
+                            }
+                          } else {
+                            integerPart = value;
+                          }
+                        }
+
+                        // 정수 부분을 1~4글자로 제한합니다.
+                        if (integerPart.length > 4) {
+                          integerPart = integerPart.substring(0, 4);
+                        }
+
+                        // 소수 부분을 0~2글자로 제한합니다.
+                        if (decimalPart.length > 2) {
+                          decimalPart = decimalPart.substring(0, 2);
+                        }
+
+                        // 새로운 입력 값을 생성합니다.
+                        String newValue = integerPart;
+                        if (value.contains('.')) {
+                          newValue += '.$decimalPart';
+
+                          // 새로운 입력 값을 TextField에 설정합니다.
+                          if (value != newValue) {
+                            controller.heightController.value =
+                                TextEditingValue(
+                              text: newValue,
+                              selection: TextSelection.fromPosition(
+                                TextPosition(offset: newValue.length),
+                              ),
+                            );
+                          }
+                        } else {
+                          controller.heightController.value = TextEditingValue(
+                            text: newValue,
+                            selection: TextSelection.fromPosition(
+                              TextPosition(offset: newValue.length),
+                            ),
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: '0',

@@ -22,9 +22,9 @@ class ItemCreateDetailController extends GetxController {
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> title = Rx<String>('');
   Rx<String> description = Rx<String>('');
-  Rx<double> width = Rx<double>(0);
-  Rx<double> depth = Rx<double>(0);
-  Rx<double> height = Rx<double>(0);
+  Rx<String> width = Rx<String>('');
+  Rx<String> depth = Rx<String>('');
+  Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(0);
 
@@ -43,15 +43,6 @@ class ItemCreateDetailController extends GetxController {
     });
     descriptionController.addListener(() {
       description.value = descriptionController.text;
-    });
-    widthController.addListener(() {
-      width.value = double.parse(widthController.text);
-    });
-    depthController.addListener(() {
-      depth.value = double.parse(depthController.text);
-    });
-    heightController.addListener(() {
-      height.value = double.parse(heightController.text);
     });
     priceController.addListener(() {
       price.value = int.parse(priceController.text.replaceAll(',', ''));
@@ -189,7 +180,7 @@ class ItemCreateDetailController extends GetxController {
   }
 
   bool isValidCreate() {
-    return images.length >= 3 &&
+    return images.isNotEmpty &&
         images.length <= 10 &&
         title.value.isNotEmpty &&
         description.value.isNotEmpty &&
@@ -211,9 +202,9 @@ class ItemCreateDetailController extends GetxController {
     // 데이터 모델에서 필요한 정보 가져오기
     String title = titleController.text;
     String description = descriptionController.text;
-    double width = double.tryParse(widthController.text) ?? 0.0;
-    double depth = double.tryParse(depthController.text) ?? 0.0;
-    double height = double.tryParse(heightController.text) ?? 0.0;
+    String width = widthController.text;
+    String depth = depthController.text;
+    String height = heightController.text;
     int price = int.tryParse(priceController.text.replaceAll(',', '')) ?? 0;
     int amount = this.amount.value;
     final formData = FormData.fromMap({
@@ -234,21 +225,30 @@ class ItemCreateDetailController extends GetxController {
       ),
     });
     //images에서 1번인덱스부터 끝까지의 이미지를 리스트에 넣고 formData에 추가
+
+    List<MapEntry<String, MultipartFile>> imageList = [];
     for (int i = 1; i < images.length; i++) {
-      formData.files.add(MapEntry(
-        'images[]',
+      imageList.add(MapEntry(
+        'images',
         await MultipartFile.fromFile(
           images[i].path,
           filename: images[i].path.split('/').last,
         ),
       ));
     }
+    formData.files.addAll(imageList);
+
+    List<MapEntry<String, String>> categoryList = [];
     // 선택된 카테고리 타입을 formData에 추가
     for (int i = 0; i < selectedCategoryType.length; i++) {
       if (selectedCategoryType[i]) {
-        formData.fields.add(MapEntry('tag[]', i.toString()));
+        categoryList.add(MapEntry('categories', i.toString()));
       }
     }
+    formData.fields.addAll(categoryList);
+
+    print(formData.files);
+    print(formData.fields);
     try {
       final response = await DioSingleton.dio.post(
         '/sellers/items',
