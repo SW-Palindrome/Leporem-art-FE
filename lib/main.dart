@@ -51,10 +51,10 @@ void main() async {
   Get.put(AccountTypeController());
   Get.put(EmailController());
   Get.put(NicknameController());
-  Get.put(ItemDetailController());
   Get.put(ItemCreateDetailController());
   Get.put(BuyerSearchController());
   Get.put(BuyerHomeController());
+  Get.put(ItemDetailController());
   Get.lazyPut(() => BuyerProfileController());
   Get.lazyPut(() => BuyerProfileEditController());
   Get.put(SellerHomeController());

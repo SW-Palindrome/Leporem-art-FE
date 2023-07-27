@@ -70,7 +70,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
   _itemWidget(BuyerHomeItem item) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/buyer/item');
+        Get.toNamed('/buyer/item', arguments: {'item_id': item.id});
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
