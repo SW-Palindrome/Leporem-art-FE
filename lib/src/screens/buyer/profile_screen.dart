@@ -15,39 +15,37 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.initialized) {
-      return CircularProgressIndicator();
-    }
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _titleRow(),
-          SizedBox(height: Get.height * 0.03),
-          _profileRow(),
-          Divider(color: ColorPalette.grey_2, thickness: 10),
-          _menuColumn(
-            title: '작품관리',
-            contents: ['주문 내역', '관심 작품', '최근 본 작품'],
-            icons: ['list', 'heart_outline', 'history'],
-            gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
-          ),
-          Divider(color: ColorPalette.grey_2, thickness: 10),
-          _menuColumn(
-            title: '커뮤니티 관리',
-            contents: ['팔로잉 목록', '차단 목록'],
-            icons: ['followers', 'block'],
-            gotoWidgets: [BuyerApp(), BuyerApp()],
-          ),
-          if (!controller.buyerProfile.isSeller)
+    return Obx(() => SingleChildScrollView(
+        child: Column(
+          children: [
+            _titleRow(),
+            SizedBox(height: Get.height * 0.03),
+            _profileRow(),
             Divider(color: ColorPalette.grey_2, thickness: 10),
-          if (!controller.buyerProfile.isSeller)
             _menuColumn(
-              title: '판매자 인증',
-              contents: ['학교 이메일 인증'],
-              icons: ['mail'],
-              gotoWidgets: [EmailScreen()],
+              title: '작품관리',
+              contents: ['주문 내역', '관심 작품', '최근 본 작품'],
+              icons: ['list', 'heart_outline', 'history'],
+              gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
             ),
-        ],
+            Divider(color: ColorPalette.grey_2, thickness: 10),
+            _menuColumn(
+              title: '커뮤니티 관리',
+              contents: ['팔로잉 목록', '차단 목록'],
+              icons: ['followers', 'block'],
+              gotoWidgets: [BuyerApp(), BuyerApp()],
+            ),
+            if (!controller.buyerProfile.value.isSeller)
+              Divider(color: ColorPalette.grey_2, thickness: 10),
+            if (!controller.buyerProfile.value.isSeller)
+              _menuColumn(
+                title: '판매자 인증',
+                contents: ['학교 이메일 인증'],
+                icons: ['mail'],
+                gotoWidgets: [EmailScreen()],
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -95,7 +93,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(Get.width * 0.1),
                 child: Image.network(
-                  controller.buyerProfile.profileImageUrl,
+                  controller.buyerProfile.value.profileImageUrl,
                   width: Get.width * 0.2,
                   height: Get.width * 0.2,
                   fit: BoxFit.cover,
@@ -158,7 +156,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               ),
               SizedBox(height: 5),
               Text(
-                controller.buyerProfile.nickname,
+                controller.buyerProfile.value.nickname,
                 style: TextStyle(
                   color: ColorPalette.black,
                   fontWeight: FontWeight.bold,
@@ -170,11 +168,12 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             ],
           ),
           Spacer(),
-          if (controller.buyerProfile.isSeller)
+          if (controller.buyerProfile.value.isSeller)
             GestureDetector(
               onTap: () async {
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
                 await SellerProfileController().fetch();
+                Get.lazyPut(() => SellerProfileController());
                 Get.offAll(SellerApp());
               },
               child: Container(
