@@ -1,16 +1,17 @@
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 
 class SellerProfileController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
   Rx<SellerProfile> sellerProfile = SellerProfile(
-    nickname: '불건전한소환사명',
+    nickname: '-',
     profileImageUrl:
-        'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
-    itemCount: 22,
-    temperature: 36.5,
-    description: '안녕하세요. 불건전한소환사명입니다.',
+        'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+    itemCount: 0,
+    temperature: 100,
+    description: '',
   ).obs;
 
   @override

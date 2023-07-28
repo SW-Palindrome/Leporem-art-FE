@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
-import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class SellerProfileEditController extends GetxController {
@@ -33,6 +32,7 @@ class SellerProfileEditController extends GetxController {
   void onInit() async {
     await fetch();
     nicknameController.text = sellerProfileEdit.nickname;
+    descriptionController.text = sellerProfileEdit.description;
     super.onInit();
   }
 
@@ -93,6 +93,14 @@ class SellerProfileEditController extends GetxController {
     }
   }
 
+  void checkDescriptionChanged(String value) {
+    if (value != sellerProfileEdit.description) {
+      isDescriptionChanged.value = true;
+    } else {
+      isDescriptionChanged.value = false;
+    }
+  }
+
   void edit() async {
     try {
       if (isNicknameChanged.value) {
@@ -139,6 +147,26 @@ class SellerProfileEditController extends GetxController {
           throw ('Error editing profile image: $e');
         }
       }
+      if (isDescriptionChanged.value) {
+        try {
+          final response = await DioSingleton.dio.patch("/sellers/descriptions",
+              data: {
+                "description": descriptionController.text,
+              },
+              options: Options(
+                headers: {
+                  "Authorization":
+                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+                },
+              ));
+
+          if (response.statusCode != 200) {
+            throw Exception('Status code: ${response.statusCode}');
+          }
+        } catch (e) {
+          throw ('Error editing description: $e');
+        }
+      }
       Get.back();
       Get.snackbar('프로필 수정', '프로필이 수정되었습니다.');
       Get.find<SellerProfileController>().fetch();
@@ -153,6 +181,8 @@ class SellerProfileEditController extends GetxController {
 
   bool isEditable() {
     return isNicknameValid.value &&
-        (isNicknameChanged.value || isProfileImageChanged.value);
+        (isNicknameChanged.value ||
+            isProfileImageChanged.value ||
+            isDescriptionChanged.value);
   }
 }

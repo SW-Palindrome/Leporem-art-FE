@@ -176,7 +176,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             GestureDetector(
               onTap: () async {
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
-                Get.lazyPut(() => SellerProfileController());
+                Get.put(SellerProfileController());
                 Get.offAll(SellerApp());
               },
               child: Container(
