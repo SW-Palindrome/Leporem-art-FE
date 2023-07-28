@@ -24,7 +24,7 @@ class BuyerProfile extends Profile {
     return BuyerProfile(
       nickname: json['nickname'],
       profileImageUrl: json['profile_image'] ??
-          'https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg',
+          'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       isSeller: json['is_seller'],
     );
   }
@@ -50,7 +50,7 @@ class SellerProfile extends Profile {
     return SellerProfile(
       nickname: json['nickname'],
       profileImageUrl: json['profile_image'] ??
-          'https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg',
+          'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       itemCount: json['item_count'],
       temperature: json['temperature'] ?? 36.5,
       description: json['description'] ?? '',
