@@ -137,6 +137,7 @@ class BuyerProfileEditController extends GetxController {
       }
       Get.back();
       Get.snackbar('프로필 수정', '프로필이 수정되었습니다.');
+      Get.find<BuyerProfileController>().fetch();
     } catch (e) {
       print('Error editing profile: $e');
     }
