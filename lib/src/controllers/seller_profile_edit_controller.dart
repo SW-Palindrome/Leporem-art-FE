@@ -1,21 +1,21 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
-import 'package:leporemart/src/models/profile.dart';
+import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
-import 'package:leporemart/src/repositories/profile_edit_repository.dart';
-import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class SellerProfileEditController extends GetxController {
-  final ProfileRepository _profileRepository = ProfileRepository();
-
   TextEditingController nicknameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  Rx<bool> isNicknameValid = false.obs;
+  Rx<bool> firstEdit = false.obs;
+  Rx<bool> isNicknameValid = true.obs;
   Rx<bool> isNicknameDuplicate = false.obs;
   Rx<bool> isNicknameFocused = false.obs;
   Rx<bool> isNicknameChanged = false.obs;
@@ -23,7 +23,6 @@ class SellerProfileEditController extends GetxController {
   Rx<bool> isProfileImageChanged = false.obs;
   Rx<bool> isDescriptionChanged = false.obs;
 
-  final ProfileEditRepository _profileEditRepository = ProfileEditRepository();
   SellerProfileEdit sellerProfileEdit = SellerProfileEdit(
     nickname: '',
     profileImageUrl: '',
@@ -40,16 +39,22 @@ class SellerProfileEditController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      SellerProfile sellerProfile =
-          await _profileRepository.fetchSellerProfile();
+      String nickname =
+          Get.find<SellerProfileController>().sellerProfile.value.nickname;
+      String profileImageUrl = Get.find<SellerProfileController>()
+          .sellerProfile
+          .value
+          .profileImageUrl;
+      String description =
+          Get.find<SellerProfileController>().sellerProfile.value.description;
       sellerProfileEdit = SellerProfileEdit(
-        nickname: sellerProfile.nickname,
-        profileImageUrl: sellerProfile.profileImageUrl,
-        description: sellerProfile.description,
+        nickname: nickname,
+        profileImageUrl: profileImageUrl,
+        description: description,
       );
     } catch (e) {
       // 에러 처리
-      print('Error fetching seller profile edit: $e');
+      print('Error fetching buyer profile edit: $e');
       // 목업 데이터 사용 또는 에러 처리 로직 추가
     }
   }
@@ -81,9 +86,105 @@ class SellerProfileEditController extends GetxController {
     }
   }
 
-  void editProfile() async {}
+  void checkNicknameChanged(String value) {
+    if (value != sellerProfileEdit.nickname) {
+      isNicknameChanged.value = true;
+    } else {
+      isNicknameChanged.value = false;
+    }
+  }
+
+  void checkDescriptionChanged(String value) {
+    if (value != sellerProfileEdit.description) {
+      isDescriptionChanged.value = true;
+    } else {
+      isDescriptionChanged.value = false;
+    }
+  }
+
+  void edit() async {
+    try {
+      if (isNicknameChanged.value) {
+        try {
+          final response = await DioSingleton.dio.patch("/users/nickname",
+              data: {
+                "nickname": nicknameController.text,
+              },
+              options: Options(
+                headers: {
+                  "Authorization":
+                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+                },
+              ));
+
+          if (response.statusCode != 200) {
+            throw Exception('Status code: ${response.statusCode}');
+          }
+        } catch (e) {
+          throw ('Error editing nickname: $e');
+        }
+      }
+      if (isProfileImageChanged.value) {
+        try {
+          final formData = FormData.fromMap({
+            "profile_image": await MultipartFile.fromFile(
+              profileImage.value.path,
+              filename: profileImage.value.path.split('/').last,
+            ),
+          });
+          final response = await DioSingleton.dio.patch("/users/profile-image",
+              data: formData,
+              options: Options(
+                headers: {
+                  "Authorization":
+                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+                },
+              ));
+
+          if (response.statusCode != 200) {
+            throw Exception('Status code: ${response.statusCode}');
+          }
+        } catch (e) {
+          throw ('Error editing profile image: $e');
+        }
+      }
+      if (isDescriptionChanged.value) {
+        try {
+          final response = await DioSingleton.dio.patch("/sellers/descriptions",
+              data: {
+                "description": descriptionController.text,
+              },
+              options: Options(
+                headers: {
+                  "Authorization":
+                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+                },
+              ));
+
+          if (response.statusCode != 200) {
+            throw Exception('Status code: ${response.statusCode}');
+          }
+        } catch (e) {
+          throw ('Error editing description: $e');
+        }
+      }
+      Get.back();
+      Get.snackbar('프로필 수정', '프로필이 수정되었습니다.');
+      Get.find<SellerProfileController>().fetch();
+      Get.find<BuyerProfileController>().fetch();
+    } catch (e) {
+      print('Error editing profile: $e');
+    }
+  }
 
   void setFocus(bool focused) {
     isNicknameFocused.value = focused;
+  }
+
+  bool isEditable() {
+    return isNicknameValid.value &&
+        (isNicknameChanged.value ||
+            isProfileImageChanged.value ||
+            isDescriptionChanged.value);
   }
 }

@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
@@ -13,14 +15,20 @@ class HomeRepository {
     isPagination = false,
   }) async {
     try {
-      final response =
-          await DioSingleton.dio.get('/items/filter', queryParameters: {
-        'page': page,
-        'search': keyword,
-        'ordering': ordering,
-        'category': category,
-        'price': price,
-      });
+      final response = await DioSingleton.dio.get('/items/filter',
+          queryParameters: {
+            'page': page,
+            'search': keyword,
+            'ordering': ordering,
+            'category': category,
+            'price': price,
+          },
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
       //rseponse의 message가 EmptyPage라면 데이터가 없는 것이므로 빈 리스트를 반환, 또한 pagination용 요청이면 currentPage를 1 감소시킴
       if (response.data['message'] == 'EmptyPage') {
         if (isPagination) Get.find<BuyerHomeController>().currentPage--;

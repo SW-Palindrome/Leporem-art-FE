@@ -26,7 +26,8 @@ class DioSingleton {
 
               // 원래의 요청을 다시 실행
               try {
-                print('재발급 후 원래의 요청을 다시 실행합니다.');
+                print(
+                    '재발급 후 원래의 요청을 다시 실행합니다. ${response.realUri}에서 오류 ${response}');
                 return handler.next(await _dioInstance!.request(
                   response.requestOptions.path,
                   options: Options(

@@ -29,7 +29,7 @@ class PlantTemperature extends StatelessWidget {
     } else if (temperature >= 60 && temperature < 80) {
       imageSrc = 'assets/images/4.png';
       temperatureColor = ColorPalette.blue;
-    } else if (temperature >= 80 && temperature < 100) {
+    } else if (temperature >= 80 && temperature <= 100.0) {
       imageSrc = 'assets/images/5.png';
       temperatureColor = ColorPalette.purple;
     }
