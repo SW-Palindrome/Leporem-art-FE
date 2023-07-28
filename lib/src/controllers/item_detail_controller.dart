@@ -40,11 +40,12 @@ class ItemDetailController extends GetxController {
 
   void changeIndex(int newIndex) {
     index.value = newIndex;
-    if (index.value == itemDetail.value.imagesUrl.length) {
+    if (index.value == itemDetail.value.imagesUrl.length + 1) {
       videoPlayerController.play();
       isPlaying.value = true;
     } else {
       videoPlayerController.pause();
+      isPlaying.value = false;
     }
   }
 
