@@ -2,7 +2,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/bindings/item_detail_binding.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/models/item.dart';
@@ -73,8 +72,8 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
   _itemWidget(BuyerHomeItem item) {
     return GestureDetector(
       onTap: () {
-        Get.to(BuyerItemDetailScreen(),
-            arguments: {'item_id': item.id}, binding: ItemDetailBinding());
+        Get.to(BuyerItemDetailScreen(), arguments: {'item_id': item.id});
+        Get.put(ItemDetailController());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
