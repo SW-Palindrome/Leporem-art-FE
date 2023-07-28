@@ -31,19 +31,22 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
           ),
         ),
         actions: [
-          GestureDetector(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Obx(
-                  () => Text(
+          Obx(
+            () => GestureDetector(
+              onTap: controller.isEditable()
+                  ? () {
+                      controller.edit();
+                    }
+                  : null,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Text(
                     '완료',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: controller.isNicknameValid.value &&
-                              (controller.isNicknameChanged.value ||
-                                  controller.isProfileImageChanged.value)
+                      color: controller.isEditable()
                           ? ColorPalette.purple
                           : ColorPalette.purple.withOpacity(0.5),
                     ),
