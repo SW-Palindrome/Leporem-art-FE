@@ -18,7 +18,6 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
         appBarType: AppBarType.buyerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
-          Get.delete<ItemDetailController>();
         },
       ),
       body: SafeArea(

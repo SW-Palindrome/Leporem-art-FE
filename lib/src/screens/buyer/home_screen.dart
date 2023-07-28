@@ -2,9 +2,11 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/bindings/item_detail_binding.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -71,8 +73,8 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
   _itemWidget(BuyerHomeItem item) {
     return GestureDetector(
       onTap: () {
-        Get.lazyPut(() => ItemDetailController());
-        Get.toNamed('/buyer/item', arguments: {'item_id': item.id});
+        Get.to(BuyerItemDetailScreen(),
+            arguments: {'item_id': item.id}, binding: ItemDetailBinding());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
