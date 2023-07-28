@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
@@ -15,7 +16,8 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => SingleChildScrollView(
+    return Obx(
+      () => SingleChildScrollView(
         child: Column(
           children: [
             _titleRow(),
@@ -104,7 +106,8 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => ProfileEditScreen());
+                    Get.to(ProfileEditScreen());
+                    Get.put(BuyerProfileEditController());
                   },
                   child: Container(
                     width: 20,
