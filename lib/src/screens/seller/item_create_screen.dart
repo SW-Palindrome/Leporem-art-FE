@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/screens/seller/item_create_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
@@ -29,24 +30,24 @@ class ItemCreateScreen extends StatelessWidget {
                   width: 24,
                 ),
                 '인스타그램에서 가져오기',
-                '/seller/create/instagram'),
+                Scaffold()),
             _itemCreateIconButton(
                 SvgPicture.asset(
                   'assets/icons/edit.svg',
                   width: 24,
                 ),
                 '직접 작성하기',
-                '/seller/create/self'),
+                ItemCreateDetailScreen()),
           ],
         ),
       ),
     );
   }
 
-  _itemCreateIconButton(Widget icon, String text, String nextWidget) {
+  _itemCreateIconButton(Widget icon, String text, Widget nextWidget) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(nextWidget);
+        Get.to(nextWidget);
       },
       child: Container(
         decoration: BoxDecoration(

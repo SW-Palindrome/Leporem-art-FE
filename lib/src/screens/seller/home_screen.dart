@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -55,7 +56,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           right: Get.width * 0.05,
           child: GestureDetector(
             onTap: () {
-              Get.toNamed('/seller/create');
+              Get.to(ItemCreateScreen());
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),

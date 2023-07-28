@@ -5,6 +5,7 @@ import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/seller/home_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_screen.dart';
+import 'package:leporemart/src/screens/seller/search_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
@@ -34,7 +35,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     return Scaffold(
       appBar: MyAppBar(
           appBarType: AppBarType.mainPageAppBar,
-          onTapFirstActionIcon: () => Get.toNamed('/seller/search')),
+          onTapFirstActionIcon: () => Get.to(SellerSearchScreen())),
       body: SellerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
