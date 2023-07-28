@@ -45,6 +45,10 @@ class DioSingleton {
             }
             return handler.next(response);
           },
+          onError: (error, handler) {
+            print('에러경로: ${error.response!.realUri}');
+            return handler.next(error);
+          },
         ),
       );
     }

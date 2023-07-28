@@ -657,6 +657,9 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: controller.widthController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]+$'))
+                      ],
                       onChanged: (value) {
                         // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
                         String integerPart = '';
@@ -759,6 +762,9 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.depthController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]+$'))
+                      ],
                       onChanged: (value) {
                         // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
                         String integerPart = '';
@@ -861,6 +867,9 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: controller.heightController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^[0-9.]+$'))
+                      ],
                       onChanged: (value) {
                         // 입력값을 제한하기 위해 정수 부분과 소수 부분을 분리합니다.
                         String integerPart = '';
@@ -987,11 +996,13 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
           child: TextField(
             keyboardType: TextInputType.number,
             controller: controller.priceController,
+            maxLength: 9,
             inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(RegExp(r'^[0-9,]+$')),
               CurrencyFormatter(), // 사용자 정의 CurrencyFormatter 적용
             ],
             decoration: InputDecoration(
+              counterText: '',
               border: InputBorder.none,
               suffix: Text(
                 '원',

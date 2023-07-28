@@ -45,6 +45,7 @@ class ItemCreateDetailController extends GetxController {
       description.value = descriptionController.text;
     });
     priceController.addListener(() {
+      if (priceController.text == '') return;
       price.value = int.parse(priceController.text.replaceAll(',', ''));
     });
   }

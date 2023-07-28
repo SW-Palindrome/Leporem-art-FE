@@ -51,7 +51,6 @@ void main() async {
   Get.put(AccountTypeController());
   Get.put(EmailController());
   Get.put(NicknameController());
-  Get.put(ItemDetailController());
   Get.put(ItemCreateDetailController());
   Get.put(BuyerSearchController());
   Get.put(BuyerHomeController());
@@ -105,16 +104,6 @@ class MyApp extends StatelessWidget {
         if (!kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
-      routes: {
-        '/login': (context) => LoginScreen(),
-        '/buyer': (context) => BuyerApp(),
-        '/buyer/search': (context) => BuyerSearchScreen(),
-        '/buyer/item': (context) => BuyerItemDetailScreen(),
-        '/seller': (context) => SellerApp(),
-        '/seller/search': (context) => SellerSearchScreen(),
-        '/seller/create': (context) => ItemCreateScreen(),
-        '/seller/create/self': (context) => ItemCreateDetailScreen(),
-      },
     );
   }
 }

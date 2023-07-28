@@ -10,8 +10,7 @@ import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
 class BuyerItemDetailScreen extends GetView<ItemDetailController> {
-  const BuyerItemDetailScreen({Key? key}) : super(key: key);
-
+  const BuyerItemDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +21,23 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _itemTitle(),
-              _itemThumbnail(),
-              _itemDescription(),
-            ],
-          ),
-        ),
+        child: Obx(() {
+          // isLoading 변수에 따라 로딩창 또는 원래 화면을 표시
+          return controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _itemTitle(),
+                      _itemThumbnail(),
+                      _itemDescription(),
+                    ],
+                  ),
+                );
+        }),
       ),
       bottomNavigationBar: _itemBottomNavigationBar(),
     );
@@ -46,20 +52,33 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(
-                controller.itemDetail.isLiked
-                    ? 'assets/icons/heart_fill.svg'
-                    : 'assets/icons/heart_outline.svg',
-                width: 30,
-                colorFilter: ColorFilter.mode(
-                    controller.itemDetail.isLiked
-                        ? ColorPalette.purple
-                        : ColorPalette.grey_4,
-                    BlendMode.srcIn),
+              Obx(
+                () => GestureDetector(
+                  onTap: controller.itemDetail.value.isLiked
+                      ? () async {
+                          await controller.unlike();
+                        }
+                      : () async {
+                          await controller.like();
+                        },
+                  child: Obx(
+                    () => SvgPicture.asset(
+                      controller.itemDetail.value.isLiked
+                          ? 'assets/icons/heart_fill.svg'
+                          : 'assets/icons/heart_outline.svg',
+                      width: 30,
+                      colorFilter: ColorFilter.mode(
+                          controller.itemDetail.value.isLiked
+                              ? ColorPalette.purple
+                              : ColorPalette.grey_4,
+                          BlendMode.srcIn),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(width: 10),
               Text(
-                '${controller.itemDetail.price.toString().replaceAllMapped(
+                '${controller.itemDetail.value.price.toString().replaceAllMapped(
                       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                       (Match m) => '${m[1]},',
                     )}원',
@@ -99,7 +118,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            controller.itemDetail.name,
+            controller.itemDetail.value.title,
             style: TextStyle(
               color: Color(0xff191f28),
               fontWeight: FontWeight.w600,
@@ -120,14 +139,14 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                       height: 40,
                       width: 40,
                       child: Image.network(
-                        controller.itemDetail.profileImageUrl,
-                        fit: BoxFit.cover,
+                        controller.itemDetail.value.profileImageUrl,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   SizedBox(width: 8),
                   Text(
-                    controller.itemDetail.creator,
+                    controller.itemDetail.value.nickname,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontWeight: FontWeight.w500,
@@ -138,7 +157,8 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                   ),
                 ],
               ),
-              PlantTemperature(temperature: controller.itemDetail.temperature),
+              PlantTemperature(
+                  temperature: controller.itemDetail.value.temperature ?? 0),
             ],
           ),
         ],
@@ -159,10 +179,18 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
             },
           ),
           items: [
-            for (String imageUrl in controller.itemDetail.imagesUrl)
+            Image.network(
+              controller.itemDetail.value.thumbnailUrl,
+              fit: BoxFit.cover,
+              width: Get.width,
+              height: Get.width,
+            ),
+            for (String imageUrl in controller.itemDetail.value.imagesUrl)
               Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
+                width: Get.width,
+                height: Get.width,
               ),
             Stack(
               children: [
@@ -225,7 +253,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                   () => Row(
                     children: [
                       for (int i = 0;
-                          i < controller.itemDetail.imagesUrl.length;
+                          i < controller.itemDetail.value.imagesUrl.length + 1;
                           i++)
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 4),
@@ -245,7 +273,8 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: controller.index.value ==
-                                  controller.itemDetail.imagesUrl.length
+                                  controller.itemDetail.value.imagesUrl.length +
+                                      1
                               ? ColorPalette.purple
                               : ColorPalette.purple.withOpacity(0.5),
                         ),
@@ -301,12 +330,12 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
             children: [
               Row(
                 children: [
-                  for (String tag in controller.itemDetail.tags)
+                  for (String tag in controller.itemDetail.value.category)
                     _categoryWidget(tag),
                 ],
               ),
               Text(
-                "잔여 ${controller.itemDetail.remainAmount}점",
+                "잔여 ${controller.itemDetail.value.currentAmount}점",
                 style: TextStyle(
                   color: Color(0xff594bf8),
                   fontWeight: FontWeight.w400,
@@ -319,7 +348,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
           ),
           SizedBox(height: 16),
           Text(
-            controller.itemDetail.description,
+            controller.itemDetail.value.description,
             style: TextStyle(
               color: Color(0xff191f28),
               fontWeight: FontWeight.w400,
