@@ -11,28 +11,34 @@ import 'package:video_player/video_player.dart';
 
 class BuyerItemDetailScreen extends GetView<ItemDetailController> {
   const BuyerItemDetailScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    controller.fetch(Get.arguments['item_id']);
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.buyerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
+          Get.delete<ItemDetailController>();
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _itemTitle(),
-              _itemThumbnail(),
-              _itemDescription(),
-            ],
-          ),
-        ),
+        child: Obx(() {
+          // isLoading 변수에 따라 로딩창 또는 원래 화면을 표시
+          return controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _itemTitle(),
+                      _itemThumbnail(),
+                      _itemDescription(),
+                    ],
+                  ),
+                );
+        }),
       ),
       bottomNavigationBar: _itemBottomNavigationBar(),
     );
@@ -181,7 +187,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      VideoPlayer(controller.videoPlayerController!),
+                      VideoPlayer(controller.videoPlayerController),
                       Obx(
                         () => AnimatedOpacity(
                           opacity: controller.isIconVisible.value ? 1.0 : 0.0,

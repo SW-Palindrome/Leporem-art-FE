@@ -4,7 +4,9 @@ import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:video_player/video_player.dart';
 
 class ItemDetailController extends GetxController {
-  VideoPlayerController? videoPlayerController;
+  VideoPlayerController videoPlayerController =
+      VideoPlayerController.network('')..initialize();
+  Rx<bool> isLoading = true.obs;
   Rx<int> index = 0.obs;
   Rx<bool> isMuted = false.obs;
   Rx<bool> isPlaying = false.obs;
@@ -30,28 +32,34 @@ class ItemDetailController extends GetxController {
     thumbnailUrl: '',
   ).obs;
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await fetch();
+  }
+
   void changeIndex(int newIndex) {
     index.value = newIndex;
     if (index.value == itemDetail.value.imagesUrl.length) {
-      videoPlayerController!.play();
+      videoPlayerController.play();
       isPlaying.value = true;
     } else {
-      videoPlayerController!.pause();
+      videoPlayerController.pause();
     }
   }
 
   void toggleVolume() {
     isMuted.value = !isMuted.value;
-    videoPlayerController!.setVolume(isMuted.value ? 0 : 1);
+    videoPlayerController.setVolume(isMuted.value ? 0 : 1);
   }
 
   void togglePlay() {
     isPlaying.value = !isPlaying.value;
     toggleIconVisible();
     if (isPlaying.value) {
-      videoPlayerController!.play();
+      videoPlayerController.play();
     } else {
-      videoPlayerController!.pause();
+      videoPlayerController.pause();
     }
   }
 
@@ -63,14 +71,18 @@ class ItemDetailController extends GetxController {
     });
   }
 
-  Future<void> fetch(int itemId) async {
+  Future<void> fetch() async {
     try {
-      itemDetail.value = await _itemDetailRepository.fetchItemDetail(itemId);
+      print('컨트롤러에서: ${Get.arguments['item_id']}');
+      isLoading.value = true;
+      itemDetail.value =
+          await _itemDetailRepository.fetchItemDetail(Get.arguments['item_id']);
       videoPlayerController =
           VideoPlayerController.network(itemDetail.value.videoUrl)
             ..initialize().then((_) {
-              videoPlayerController!.setLooping(true);
+              videoPlayerController.setLooping(true);
             });
+      isLoading.value = false;
     } catch (e) {
       // 에러 처리
       print('Error fetching item detail: $e');

@@ -54,7 +54,7 @@ void main() async {
   Get.put(ItemCreateDetailController());
   Get.put(BuyerSearchController());
   Get.put(BuyerHomeController());
-  Get.put(ItemDetailController());
+  Get.lazyPut(() => ItemDetailController());
   Get.lazyPut(() => BuyerProfileController());
   Get.lazyPut(() => BuyerProfileEditController());
   Get.put(SellerHomeController());
