@@ -1,0 +1,226 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/my_app_bar.dart';
+import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
+import 'package:leporemart/src/widgets/plant_temperature.dart';
+
+class ItemCreatorScreen extends StatelessWidget {
+  const ItemCreatorScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorPalette.white,
+      appBar: MyAppBar(
+        appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () {
+          Get.back();
+        },
+        isWhite: true,
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            _profileInfo(),
+            _itemGrid(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: ColorPalette.grey_6,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset('assets/icons/plus.svg',
+                        width: 20,
+                        height: 20,
+                        colorFilter: ColorFilter.mode(
+                          ColorPalette.black,
+                          BlendMode.srcIn,
+                        )),
+                    SizedBox(width: 10),
+                    Text(
+                      '팔로우',
+                      style: TextStyle(
+                        color: ColorPalette.grey_7,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 15),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: ShapeDecoration(
+                  gradient: ColorPalette.gradientPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/message_fill.svg',
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        ColorPalette.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '채팅하기',
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _profileInfo() {
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(Get.width * 0.25),
+          child: Image.network(
+            'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+            width: Get.width * 0.25,
+            height: Get.width * 0.25,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          '준식아다이아가자',
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 18.0,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          '도예를 좋아하는 4학년',
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 14.0,
+          ),
+        ),
+        SizedBox(height: 10),
+        PlantTemperature(temperature: 52, type: PlantTemperatureType.all),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: ColorPalette.grey_1,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '팔로워',
+                      style: TextStyle(
+                        color: ColorPalette.grey_6,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '150',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: "PretendardVariable",
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: ColorPalette.grey_1,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '작품',
+                      style: TextStyle(
+                        color: ColorPalette.grey_6,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '7',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: "PretendardVariable",
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  _itemGrid() {
+    return Container();
+  }
+}

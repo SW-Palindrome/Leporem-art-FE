@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -14,11 +15,13 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorPalette.white,
       appBar: MyAppBar(
         appBarType: AppBarType.buyerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
         },
+        isWhite: true,
       ),
       body: SafeArea(
         child: Obx(() {
@@ -128,38 +131,43 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
             ),
           ),
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image.network(
-                        controller.itemDetail.value.profileImageUrl,
-                        fit: BoxFit.fill,
+          GestureDetector(
+            onTap: () {
+              Get.to(ItemCreatorScreen());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Image.network(
+                          controller.itemDetail.value.profileImageUrl,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    controller.itemDetail.value.nickname,
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14.0,
+                    SizedBox(width: 8),
+                    Text(
+                      controller.itemDetail.value.nickname,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              PlantTemperature(
-                  temperature: controller.itemDetail.value.temperature ?? 0),
-            ],
+                  ],
+                ),
+                PlantTemperature(
+                    temperature: controller.itemDetail.value.temperature ?? 0),
+              ],
+            ),
           ),
         ],
       ),
