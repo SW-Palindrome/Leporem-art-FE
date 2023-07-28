@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
@@ -170,6 +171,7 @@ class SellerProfileEditController extends GetxController {
       Get.back();
       Get.snackbar('프로필 수정', '프로필이 수정되었습니다.');
       Get.find<SellerProfileController>().fetch();
+      Get.find<BuyerProfileController>().fetch();
     } catch (e) {
       print('Error editing profile: $e');
     }

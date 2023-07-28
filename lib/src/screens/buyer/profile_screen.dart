@@ -177,7 +177,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               onTap: () async {
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
                 Get.put(SellerProfileController());
-                Get.offAll(SellerApp());
+                Get.offAll(() => SellerApp());
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
