@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class BuyerProfileEditController extends GetxController {
-  final ProfileRepository _profileRepository = ProfileRepository();
   TextEditingController nicknameController = TextEditingController();
 
   Rx<bool> isNicknameValid = false.obs;
@@ -33,10 +33,18 @@ class BuyerProfileEditController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      BuyerProfile buyerProfile = await _profileRepository.fetchBuyerProfile();
+      // BuyerProfile buyerProfile = await _profileRepository.fetchBuyerProfile();
+      // buyerProfileEdit = BuyerProfileEdit(
+      //   nickname: buyerProfile.nickname,
+      //   profileImageUrl: buyerProfile.profileImageUrl,
+      // );
+      String nickname =
+          Get.find<BuyerProfileController>().buyerProfile.value.nickname;
+      String profileImageUrl =
+          Get.find<BuyerProfileController>().buyerProfile.value.profileImageUrl;
       buyerProfileEdit = BuyerProfileEdit(
-        nickname: buyerProfile.nickname,
-        profileImageUrl: buyerProfile.profileImageUrl,
+        nickname: nickname,
+        profileImageUrl: profileImageUrl,
       );
     } catch (e) {
       // 에러 처리

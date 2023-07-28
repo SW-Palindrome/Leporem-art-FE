@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
-import 'package:leporemart/src/repositories/profile_edit_repository.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -23,7 +22,6 @@ class SellerProfileEditController extends GetxController {
   Rx<bool> isProfileImageChanged = false.obs;
   Rx<bool> isDescriptionChanged = false.obs;
 
-  final ProfileEditRepository _profileEditRepository = ProfileEditRepository();
   SellerProfileEdit sellerProfileEdit = SellerProfileEdit(
     nickname: '',
     profileImageUrl: '',
