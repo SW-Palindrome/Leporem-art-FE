@@ -151,6 +151,7 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
+                controller.firstEdit.value = true;
               }
             },
             child: TextFormField(
@@ -168,7 +169,8 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                   color: ColorPalette.grey_3,
                   fontSize: 18,
                 ),
-                errorText: !controller.isNicknameValid.value
+                errorText: !controller.isNicknameValid.value &&
+                        controller.firstEdit.value
                     ? "올바른 양식의 닉네임을 입력해주세요."
                     : null,
                 errorStyle: TextStyle(
@@ -187,8 +189,8 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                   ),
                 ),
               ),
-              onChanged: (text) {
-                controller.isNicknameValid.value = true;
+              onChanged: (value) {
+                controller.checkNicknameChanged(value);
               },
             ),
           ),
