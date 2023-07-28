@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/item_widget.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
-import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
 class ItemCreatorScreen extends StatelessWidget {
@@ -20,92 +21,100 @@ class ItemCreatorScreen extends StatelessWidget {
         },
         isWhite: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            _profileInfo(),
-            _itemGrid(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              _profileInfo(),
+              SizedBox(height: 20),
+              _itemGrid(),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: ColorPalette.grey_6,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset('assets/icons/plus.svg',
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(
-                          ColorPalette.black,
-                          BlendMode.srcIn,
-                        )),
-                    SizedBox(width: 10),
-                    Text(
-                      '팔로우',
-                      style: TextStyle(
-                        color: ColorPalette.grey_7,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "PretendardVariable",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 16.0,
-                      ),
-                    )
-                  ],
+      bottomNavigationBar: _profileBottomNavigationBar(),
+    );
+  }
+
+  Container _profileBottomNavigationBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      margin: EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: ColorPalette.grey_6,
                 ),
               ),
-            ),
-            SizedBox(width: 15),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: ShapeDecoration(
-                  gradient: ColorPalette.gradientPurple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/message_fill.svg',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/icons/plus.svg',
                       width: 20,
                       height: 20,
                       colorFilter: ColorFilter.mode(
-                        ColorPalette.white,
+                        ColorPalette.black,
                         BlendMode.srcIn,
-                      ),
+                      )),
+                  SizedBox(width: 10),
+                  Text(
+                    '팔로우',
+                    style: TextStyle(
+                      color: ColorPalette.grey_7,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16.0,
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      '채팅하기',
-                      style: TextStyle(
-                        color: ColorPalette.white,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "PretendardVariable",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 16.0,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(width: 15),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              decoration: ShapeDecoration(
+                gradient: ColorPalette.gradientPurple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/message_fill.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      ColorPalette.white,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    '채팅하기',
+                    style: TextStyle(
+                      color: ColorPalette.white,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16.0,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -221,6 +230,27 @@ class ItemCreatorScreen extends StatelessWidget {
   }
 
   _itemGrid() {
-    return Container();
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 15,
+        childAspectRatio: 4 / 7,
+      ),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return itemWidget(BuyerHomeItem(
+          id: index + 1,
+          name: 'name',
+          creator: 'creator',
+          price: 10000,
+          thumbnailUrl:
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+          likes: 1,
+          isLiked: false,
+        ));
+      },
+    );
   }
 }

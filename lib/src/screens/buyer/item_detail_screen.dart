@@ -131,7 +131,7 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
             ),
           ),
           SizedBox(height: 8),
-          GestureDetector(
+          InkWell(
             onTap: () {
               Get.to(ItemCreatorScreen());
             },

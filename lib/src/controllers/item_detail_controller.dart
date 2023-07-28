@@ -41,6 +41,12 @@ class ItemDetailController extends GetxController {
     await fetch();
   }
 
+  @override
+  void onClose() {
+    videoPlayerController.dispose();
+    super.onClose();
+  }
+
   void changeIndex(int newIndex) {
     index.value = newIndex;
     if (index.value == itemDetail.value.imagesUrl.length + 1) {
