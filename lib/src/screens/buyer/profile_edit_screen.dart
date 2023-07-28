@@ -94,22 +94,26 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
+                controller.firstEdit.value = true;
               }
             },
             child: TextFormField(
               controller: controller.nicknameController,
+              maxLength: 10,
               style: TextStyle(
                 color: ColorPalette.black,
                 fontSize: 18,
                 height: 1,
               ),
               decoration: InputDecoration(
+                counterText: "",
                 hintText: "한글, 영어, 숫자 _, - 2~10자 이내",
                 hintStyle: TextStyle(
                   color: ColorPalette.grey_3,
                   fontSize: 18,
                 ),
-                errorText: !controller.isNicknameValid.value
+                errorText: !controller.isNicknameValid.value &&
+                        controller.firstEdit.value
                     ? "올바른 양식의 닉네임을 입력해주세요."
                     : null,
                 errorStyle: TextStyle(
@@ -128,8 +132,8 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
                   ),
                 ),
               ),
-              onChanged: (text) {
-                controller.isNicknameValid.value = true;
+              onChanged: (value) {
+                controller.checkNicknameChanged(value);
               },
             ),
           ),

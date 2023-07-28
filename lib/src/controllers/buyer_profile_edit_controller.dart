@@ -12,6 +12,7 @@ import 'package:leporemart/src/utils/dio_singleton.dart';
 class BuyerProfileEditController extends GetxController {
   TextEditingController nicknameController = TextEditingController();
 
+  Rx<bool> firstEdit = false.obs;
   Rx<bool> isNicknameValid = false.obs;
   Rx<bool> isNicknameDuplicate = false.obs;
   Rx<bool> isNicknameFocused = false.obs;
@@ -77,6 +78,14 @@ class BuyerProfileEditController extends GetxController {
       isNicknameDuplicate.value = true;
     } catch (e) {
       isNicknameDuplicate.value = false;
+    }
+  }
+
+  void checkNicknameChanged(String value) {
+    if (value != buyerProfileEdit.nickname) {
+      isNicknameChanged.value = true;
+    } else {
+      isNicknameChanged.value = false;
     }
   }
 
