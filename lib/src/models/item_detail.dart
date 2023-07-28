@@ -11,7 +11,7 @@ class ItemDetail {
   final String thumbnailUrl;
   final List<String> imagesUrl;
   final String videoUrl;
-  final bool isLiked;
+  bool isLiked;
   final String? width;
   final String? depth;
   final String? height;
@@ -53,6 +53,48 @@ class ItemDetail {
       width: json['width'],
       depth: json['depth'],
       height: json['height'],
+    );
+  }
+
+  ItemDetail like() {
+    return ItemDetail(
+      id: id,
+      profileImageUrl: profileImageUrl,
+      nickname: nickname,
+      temperature: temperature,
+      title: title,
+      description: description,
+      price: price,
+      currentAmount: currentAmount,
+      thumbnailUrl: thumbnailUrl,
+      imagesUrl: imagesUrl,
+      category: category,
+      videoUrl: videoUrl,
+      isLiked: true,
+      width: width,
+      depth: depth,
+      height: height,
+    );
+  }
+
+  ItemDetail unlike() {
+    return ItemDetail(
+      id: id,
+      profileImageUrl: profileImageUrl,
+      nickname: nickname,
+      temperature: temperature,
+      title: title,
+      description: description,
+      price: price,
+      currentAmount: currentAmount,
+      thumbnailUrl: thumbnailUrl,
+      imagesUrl: imagesUrl,
+      category: category,
+      videoUrl: videoUrl,
+      isLiked: false,
+      width: width,
+      depth: depth,
+      height: height,
     );
   }
 }

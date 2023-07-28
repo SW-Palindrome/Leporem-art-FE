@@ -53,16 +53,29 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(
-                controller.itemDetail.value.isLiked
-                    ? 'assets/icons/heart_fill.svg'
-                    : 'assets/icons/heart_outline.svg',
-                width: 30,
-                colorFilter: ColorFilter.mode(
-                    controller.itemDetail.value.isLiked
-                        ? ColorPalette.purple
-                        : ColorPalette.grey_4,
-                    BlendMode.srcIn),
+              Obx(
+                () => GestureDetector(
+                  onTap: controller.itemDetail.value.isLiked
+                      ? () async {
+                          await controller.unlike();
+                        }
+                      : () async {
+                          await controller.like();
+                        },
+                  child: Obx(
+                    () => SvgPicture.asset(
+                      controller.itemDetail.value.isLiked
+                          ? 'assets/icons/heart_fill.svg'
+                          : 'assets/icons/heart_outline.svg',
+                      width: 30,
+                      colorFilter: ColorFilter.mode(
+                          controller.itemDetail.value.isLiked
+                              ? ColorPalette.purple
+                              : ColorPalette.grey_4,
+                          BlendMode.srcIn),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(width: 10),
               Text(
