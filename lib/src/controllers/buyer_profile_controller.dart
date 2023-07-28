@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 
-class BuyerProfileController extends GetxController with StateMixin<BuyerProfile> {
+class BuyerProfileController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
   Rx<BuyerProfile> buyerProfile = BuyerProfile(
     nickname: '-',

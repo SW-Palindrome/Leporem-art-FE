@@ -106,7 +106,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(ProfileEditScreen());
+                    Get.to(BuyerProfileEditScreen());
                     Get.put(BuyerProfileEditController());
                   },
                   child: Container(

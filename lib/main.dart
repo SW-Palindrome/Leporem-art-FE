@@ -57,7 +57,6 @@ void main() async {
   Get.lazyPut(() => BuyerProfileController());
   Get.put(SellerHomeController());
   Get.put(SellerSearchController());
-  Get.lazyPut(() => SellerProfileEditController());
   Get.put(BuyerMessageController());
 
   await initializeDateFormatting();
