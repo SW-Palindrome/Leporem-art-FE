@@ -92,7 +92,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Get.width * 0.1),
       child: Image.network(
-        chatRoom.profileImageUrl,
+        chatRoom.opponentProfileImageUrl,
         width: 48,
         height: 48,
       ),
@@ -121,19 +121,19 @@ class MessageScreen extends GetView<BuyerMessageController> {
         Row(
           children: [
             Text(
-                chatRoom.nickname,
+                chatRoom.opponentNickname,
                 style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, fontWeight: FontWeight.w700)
             ),
             SizedBox(width: 6),
             Text(
-                DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
+                DateFormat('aa hh:mm', 'ko').format(chatRoom.lastMessageDatetime),
                 style: TextStyle(fontSize: 11, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_4)
             ),
           ],
         ),
         SizedBox(height: 8),
         Text(
-            chatRoom.lastChatMessage,
+            chatRoom.lastMessage,
             style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_6)
         ),
       ],
