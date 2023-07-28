@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
@@ -175,7 +176,6 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             GestureDetector(
               onTap: () async {
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
-                await SellerProfileController().fetch();
                 Get.lazyPut(() => SellerProfileController());
                 Get.offAll(SellerApp());
               },
