@@ -155,12 +155,14 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
             },
             child: TextFormField(
               controller: controller.nicknameController,
+              maxLength: 10,
               style: TextStyle(
                 color: ColorPalette.black,
                 fontSize: 18,
                 height: 1,
               ),
               decoration: InputDecoration(
+                counterText: "",
                 hintText: "한글, 영어, 숫자 _, - 2~10자 이내",
                 hintStyle: TextStyle(
                   color: ColorPalette.grey_3,
