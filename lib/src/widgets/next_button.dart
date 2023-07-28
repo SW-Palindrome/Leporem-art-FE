@@ -25,11 +25,7 @@ class NextButton extends StatelessWidget {
         height: Get.height * 0.06,
         decoration: value
             ? ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(1.00, -0.07),
-                  end: Alignment(-1, 0.07),
-                  colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
-                ),
+                gradient: ColorPalette.gradientPurple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
