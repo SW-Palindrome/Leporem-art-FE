@@ -1,13 +1,15 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
+import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
-import 'package:leporemart/src/widgets/item_widget.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
-class ItemCreatorScreen extends StatelessWidget {
+class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
   const ItemCreatorScreen({super.key});
 
   @override
@@ -21,15 +23,29 @@ class ItemCreatorScreen extends StatelessWidget {
         },
         isWhite: true,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              _profileInfo(),
-              SizedBox(height: 20),
-              _itemGrid(),
-            ],
+      body: NotificationListener(
+        onNotification: (ScrollNotification scrollInfo) {
+          if (scrollInfo is ScrollEndNotification) {
+            if (controller.scrollController.position.extentAfter == 0) {
+              controller.fetch(isPagination: true);
+            }
+            if (controller.scrollController.position.extentBefore == 0) {
+              controller.pageReset();
+            }
+          }
+          return false;
+        },
+        child: SingleChildScrollView(
+          controller: controller.scrollController,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                _profileInfo(),
+                SizedBox(height: 20),
+                _itemGrid(),
+              ],
+            ),
           ),
         ),
       ),
@@ -230,27 +246,150 @@ class ItemCreatorScreen extends StatelessWidget {
   }
 
   _itemGrid() {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 15,
-        childAspectRatio: 4 / 7,
+    return Obx(
+      () => GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 15,
+          childAspectRatio: 4 / 7,
+        ),
+        itemCount: controller.items.length,
+        itemBuilder: (context, index) {
+          return _itemWidget(index);
+        },
       ),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return itemWidget(BuyerHomeItem(
-          id: index + 1,
-          name: 'name',
-          creator: 'creator',
-          price: 10000,
-          thumbnailUrl:
-              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
-          likes: 1,
-          isLiked: false,
-        ));
+    );
+  }
+
+  _itemWidget(int index) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(BuyerItemDetailScreen(),
+            arguments: {'item_id': controller.items[index].id});
+        Get.put(ItemDetailController());
       },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                children: [
+                  ExtendedImage.network(
+                    controller.items[index].thumbnailUrl,
+                    fit: BoxFit.cover,
+                    width: Get.width * 0.5,
+                    height: Get.width * 0.5,
+                    cache: true,
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: controller.items[index].isLiked
+                        ? GestureDetector(
+                            onTap: () async {
+                              await controller
+                                  .unlike(controller.items[index].id);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/heart_fill.svg',
+                              height: 24,
+                              width: 24,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.purple, BlendMode.srcIn),
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () async {
+                              await controller.like(controller.items[index].id);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/heart_outline.svg',
+                              height: 24,
+                              width: 24,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.white, BlendMode.srcIn),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: ColorPalette.white,
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(10))),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.items[index].creator,
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontSize: 10,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                    child: Text(
+                      controller.items[index].name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    '${controller.items[index].price.toString().toString().replaceAllMapped(
+                          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                          (Match m) => '${m[1]},',
+                        )}원',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: ColorPalette.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/heart_fill.svg',
+                        height: 12,
+                        width: 12,
+                        colorFilter: ColorFilter.mode(
+                            controller.items[index].likes != 0
+                                ? ColorPalette.purple
+                                : Colors.transparent,
+                            BlendMode.srcIn),
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        '${controller.items[index].likes}',
+                        style: TextStyle(
+                          color: controller.items[index].likes != 0
+                              ? ColorPalette.purple
+                              : Colors.transparent,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

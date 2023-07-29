@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -133,7 +134,10 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
           SizedBox(height: 8),
           InkWell(
             onTap: () {
-              Get.to(ItemCreatorScreen());
+              Get.to(ItemCreatorScreen(), arguments: {
+                'nickname': controller.itemDetail.value.nickname
+              });
+              Get.put(BuyerItemCreatorController());
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
