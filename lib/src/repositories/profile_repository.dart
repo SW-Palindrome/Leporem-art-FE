@@ -47,6 +47,20 @@ class ProfileRepository {
       return mockSellerProfile;
     }
   }
+
+  Future<SellerProfile> fetchCreatorProfile(String nickname) async {
+    try {
+      final response = await DioSingleton.dio.get(
+        '/sellers/info/$nickname',
+      );
+      final data = response.data;
+      final SellerProfile sellerProfile = SellerProfile.fromJson(data);
+      return sellerProfile;
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching creator profile in repository: $e');
+    }
+  }
 }
 
 final mockBuyerProfile = BuyerProfile(

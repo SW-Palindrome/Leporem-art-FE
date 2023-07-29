@@ -3,13 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
+import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class BuyerItemCreatorController extends GetxController {
+  final ProfileRepository _profileRepository = ProfileRepository();
   final HomeRepository _homeRepository = HomeRepository();
 
   RxList<BuyerHomeItem> items = <BuyerHomeItem>[].obs;
+  Rx<SellerProfile> creatorProfile = SellerProfile(
+    nickname: '-',
+    profileImageUrl:
+        'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+    itemCount: 0,
+    temperature: 100,
+    description: '',
+  ).obs;
 
   int currentPage = 1;
   ScrollController scrollController = ScrollController();
@@ -22,16 +33,29 @@ class BuyerItemCreatorController extends GetxController {
 
   Future<void> fetch({bool isPagination = false}) async {
     try {
-      if (isPagination!) currentPage++;
-      final List<BuyerHomeItem> fetchedItems =
-          await _homeRepository.fetchBuyerCreatorItems(
-        currentPage,
-        nickname: Get.arguments['nickname'],
-        isPagination: isPagination,
-      );
-      items.addAll(fetchedItems);
+      try {
+        if (isPagination!) currentPage++;
+        final List<BuyerHomeItem> fetchedItems =
+            await _homeRepository.fetchBuyerCreatorItems(
+          currentPage,
+          nickname: Get.arguments['nickname'],
+          isPagination: isPagination,
+        );
+        items.addAll(fetchedItems);
+      } catch (e) {
+        // 에러 처리
+        throw ('Error fetching buyer home items in controller: $e');
+      }
+      try {
+        final fetchSellerProfile = await _profileRepository
+            .fetchCreatorProfile(Get.arguments['nickname']);
+        creatorProfile.value = fetchSellerProfile;
+      } catch (e) {
+        // 에러 처리
+        throw ('Error fetching seller profile: $e');
+        // 목업 데이터 사용 또는 에러 처리 로직 추가
+      }
     } catch (e) {
-      // 에러 처리
       print('Error fetching buyer home items in controller: $e');
     }
   }
