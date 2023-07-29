@@ -276,7 +276,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
   _itemWidget(int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(BuyerItemDetailScreen(),
+        Get.off(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(ItemDetailController());
       },
