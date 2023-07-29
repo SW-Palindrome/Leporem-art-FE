@@ -38,7 +38,6 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
         child: SingleChildScrollView(
           controller: controller.scrollController,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
                 _profileInfo(),
@@ -136,133 +135,140 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
   }
 
   _profileInfo() {
-    return Obx(
-      () => Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(Get.width * 0.25),
-            child: Image.network(
-              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
-              width: Get.width * 0.25,
-              height: Get.width * 0.25,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      child: Obx(
+        () => Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(Get.width * 0.25),
+              child: Image.network(
+                'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+                width: Get.width * 0.25,
+                height: Get.width * 0.25,
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            controller.creatorProfile.value.nickname,
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 18.0,
+            SizedBox(height: 10),
+            Text(
+              controller.creatorProfile.value.nickname,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 18.0,
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            controller.creatorProfile.value.description,
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0,
+            SizedBox(height: 10),
+            Text(
+              controller.creatorProfile.value.description,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          PlantTemperature(
-              temperature: controller.creatorProfile.value.temperature,
-              type: PlantTemperatureType.all),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: ColorPalette.grey_1,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        '팔로워',
-                        style: TextStyle(
-                          color: ColorPalette.grey_6,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12.0,
+            SizedBox(height: 10),
+            PlantTemperature(
+                temperature: controller.creatorProfile.value.temperature,
+                type: PlantTemperatureType.all),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ColorPalette.grey_1,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          '팔로워',
+                          style: TextStyle(
+                            color: ColorPalette.grey_6,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        '150',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: "PretendardVariable",
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12.0,
+                        SizedBox(height: 5),
+                        Text(
+                          '150',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: "PretendardVariable",
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: ColorPalette.grey_1,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        '작품',
-                        style: TextStyle(
-                          color: ColorPalette.grey_6,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12.0,
+                SizedBox(width: 10),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ColorPalette.grey_1,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          '작품',
+                          style: TextStyle(
+                            color: ColorPalette.grey_6,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        '7',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: "PretendardVariable",
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12.0,
+                        SizedBox(height: 5),
+                        Text(
+                          '7',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: "PretendardVariable",
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 
   _itemGrid() {
     return Obx(
-      () => GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15,
-          childAspectRatio: 4 / 7,
+      () => Container(
+        padding: EdgeInsets.only(top: 20, left: 24, right: 24),
+        color: ColorPalette.grey_1,
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 15,
+            childAspectRatio: 4 / 7,
+          ),
+          itemCount: controller.items.length,
+          itemBuilder: (context, index) {
+            return _itemWidget(index);
+          },
         ),
-        itemCount: controller.items.length,
-        itemBuilder: (context, index) {
-          return _itemWidget(index);
-        },
       ),
     );
   }
