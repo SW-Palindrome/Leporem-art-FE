@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -44,6 +45,40 @@ class HomeRepository {
     } catch (e) {
       // 에러 처리
       throw ('Error fetching buyer home items in repository: $e');
+    }
+  }
+
+  Future<List<BuyerHomeItem>> fetchBuyerCreatorItems(
+    int page, {
+    String? nickname,
+    isPagination = false,
+  }) async {
+    try {
+      final response = await DioSingleton.dio.get('/items/filter',
+          queryParameters: {
+            'page': page,
+            'nickname': nickname,
+          },
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
+      if (response.data['message'] == 'EmptyPage') {
+        if (isPagination) Get.find<BuyerItemCreatorController>().currentPage--;
+        return [];
+      }
+      final data = response.data;
+      //items를 리스트에 넣고 파싱
+      final List<dynamic> itemsData = data['items'];
+      // 아이템 데이터를 변환하여 리스트로 생성
+      final List<BuyerHomeItem> items =
+          itemsData.map((json) => BuyerHomeItem.fromJson(json)).toList();
+      return items;
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching item creators in repository: $e');
     }
   }
 

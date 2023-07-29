@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -14,11 +16,13 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorPalette.white,
       appBar: MyAppBar(
         appBarType: AppBarType.buyerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
         },
+        isWhite: true,
       ),
       body: SafeArea(
         child: Obx(() {
@@ -77,17 +81,19 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
                 ),
               ),
               SizedBox(width: 10),
-              Text(
-                '${controller.itemDetail.value.price.toString().replaceAllMapped(
-                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},',
-                    )}원',
-                style: TextStyle(
-                  color: Color(0xff191f28),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 18.0,
+              Obx(
+                () => Text(
+                  '${controller.itemDetail.value.price.toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},',
+                      )}원',
+                  style: TextStyle(
+                    color: Color(0xff191f28),
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0,
+                  ),
                 ),
               ),
             ],
@@ -117,49 +123,64 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            controller.itemDetail.value.title,
-            style: TextStyle(
-              color: Color(0xff191f28),
-              fontWeight: FontWeight.w600,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 18.0,
+          Obx(
+            () => Text(
+              controller.itemDetail.value.title,
+              style: TextStyle(
+                color: Color(0xff191f28),
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 18.0,
+              ),
             ),
           ),
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image.network(
-                        controller.itemDetail.value.profileImageUrl,
-                        fit: BoxFit.fill,
+          InkWell(
+            onTap: () {
+              Get.off(ItemCreatorScreen(), arguments: {
+                'nickname': controller.itemDetail.value.nickname
+              });
+              Get.put(BuyerItemCreatorController());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Image.network(
+                          controller.itemDetail.value.profileImageUrl,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    controller.itemDetail.value.nickname,
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14.0,
+                    SizedBox(width: 8),
+                    Obx(
+                      () => Text(
+                        controller.itemDetail.value.nickname,
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14.0,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              PlantTemperature(
-                  temperature: controller.itemDetail.value.temperature ?? 0),
-            ],
+                  ],
+                ),
+                Obx(
+                  () => PlantTemperature(
+                      temperature:
+                          controller.itemDetail.value.temperature ?? 0),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -169,76 +190,78 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
   _itemThumbnail() {
     return Stack(
       children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            height: Get.width,
-            viewportFraction: 1,
-            enableInfiniteScroll: false,
-            onPageChanged: (index, reason) {
-              controller.changeIndex(index);
-            },
-          ),
-          items: [
-            Image.network(
-              controller.itemDetail.value.thumbnailUrl,
-              fit: BoxFit.cover,
-              width: Get.width,
+        Obx(
+          () => CarouselSlider(
+            options: CarouselOptions(
               height: Get.width,
+              viewportFraction: 1,
+              enableInfiniteScroll: false,
+              onPageChanged: (index, reason) {
+                controller.changeIndex(index);
+              },
             ),
-            for (String imageUrl in controller.itemDetail.value.imagesUrl)
+            items: [
               Image.network(
-                imageUrl,
+                controller.itemDetail.value.thumbnailUrl,
                 fit: BoxFit.cover,
                 width: Get.width,
                 height: Get.width,
               ),
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: controller.togglePlay,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      VideoPlayer(controller.videoPlayerController),
-                      Obx(
-                        () => AnimatedOpacity(
-                          opacity: controller.isIconVisible.value ? 1.0 : 0.0,
-                          duration: Duration(milliseconds: 500),
-                          child: controller.isPlaying.value
-                              ? Icon(
-                                  Icons.play_arrow,
-                                  size: 50,
-                                  color: Colors.white,
-                                )
-                              : Icon(
-                                  Icons.pause,
-                                  size: 50,
-                                  color: Colors.white,
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
+              for (String imageUrl in controller.itemDetail.value.imagesUrl)
+                Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  width: Get.width,
+                  height: Get.width,
                 ),
-                Positioned(
-                  bottom: 16,
-                  right: 16,
-                  child: GestureDetector(
-                    onTap: controller.toggleVolume,
-                    child: Obx(
-                      () => Icon(
-                        controller.isMuted.value
-                            ? Icons.volume_off
-                            : Icons.volume_up,
-                        size: 24,
-                        color: Colors.white,
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: controller.togglePlay,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        VideoPlayer(controller.videoPlayerController),
+                        Obx(
+                          () => AnimatedOpacity(
+                            opacity: controller.isIconVisible.value ? 1.0 : 0.0,
+                            duration: Duration(milliseconds: 500),
+                            child: controller.isPlaying.value
+                                ? Icon(
+                                    Icons.play_arrow,
+                                    size: 50,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    Icons.pause,
+                                    size: 50,
+                                    color: Colors.white,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: GestureDetector(
+                      onTap: controller.toggleVolume,
+                      child: Obx(
+                        () => Icon(
+                          controller.isMuted.value
+                              ? Icons.volume_off
+                              : Icons.volume_up,
+                          size: 24,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         Positioned(
           bottom: 0,
@@ -328,33 +351,39 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  for (String tag in controller.itemDetail.value.category)
-                    _categoryWidget(tag),
-                ],
+              Obx(
+                () => Row(
+                  children: [
+                    for (String tag in controller.itemDetail.value.category)
+                      _categoryWidget(tag),
+                  ],
+                ),
               ),
-              Text(
-                "잔여 ${controller.itemDetail.value.currentAmount}점",
-                style: TextStyle(
-                  color: Color(0xff594bf8),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
+              Obx(
+                () => Text(
+                  "잔여 ${controller.itemDetail.value.currentAmount}점",
+                  style: TextStyle(
+                    color: Color(0xff594bf8),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ],
           ),
           SizedBox(height: 16),
-          Text(
-            controller.itemDetail.value.description,
-            style: TextStyle(
-              color: Color(0xff191f28),
-              fontWeight: FontWeight.w400,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 13.0,
+          Obx(
+            () => Text(
+              controller.itemDetail.value.description,
+              style: TextStyle(
+                color: Color(0xff191f28),
+                fontWeight: FontWeight.w400,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 13.0,
+              ),
             ),
           ),
         ],

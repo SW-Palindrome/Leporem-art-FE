@@ -4,8 +4,8 @@ class BuyerHomeItem {
   final String creator;
   final int price;
   final String thumbnailUrl;
-  final int likes;
-  final bool isLiked;
+  int likes;
+  bool isLiked;
 
   BuyerHomeItem({
     required this.id,
@@ -24,10 +24,20 @@ class BuyerHomeItem {
       creator: json['nickname'],
       price: json['price'],
       thumbnailUrl: json['thumbnail_image'],
-      likes: json['likes'],
+      likes: json['like_count'],
       //TODO: isLiked 좋아요했는지 여부 추후 구현
-      isLiked: json['isLiked'] ?? false,
+      isLiked: json['is_liked'] ?? false,
     );
+  }
+
+  void like() {
+    isLiked = true;
+    likes++;
+  }
+
+  void unlike() {
+    isLiked = false;
+    likes--;
   }
 }
 
