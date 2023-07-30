@@ -230,7 +230,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          '7',
+                          '${controller.creatorProfile.value.itemCount}',
                           style: TextStyle(
                             color: ColorPalette.black,
                             fontFamily: "PretendardVariable",
