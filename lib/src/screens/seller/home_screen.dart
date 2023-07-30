@@ -456,57 +456,29 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        item.likes != 0
-                            ? Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/heart_fill.svg',
-                                    height: 12,
-                                    width: 12,
-                                    colorFilter: ColorFilter.mode(
-                                        ColorPalette.purple, BlendMode.srcIn),
-                                  ),
-                                  SizedBox(width: 2),
-                                  Text(
-                                    item.likes.toString(),
-                                    style: TextStyle(
-                                      color: ColorPalette.purple,
-                                      fontFamily: "PretendardVariable",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 11.0,
-                                    ),
-                                  )
-                                ],
+                    item.likes != 0
+                        ? Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/heart_fill.svg',
+                                height: 12,
+                                width: 12,
+                                colorFilter: ColorFilter.mode(
+                                    ColorPalette.purple, BlendMode.srcIn),
+                              ),
+                              SizedBox(width: 2),
+                              Text(
+                                item.likes.toString(),
+                                style: TextStyle(
+                                  color: ColorPalette.purple,
+                                  fontFamily: "PretendardVariable",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 11.0,
+                                ),
                               )
-                            : SizedBox(),
-                        SizedBox(width: 5),
-                        item.messages != 0
-                            ? Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/message_fill.svg',
-                                    height: 12,
-                                    width: 12,
-                                    colorFilter: ColorFilter.mode(
-                                        ColorPalette.purple, BlendMode.srcIn),
-                                  ),
-                                  SizedBox(width: 2),
-                                  Text(
-                                    item.messages.toString(),
-                                    style: TextStyle(
-                                      color: ColorPalette.purple,
-                                      fontFamily: "PretendardVariable",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 11.0,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : SizedBox(),
-                      ],
-                    ),
+                            ],
+                          )
+                        : SizedBox(),
                     Text(
                       item.timeAgo,
                       style: TextStyle(

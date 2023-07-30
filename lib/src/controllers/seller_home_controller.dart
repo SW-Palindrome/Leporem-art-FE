@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 
@@ -14,15 +15,16 @@ class SellerHomeController extends GetxController {
   ScrollController scrollController = ScrollController();
 
   @override
-  void onInit() async {
-    await fetch();
+  void onInit() {
     super.onInit();
+    fetch();
   }
 
   Future<void> fetch() async {
     try {
       final List<SellerHomeItem> fetchedSellerHomeItems =
-          await _homeRepository.fetchSellerHomeItems(currentPage);
+          await _homeRepository.fetchSellerHomeItems(currentPage,
+              Get.find<SellerProfileController>().sellerProfile.value.nickname);
       items.addAll(fetchedSellerHomeItems);
       currentPage++;
     } catch (e) {
@@ -44,7 +46,7 @@ class SellerHomeController extends GetxController {
   }
 
   void pageReset() async {
-    resetSelected();
+    items.clear();
     currentPage = 1;
     await fetch();
   }
