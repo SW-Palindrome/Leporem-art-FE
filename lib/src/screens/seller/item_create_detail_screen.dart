@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
+import 'package:leporemart/src/screens/seller/home_screen.dart';
+import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -51,7 +52,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   value: controller.isValidCreate(),
                   onTap: () async {
                     await controller.createItem();
-                    Get.offAllNamed('/seller');
+                    Get.offAll(SellerApp());
                   },
                 ),
               ),
