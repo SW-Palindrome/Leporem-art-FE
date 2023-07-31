@@ -13,7 +13,7 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        appBarType: AppBarType.buyerSearchAppBar,
+        appBarType: AppBarType.sellerSearchAppBar,
         onTapLeadingIcon: () {
           Get.back();
         },
@@ -97,14 +97,18 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
                           ),
                         ),
                         SizedBox(width: 5),
-                        SvgPicture.asset(
-                          'assets/icons/cancle.svg',
-                          colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4,
-                            BlendMode.srcIn,
+                        GestureDetector(
+                          onTap: () => controller
+                              .removeRecentSearch(controller.recentSearches[i]),
+                          child: SvgPicture.asset(
+                            'assets/icons/cancle.svg',
+                            colorFilter: ColorFilter.mode(
+                              ColorPalette.grey_4,
+                              BlendMode.srcIn,
+                            ),
+                            width: 12,
+                            height: 12,
                           ),
-                          width: 12,
-                          height: 12,
                         ),
                       ],
                     ),
