@@ -386,6 +386,81 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
               ),
             ),
           ),
+          SizedBox(height: 16),
+          if (controller.itemDetail.value.width != null &&
+              controller.itemDetail.value.height != null &&
+              controller.itemDetail.value.depth != null)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 1,
+                  color: ColorPalette.grey_2,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '작품 크기',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 11.0,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        '가로 ${controller.itemDetail.value.width}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '세로 ${controller.itemDetail.value.depth}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '높이 ${controller.itemDetail.value.height}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
