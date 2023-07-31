@@ -22,15 +22,21 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _itemTitle(),
-              _itemThumbnail(),
-              _itemDescription(),
-            ],
-          ),
+        child: Obx(
+          () => controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _itemTitle(),
+                      _itemThumbnail(),
+                      _itemDescription(),
+                    ],
+                  ),
+                ),
         ),
       ),
       bottomNavigationBar: _itemBottomNavigationBar(),
