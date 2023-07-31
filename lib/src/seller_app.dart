@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
@@ -18,9 +19,11 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      Get.lazyPut(() => SellerProfileController());
+      Get.lazyPut(() => SellerHomeController());
+      Get.lazyPut(() => SellerSearchController());
       switch (controller.selectedSellerIndex.value) {
         case 0:
-          Get.put(SellerHomeController());
           return _homeScaffold();
         case 1:
           return _customOrderScaffold();
