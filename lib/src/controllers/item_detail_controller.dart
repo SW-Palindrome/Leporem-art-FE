@@ -6,7 +6,7 @@ import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_player/video_player.dart';
 
-class ItemDetailController extends GetxController {
+class BuyerItemDetailController extends GetxController {
   VideoPlayerController videoPlayerController =
       VideoPlayerController.network('')..initialize();
   Rx<bool> isLoading = true.obs;

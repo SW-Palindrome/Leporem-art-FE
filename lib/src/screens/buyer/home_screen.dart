@@ -73,7 +73,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
       onTap: () {
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
-        Get.put(ItemDetailController());
+        Get.put(BuyerItemDetailController());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

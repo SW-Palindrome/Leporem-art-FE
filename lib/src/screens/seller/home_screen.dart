@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/screens/seller/item_create_screen.dart';
+import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/next_button.dart';

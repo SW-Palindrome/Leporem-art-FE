@@ -11,7 +11,7 @@ import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
-class BuyerItemDetailScreen extends GetView<ItemDetailController> {
+class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
   const BuyerItemDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
