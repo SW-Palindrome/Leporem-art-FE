@@ -9,7 +9,7 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class BuyerHomeScreen extends GetView<BuyerHomeController> {
-  BuyerHomeScreen({super.key});
+  const BuyerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   controller: controller.scrollController,
                   itemCount: controller.items.length,
                   itemBuilder: (context, index) {
-                    if (index < controller.items.length) {
-                      return _itemWidget(index);
-                    } else {
-                      // Show a loading indicator at the end of the grid
-                      return Center(child: CircularProgressIndicator());
-                    }
+                    return _itemWidget(index);
                   },
                 ),
               ),
