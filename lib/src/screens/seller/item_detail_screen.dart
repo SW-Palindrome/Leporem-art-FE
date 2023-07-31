@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/item_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
+import 'package:leporemart/src/screens/seller/item_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -19,6 +21,10 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
         appBarType: AppBarType.sellerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
+        },
+        onTapSecondActionIcon: () {
+          Get.to(ItemEditScreen());
+          Get.put(ItemEditController());
         },
       ),
       body: SafeArea(
