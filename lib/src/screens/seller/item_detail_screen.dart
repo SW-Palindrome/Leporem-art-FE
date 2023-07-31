@@ -315,15 +315,51 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                     _categoryWidget(tag),
                 ],
               ),
-              Text(
-                "잔여 ${controller.itemDetail.value.currentAmount}점",
-                style: TextStyle(
-                  color: Color(0xff594bf8),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
+              Row(
+                children: [
+                  Container(
+                    width: 24,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorPalette.grey_2,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/minus.svg',
+                      width: 12,
+                      height: 12,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_6, BlendMode.srcIn),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    "잔여 ${controller.itemDetail.value.currentAmount}점",
+                    style: TextStyle(
+                      color: Color(0xff594bf8),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorPalette.grey_2,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/plus.svg',
+                      width: 12,
+                      height: 12,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_6, BlendMode.srcIn),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
