@@ -17,9 +17,9 @@ class SellerHomeController extends GetxController {
   ScrollController scrollController = ScrollController();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    fetch();
+    await fetch();
   }
 
   Future<void> fetch({bool isPagination = false}) async {
@@ -40,7 +40,7 @@ class SellerHomeController extends GetxController {
           break;
       }
       if (isPagination!) currentPage++;
-      final List<SellerHomeItem> fetchedSellerHomeItems =
+      final List<SellerHomeItem> fetchedItems =
           await _homeRepository.fetchSellerHomeItems(
         currentPage,
         nickname:
@@ -48,7 +48,7 @@ class SellerHomeController extends GetxController {
         keyword: Get.find<SellerSearchController>().searchController.text,
         ordering: ordering,
       );
-      items.addAll(fetchedSellerHomeItems);
+      items.addAll(fetchedItems);
     } catch (e) {
       // 에러 처리
       print('Error fetching seller home items in controller: $e');
