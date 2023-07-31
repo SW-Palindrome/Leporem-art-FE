@@ -22,7 +22,6 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         title: '작품 등록',
         onTapLeadingIcon: () {
           Get.back();
-          controller.clearForm();
         },
         isWhite: false,
       ),
