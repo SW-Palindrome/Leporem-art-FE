@@ -526,6 +526,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
           child: TextField(
             controller: controller.titleController,
             maxLength: 46,
+            onChanged: (value) => controller.checkTitleChanged(value),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '이름',
@@ -579,6 +580,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
             maxLength: 255,
             maxLines: null,
             controller: controller.descriptionController,
+            onChanged: (value) => controller.checkDescriptionChanged(value),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '작품에 대한 상세한 설명을 적어주세요.',
@@ -709,6 +711,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                             ),
                           );
                         }
+                        controller.checkWidthChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -814,6 +817,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                             ),
                           );
                         }
+                        controller.checkDepthChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -920,6 +924,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                             ),
                           );
                         }
+                        controller.checkHeightChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
