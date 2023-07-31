@@ -28,6 +28,31 @@ class ItemEditController extends ItemCreateDetailController {
     await load();
   }
 
+  void checkCategoryChanged() {
+    List<String> categoryList = itemDetail.category;
+    List<String> selectCategoryList = [];
+    for (int i = 0; i < categoryList.length; i++) {
+      for (int j = 0; j < selectedCategoryType.length; j++) {
+        if (selectedCategoryType[j]) {
+          selectCategoryList.add(categoryTypes[j]);
+        }
+      }
+    }
+    categoryList.sort();
+    selectCategoryList.sort();
+    if (categoryList.length != selectCategoryList.length) {
+      isCategoryChanged.value = true;
+      return;
+    }
+    for (int i = 0; i < categoryList.length; i++) {
+      if (categoryList[i] != selectCategoryList[i]) {
+        isCategoryChanged.value = true;
+        return;
+      }
+    }
+    isCategoryChanged.value = false;
+  }
+
   void checkTitleChanged(String value) {
     if (value != itemDetail.title) {
       isTitleChanged.value = true;
@@ -86,6 +111,37 @@ class ItemEditController extends ItemCreateDetailController {
     } else {
       isAmountChanged.value = false;
     }
+  }
+
+  @override
+  void increaseAmount() {
+    super.increaseAmount();
+    checkAmountChanged();
+  }
+
+  @override
+  void decreaseAmount() {
+    super.decreaseAmount();
+    checkAmountChanged();
+  }
+
+  @override
+  void changeSelectedCategoryType(int index) {
+    super.changeSelectedCategoryType(index);
+    checkCategoryChanged();
+  }
+
+  bool isEditable() {
+    return isImageChanged.value ||
+        isVideoChanged.value ||
+        isCategoryChanged.value ||
+        isTitleChanged.value ||
+        isDescriptionChanged.value ||
+        isWidthChanged.value ||
+        isDepthChanged.value ||
+        isHeightChanged.value ||
+        isPriceChanged.value ||
+        isAmountChanged.value;
   }
 
   Future<void> load() async {

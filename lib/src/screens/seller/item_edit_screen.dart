@@ -45,14 +45,20 @@ class ItemEditScreen extends GetView<ItemEditController> {
               _amountInput(),
               SizedBox(height: 20),
               Obx(
-                () => NextButton(
-                  text: "수정완료",
-                  value: controller.isValidCreate(),
-                  onTap: () async {
-                    await controller.createItem();
-                    Get.offAll(SellerApp());
-                  },
-                ),
+                () => controller.isValidCreate() && controller.isEditable()
+                    ? NextButton(
+                        text: "수정완료",
+                        value: true,
+                        onTap: () async {
+                          await controller.createItem();
+                          Get.offAll(SellerApp());
+                        },
+                      )
+                    : NextButton(
+                        text: "수정완료",
+                        value: false,
+                        onTap: () {},
+                      ),
               ),
             ],
           ),
@@ -1005,6 +1011,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
               FilteringTextInputFormatter.allow(RegExp(r'^[0-9,]+$')),
               CurrencyFormatter(), // 사용자 정의 CurrencyFormatter 적용
             ],
+            onChanged: (value) => controller.checkPriceChanged(value),
             decoration: InputDecoration(
               counterText: '',
               border: InputBorder.none,
@@ -1052,7 +1059,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
         Row(
           children: [
             GestureDetector(
-              onTap: () => controller.decreaseQuantity(),
+              onTap: () => controller.decreaseAmount(),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -1097,7 +1104,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
             ),
             SizedBox(width: Get.width * 0.02),
             GestureDetector(
-              onTap: () => controller.increaseQuantity(),
+              onTap: () => controller.increaseAmount(),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
