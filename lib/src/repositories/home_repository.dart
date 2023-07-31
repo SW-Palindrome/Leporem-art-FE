@@ -86,6 +86,7 @@ class HomeRepository {
     int page, {
     String? nickname,
     String? ordering,
+    String? keyword,
     isPagination = false,
   }) async {
     try {
@@ -94,6 +95,7 @@ class HomeRepository {
             'page': page,
             'nickname': nickname,
             'ordering': ordering,
+            'search': keyword,
           },
           options: Options(
             headers: {

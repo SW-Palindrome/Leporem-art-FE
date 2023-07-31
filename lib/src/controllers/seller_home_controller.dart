@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 
@@ -44,6 +45,7 @@ class SellerHomeController extends GetxController {
         currentPage,
         nickname:
             Get.find<SellerProfileController>().sellerProfile.value.nickname,
+        keyword: Get.find<SellerSearchController>().searchController.text,
         ordering: ordering,
       );
       items.addAll(fetchedSellerHomeItems);
