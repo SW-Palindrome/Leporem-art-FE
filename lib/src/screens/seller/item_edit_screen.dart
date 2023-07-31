@@ -24,43 +24,45 @@ class ItemEditScreen extends GetView<ItemEditController> {
         },
         isWhite: false,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          color: ColorPalette.grey_1,
-          child: Column(
-            children: [
-              _mediaInput(),
-              SizedBox(height: 20),
-              _categoryInput(),
-              SizedBox(height: 20),
-              _titleInput(),
-              SizedBox(height: 20),
-              _descriptionInput(),
-              SizedBox(height: 20),
-              _sizeInput(),
-              SizedBox(height: 20),
-              _priceInput(),
-              SizedBox(height: 20),
-              _amountInput(),
-              SizedBox(height: 20),
-              Obx(
-                () => controller.isValidCreate() && controller.isEditable()
-                    ? NextButton(
-                        text: "수정완료",
-                        value: true,
-                        onTap: () async {
-                          await controller.createItem();
-                          Get.offAll(SellerApp());
-                        },
-                      )
-                    : NextButton(
-                        text: "수정완료",
-                        value: false,
-                        onTap: () {},
-                      ),
-              ),
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            color: ColorPalette.grey_1,
+            child: Column(
+              children: [
+                _mediaInput(),
+                SizedBox(height: 20),
+                _categoryInput(),
+                SizedBox(height: 20),
+                _titleInput(),
+                SizedBox(height: 20),
+                _descriptionInput(),
+                SizedBox(height: 20),
+                _sizeInput(),
+                SizedBox(height: 20),
+                _priceInput(),
+                SizedBox(height: 20),
+                _amountInput(),
+                SizedBox(height: 20),
+                Obx(
+                  () => controller.isValidCreate() && controller.isEditable()
+                      ? NextButton(
+                          text: "수정완료",
+                          value: true,
+                          onTap: () async {
+                            await controller.createItem();
+                            Get.offAll(SellerApp());
+                          },
+                        )
+                      : NextButton(
+                          text: "수정완료",
+                          value: false,
+                          onTap: () {},
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
