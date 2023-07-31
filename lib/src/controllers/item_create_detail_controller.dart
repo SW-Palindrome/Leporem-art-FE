@@ -172,13 +172,13 @@ class ItemCreateDetailController extends GetxController {
     selectedCategoryType.value = List.generate(5, (index) => false);
   }
 
-  void decreaseQuantity() {
+  void decreaseAmount() {
     if (amount.value > 0) {
       amount.value--;
     }
   }
 
-  void increaseQuantity() {
+  void increaseAmount() {
     if (amount.value < 99) {
       amount.value++;
     }

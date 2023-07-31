@@ -1048,7 +1048,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         Row(
           children: [
             GestureDetector(
-              onTap: () => controller.decreaseQuantity(),
+              onTap: () => controller.decreaseAmount(),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -1093,7 +1093,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             ),
             SizedBox(width: Get.width * 0.02),
             GestureDetector(
-              onTap: () => controller.increaseQuantity(),
+              onTap: () => controller.increaseAmount(),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
