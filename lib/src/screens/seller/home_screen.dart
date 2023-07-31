@@ -382,7 +382,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
   _itemWidget(int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(SellerItemDeatilScreen(),
+        Get.to(SellerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(SellerItemDetailController());
       },
