@@ -38,7 +38,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     return Scaffold(
       appBar: Get.find<SellerSearchController>().isSearching.value
           ? MyAppBar(
-              appBarType: AppBarType.buyerSearchAppBar,
+              appBarType: AppBarType.sellerSearchAppBar,
               onTapLeadingIcon: () async {
                 Get.find<SellerSearchController>().isSearching.value = false;
                 Get.find<SellerSearchController>().searchController.clear();
