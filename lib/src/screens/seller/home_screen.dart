@@ -474,29 +474,6 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      controller.items[index].likes != 0
-                          ? Row(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/heart_fill.svg',
-                                  height: 12,
-                                  width: 12,
-                                  colorFilter: ColorFilter.mode(
-                                      ColorPalette.purple, BlendMode.srcIn),
-                                ),
-                                SizedBox(width: 2),
-                                Text(
-                                  controller.items[index].likes.toString(),
-                                  style: TextStyle(
-                                    color: ColorPalette.purple,
-                                    fontFamily: "PretendardVariable",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 11.0,
-                                  ),
-                                )
-                              ],
-                            )
-                          : SizedBox(),
                       Text(
                         controller.items[index].timeAgo,
                         style: TextStyle(
