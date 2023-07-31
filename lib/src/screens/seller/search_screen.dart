@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -68,8 +69,13 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
             children: [
               for (int i = 0; i < controller.recentSearches.length; i++)
                 GestureDetector(
-                  onTap: () => controller
-                      .removeRecentSearch(controller.recentSearches[i]),
+                  onTap: () async {
+                    controller.searchController.text =
+                        controller.recentSearches[i];
+                    controller.isSearching.value = true;
+                    await Get.find<SellerHomeController>().pageReset();
+                    Get.back();
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
