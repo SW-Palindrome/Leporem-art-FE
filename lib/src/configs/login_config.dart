@@ -52,7 +52,7 @@ void getKakaoUserInfo() async {
 
 Future<bool> isSignup() async {
   try {
-    final response = await DioSingleton.dio.get(
+    final response = await DioSingleton.dio.post(
       "/users/login/kakao",
       data: {
         "id_token": await getOAuthToken().then((value) => value!.idToken),
