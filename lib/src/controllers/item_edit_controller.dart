@@ -131,6 +131,30 @@ class ItemEditController extends ItemCreateDetailController {
     checkCategoryChanged();
   }
 
+  @override
+  Future<void> selectImages() async {
+    super.selectImages();
+    isImageChanged.value = true;
+  }
+
+  @override
+  Future<void> selectVideo() async {
+    super.selectVideo();
+    isVideoChanged.value = true;
+  }
+
+  @override
+  void removeImage(int index) {
+    super.removeImage(index);
+    isImageChanged.value = true;
+  }
+
+  @override
+  void removeVideo(int index) {
+    super.removeVideo(index);
+    isVideoChanged.value = true;
+  }
+
   bool isEditable() {
     return isImageChanged.value ||
         isVideoChanged.value ||
