@@ -48,7 +48,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       controller: controller.scrollController,
                       itemCount: controller.items.length,
                       itemBuilder: (context, index) {
-                        return _itemWidget(controller.items[index]);
+                        return _itemWidget(index);
                       },
                     ),
                   ),
@@ -379,7 +379,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
     );
   }
 
-  _itemWidget(SellerHomeItem item) {
+  _itemWidget(int index) {
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.only(bottom: 15),
@@ -392,7 +392,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              item.thumbnailUrl,
+              controller.items[index].thumbnailUrl,
               height: Get.width * 0.25,
               width: Get.width * 0.25,
               fit: BoxFit.cover,
@@ -407,7 +407,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      item.name,
+                      controller.items[index].name,
                       style: TextStyle(
                         color: ColorPalette.black,
                         fontWeight: FontWeight.w500,
@@ -427,7 +427,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                         ),
                         SizedBox(width: 2),
                         Text(
-                          item.star.toString(),
+                          controller.items[index].star.toString(),
                           style: TextStyle(
                             color: ColorPalette.yellow,
                             fontWeight: FontWeight.w400,
@@ -442,7 +442,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                  '${CurrencyFormatter().numberToCurrency(controller.items[index].price)}원',
                   style: TextStyle(
                     color: ColorPalette.black,
                     fontWeight: FontWeight.w600,
@@ -453,7 +453,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  '잔여 ${item.remainAmount}점',
+                  '잔여 ${controller.items[index].remainAmount}점',
                   style: TextStyle(
                     color: ColorPalette.grey_5,
                     fontWeight: FontWeight.w400,
@@ -466,7 +466,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    item.likes != 0
+                    controller.items[index].likes != 0
                         ? Row(
                             children: [
                               SvgPicture.asset(
@@ -478,7 +478,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                               ),
                               SizedBox(width: 2),
                               Text(
-                                item.likes.toString(),
+                                controller.items[index].likes.toString(),
                                 style: TextStyle(
                                   color: ColorPalette.purple,
                                   fontFamily: "PretendardVariable",
@@ -490,7 +490,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                           )
                         : SizedBox(),
                     Text(
-                      item.timeAgo,
+                      controller.items[index].timeAgo,
                       style: TextStyle(
                         color: ColorPalette.grey_4,
                         fontFamily: "PretendardVariable",
