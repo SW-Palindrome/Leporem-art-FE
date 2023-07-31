@@ -83,12 +83,17 @@ class HomeRepository {
   }
 
   Future<List<SellerHomeItem>> fetchSellerHomeItems(
-      int page, String nickname) async {
+    int page, {
+    String? nickname,
+    String? ordering,
+    isPagination = false,
+  }) async {
     try {
       final response = await DioSingleton.dio.get('/items/filter',
           queryParameters: {
             'page': page,
             'nickname': nickname,
+            'ordering': ordering,
           },
           options: Options(
             headers: {

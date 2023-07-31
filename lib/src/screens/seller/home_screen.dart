@@ -39,12 +39,28 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
               SizedBox(height: Get.height * 0.02),
               Expanded(
                 child: Obx(
-                  () => ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: controller.items.length,
-                    itemBuilder: (context, index) {
-                      return _itemWidget(controller.items[index]);
+                  () => NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      if (scrollInfo is ScrollEndNotification) {
+                        if (controller.scrollController.position.extentAfter ==
+                            0) {
+                          controller.fetch(isPagination: true);
+                        }
+                        if (controller.scrollController.position.extentBefore ==
+                            0) {
+                          controller.pageReset();
+                        }
+                      }
+                      return false;
                     },
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      controller: controller.scrollController,
+                      itemCount: controller.items.length,
+                      itemBuilder: (context, index) {
+                        return _itemWidget(controller.items[index]);
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -282,6 +298,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: GestureDetector(
             onTap: () {
               controller.resetSelected();
+              Get.back();
             },
             child: Container(
               height: Get.height * 0.06,
@@ -328,7 +345,10 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         NextButton(
           text: '적용하기',
           value: controller.isResetValid(),
-          onTap: () => Get.back(),
+          onTap: () {
+            controller.applyFilter();
+            Get.back();
+          },
           width: Get.width * 0.5,
         ),
       ],
@@ -347,7 +367,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         children: [
           Obx(
             () => Text(
-              controller.sortTypes[controller.selectedSortType.value],
+              controller.sortTypes[controller.displayedSortType.value],
               style: TextStyle(
                 fontSize: 12,
                 color: ColorPalette.grey_6,
