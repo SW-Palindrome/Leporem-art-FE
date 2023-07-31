@@ -8,7 +8,7 @@ class ItemDetailRepository {
     try {
       print('현재 요청 페이지: $itemID');
       // API 요청
-      final response = await DioSingleton.dio.get('/items/buyer/detail',
+      final response = await DioSingleton.dio.get('/items/detail/buyer',
           queryParameters: {'item_id': itemID},
           options: Options(
             headers: {

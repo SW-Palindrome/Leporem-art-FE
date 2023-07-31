@@ -126,9 +126,9 @@ class BuyerSearchScreen extends GetView<BuyerSearchController> {
               for (int i = 0; i < controller.recentSearches.length; i++)
                 GestureDetector(
                   onTap: () async {
-                    Get.find<BuyerSearchController>().searchController.text =
+                    controller.searchController.text =
                         controller.recentSearches[i];
-                    Get.find<BuyerSearchController>().isSearching.value = true;
+                    controller.isSearching.value = true;
                     await Get.find<BuyerHomeController>().pageReset();
                     Get.back();
                   },

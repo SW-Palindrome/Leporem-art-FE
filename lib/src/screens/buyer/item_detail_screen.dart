@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
-import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -11,7 +11,7 @@ import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
-class BuyerItemDetailScreen extends GetView<ItemDetailController> {
+class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
   const BuyerItemDetailScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -386,6 +386,81 @@ class BuyerItemDetailScreen extends GetView<ItemDetailController> {
               ),
             ),
           ),
+          SizedBox(height: 16),
+          if (controller.itemDetail.value.width != null &&
+              controller.itemDetail.value.height != null &&
+              controller.itemDetail.value.depth != null)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 1,
+                  color: ColorPalette.grey_2,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '작품 크기',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 11.0,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        '가로 ${controller.itemDetail.value.width}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '세로 ${controller.itemDetail.value.depth}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '높이 ${controller.itemDetail.value.height}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

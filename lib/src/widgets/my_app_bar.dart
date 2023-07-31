@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../controllers/seller_search_controller.dart';
@@ -202,10 +203,40 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  _sellerItemDetailAppBar() {}
+  _sellerItemDetailAppBar() {
+    return AppBar(
+      backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(
+          'assets/icons/arrow_left.svg',
+          colorFilter: ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
+          width: 24,
+        ),
+        onPressed: onTapLeadingIcon,
+      ),
+      actions: [
+        IconButton(
+          onPressed: onTapFirstActionIcon,
+          icon: SvgPicture.asset(
+            'assets/icons/list.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+            width: 24,
+          ),
+        ),
+        IconButton(
+          onPressed: onTapSecondActionIcon,
+          icon: SvgPicture.asset(
+            'assets/icons/edit.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+            width: 24,
+          ),
+        ),
+      ],
+    );
+  }
 
   _sellerSearchAppBar() {
-    final sellerSearchController = Get.find<SellerSearchController>();
     return AppBar(
       backgroundColor: isWhite ? ColorPalette.white : ColorPalette.grey_1,
       elevation: 0,
@@ -225,8 +256,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Center(
           child: TextField(
-            onSubmitted: (value) {
-              sellerSearchController.addRecentSearch(value);
+            controller: Get.find<SellerSearchController>().searchController,
+            onSubmitted: (value) async {
+              Get.find<SellerSearchController>().addRecentSearch(value);
+              Get.find<SellerSearchController>().isSearching.value = true;
+              await Get.find<SellerHomeController>().pageReset();
+              Get.back();
             },
             decoration: InputDecoration.collapsed(
               hintText: '작품명을 검색해주세요.',

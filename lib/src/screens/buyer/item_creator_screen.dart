@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
-import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -230,7 +230,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          '7',
+                          '${controller.creatorProfile.value.itemCount}',
                           style: TextStyle(
                             color: ColorPalette.black,
                             fontFamily: "PretendardVariable",
@@ -278,7 +278,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
       onTap: () {
         Get.off(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
-        Get.put(ItemDetailController());
+        Get.put(BuyerItemDetailController());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

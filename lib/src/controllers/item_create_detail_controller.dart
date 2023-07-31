@@ -269,14 +269,12 @@ class ItemCreateDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        clearForm();
         Get.snackbar(
           '작품 등록',
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
       } else {
-        clearForm();
         Get.snackbar(
           '작품 등록 실패',
           '작품 등록에 실패하였습니다. 다시 시도해주세요.',
@@ -285,26 +283,11 @@ class ItemCreateDetailController extends GetxController {
       }
     } catch (error) {
       print(error);
-      clearForm();
       Get.snackbar(
         '작품 등록 실패',
         '작품 등록 중 오류가 발생하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
-  }
-
-  void clearForm() {
-    images.clear();
-    videos.clear();
-    thumbnail.value = null;
-    resetSelectedCategoryType();
-    titleController.clear();
-    descriptionController.clear();
-    widthController.clear();
-    depthController.clear();
-    heightController.clear();
-    priceController.clear();
-    amount.value = 0;
   }
 }

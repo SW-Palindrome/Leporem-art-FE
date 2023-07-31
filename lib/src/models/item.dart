@@ -48,9 +48,8 @@ class SellerHomeItem {
   final int price;
   final String thumbnailUrl;
   final int likes;
-  final int messages;
   final int remainAmount;
-  final double star;
+  final String star;
   final String timeAgo;
   final bool isAuction;
 
@@ -61,7 +60,6 @@ class SellerHomeItem {
     required this.price,
     required this.thumbnailUrl,
     required this.likes,
-    required this.messages,
     required this.remainAmount,
     required this.star,
     required this.timeAgo,
@@ -75,12 +73,11 @@ class SellerHomeItem {
       creator: json['nickname'],
       price: json['price'],
       thumbnailUrl: json['thumbnail_image'],
-      likes: json['likes'],
-      messages: json['messages'],
-      remainAmount: json['remain_amount'],
-      star: json['star'],
+      likes: json['like_count'],
+      remainAmount: json['remain_amount'] ?? 0,
+      star: json['avg_rating'],
       //TODO: timeAgo 시간 표시 추후 구현
-      timeAgo: json['time_ago'] ?? '1분 전',
+      timeAgo: json['time_diff'],
       isAuction: json['is_auction'] ?? false,
     );
   }

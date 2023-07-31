@@ -11,27 +11,9 @@ import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
-import 'package:leporemart/src/controllers/buyer_message_controller.dart';
-import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
-import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
-import 'package:leporemart/src/controllers/seller_home_controller.dart';
-import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
-import 'package:leporemart/src/controllers/buyer_home_controller.dart';
-import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
-import 'package:leporemart/src/controllers/item_detail_controller.dart';
-import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/controllers/seller_profile_controller.dart';
-import 'package:leporemart/src/controllers/seller_search_controller.dart';
-import 'package:leporemart/src/screens/account/email_screen.dart';
-import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
-import 'package:leporemart/src/screens/buyer/search_screen.dart';
-import 'package:leporemart/src/screens/seller/item_create_detail_screen.dart';
-import 'package:leporemart/src/screens/seller/item_create_screen.dart';
-import 'package:leporemart/src/screens/seller/search_screen.dart';
-import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -46,18 +28,11 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  Get.put(MyBottomNavigationbarController());
-  Get.put(AgreementController());
-  Get.put(AccountTypeController());
-  Get.put(EmailController());
-  Get.put(NicknameController());
-  Get.put(ItemCreateDetailController());
-  Get.put(BuyerSearchController());
-  Get.put(BuyerHomeController());
-  Get.lazyPut(() => BuyerProfileController());
-  Get.put(SellerHomeController());
-  Get.put(SellerSearchController());
-  Get.put(BuyerMessageController());
+  Get.lazyPut(() => MyBottomNavigationbarController());
+  Get.lazyPut(() => AgreementController());
+  Get.lazyPut(() => AccountTypeController());
+  Get.lazyPut(() => EmailController());
+  Get.lazyPut(() => NicknameController());
 
   await initializeDateFormatting();
 

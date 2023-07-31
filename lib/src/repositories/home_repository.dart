@@ -82,10 +82,27 @@ class HomeRepository {
     }
   }
 
-  Future<List<SellerHomeItem>> fetchSellerHomeItems(int page) async {
+  Future<List<SellerHomeItem>> fetchSellerHomeItems(
+    int page, {
+    String? nickname,
+    String? ordering,
+    String? keyword,
+    isPagination = false,
+  }) async {
     try {
-      final response = await DioSingleton.dio
-          .get('/items/sellers/main', queryParameters: {'page': page});
+      final response = await DioSingleton.dio.get('/items/filter',
+          queryParameters: {
+            'page': page,
+            'nickname': nickname,
+            'ordering': ordering,
+            'search': keyword,
+          },
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
       final data = response.data;
       //items를 리스트에 넣고 파싱
       final List<dynamic> itemsData = data['items'];
@@ -96,25 +113,7 @@ class HomeRepository {
       return items;
     } catch (e) {
       // 에러 처리
-      throw ('Error fetching buyer home items in repository: $e');
+      throw ('Error fetching seller home items in repository: $e');
     }
   }
 }
-
-final List<SellerHomeItem> mockSellerHomeItems = [
-  for (int i = 0; i < 10; i++)
-    SellerHomeItem(
-      id: 1,
-      name: '상품상품상품상품상품',
-      creator: '제작자 1',
-      price: 10000,
-      thumbnailUrl:
-          'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/rs_quotation_api/ytqc8cje/b0bc8fe9d933474ba5824e2c6b08b935.jpg',
-      likes: 50,
-      messages: 10,
-      timeAgo: '10분 전',
-      star: 4.5,
-      remainAmount: 5,
-      isAuction: false,
-    ),
-];

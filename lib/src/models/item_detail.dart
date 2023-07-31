@@ -7,7 +7,7 @@ class ItemDetail {
   final String description;
   final int price;
   final List<String> category;
-  final int currentAmount;
+  int currentAmount;
   final String thumbnailUrl;
   final List<String> imagesUrl;
   final String videoUrl;
@@ -92,6 +92,48 @@ class ItemDetail {
       category: category,
       videoUrl: videoUrl,
       isLiked: false,
+      width: width,
+      depth: depth,
+      height: height,
+    );
+  }
+
+  ItemDetail decreaseAmount() {
+    return ItemDetail(
+      id: id,
+      profileImageUrl: profileImageUrl,
+      nickname: nickname,
+      temperature: temperature,
+      title: title,
+      description: description,
+      price: price,
+      currentAmount: currentAmount - 1,
+      thumbnailUrl: thumbnailUrl,
+      imagesUrl: imagesUrl,
+      category: category,
+      videoUrl: videoUrl,
+      isLiked: isLiked,
+      width: width,
+      depth: depth,
+      height: height,
+    );
+  }
+
+  ItemDetail increaseAmount() {
+    return ItemDetail(
+      id: id,
+      profileImageUrl: profileImageUrl,
+      nickname: nickname,
+      temperature: temperature,
+      title: title,
+      description: description,
+      price: price,
+      currentAmount: currentAmount + 1,
+      thumbnailUrl: thumbnailUrl,
+      imagesUrl: imagesUrl,
+      category: category,
+      videoUrl: videoUrl,
+      isLiked: isLiked,
       width: width,
       depth: depth,
       height: height,

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
-import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class BuyerHomeScreen extends GetView<BuyerHomeController> {
-  BuyerHomeScreen({super.key});
+  const BuyerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   controller: controller.scrollController,
                   itemCount: controller.items.length,
                   itemBuilder: (context, index) {
-                    if (index < controller.items.length) {
-                      return _itemWidget(index);
-                    } else {
-                      // Show a loading indicator at the end of the grid
-                      return Center(child: CircularProgressIndicator());
-                    }
+                    return _itemWidget(index);
                   },
                 ),
               ),
@@ -73,7 +68,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
       onTap: () {
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
-        Get.put(ItemDetailController());
+        Get.put(BuyerItemDetailController());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
