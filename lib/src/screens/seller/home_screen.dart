@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
+import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
