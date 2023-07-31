@@ -1,9 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/repositories/item_detail_repository.dart';
-import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_player/video_player.dart';
 
 class SellerItemDetailController extends GetxController {
@@ -97,54 +94,6 @@ class SellerItemDetailController extends GetxController {
       // 에러 처리
       print('Error fetching item detail: $e');
       // 목업 데이터 사용 또는 에러 처리 로직 추가
-    }
-  }
-
-  Future<void> like() async {
-    try {
-      print('좋아요');
-      // API 요청
-      final response = await DioSingleton.dio.post('/items/like',
-          data: {'item_id': Get.arguments['item_id']},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
-      // 200이 아니라면 오류
-      if (response.statusCode != 200) {
-        throw Exception(
-            'Status Code: ${response.statusCode} / Body: ${response.data}');
-      }
-      itemDetail.value = itemDetail.value.like();
-    } catch (e) {
-      // 에러 처리
-      print('Error fetching like ${Get.arguments['item_id']}: $e');
-    }
-  }
-
-  Future<void> unlike() async {
-    try {
-      print('좋아요 해제');
-      // API 요청
-      final response = await DioSingleton.dio.delete('/items/like',
-          data: {'item_id': Get.arguments['item_id']},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
-      // 200이 아니라면 오류
-      if (response.statusCode != 200) {
-        throw Exception(
-            'Status Code: ${response.statusCode} / Body: ${response.data}');
-      }
-      itemDetail.value = itemDetail.value.unlike();
-    } catch (e) {
-      // 에러 처리
-      print('Error fetching like ${Get.arguments['item_id']}: $e');
     }
   }
 }
