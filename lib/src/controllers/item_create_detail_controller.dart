@@ -59,7 +59,6 @@ class ItemCreateDetailController extends GetxController {
     return result;
   }
 
-//TODO:
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
