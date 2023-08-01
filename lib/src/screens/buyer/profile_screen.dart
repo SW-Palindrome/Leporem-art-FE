@@ -11,6 +11,7 @@ import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/screens/account/email_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
+import 'package:leporemart/src/screens/buyer/recent_item_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
@@ -31,7 +32,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               title: '작품관리',
               contents: ['주문 내역', '관심 작품', '최근 본 작품'],
               icons: ['list', 'heart_outline', 'history'],
-              gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
+              gotoWidgets: [BuyerApp(), BuyerApp(), RecentItemScreen()],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
