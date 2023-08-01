@@ -198,6 +198,7 @@ class ItemEditController extends ItemCreateDetailController {
     isVideoLoading.value = true;
     Dio dio = Dio();
     try {
+      // 썸네일 이미지를 불러옴
       var response = await dio.get(itemDetail.thumbnailUrl,
           options: Options(responseType: ResponseType.bytes));
 
@@ -213,6 +214,7 @@ class ItemEditController extends ItemCreateDetailController {
       images.value.add(imageFile);
       isImagesLoading[0] = false;
 
+      // imageList에 있는 이미지들을 불러옴
       for (int i = 0; i < imageList.length; i++) {
         final response = await dio.get(imageList[i],
             options: Options(responseType: ResponseType.bytes));
@@ -229,7 +231,10 @@ class ItemEditController extends ItemCreateDetailController {
         images.add(imageFile);
         isImagesLoading[i + 1] = false;
       }
+      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+      images.refresh();
 
+      // 비디오 불러오기
       response = await dio.get(itemDetail.videoUrl,
           options: Options(responseType: ResponseType.bytes));
 
