@@ -117,6 +117,17 @@ class ItemEditController extends ItemCreateDetailController {
   }
 
   @override
+  bool isValidCreate() {
+    return images.isNotEmpty &&
+        images.length <= 10 &&
+        title.value.isNotEmpty &&
+        description.value.isNotEmpty &&
+        price.value >= 1000 &&
+        price.value <= 1000000 &&
+        amount.value >= 0;
+  }
+
+  @override
   void increaseAmount() {
     super.increaseAmount();
     checkAmountChanged();
