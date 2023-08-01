@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/screens/buyer/review_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
@@ -85,32 +86,33 @@ class BuyerOrderListScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.bottomSheet(
-                                MyBottomSheet(
-                                  title: "주문을 취소할까요?",
-                                  description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
-                                  descriptionFontSize: 16,
-                                  height: Get.height * 0.3,
-                                  buttonType: BottomSheetType.twoButton,
-                                  onCloseButtonPressed: () {
-                                    Get.back();
-                                  },
-                                  leftButtonText: "이전으로",
-                                  onLeftButtonPressed: () {
-                                    Get.back();
-                                  },
-                                  rightButtonText: "주문 취소하기",
-                                  onRightButtonPressed: () {
-                                    print('주문 취소하기');
-                                  },
-                                ),
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(30.0),
-                                  ),
-                                ),
-                              );
+                              Get.to(ReviewScreen());
+                              // Get.bottomSheet(
+                              //   MyBottomSheet(
+                              //     title: "주문을 취소할까요?",
+                              //     description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
+                              //     descriptionFontSize: 16,
+                              //     height: Get.height * 0.3,
+                              //     buttonType: BottomSheetType.twoButton,
+                              //     onCloseButtonPressed: () {
+                              //       Get.back();
+                              //     },
+                              //     leftButtonText: "이전으로",
+                              //     onLeftButtonPressed: () {
+                              //       Get.back();
+                              //     },
+                              //     rightButtonText: "주문 취소하기",
+                              //     onRightButtonPressed: () {
+                              //       print('주문 취소하기');
+                              //     },
+                              //   ),
+                              //   backgroundColor: Colors.white,
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.vertical(
+                              //       top: Radius.circular(30.0),
+                              //     ),
+                              //   ),
+                              // );
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
