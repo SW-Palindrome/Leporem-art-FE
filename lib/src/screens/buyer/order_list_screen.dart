@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/screens/buyer/review_screen.dart';
+import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
@@ -86,7 +86,7 @@ class BuyerOrderListScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(ReviewScreen());
+                              Get.to(ReviewStarScreen());
                               // Get.bottomSheet(
                               //   MyBottomSheet(
                               //     title: "주문을 취소할까요?",

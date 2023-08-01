@@ -5,8 +5,8 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class ReviewScreen extends StatelessWidget {
-  const ReviewScreen({super.key});
+class ReviewStarScreen extends StatelessWidget {
+  const ReviewStarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
