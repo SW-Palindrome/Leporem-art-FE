@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/models/item_detail.dart';
+import 'package:leporemart/src/seller_app.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -250,6 +253,94 @@ class ItemEditController extends ItemCreateDetailController {
       isVideoLoading.value = false;
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> editItem() async {
+    // 데이터 모델에서 필요한 정보 가져오기
+    String title = titleController.text;
+    String description = descriptionController.text;
+    String width = widthController.text;
+    String depth = depthController.text;
+    String height = heightController.text;
+    int price = int.tryParse(priceController.text.replaceAll(',', '')) ?? 0;
+    int amount = this.amount.value;
+    final formData = FormData.fromMap({
+      'title': title,
+      'description': description,
+      'width': width,
+      'depth': depth,
+      'height': height,
+      'price': price,
+      'amount': amount,
+      'thumbnail_image': await MultipartFile.fromFile(
+        images.first.path,
+        filename: images.first.path.split('/').last,
+      ),
+      'shorts': await MultipartFile.fromFile(
+        videos.first.path,
+        filename: videos.first.path.split('/').last,
+      ),
+    });
+    //images에서 1번인덱스부터 끝까지의 이미지를 리스트에 넣고 formData에 추가
+
+    List<MapEntry<String, MultipartFile>> imageList = [];
+    for (int i = 1; i < images.length; i++) {
+      imageList.add(MapEntry(
+        'images',
+        await MultipartFile.fromFile(
+          images[i].path,
+          filename: images[i].path.split('/').last,
+        ),
+      ));
+    }
+    formData.files.addAll(imageList);
+
+    List<MapEntry<String, String>> categoryList = [];
+    // 선택된 카테고리 타입을 formData에 추가
+    for (int i = 0; i < selectedCategoryType.length; i++) {
+      if (selectedCategoryType[i]) {
+        categoryList.add(MapEntry('categories', (i + 1).toString()));
+      }
+    }
+    formData.fields.addAll(categoryList);
+
+    print(formData.files);
+    print(formData.fields);
+    try {
+      final response = await DioSingleton.dio.patch(
+        '/sellers/items/${itemDetail.id}',
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          '작품 수정',
+          '작품이 성공적으로 수정되었습니다.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Get.offAll(SellerApp());
+      } else {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (error) {
+      print(error);
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정 중 오류가 발생하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }
