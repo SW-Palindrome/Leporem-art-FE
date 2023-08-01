@@ -25,8 +25,7 @@ class BuyerHomeItem {
       price: json['price'],
       thumbnailImage: json['thumbnail_image'],
       likes: json['like_count'],
-      //TODO: isLiked 좋아요했는지 여부 추후 구현
-      isLiked: json['is_liked'] ?? false,
+      isLiked: json['is_liked'],
     );
   }
 
@@ -79,6 +78,35 @@ class SellerHomeItem {
       //TODO: timeAgo 시간 표시 추후 구현
       timeDiff: json['time_diff'],
       isAuction: json['is_auction'] ?? false,
+    );
+  }
+}
+
+class RecentItem {
+  final int id;
+  final String nickname;
+  final String title;
+  final int price;
+  final String thumbnailImage;
+  final bool isLiked;
+
+  RecentItem({
+    required this.id,
+    required this.nickname,
+    required this.title,
+    required this.price,
+    required this.thumbnailImage,
+    required this.isLiked,
+  });
+
+  factory RecentItem.fromJson(Map<String, dynamic> json) {
+    return RecentItem(
+      id: json['item_id'],
+      nickname: json['nickname'],
+      title: json['title'],
+      price: json['price'],
+      thumbnailImage: json['thumbnail_image'],
+      isLiked: json['is_liked'],
     );
   }
 }
