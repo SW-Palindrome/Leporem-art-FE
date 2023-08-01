@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 enum BottomSheetType { noneButton, oneButton, twoButton }
@@ -79,43 +80,59 @@ class MyBottomSheet extends StatelessWidget {
               onTap: onLeftButtonPressed!,
             ),
           if (buttonType == BottomSheetType.twoButton)
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(24),
-                    child: ElevatedButton(
-                      onPressed: onLeftButtonPressed,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey[200],
-                      ),
-                      child: Text(
-                        '왼쪽 버튼',
-                        style: TextStyle(
-                          color: Colors.grey[700],
+            Padding(
+              padding: EdgeInsets.only(top: 40),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onLeftButtonPressed,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 17),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: ColorPalette.grey_2,
+                        ),
+                        child: Text(
+                          leftButtonText ?? '왼쪽 버튼',
+                          style: TextStyle(
+                            color: ColorPalette.grey_7,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16.0,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(24),
-                    child: ElevatedButton(
-                      onPressed: onRightButtonPressed,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                      ),
-                      child: Text(
-                        '오른쪽 버튼',
-                        style: TextStyle(
-                          color: Colors.white,
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onRightButtonPressed,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 17),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: ColorPalette.red,
+                        ),
+                        child: Text(
+                          rightButtonText ?? '오른쪽 버튼',
+                          style: TextStyle(
+                            color: ColorPalette.white,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16.0,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
         ],
       ),
