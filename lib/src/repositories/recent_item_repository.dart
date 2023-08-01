@@ -6,11 +6,14 @@ import 'package:leporemart/src/utils/dio_singleton.dart';
 class RecentItemRepository {
   Future<List<RecentItem>> fetchRecentItems() async {
     try {
-      final response = await DioSingleton.dio.get('/items/viewed', options: Options(
-        headers: {
-          "Authorization":
-              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-        },
+      final response = await DioSingleton.dio.get(
+        '/items/viewed',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
       );
       final data = response.data;
       final List<dynamic> itemsData = data['items'];
