@@ -139,6 +139,9 @@ class BuyerOrderListScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SvgPicture.asset('assets/icons/deliver_on.svg',
+                      width: 16, height: 16),
+                  SizedBox(width: 6),
                   Text(
                     '배송 준비 중',
                     style: TextStyle(
@@ -157,10 +160,13 @@ class BuyerOrderListScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                         color: ColorPalette.grey_3),
                   ),
+                  SvgPicture.asset('assets/icons/deliver_off.svg',
+                      width: 16, height: 16),
+                  SizedBox(width: 6),
                   Text(
                     '배송 중',
                     style: TextStyle(
-                      color: ColorPalette.black,
+                      color: ColorPalette.grey_4,
                       fontWeight: FontWeight.bold,
                       fontFamily: "PretendardVariable",
                       fontStyle: FontStyle.normal,
@@ -175,10 +181,13 @@ class BuyerOrderListScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                         color: ColorPalette.grey_3),
                   ),
+                  SvgPicture.asset('assets/icons/deliver_off.svg',
+                      width: 16, height: 16),
+                  SizedBox(width: 6),
                   Text(
                     '배송 완료',
                     style: TextStyle(
-                      color: ColorPalette.black,
+                      color: ColorPalette.grey_4,
                       fontWeight: FontWeight.bold,
                       fontFamily: "PretendardVariable",
                       fontStyle: FontStyle.normal,
