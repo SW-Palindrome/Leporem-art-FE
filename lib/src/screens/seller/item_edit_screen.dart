@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/item_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
@@ -51,8 +52,9 @@ class ItemEditScreen extends GetView<ItemEditController> {
                           text: "수정완료",
                           value: true,
                           onTap: () async {
-                            await controller.createItem();
-                            Get.offAll(SellerApp());
+                            await controller.editItem();
+                            await Get.find<SellerItemDetailController>()
+                                .fetch();
                           },
                         )
                       : NextButton(
