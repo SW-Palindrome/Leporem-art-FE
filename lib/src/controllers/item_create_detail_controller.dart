@@ -8,6 +8,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -59,7 +60,6 @@ class ItemCreateDetailController extends GetxController {
     return result;
   }
 
-//TODO:
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
@@ -172,13 +172,13 @@ class ItemCreateDetailController extends GetxController {
     selectedCategoryType.value = List.generate(5, (index) => false);
   }
 
-  void decreaseQuantity() {
+  void decreaseAmount() {
     if (amount.value > 0) {
       amount.value--;
     }
   }
 
-  void increaseQuantity() {
+  void increaseAmount() {
     if (amount.value < 99) {
       amount.value++;
     }
@@ -220,7 +220,7 @@ class ItemCreateDetailController extends GetxController {
       'depth': depth,
       'height': height,
       'price': price,
-      'max_amount': amount,
+      'mount': amount,
       'thumbnail_image': await MultipartFile.fromFile(
         images.first.path,
         filename: images.first.path.split('/').last,
@@ -274,6 +274,7 @@ class ItemCreateDetailController extends GetxController {
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        Get.offAll(SellerApp());
       } else {
         Get.snackbar(
           '작품 등록 실패',
