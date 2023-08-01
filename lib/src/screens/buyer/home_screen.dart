@@ -79,7 +79,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               child: Stack(
                 children: [
                   ExtendedImage.network(
-                    controller.items[index].thumbnailUrl,
+                    controller.items[index].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.5,
                     height: Get.width * 0.5,
@@ -128,7 +128,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.items[index].creator,
+                    controller.items[index].nickname,
                     style: TextStyle(
                       color: ColorPalette.grey_4,
                       fontSize: 10,
@@ -138,7 +138,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   SizedBox(
                     height: Get.height * 0.04,
                     child: Text(
-                      controller.items[index].name,
+                      controller.items[index].title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

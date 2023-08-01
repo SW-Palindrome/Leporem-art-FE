@@ -6,7 +6,7 @@ class BuyerProfileController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
   Rx<BuyerProfile> buyerProfile = BuyerProfile(
     nickname: '-',
-    profileImageUrl:
+    profileImage:
         'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
     isSeller: false,
   ).obs;

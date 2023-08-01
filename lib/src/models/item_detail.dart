@@ -1,6 +1,6 @@
 class ItemDetail {
   final int id;
-  final String profileImageUrl;
+  final String profileImage;
   final String nickname;
   final double? temperature;
   final String title;
@@ -8,9 +8,9 @@ class ItemDetail {
   final int price;
   final List<String> category;
   int currentAmount;
-  final String thumbnailUrl;
-  final List<String> imagesUrl;
-  final String videoUrl;
+  final String thumbnailImage;
+  final List<String> images;
+  final String shorts;
   bool isLiked;
   final String? width;
   final String? depth;
@@ -18,7 +18,7 @@ class ItemDetail {
 
   ItemDetail({
     required this.id,
-    required this.profileImageUrl,
+    required this.profileImage,
     required this.nickname,
     required this.temperature,
     required this.title,
@@ -26,9 +26,9 @@ class ItemDetail {
     required this.price,
     required this.category,
     required this.currentAmount,
-    required this.thumbnailUrl,
-    required this.imagesUrl,
-    required this.videoUrl,
+    required this.thumbnailImage,
+    required this.images,
+    required this.shorts,
     required this.isLiked,
     required this.width,
     required this.depth,
@@ -38,17 +38,17 @@ class ItemDetail {
   factory ItemDetail.fromJson(Map<String, dynamic> json) {
     return ItemDetail(
       id: json['item_id'],
-      profileImageUrl: json['profile_image'],
+      profileImage: json['profile_image'],
       nickname: json['nickname'],
       temperature: json['temperature'],
       title: json['title'],
       description: json['description'],
       price: json['price'],
       currentAmount: json['current_amount'],
-      thumbnailUrl: json['thumbnail_image'],
-      imagesUrl: List<String>.from(json['images']),
+      thumbnailImage: json['thumbnail_image'],
+      images: List<String>.from(json['images']),
       category: List<String>.from(json['category']),
-      videoUrl: json['shorts'],
+      shorts: json['shorts'],
       isLiked: json['like'],
       width: json['width'],
       depth: json['depth'],
@@ -59,17 +59,17 @@ class ItemDetail {
   ItemDetail like() {
     return ItemDetail(
       id: id,
-      profileImageUrl: profileImageUrl,
+      profileImage: profileImage,
       nickname: nickname,
       temperature: temperature,
       title: title,
       description: description,
       price: price,
       currentAmount: currentAmount,
-      thumbnailUrl: thumbnailUrl,
-      imagesUrl: imagesUrl,
+      thumbnailImage: thumbnailImage,
+      images: images,
       category: category,
-      videoUrl: videoUrl,
+      shorts: shorts,
       isLiked: true,
       width: width,
       depth: depth,
@@ -80,17 +80,17 @@ class ItemDetail {
   ItemDetail unlike() {
     return ItemDetail(
       id: id,
-      profileImageUrl: profileImageUrl,
+      profileImage: profileImage,
       nickname: nickname,
       temperature: temperature,
       title: title,
       description: description,
       price: price,
       currentAmount: currentAmount,
-      thumbnailUrl: thumbnailUrl,
-      imagesUrl: imagesUrl,
+      thumbnailImage: thumbnailImage,
+      images: images,
       category: category,
-      videoUrl: videoUrl,
+      shorts: shorts,
       isLiked: false,
       width: width,
       depth: depth,
@@ -101,17 +101,17 @@ class ItemDetail {
   ItemDetail decreaseAmount() {
     return ItemDetail(
       id: id,
-      profileImageUrl: profileImageUrl,
+      profileImage: profileImage,
       nickname: nickname,
       temperature: temperature,
       title: title,
       description: description,
       price: price,
       currentAmount: currentAmount - 1,
-      thumbnailUrl: thumbnailUrl,
-      imagesUrl: imagesUrl,
+      thumbnailImage: thumbnailImage,
+      images: images,
       category: category,
-      videoUrl: videoUrl,
+      shorts: shorts,
       isLiked: isLiked,
       width: width,
       depth: depth,
@@ -122,17 +122,17 @@ class ItemDetail {
   ItemDetail increaseAmount() {
     return ItemDetail(
       id: id,
-      profileImageUrl: profileImageUrl,
+      profileImage: profileImage,
       nickname: nickname,
       temperature: temperature,
       title: title,
       description: description,
       price: price,
       currentAmount: currentAmount + 1,
-      thumbnailUrl: thumbnailUrl,
-      imagesUrl: imagesUrl,
+      thumbnailImage: thumbnailImage,
+      images: images,
       category: category,
-      videoUrl: videoUrl,
+      shorts: shorts,
       isLiked: isLiked,
       width: width,
       depth: depth,

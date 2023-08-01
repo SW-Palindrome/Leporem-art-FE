@@ -399,7 +399,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                controller.items[index].thumbnailUrl,
+                controller.items[index].thumbnailImage,
                 height: Get.width * 0.23,
                 width: Get.width * 0.23,
                 fit: BoxFit.cover,
@@ -414,7 +414,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        controller.items[index].name,
+                        controller.items[index].title,
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.w500,
@@ -474,7 +474,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        controller.items[index].timeAgo,
+                        controller.items[index].timeDiff,
                         style: TextStyle(
                           color: ColorPalette.grey_4,
                           fontFamily: "PretendardVariable",

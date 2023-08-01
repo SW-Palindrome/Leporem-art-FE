@@ -154,7 +154,7 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                         height: 40,
                         width: 40,
                         child: Image.network(
-                          controller.itemDetail.value.profileImageUrl,
+                          controller.itemDetail.value.profileImage,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -202,12 +202,12 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
             ),
             items: [
               Image.network(
-                controller.itemDetail.value.thumbnailUrl,
+                controller.itemDetail.value.thumbnailImage,
                 fit: BoxFit.cover,
                 width: Get.width,
                 height: Get.width,
               ),
-              for (String imageUrl in controller.itemDetail.value.imagesUrl)
+              for (String imageUrl in controller.itemDetail.value.images)
                 Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
@@ -276,7 +276,7 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                   () => Row(
                     children: [
                       for (int i = 0;
-                          i < controller.itemDetail.value.imagesUrl.length + 1;
+                          i < controller.itemDetail.value.images.length + 1;
                           i++)
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 4),
@@ -296,8 +296,7 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: controller.index.value ==
-                                  controller.itemDetail.value.imagesUrl.length +
-                                      1
+                                  controller.itemDetail.value.images.length + 1
                               ? ColorPalette.purple
                               : ColorPalette.purple.withOpacity(0.5),
                         ),
