@@ -9,7 +9,10 @@ class OrderListRepository {
       final response = await DioSingleton.dio.get(
         '/buyers/orders/my',
         options: Options(
-          headers: {"Authorization": "Palindrome Leporemart33!"},
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
         ),
       );
       // 데이터를 변환하여 리스트로 생성
@@ -30,7 +33,10 @@ class OrderListRepository {
       final response = await DioSingleton.dio.post(
         '/orders/$orderId/cancel',
         options: Options(
-          headers: {"Authorization": "Palindrome Leporemart33!"},
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
         ),
       );
       print('response: ${response.statusCode} / ${response.realUri}');
