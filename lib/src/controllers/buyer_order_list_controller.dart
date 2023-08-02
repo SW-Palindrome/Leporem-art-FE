@@ -18,7 +18,15 @@ class BuyerOrderListController extends GetxController {
       List<Order> fetchedOrders = await _orderListRepository.fetchOrders();
       orders.assignAll(fetchedOrders);
     } catch (e) {
-      throw ('Error fetching buyer order list in controller: $e');
+      print('Error fetching buyer order list in controller: $e');
+    }
+  }
+
+  Future<void> cancel(int orderId) async {
+    try {
+      await _orderListRepository.cancelOrder(orderId);
+    } catch (e) {
+      print('Error fetching buyer order cancel in controller: $e');
     }
   }
 }
