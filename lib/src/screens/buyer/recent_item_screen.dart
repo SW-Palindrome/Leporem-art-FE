@@ -38,20 +38,25 @@ class RecentItemScreen extends GetView<RecentItemController> {
   }
 
   _deleteButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorPalette.grey_3,
-      ),
-      child: Text(
-        '전체 삭제',
-        style: TextStyle(
-          color: ColorPalette.grey_7,
-          fontWeight: FontWeight.w500,
-          fontFamily: "PretendardVariable",
-          fontStyle: FontStyle.normal,
-          fontSize: 11.0,
+    return GestureDetector(
+      onTap: () {
+        controller.totalDelete();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: ColorPalette.grey_3,
+        ),
+        child: Text(
+          '전체 삭제',
+          style: TextStyle(
+            color: ColorPalette.grey_7,
+            fontWeight: FontWeight.w500,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 11.0,
+          ),
         ),
       ),
     );

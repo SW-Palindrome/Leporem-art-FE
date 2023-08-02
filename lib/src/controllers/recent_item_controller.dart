@@ -53,6 +53,13 @@ class RecentItemController extends GetxController {
     }
   }
 
+  void totalDelete() {
+    // items에 있는 모든 items를 삭제하는 함수
+    for (int i = items.length - 1; i >= 0; i--) {
+      delete(items[i].id);
+    }
+  }
+
   Future<void> like(int itemId) async {
     try {
       print('좋아요');
