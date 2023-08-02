@@ -211,15 +211,21 @@ class ReviewDetailScreen extends GetView<ReviewController> {
             onChanged: (value) {
               controller.description.value = value;
             },
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontFamily: "PretendardVariable",
+              fontSize: 14.0,
+            ),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '구매하신 작품의 후기를 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
+              hintMaxLines: 2,
               hintStyle: TextStyle(
                 color: ColorPalette.grey_4,
                 fontWeight: FontWeight.w600,
                 fontFamily: "PretendardVariable",
                 fontStyle: FontStyle.normal,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
             ),
           ),
