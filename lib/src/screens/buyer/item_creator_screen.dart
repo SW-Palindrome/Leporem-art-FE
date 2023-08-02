@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
@@ -279,6 +280,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
         Get.off(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(BuyerItemDetailController());
+        Get.find<BuyerHomeController>().view(controller.items[index].id);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

@@ -69,6 +69,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(BuyerItemDetailController());
+        controller.view(controller.items[index].id);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
