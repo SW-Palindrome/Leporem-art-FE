@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/controllers/recent_item_controller.dart';
@@ -38,6 +39,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               onTaps: [
                 () {
                   Get.to(BuyerOrderListScreen());
+                  Get.put(BuyerOrderListController());
                 },
                 () {},
                 () {
