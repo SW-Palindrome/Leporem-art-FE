@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/seller/home_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_screen.dart';
+import 'package:leporemart/src/screens/seller/search_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
@@ -15,6 +19,9 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      Get.lazyPut(() => SellerProfileController());
+      Get.lazyPut(() => SellerHomeController());
+      Get.lazyPut(() => SellerSearchController());
       switch (controller.selectedSellerIndex.value) {
         case 0:
           return _homeScaffold();
@@ -32,9 +39,21 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
 
   _homeScaffold() {
     return Scaffold(
-      appBar: MyAppBar(
-          appBarType: AppBarType.mainPageAppBar,
-          onTapFirstActionIcon: () => Get.toNamed('/seller/search')),
+      appBar: Get.find<SellerSearchController>().isSearching.value
+          ? MyAppBar(
+              appBarType: AppBarType.sellerSearchAppBar,
+              onTapLeadingIcon: () async {
+                Get.find<SellerSearchController>().isSearching.value = false;
+                Get.find<SellerSearchController>().searchController.clear();
+                Get.find<SellerHomeController>().items.clear();
+                Get.find<SellerHomeController>().currentPage = 1;
+                await Get.find<SellerHomeController>().fetch();
+                Get.back();
+              },
+            )
+          : MyAppBar(
+              appBarType: AppBarType.mainPageAppBar,
+              onTapFirstActionIcon: () => Get.to(SellerSearchScreen())),
       body: SellerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),

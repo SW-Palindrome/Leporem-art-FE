@@ -8,6 +8,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -45,6 +46,7 @@ class ItemCreateDetailController extends GetxController {
       description.value = descriptionController.text;
     });
     priceController.addListener(() {
+      if (priceController.text == '') return;
       price.value = int.parse(priceController.text.replaceAll(',', ''));
     });
   }
@@ -58,7 +60,6 @@ class ItemCreateDetailController extends GetxController {
     return result;
   }
 
-//TODO:
   Future<void> selectImages() async {
     final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
     // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
@@ -171,13 +172,13 @@ class ItemCreateDetailController extends GetxController {
     selectedCategoryType.value = List.generate(5, (index) => false);
   }
 
-  void decreaseQuantity() {
+  void decreaseAmount() {
     if (amount.value > 0) {
       amount.value--;
     }
   }
 
-  void increaseQuantity() {
+  void increaseAmount() {
     if (amount.value < 99) {
       amount.value++;
     }
@@ -219,7 +220,7 @@ class ItemCreateDetailController extends GetxController {
       'depth': depth,
       'height': height,
       'price': price,
-      'max_amount': amount,
+      'mount': amount,
       'thumbnail_image': await MultipartFile.fromFile(
         images.first.path,
         filename: images.first.path.split('/').last,
@@ -268,14 +269,13 @@ class ItemCreateDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        clearForm();
         Get.snackbar(
           '작품 등록',
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        Get.offAll(SellerApp());
       } else {
-        clearForm();
         Get.snackbar(
           '작품 등록 실패',
           '작품 등록에 실패하였습니다. 다시 시도해주세요.',
@@ -284,26 +284,11 @@ class ItemCreateDetailController extends GetxController {
       }
     } catch (error) {
       print(error);
-      clearForm();
       Get.snackbar(
         '작품 등록 실패',
         '작품 등록 중 오류가 발생하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
-  }
-
-  void clearForm() {
-    images.clear();
-    videos.clear();
-    thumbnail.value = null;
-    resetSelectedCategoryType();
-    titleController.clear();
-    descriptionController.clear();
-    widthController.clear();
-    depthController.clear();
-    heightController.clear();
-    priceController.clear();
-    amount.value = 0;
   }
 }

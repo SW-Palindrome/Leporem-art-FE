@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
-import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class BuyerHomeScreen extends GetView<BuyerHomeController> {
-  BuyerHomeScreen({super.key});
+  const BuyerHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +52,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   controller: controller.scrollController,
                   itemCount: controller.items.length,
                   itemBuilder: (context, index) {
-                    if (index < controller.items.length) {
-                      return _itemWidget(controller.items[index]);
-                    } else {
-                      // Show a loading indicator at the end of the grid
-                      return Center(child: CircularProgressIndicator());
-                    }
+                    return _itemWidget(index);
                   },
                 ),
               ),
@@ -67,10 +63,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
     );
   }
 
-  _itemWidget(BuyerHomeItem item) {
+  _itemWidget(int index) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/buyer/item');
+        Get.to(BuyerItemDetailScreen(),
+            arguments: {'item_id': controller.items[index].id});
+        Get.put(BuyerItemDetailController());
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -81,7 +79,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               child: Stack(
                 children: [
                   ExtendedImage.network(
-                    item.thumbnailUrl,
+                    controller.items[index].thumbnailUrl,
                     fit: BoxFit.cover,
                     width: Get.width * 0.5,
                     height: Get.width * 0.5,
@@ -90,20 +88,31 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   Positioned(
                     bottom: 10,
                     right: 10,
-                    child: item.isLiked
-                        ? SvgPicture.asset(
-                            'assets/icons/heart_fill.svg',
-                            height: 24,
-                            width: 24,
-                            colorFilter: ColorFilter.mode(
-                                ColorPalette.purple, BlendMode.srcIn),
+                    child: controller.items[index].isLiked
+                        ? GestureDetector(
+                            onTap: () async {
+                              await controller
+                                  .unlike(controller.items[index].id);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/heart_fill.svg',
+                              height: 24,
+                              width: 24,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.purple, BlendMode.srcIn),
+                            ),
                           )
-                        : SvgPicture.asset(
-                            'assets/icons/heart_outline.svg',
-                            height: 24,
-                            width: 24,
-                            colorFilter: ColorFilter.mode(
-                                ColorPalette.white, BlendMode.srcIn),
+                        : GestureDetector(
+                            onTap: () async {
+                              await controller.like(controller.items[index].id);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/heart_outline.svg',
+                              height: 24,
+                              width: 24,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.white, BlendMode.srcIn),
+                            ),
                           ),
                   ),
                 ],
@@ -119,7 +128,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.creator,
+                    controller.items[index].creator,
                     style: TextStyle(
                       color: ColorPalette.grey_4,
                       fontSize: 10,
@@ -129,7 +138,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   SizedBox(
                     height: Get.height * 0.04,
                     child: Text(
-                      item.name,
+                      controller.items[index].name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -140,7 +149,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    '${item.price.toString().toString().replaceAllMapped(
+                    '${controller.items[index].price.toString().toString().replaceAllMapped(
                           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                           (Match m) => '${m[1]},',
                         )}원',
@@ -158,16 +167,16 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                         height: 12,
                         width: 12,
                         colorFilter: ColorFilter.mode(
-                            item.likes != 0
+                            controller.items[index].likes != 0
                                 ? ColorPalette.purple
                                 : Colors.transparent,
                             BlendMode.srcIn),
                       ),
                       SizedBox(width: 2),
                       Text(
-                        '${item.likes}',
+                        '${controller.items[index].likes}',
                         style: TextStyle(
-                          color: item.likes != 0
+                          color: controller.items[index].likes != 0
                               ? ColorPalette.purple
                               : Colors.transparent,
                           fontSize: 10,

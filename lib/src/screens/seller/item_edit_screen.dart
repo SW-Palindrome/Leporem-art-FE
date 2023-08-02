@@ -3,59 +3,68 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
-import 'package:leporemart/src/screens/seller/home_screen.dart';
+import 'package:leporemart/src/controllers/item_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
-class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
-  const ItemCreateDetailScreen({Key? key}) : super(key: key);
+class ItemEditScreen extends GetView<ItemEditController> {
+  const ItemEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: '작품 등록',
+        title: '작품 수정',
         onTapLeadingIcon: () {
           Get.back();
         },
         isWhite: false,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          color: ColorPalette.grey_1,
-          child: Column(
-            children: [
-              _mediaInput(),
-              SizedBox(height: 20),
-              _categoryInput(),
-              SizedBox(height: 20),
-              _titleInput(),
-              SizedBox(height: 20),
-              _descriptionInput(),
-              SizedBox(height: 20),
-              _sizeInput(),
-              SizedBox(height: 20),
-              _priceInput(),
-              SizedBox(height: 20),
-              _amountInput(),
-              SizedBox(height: 20),
-              Obx(
-                () => NextButton(
-                  text: "작품 등록하기",
-                  value: controller.isValidCreate(),
-                  onTap: () async {
-                    await controller.createItem();
-                    Get.offAll(SellerApp());
-                  },
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            color: ColorPalette.grey_1,
+            child: Column(
+              children: [
+                _mediaInput(),
+                SizedBox(height: 20),
+                _categoryInput(),
+                SizedBox(height: 20),
+                _titleInput(),
+                SizedBox(height: 20),
+                _descriptionInput(),
+                SizedBox(height: 20),
+                _sizeInput(),
+                SizedBox(height: 20),
+                _priceInput(),
+                SizedBox(height: 20),
+                _amountInput(),
+                SizedBox(height: 20),
+                Obx(
+                  () => controller.isValidCreate() && controller.isEditable()
+                      ? NextButton(
+                          text: "수정완료",
+                          value: true,
+                          onTap: () async {
+                            await controller.editItem();
+                            await Get.find<SellerItemDetailController>()
+                                .fetch();
+                          },
+                        )
+                      : NextButton(
+                          text: "수정완료",
+                          value: false,
+                          onTap: () {},
+                        ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -527,6 +536,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
           child: TextField(
             controller: controller.titleController,
             maxLength: 46,
+            onChanged: (value) => controller.checkTitleChanged(value),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '이름',
@@ -580,6 +590,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             maxLength: 255,
             maxLines: null,
             controller: controller.descriptionController,
+            onChanged: (value) => controller.checkDescriptionChanged(value),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '작품에 대한 상세한 설명을 적어주세요.',
@@ -710,6 +721,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                             ),
                           );
                         }
+                        controller.checkWidthChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -815,6 +827,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                             ),
                           );
                         }
+                        controller.checkDepthChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -921,6 +934,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                             ),
                           );
                         }
+                        controller.checkHeightChanged(value);
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -1001,6 +1015,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
               FilteringTextInputFormatter.allow(RegExp(r'^[0-9,]+$')),
               CurrencyFormatter(), // 사용자 정의 CurrencyFormatter 적용
             ],
+            onChanged: (value) => controller.checkPriceChanged(value),
             decoration: InputDecoration(
               counterText: '',
               border: InputBorder.none,

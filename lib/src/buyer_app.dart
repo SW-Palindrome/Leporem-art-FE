@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_message_controller.dart';
+import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/auction_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_screen.dart';
 import 'package:leporemart/src/screens/buyer/home_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
+import 'package:leporemart/src/screens/buyer/search_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
@@ -17,6 +20,10 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => BuyerSearchController());
+    Get.lazyPut(() => BuyerHomeController());
+    Get.lazyPut(() => BuyerProfileController());
+    Get.lazyPut(() => BuyerMessageController());
     return Obx(() {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
@@ -51,7 +58,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
             )
           : MyAppBar(
               appBarType: AppBarType.mainPageAppBar,
-              onTapFirstActionIcon: () => Get.toNamed('/buyer/search')),
+              onTapFirstActionIcon: () => Get.to(BuyerSearchScreen())),
       body: BuyerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),

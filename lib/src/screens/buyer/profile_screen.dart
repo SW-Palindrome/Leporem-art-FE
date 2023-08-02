@@ -4,8 +4,13 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
+import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
+import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/screens/account/email_screen.dart';
+import 'package:leporemart/src/screens/buyer/order_list_screen.dart';
 import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -15,7 +20,8 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => SingleChildScrollView(
+    return Obx(
+      () => SingleChildScrollView(
         child: Column(
           children: [
             _titleRow(),
@@ -26,7 +32,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               title: '작품관리',
               contents: ['주문 내역', '관심 작품', '최근 본 작품'],
               icons: ['list', 'heart_outline', 'history'],
-              gotoWidgets: [BuyerApp(), BuyerApp(), BuyerApp()],
+              gotoWidgets: [BuyerOrderListScreen(), BuyerApp(), BuyerApp()],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
@@ -104,7 +110,8 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => ProfileEditScreen());
+                    Get.to(BuyerProfileEditScreen());
+                    Get.put(BuyerProfileEditController());
                   },
                   child: Container(
                     width: 20,
@@ -172,9 +179,8 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             GestureDetector(
               onTap: () async {
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
-                await SellerProfileController().fetch();
-                Get.lazyPut(() => SellerProfileController());
-                Get.offAll(SellerApp());
+                Get.put(SellerProfileController());
+                Get.offAll(() => SellerApp());
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

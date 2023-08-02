@@ -2,35 +2,47 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/item_detail_controller.dart';
+import 'package:leporemart/src/controllers/item_edit_controller.dart';
+import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
+import 'package:leporemart/src/screens/seller/item_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
-class SellerItemDetailScreen extends GetView<ItemDetailController> {
-  const SellerItemDetailScreen({Key? key}) : super(key: key);
+class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
+  const SellerItemDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        appBarType: AppBarType.buyerItemDetailAppBar,
+        appBarType: AppBarType.sellerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
         },
+        onTapSecondActionIcon: () {
+          Get.to(ItemEditScreen());
+          Get.put(ItemEditController());
+        },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _itemTitle(),
-              _itemThumbnail(),
-              _itemDescription(),
-            ],
-          ),
+        child: Obx(
+          () => controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _itemTitle(),
+                      _itemThumbnail(),
+                      _itemDescription(),
+                    ],
+                  ),
+                ),
         ),
       ),
       bottomNavigationBar: _itemBottomNavigationBar(),
@@ -46,20 +58,8 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(
-                controller.itemDetail.isLiked
-                    ? 'assets/icons/heart_fill.svg'
-                    : 'assets/icons/heart_outline.svg',
-                width: 30,
-                colorFilter: ColorFilter.mode(
-                    controller.itemDetail.isLiked
-                        ? ColorPalette.purple
-                        : ColorPalette.grey_4,
-                    BlendMode.srcIn),
-              ),
-              SizedBox(width: 10),
               Text(
-                '${controller.itemDetail.price.toString().replaceAllMapped(
+                '${controller.itemDetail.value.price.toString().replaceAllMapped(
                       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                       (Match m) => '${m[1]},',
                     )}원',
@@ -74,10 +74,10 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
             ],
           ),
           NextButton(
-            text: "채팅하기",
+            text: "끌어올리기",
             value: true,
             onTap: () {},
-            width: Get.width * 0.35,
+            width: Get.width * 0.4,
           ),
         ],
       ),
@@ -99,7 +99,7 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            controller.itemDetail.name,
+            controller.itemDetail.value.title,
             style: TextStyle(
               color: Color(0xff191f28),
               fontWeight: FontWeight.w600,
@@ -120,14 +120,14 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
                       height: 40,
                       width: 40,
                       child: Image.network(
-                        controller.itemDetail.profileImageUrl,
-                        fit: BoxFit.cover,
+                        controller.itemDetail.value.profileImageUrl,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   SizedBox(width: 8),
                   Text(
-                    controller.itemDetail.creator,
+                    controller.itemDetail.value.nickname,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontWeight: FontWeight.w500,
@@ -138,7 +138,8 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
                   ),
                 ],
               ),
-              PlantTemperature(temperature: controller.itemDetail.temperature),
+              PlantTemperature(
+                  temperature: controller.itemDetail.value.temperature ?? 0),
             ],
           ),
         ],
@@ -159,10 +160,18 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
             },
           ),
           items: [
-            for (String imageUrl in controller.itemDetail.imagesUrl)
+            Image.network(
+              controller.itemDetail.value.thumbnailUrl,
+              fit: BoxFit.cover,
+              width: Get.width,
+              height: Get.width,
+            ),
+            for (String imageUrl in controller.itemDetail.value.imagesUrl)
               Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
+                width: Get.width,
+                height: Get.width,
               ),
             Stack(
               children: [
@@ -225,7 +234,7 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
                   () => Row(
                     children: [
                       for (int i = 0;
-                          i < controller.itemDetail.imagesUrl.length;
+                          i < controller.itemDetail.value.imagesUrl.length + 1;
                           i++)
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 4),
@@ -245,7 +254,8 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: controller.index.value ==
-                                  controller.itemDetail.imagesUrl.length
+                                  controller.itemDetail.value.imagesUrl.length +
+                                      1
                               ? ColorPalette.purple
                               : ColorPalette.purple.withOpacity(0.5),
                         ),
@@ -301,25 +311,73 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
             children: [
               Row(
                 children: [
-                  for (String tag in controller.itemDetail.tags)
+                  for (String tag in controller.itemDetail.value.category)
                     _categoryWidget(tag),
                 ],
               ),
-              Text(
-                "잔여 ${controller.itemDetail.remainAmount}점",
-                style: TextStyle(
-                  color: Color(0xff594bf8),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.decreaseAmount();
+                    },
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorPalette.grey_2,
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/minus.svg',
+                        width: 12,
+                        height: 12,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.grey_6, BlendMode.srcIn),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Obx(
+                    () => Text(
+                      "잔여 ${controller.itemDetail.value.currentAmount}점",
+                      style: TextStyle(
+                        color: Color(0xff594bf8),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      controller.increaseAmount();
+                    },
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorPalette.grey_2,
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/plus.svg',
+                        width: 12,
+                        height: 12,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.grey_6, BlendMode.srcIn),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
           SizedBox(height: 16),
           Text(
-            controller.itemDetail.description,
+            controller.itemDetail.value.description,
             style: TextStyle(
               color: Color(0xff191f28),
               fontWeight: FontWeight.w400,
@@ -328,6 +386,81 @@ class SellerItemDetailScreen extends GetView<ItemDetailController> {
               fontSize: 13.0,
             ),
           ),
+          SizedBox(height: 16),
+          if (controller.itemDetail.value.width != null &&
+              controller.itemDetail.value.height != null &&
+              controller.itemDetail.value.depth != null)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 1,
+                  color: ColorPalette.grey_2,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '작품 크기',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 11.0,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        '가로 ${controller.itemDetail.value.width}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '세로 ${controller.itemDetail.value.depth}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/cancle.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.black, BlendMode.srcIn),
+                      ),
+                      Text(
+                        '높이 ${controller.itemDetail.value.height}cm',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

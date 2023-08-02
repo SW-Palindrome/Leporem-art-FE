@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-class ProfileEditScreen extends GetView<BuyerProfileEditController> {
-  const ProfileEditScreen({super.key});
+class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
+  const BuyerProfileEditScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +31,22 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
           ),
         ),
         actions: [
-          GestureDetector(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Obx(
-                  () => Text(
+          Obx(
+            () => GestureDetector(
+              onTap: controller.isEditable()
+                  ? () {
+                      controller.edit();
+                    }
+                  : null,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Text(
                     '완료',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: controller.isNicknameValid.value &&
-                              (controller.isNicknameChanged.value ||
-                                  controller.isProfileImageChanged.value)
+                      color: controller.isEditable()
                           ? ColorPalette.purple
                           : ColorPalette.purple.withOpacity(0.5),
                     ),
@@ -94,22 +97,26 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
+                controller.firstEdit.value = true;
               }
             },
             child: TextFormField(
               controller: controller.nicknameController,
+              maxLength: 10,
               style: TextStyle(
                 color: ColorPalette.black,
                 fontSize: 18,
                 height: 1,
               ),
               decoration: InputDecoration(
+                counterText: "",
                 hintText: "한글, 영어, 숫자 _, - 2~10자 이내",
                 hintStyle: TextStyle(
                   color: ColorPalette.grey_3,
                   fontSize: 18,
                 ),
-                errorText: !controller.isNicknameValid.value
+                errorText: !controller.isNicknameValid.value &&
+                        controller.firstEdit.value
                     ? "올바른 양식의 닉네임을 입력해주세요."
                     : null,
                 errorStyle: TextStyle(
@@ -128,8 +135,8 @@ class ProfileEditScreen extends GetView<BuyerProfileEditController> {
                   ),
                 ),
               ),
-              onChanged: (text) {
-                controller.isNicknameValid.value = true;
+              onChanged: (value) {
+                controller.checkNicknameChanged(value);
               },
             ),
           ),

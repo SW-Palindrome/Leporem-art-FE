@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
-import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
+import 'package:leporemart/src/screens/seller/item_create_screen.dart';
+import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -21,29 +23,35 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _searchDropDown(),
-                  Text(
-                    '총 ${controller.items.length}개',
-                    style: TextStyle(
-                      color: ColorPalette.grey_5,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 12.0,
-                    ),
-                  ),
                 ],
               ),
               SizedBox(height: Get.height * 0.02),
               Expanded(
                 child: Obx(
-                  () => ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: controller.items.length,
-                    itemBuilder: (context, index) {
-                      return _itemWidget(controller.items[index]);
+                  () => NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      if (scrollInfo is ScrollEndNotification) {
+                        if (controller.scrollController.position.extentAfter ==
+                            0) {
+                          controller.fetch(isPagination: true);
+                        }
+                        if (controller.scrollController.position.extentBefore ==
+                            0) {
+                          controller.pageReset();
+                        }
+                      }
+                      return false;
                     },
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      controller: controller.scrollController,
+                      itemCount: controller.items.length,
+                      itemBuilder: (context, index) {
+                        return _itemWidget(index);
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -55,7 +63,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           right: Get.width * 0.05,
           child: GestureDetector(
             onTap: () {
-              Get.toNamed('/seller/create');
+              Get.to(ItemCreateScreen());
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -281,6 +289,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: GestureDetector(
             onTap: () {
               controller.resetSelected();
+              Get.back();
             },
             child: Container(
               height: Get.height * 0.06,
@@ -327,7 +336,10 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         NextButton(
           text: '적용하기',
           value: controller.isResetValid(),
-          onTap: () => Get.back(),
+          onTap: () {
+            controller.applyFilter();
+            Get.back();
+          },
           width: Get.width * 0.5,
         ),
       ],
@@ -346,7 +358,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         children: [
           Obx(
             () => Text(
-              controller.sortTypes[controller.selectedSortType.value],
+              controller.sortTypes[controller.displayedSortType.value],
               style: TextStyle(
                 fontSize: 12,
                 color: ColorPalette.grey_6,
@@ -368,159 +380,115 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
     );
   }
 
-  _itemWidget(SellerHomeItem item) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(bottom: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorPalette.white,
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              item.thumbnailUrl,
-              height: Get.width * 0.25,
-              width: Get.width * 0.25,
-              fit: BoxFit.cover,
+  _itemWidget(int index) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(SellerItemDetailScreen(),
+            arguments: {'item_id': controller.items[index].id});
+        Get.put(SellerItemDetailController());
+      },
+      child: Container(
+        padding: EdgeInsets.all(15),
+        margin: EdgeInsets.only(bottom: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: ColorPalette.white,
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                controller.items[index].thumbnailUrl,
+                height: Get.width * 0.25,
+                width: Get.width * 0.25,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      item.name,
-                      style: TextStyle(
-                        color: ColorPalette.black,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "PretendardVariable",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/star_fill.svg',
-                          height: 12,
-                          width: 12,
-                          colorFilter: ColorFilter.mode(
-                              ColorPalette.yellow, BlendMode.srcIn),
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.items[index].name,
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
                         ),
-                        SizedBox(width: 2),
-                        Text(
-                          item.star.toString(),
-                          style: TextStyle(
-                            color: ColorPalette.yellow,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 11.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                  style: TextStyle(
-                    color: ColorPalette.black,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "PretendardVariable",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 15.0,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  '잔여 ${item.remainAmount}점',
-                  style: TextStyle(
-                    color: ColorPalette.grey_5,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "PretendardVariable",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 12.0,
-                  ),
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        item.likes != 0
-                            ? Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/heart_fill.svg',
-                                    height: 12,
-                                    width: 12,
-                                    colorFilter: ColorFilter.mode(
-                                        ColorPalette.purple, BlendMode.srcIn),
-                                  ),
-                                  SizedBox(width: 2),
-                                  Text(
-                                    item.likes.toString(),
-                                    style: TextStyle(
-                                      color: ColorPalette.purple,
-                                      fontFamily: "PretendardVariable",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 11.0,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : SizedBox(),
-                        SizedBox(width: 5),
-                        item.messages != 0
-                            ? Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/message_fill.svg',
-                                    height: 12,
-                                    width: 12,
-                                    colorFilter: ColorFilter.mode(
-                                        ColorPalette.purple, BlendMode.srcIn),
-                                  ),
-                                  SizedBox(width: 2),
-                                  Text(
-                                    item.messages.toString(),
-                                    style: TextStyle(
-                                      color: ColorPalette.purple,
-                                      fontFamily: "PretendardVariable",
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 11.0,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : SizedBox(),
-                      ],
-                    ),
-                    Text(
-                      item.timeAgo,
-                      style: TextStyle(
-                        color: ColorPalette.grey_4,
-                        fontFamily: "PretendardVariable",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 11.0,
                       ),
-                    )
-                  ],
-                ),
-              ],
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/star_fill.svg',
+                            height: 12,
+                            width: 12,
+                            colorFilter: ColorFilter.mode(
+                                ColorPalette.yellow, BlendMode.srcIn),
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            controller.items[index].star.toString(),
+                            style: TextStyle(
+                              color: ColorPalette.yellow,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "PretendardVariable",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 11.0,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    '${CurrencyFormatter().numberToCurrency(controller.items[index].price)}원',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    '잔여 ${controller.items[index].remainAmount}점',
+                    style: TextStyle(
+                      color: ColorPalette.grey_5,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "PretendardVariable",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.items[index].timeAgo,
+                        style: TextStyle(
+                          color: ColorPalette.grey_4,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 11.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
