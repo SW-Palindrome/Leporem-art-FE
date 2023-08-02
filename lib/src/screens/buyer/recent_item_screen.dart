@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/recent_item_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
-class RecentItemScreen extends StatelessWidget {
+class RecentItemScreen extends GetView<RecentItemController> {
   const RecentItemScreen({super.key});
 
   @override
@@ -57,17 +58,19 @@ class RecentItemScreen extends StatelessWidget {
   }
 
   _recentItemList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return _recentItem();
-      },
+    return Obx(
+      () => ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: controller.items.length,
+        itemBuilder: (context, index) {
+          return _recentItem(index);
+        },
+      ),
     );
   }
 
-  _recentItem() {
+  _recentItem(int index) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -82,7 +85,7 @@ class RecentItemScreen extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                'https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg',
+                controller.items[index].thumbnailImage,
                 height: Get.width * 0.23,
                 width: Get.width * 0.23,
                 fit: BoxFit.cover,
@@ -97,7 +100,7 @@ class RecentItemScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '테스트',
+                        controller.items[index].nickname,
                         style: TextStyle(
                           color: ColorPalette.grey_4,
                           fontWeight: FontWeight.bold,
@@ -119,7 +122,7 @@ class RecentItemScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '제목',
+                    controller.items[index].title,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontWeight: FontWeight.w500,
@@ -130,7 +133,7 @@ class RecentItemScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '${CurrencyFormatter().numberToCurrency(10000)}원',
+                    '${CurrencyFormatter().numberToCurrency(controller.items[index].price)}원',
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontWeight: FontWeight.bold,
@@ -151,13 +154,21 @@ class RecentItemScreen extends StatelessWidget {
                             ColorPalette.grey_4, BlendMode.srcIn),
                       ),
                       SizedBox(width: 8),
-                      SvgPicture.asset(
-                        'assets/icons/heart_outline.svg',
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
+                      controller.items[index].isLiked
+                          ? SvgPicture.asset(
+                              'assets/icons/heart_fill.svg',
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.purple, BlendMode.srcIn),
+                            )
+                          : SvgPicture.asset(
+                              'assets/icons/heart_outline.svg',
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.grey_4, BlendMode.srcIn),
+                            ),
                     ],
                   ),
                 ],
