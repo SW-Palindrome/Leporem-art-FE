@@ -109,13 +109,18 @@ class RecentItemScreen extends GetView<RecentItemController> {
                           fontSize: 10,
                         ),
                       ),
-                      Text(
-                        '삭제',
-                        style: TextStyle(
-                          color: ColorPalette.grey_4,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 10,
+                      GestureDetector(
+                        onTap: () async {
+                          await controller.delete(controller.items[index].id);
+                        },
+                        child: Text(
+                          '삭제',
+                          style: TextStyle(
+                            color: ColorPalette.grey_4,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 10,
+                          ),
                         ),
                       )
                     ],

@@ -28,6 +28,31 @@ class RecentItemController extends GetxController {
     }
   }
 
+  Future<void> delete(int itemId) async {
+    try {
+      // API 요청
+      final response = await DioSingleton.dio.delete('/items/viewed',
+          data: {'item_id': itemId},
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
+      // 200이 아니라면 오류
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Status Code: ${response.statusCode} / Body: ${response.data}');
+      }
+      //itemId가 일치하는 아이템 삭제
+      items.removeWhere((element) => element.id == itemId);
+      items.refresh();
+    } catch (e) {
+      // 에러 처리
+      print('Error delete $itemId in home $e');
+    }
+  }
+
   Future<void> like(int itemId) async {
     try {
       print('좋아요');
