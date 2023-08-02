@@ -216,20 +216,20 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
     );
   }
 
-  _topButton(String status) {
-    switch (status) {
+  _topButton(Order order) {
+    switch (order.orderStatus) {
       case "주문완료":
-        return _cancleButton();
+        return _cancelButton(order.id);
       case "배송중":
         return _deliveryButton();
       case "배송완료":
         return _reviewButton();
       case "주문취소":
-        return _cancledText();
+        return _cancelText();
     }
   }
 
-  _cancleButton() {
+  _cancelButton(int orderId) {
     return GestureDetector(
       onTap: () {
         Get.bottomSheet(
@@ -317,7 +317,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
     );
   }
 
-  _cancledText() {
+  _cancelText() {
     return Text(
       '주문 취소됨',
       style: TextStyle(
