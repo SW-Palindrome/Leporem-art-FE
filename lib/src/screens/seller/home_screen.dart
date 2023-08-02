@@ -19,7 +19,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
       children: [
         Container(
           color: ColorPalette.grey_1,
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
               Row(
@@ -388,8 +388,8 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         Get.put(SellerItemDetailController());
       },
       child: Container(
-        padding: EdgeInsets.all(15),
-        margin: EdgeInsets.only(bottom: 15),
+        padding: EdgeInsets.all(12),
+        margin: EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: ColorPalette.white,
@@ -399,9 +399,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                controller.items[index].thumbnailUrl,
-                height: Get.width * 0.25,
-                width: Get.width * 0.25,
+                controller.items[index].thumbnailImage,
+                height: Get.width * 0.23,
+                width: Get.width * 0.23,
                 fit: BoxFit.cover,
               ),
             ),
@@ -414,7 +414,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        controller.items[index].name,
+                        controller.items[index].title,
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.w500,
@@ -447,7 +447,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 8),
                   Text(
                     '${CurrencyFormatter().numberToCurrency(controller.items[index].price)}원',
                     style: TextStyle(
@@ -458,7 +458,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       fontSize: 15.0,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 8),
                   Text(
                     '잔여 ${controller.items[index].remainAmount}점',
                     style: TextStyle(
@@ -469,12 +469,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       fontSize: 12.0,
                     ),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 13),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        controller.items[index].timeAgo,
+                        controller.items[index].timeDiff,
                         style: TextStyle(
                           color: ColorPalette.grey_4,
                           fontFamily: "PretendardVariable",

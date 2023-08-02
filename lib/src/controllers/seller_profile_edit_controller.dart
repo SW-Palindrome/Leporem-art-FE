@@ -25,7 +25,7 @@ class SellerProfileEditController extends GetxController {
 
   SellerProfileEdit sellerProfileEdit = SellerProfileEdit(
     nickname: '',
-    profileImageUrl: '',
+    profileImage: '',
     description: '',
   );
 
@@ -41,15 +41,13 @@ class SellerProfileEditController extends GetxController {
     try {
       String nickname =
           Get.find<SellerProfileController>().sellerProfile.value.nickname;
-      String profileImageUrl = Get.find<SellerProfileController>()
-          .sellerProfile
-          .value
-          .profileImageUrl;
+      String profileImageUrl =
+          Get.find<SellerProfileController>().sellerProfile.value.profileImage;
       String description =
           Get.find<SellerProfileController>().sellerProfile.value.description;
       sellerProfileEdit = SellerProfileEdit(
         nickname: nickname,
-        profileImageUrl: profileImageUrl,
+        profileImage: profileImageUrl,
         description: description,
       );
     } catch (e) {

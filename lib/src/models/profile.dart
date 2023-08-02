@@ -1,10 +1,10 @@
 class Profile {
   final String nickname;
-  final String profileImageUrl;
+  final String profileImage;
 
   Profile({
     required this.nickname,
-    required this.profileImageUrl,
+    required this.profileImage,
   });
 }
 
@@ -13,17 +13,17 @@ class BuyerProfile extends Profile {
 
   BuyerProfile({
     required String nickname,
-    required String profileImageUrl,
+    required String profileImage,
     required this.isSeller,
   }) : super(
           nickname: nickname,
-          profileImageUrl: profileImageUrl,
+          profileImage: profileImage,
         );
 
   factory BuyerProfile.fromJson(Map<String, dynamic> json) {
     return BuyerProfile(
       nickname: json['nickname'],
-      profileImageUrl: json['profile_image'] ??
+      profileImage: json['profile_image'] ??
           'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       isSeller: json['is_seller'],
     );
@@ -43,7 +43,7 @@ class SellerProfile extends Profile {
     required this.description,
   }) : super(
           nickname: nickname,
-          profileImageUrl: profileImageUrl,
+          profileImage: profileImageUrl,
         );
 
   factory SellerProfile.fromJson(Map<String, dynamic> json) {

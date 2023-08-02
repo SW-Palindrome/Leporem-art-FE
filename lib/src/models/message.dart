@@ -1,12 +1,12 @@
 class ChatRoom {
   final String nickname;
-  final String profileImageUrl;
+  final String profileImage;
   final DateTime lastChatDatetime;
   final String lastChatMessage;
 
   ChatRoom({
     required this.nickname,
-    required this.profileImageUrl,
+    required this.profileImage,
     required this.lastChatDatetime,
     required this.lastChatMessage,
   });
@@ -14,9 +14,8 @@ class ChatRoom {
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
     return ChatRoom(
         nickname: json['nickname'],
-        profileImageUrl: json['profile_image'],
+        profileImage: json['profile_image'],
         lastChatDatetime: json['last_chat_datetime'],
-        lastChatMessage: json['last_chat_message']
-    );
+        lastChatMessage: json['last_chat_message']);
   }
 }

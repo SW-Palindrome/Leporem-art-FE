@@ -227,4 +227,25 @@ class BuyerHomeController extends GetxController {
       print('Error fetching like $itemId in home $e');
     }
   }
+
+  Future<void> view(int itemId) async {
+    try {
+      // API 요청
+      final response = await DioSingleton.dio.post('/items/viewed',
+          data: {'item_id': itemId},
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
+      if (response.statusCode != 201) {
+        throw Exception(
+            'Status Code: ${response.statusCode} / Body: ${response.data}');
+      }
+    } catch (e) {
+      // 에러 처리
+      print('Error fetching viewed $itemId in home $e');
+    }
+  }
 }

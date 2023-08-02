@@ -32,7 +32,7 @@ class ItemDetailRepository {
 
 final mockItemDetail = ItemDetail(
   id: 1,
-  profileImageUrl:
+  profileImage:
       'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',
   nickname: '불타는 효자',
   temperature: 95,
@@ -42,14 +42,14 @@ final mockItemDetail = ItemDetail(
   price: 10000,
   category: ['태그 1', '태그 2'],
   currentAmount: 5,
-  thumbnailUrl:
+  thumbnailImage:
       'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/rs_quotation_api/ytqc8cje/b0bc8fe9d933474ba5824e2c6b08b935.jpg',
-  imagesUrl: [
+  images: [
     'https://thumbnail9.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/2020/10/27/12/7/6a8098ac-d89a-4846-aff4-c9bd6f43d507.jpg',
     'https://thumbnail6.coupangcdn.com/thumbnails/remote/292x292ex/image/rs_quotation_api/ytqc8cje/b0bc8fe9d933474ba5824e2c6b08b935.jpg',
     'https://thumbnail9.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/2020/10/27/12/7/6a8098ac-d89a-4846-aff4-c9bd6f43d507.jpg',
   ],
-  videoUrl:
+  shorts:
       'https://leporem-art-fe-test.s3.ap-northeast-2.amazonaws.com/test.mp4',
   isLiked: true,
   depth: '1.02',

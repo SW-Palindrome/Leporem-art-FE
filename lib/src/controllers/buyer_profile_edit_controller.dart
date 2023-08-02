@@ -23,7 +23,7 @@ class BuyerProfileEditController extends GetxController {
 
   BuyerProfileEdit buyerProfileEdit = BuyerProfileEdit(
     nickname: '',
-    profileImageUrl: '',
+    profileImage: '',
   );
 
   @override
@@ -43,10 +43,10 @@ class BuyerProfileEditController extends GetxController {
       String nickname =
           Get.find<BuyerProfileController>().buyerProfile.value.nickname;
       String profileImageUrl =
-          Get.find<BuyerProfileController>().buyerProfile.value.profileImageUrl;
+          Get.find<BuyerProfileController>().buyerProfile.value.profileImage;
       buyerProfileEdit = BuyerProfileEdit(
         nickname: nickname,
-        profileImageUrl: profileImageUrl,
+        profileImage: profileImageUrl,
       );
     } catch (e) {
       // 에러 처리
