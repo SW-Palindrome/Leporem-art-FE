@@ -218,15 +218,19 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   }
 
   _topButton(Order order) {
-    switch (order.orderStatus) {
-      case "주문완료":
-        return _cancelButton(order.id);
-      case "배송중":
-        return _deliveryButton();
-      case "배송완료":
-        return _reviewButton(order);
-      case "주문취소":
-        return _cancelText();
+    if (order.isReviewed) {
+      return _reviewText();
+    } else {
+      switch (order.orderStatus) {
+        case "주문완료":
+          return _cancelButton(order.id);
+        case "배송중":
+          return _deliveryButton();
+        case "배송완료":
+          return _reviewButton(order);
+        case "주문취소":
+          return _cancelText();
+      }
     }
   }
 
@@ -330,6 +334,19 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
       '주문 취소됨',
       style: TextStyle(
         color: ColorPalette.red,
+        fontWeight: FontWeight.bold,
+        fontFamily: "PretendardVariable",
+        fontStyle: FontStyle.normal,
+        fontSize: 11.0,
+      ),
+    );
+  }
+
+  _reviewText() {
+    return Text(
+      '후기 작성완료',
+      style: TextStyle(
+        color: ColorPalette.black,
         fontWeight: FontWeight.bold,
         fontFamily: "PretendardVariable",
         fontStyle: FontStyle.normal,

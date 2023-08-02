@@ -6,6 +6,7 @@ class Order {
   final int price;
   final String orderedDatetime;
   String orderStatus;
+  final bool isReviewed;
 
   Order({
     required this.id,
@@ -15,6 +16,7 @@ class Order {
     required this.price,
     required this.orderedDatetime,
     required this.orderStatus,
+    this.isReviewed = false,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
