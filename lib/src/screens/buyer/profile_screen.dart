@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/recent_item_controller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
@@ -32,14 +34,24 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               title: '작품관리',
               contents: ['주문 내역', '관심 작품', '최근 본 작품'],
               icons: ['list', 'heart_outline', 'history'],
-              gotoWidgets: [BuyerApp(), BuyerApp(), RecentItemScreen()],
+              onTaps: [
+                () {},
+                () {},
+                () {
+                  Get.to(RecentItemScreen());
+                  Get.put(RecentItemController());
+                }
+              ],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
               title: '커뮤니티 관리',
               contents: ['팔로잉 목록', '차단 목록'],
               icons: ['followers', 'block'],
-              gotoWidgets: [BuyerApp(), BuyerApp()],
+              onTaps: [
+                () {},
+                () {},
+              ],
             ),
             if (!controller.buyerProfile.value.isSeller)
               Divider(color: ColorPalette.grey_2, thickness: 10),
@@ -48,7 +60,9 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 title: '판매자 인증',
                 contents: ['학교 이메일 인증'],
                 icons: ['mail'],
-                gotoWidgets: [EmailScreen()],
+                onTaps: [
+                  () {},
+                ],
               ),
           ],
         ),
@@ -220,7 +234,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
     required String title,
     required List<String> contents,
     required List<String> icons,
-    required List<Widget> gotoWidgets,
+    required List<Function()> onTaps,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -242,7 +256,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             _menuColumnItem(
               content: contents[i],
               icon: icons[i],
-              gotoWidget: gotoWidgets[i],
+              onTap: onTaps[i],
             ),
         ],
       ),
@@ -252,13 +266,11 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
   _menuColumnItem(
       {required String content,
       required String icon,
-      required Widget gotoWidget}) {
+      required Function() onTap}) {
     return Container(
       margin: EdgeInsets.only(bottom: Get.height * 0.013),
       child: GestureDetector(
-        onTap: () {
-          Get.to(gotoWidget);
-        },
+        onTap: onTap,
         child: Row(
           children: [
             Container(
