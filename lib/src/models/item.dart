@@ -88,7 +88,7 @@ class RecentItem {
   final String title;
   final int price;
   final String thumbnailImage;
-  final bool isLiked;
+  bool isLiked;
 
   RecentItem({
     required this.id,
@@ -108,5 +108,13 @@ class RecentItem {
       thumbnailImage: json['thumbnail_image'],
       isLiked: json['is_liked'],
     );
+  }
+
+  void like() {
+    isLiked = true;
+  }
+
+  void unlike() {
+    isLiked = false;
   }
 }
