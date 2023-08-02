@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
+import 'package:leporemart/src/screens/buyer/review_compelete_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -15,7 +16,7 @@ class ReviewDetailScreen extends GetView<ReviewController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: Get.arguments['title'],
+        title: Get.arguments['order'].title,
         onTapLeadingIcon: () {
           Get.back();
         },
@@ -32,7 +33,8 @@ class ReviewDetailScreen extends GetView<ReviewController> {
                   text: '후기 작성하기',
                   value: controller.description.value != '',
                   onTap: () {
-                    controller.createReview();
+                    Get.to(ReviewCompeleteScreen());
+                    //controller.createReview();
                   },
                 ),
               ),

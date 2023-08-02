@@ -15,7 +15,7 @@ class ReviewStarScreen extends GetView<ReviewController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: Get.arguments['title'],
+        title: Get.arguments['order'].title,
         onTapLeadingIcon: () {
           Get.back();
         },
@@ -29,7 +29,7 @@ class ReviewStarScreen extends GetView<ReviewController> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    'https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg',
+                    Get.arguments['order'].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.33,
                     height: Get.width * 0.33,
@@ -91,8 +91,7 @@ class ReviewStarScreen extends GetView<ReviewController> {
                       text: '별점 메기기',
                       onTap: () {
                         Get.to(ReviewDetailScreen(), arguments: {
-                          'order_id': Get.arguments['order_id'],
-                          'title': Get.arguments['title']
+                          'order': Get.arguments['order'],
                         });
                       },
                       value: controller.star.value != 0),

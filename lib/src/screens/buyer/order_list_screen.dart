@@ -302,8 +302,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   _reviewButton(Order order) {
     return GestureDetector(
       onTap: () {
-        Get.to(ReviewStarScreen(),
-            arguments: {'order_id': order.id, 'title': order.title});
+        Get.to(ReviewStarScreen(), arguments: {'order': order});
         Get.put(ReviewController());
       },
       child: Container(

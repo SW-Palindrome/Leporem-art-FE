@@ -13,12 +13,10 @@ class ReviewController extends GetxController {
 
   Future<void> createReview() async {
     try {
-      print(
-          'order_id: ${Get.arguments['order_id']} / title: ${Get.arguments['title']} / rating: ${star.value} / comment: ${description.value}');
       final response = await DioSingleton.dio.post(
         '/orders/review',
         data: {
-          'order_id': Get.arguments['order_id'],
+          'order_id': Get.arguments['order'].id,
           'rating': star.value,
           'comment': description.value,
         },
