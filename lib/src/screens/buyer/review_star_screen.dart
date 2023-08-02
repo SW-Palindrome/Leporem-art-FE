@@ -90,7 +90,10 @@ class ReviewStarScreen extends GetView<ReviewController> {
                   () => NextButton(
                       text: '별점 메기기',
                       onTap: () {
-                        Get.to(ReviewDetailScreen());
+                        Get.to(ReviewDetailScreen(), arguments: {
+                          'order_id': Get.arguments['order_id'],
+                          'title': Get.arguments['title']
+                        });
                       },
                       value: controller.star.value != 0),
                 ),
