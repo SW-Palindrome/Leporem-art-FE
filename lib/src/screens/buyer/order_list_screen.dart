@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
+import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
@@ -88,7 +89,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
                               fontSize: 10,
                             ),
                           ),
-                          _topButton(controller.orders[index].orderStatus),
+                          _topButton(controller.orders[index]),
                         ],
                       ),
                       SizedBox(height: 8),
@@ -245,9 +246,16 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
               Get.back();
             },
             onRightButtonPressed: () {
+              controller.cancel(orderId);
+              controller.fetch();
               Get.back();
-              controller.cancle();
             },
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30.0),
+            ),
           ),
         );
       },
