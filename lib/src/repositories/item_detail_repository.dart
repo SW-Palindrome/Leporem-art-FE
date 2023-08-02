@@ -8,14 +8,16 @@ class ItemDetailRepository {
     try {
       print('현재 요청 페이지: $itemID');
       // API 요청
-      final response = await DioSingleton.dio.get('/items/detail/buyer',
-          queryParameters: {'item_id': itemID},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final response = await DioSingleton.dio.get(
+        '/items/detail/buyer',
+        queryParameters: {'item_id': itemID},
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
       final data = response.data['detail'];
       // API 응답을 Item 모델로 변환
       final ItemDetail itemDetail = ItemDetail.fromJson(data);

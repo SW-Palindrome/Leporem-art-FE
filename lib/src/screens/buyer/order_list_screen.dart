@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
+import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
-class BuyerOrderListScreen extends StatelessWidget {
+class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   const BuyerOrderListScreen({super.key});
 
   @override
@@ -33,17 +35,19 @@ class BuyerOrderListScreen extends StatelessWidget {
   }
 
   _orderList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return _orderItem();
-      },
+    return Obx(
+      () => ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: controller.orders.length,
+        itemBuilder: (context, index) {
+          return _orderItem(index);
+        },
+      ),
     );
   }
 
-  _orderItem() {
+  _orderItem(int index) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -61,7 +65,7 @@ class BuyerOrderListScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    'https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg',
+                    controller.orders[index].thumbnailImage,
                     height: Get.width * 0.23,
                     width: Get.width * 0.23,
                     fit: BoxFit.cover,
@@ -76,7 +80,7 @@ class BuyerOrderListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '주문일자 2023/06/07',
+                            '주문일자 ${controller.orders[index].orderedDatetime.split('T')[0].replaceAll('-', '/')}',
                             style: TextStyle(
                               color: ColorPalette.grey_4,
                               fontWeight: FontWeight.bold,
@@ -85,61 +89,12 @@ class BuyerOrderListScreen extends StatelessWidget {
                               fontSize: 10,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(ReviewStarScreen());
-                              Get.put(ReviewController());
-                              // Get.bottomSheet(
-                              //   MyBottomSheet(
-                              //     title: "주문을 취소할까요?",
-                              //     description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
-                              //     descriptionFontSize: 16,
-                              //     height: Get.height * 0.3,
-                              //     buttonType: BottomSheetType.twoButton,
-                              //     onCloseButtonPressed: () {
-                              //       Get.back();
-                              //     },
-                              //     leftButtonText: "이전으로",
-                              //     onLeftButtonPressed: () {
-                              //       Get.back();
-                              //     },
-                              //     rightButtonText: "주문 취소하기",
-                              //     onRightButtonPressed: () {
-                              //       print('주문 취소하기');
-                              //     },
-                              //   ),
-                              //   backgroundColor: Colors.white,
-                              //   shape: RoundedRectangleBorder(
-                              //     borderRadius: BorderRadius.vertical(
-                              //       top: Radius.circular(30.0),
-                              //     ),
-                              //   ),
-                              // );
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: ColorPalette.grey_3,
-                              ),
-                              child: Text(
-                                '주문 취소',
-                                style: TextStyle(
-                                  color: ColorPalette.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "PretendardVariable",
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 11.0,
-                                ),
-                              ),
-                            ),
-                          ),
+                          _topButton(controller.orders[index]),
                         ],
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '제목',
+                        controller.orders[index].title,
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.bold,
@@ -150,7 +105,9 @@ class BuyerOrderListScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '${CurrencyFormatter().numberToCurrency(10000)}원',
+                        '${CurrencyFormatter().numberToCurrency(
+                          controller.orders[index].price,
+                        )}원',
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.bold,
@@ -171,69 +128,212 @@ class BuyerOrderListScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 color: ColorPalette.grey_1,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset('assets/icons/deliver_on.svg',
-                      width: 16, height: 16),
-                  SizedBox(width: 6),
-                  Text(
-                    '배송 준비 중',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    width: 31.5,
-                    height: 2,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: ColorPalette.grey_3),
-                  ),
-                  SvgPicture.asset('assets/icons/deliver_off.svg',
-                      width: 16, height: 16),
-                  SizedBox(width: 6),
-                  Text(
-                    '배송 중',
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 11,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    width: 31.5,
-                    height: 2,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: ColorPalette.grey_3),
-                  ),
-                  SvgPicture.asset('assets/icons/deliver_off.svg',
-                      width: 16, height: 16),
-                  SizedBox(width: 6),
-                  Text(
-                    '배송 완료',
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
-              ),
+              child: controller.orders[index].orderStatus != '주문취소'
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                            controller.orders[index].orderStatus == '주문완료'
+                                ? 'assets/icons/deliver_on.svg'
+                                : 'assets/icons/deliver_off.svg',
+                            width: 16,
+                            height: 16),
+                        SizedBox(width: 6),
+                        Text(
+                          '배송 준비 중',
+                          style: TextStyle(
+                            color:
+                                controller.orders[index].orderStatus == '주문완료'
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          width: 31.5,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              color: ColorPalette.grey_3),
+                        ),
+                        SvgPicture.asset(
+                            controller.orders[index].orderStatus == '배송중'
+                                ? 'assets/icons/deliver_on.svg'
+                                : 'assets/icons/deliver_off.svg',
+                            width: 16,
+                            height: 16),
+                        SizedBox(width: 6),
+                        Text(
+                          '배송 중',
+                          style: TextStyle(
+                            color: controller.orders[index].orderStatus == '배송중'
+                                ? ColorPalette.black
+                                : ColorPalette.grey_4,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          width: 31.5,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              color: ColorPalette.grey_3),
+                        ),
+                        SvgPicture.asset(
+                            controller.orders[index].orderStatus == '배송완료'
+                                ? 'assets/icons/deliver_on.svg'
+                                : 'assets/icons/deliver_off.svg',
+                            width: 16,
+                            height: 16),
+                        SizedBox(width: 6),
+                        Text(
+                          '배송 완료',
+                          style: TextStyle(
+                            color:
+                                controller.orders[index].orderStatus == '배송완료'
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    )
+                  : null,
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  _topButton(Order order) {
+    switch (order.orderStatus) {
+      case "주문완료":
+        return _cancelButton(order.id);
+      case "배송중":
+        return _deliveryButton();
+      case "배송완료":
+        return _reviewButton(order);
+      case "주문취소":
+        return _cancelText();
+    }
+  }
+
+  _cancelButton(int orderId) {
+    return GestureDetector(
+      onTap: () {
+        Get.bottomSheet(
+          MyBottomSheet(
+            title: '주문을 취소할까요?',
+            description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
+            height: Get.height * 0.3,
+            buttonType: BottomSheetType.twoButton,
+            onCloseButtonPressed: () {
+              Get.back();
+            },
+            onLeftButtonPressed: () {
+              Get.back();
+            },
+            onRightButtonPressed: () {
+              controller.cancel(orderId);
+              controller.fetch();
+              Get.back();
+            },
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30.0),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: ColorPalette.grey_3,
+        ),
+        child: Text(
+          '주문 취소',
+          style: TextStyle(
+            color: ColorPalette.red,
+            fontWeight: FontWeight.bold,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 11.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  _deliveryButton() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: ColorPalette.grey_3,
+      ),
+      child: Text(
+        '배송 조회',
+        style: TextStyle(
+          color: ColorPalette.black,
+          fontWeight: FontWeight.bold,
+          fontFamily: "PretendardVariable",
+          fontStyle: FontStyle.normal,
+          fontSize: 11.0,
+        ),
+      ),
+    );
+  }
+
+  _reviewButton(Order order) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(ReviewStarScreen(), arguments: {'order': order});
+        Get.put(ReviewController());
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: ColorPalette.grey_3,
+        ),
+        child: Text(
+          '후기 작성',
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontWeight: FontWeight.bold,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 11.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  _cancelText() {
+    return Text(
+      '주문 취소됨',
+      style: TextStyle(
+        color: ColorPalette.red,
+        fontWeight: FontWeight.bold,
+        fontFamily: "PretendardVariable",
+        fontStyle: FontStyle.normal,
+        fontSize: 11.0,
       ),
     );
   }
