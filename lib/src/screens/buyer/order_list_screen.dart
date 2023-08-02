@@ -224,7 +224,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
       case "배송중":
         return _deliveryButton();
       case "배송완료":
-        return _reviewButton();
+        return _reviewButton(order);
       case "주문취소":
         return _cancelText();
     }
@@ -299,10 +299,11 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
     );
   }
 
-  _reviewButton() {
+  _reviewButton(Order order) {
     return GestureDetector(
       onTap: () {
-        Get.to(ReviewStarScreen());
+        Get.to(ReviewStarScreen(),
+            arguments: {'order_id': order.id, 'title': order.title});
         Get.put(ReviewController());
       },
       child: Container(

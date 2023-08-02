@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class ReviewController extends GetxController {
   RxList<File> images = RxList<File>([]);
@@ -13,6 +16,30 @@ class ReviewController extends GetxController {
   Rx<int> star = 0.obs;
 
   TextEditingController descriptionController = TextEditingController();
+
+  Future<void> createReview() async {
+    try {
+      final response = await DioSingleton.dio.post(
+        '/orders/review',
+        queryParameters: {
+          'order_id': Get.arguments['order_id'],
+          'rating': star.value,
+          'comment': description.value,
+        },
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      if (response.statusCode != 201) {
+        throw ('{response.statusCode} / ${response.realUri} / ${response.data['message']}');
+      }
+    } catch (e) {
+      print('Error creating review: $e');
+    }
+  }
 
   Future<Uint8List?> compressImage(XFile imageFile) async {
     final File file = File(imageFile.path);

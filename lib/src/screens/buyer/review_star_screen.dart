@@ -15,7 +15,7 @@ class ReviewStarScreen extends GetView<ReviewController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: '가로등 빛 받은 나뭇잎 컵',
+        title: Get.arguments['title'],
         onTapLeadingIcon: () {
           Get.back();
         },
