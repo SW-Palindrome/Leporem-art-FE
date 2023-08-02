@@ -31,6 +31,7 @@ class ReviewController extends GetxController {
         Get.snackbar("서버 오류", "요청중 오류가 발생했습니다. 다시시도해주세요.");
         throw ('{response.statusCode} / ${response.realUri} / ${response.data['message']}');
       }
+      Get.until((route) => Get.currentRoute == '/BuyerOrderListScreen');
       Get.to(ReviewCompeleteScreen());
     } catch (e) {
       print('Error creating review: $e');

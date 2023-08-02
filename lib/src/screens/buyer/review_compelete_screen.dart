@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/screens/buyer/order_list_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class ReviewCompeleteScreen extends StatelessWidget {
@@ -11,6 +11,12 @@ class ReviewCompeleteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppBar(
+        appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () {
+          Get.back();
+        },
+      ),
       body: SafeArea(
         child: _complete(),
       ),
@@ -18,9 +24,10 @@ class ReviewCompeleteScreen extends StatelessWidget {
   }
 
   _complete() {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Center(
+        Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -43,18 +50,17 @@ class ReviewCompeleteScreen extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          bottom: 0,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: NextButton(
-                text: '주문 내역으로 돌아가기',
-                value: true,
-                onTap: () {
-                  Get.offAll(BuyerOrderListScreen());
-                }),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: NextButton(
+            text: '주문 내역으로 돌아가기',
+            value: true,
+            onTap: () {
+              Get.back();
+            },
+            width: Get.width,
           ),
-        )
+        ),
       ],
     );
   }

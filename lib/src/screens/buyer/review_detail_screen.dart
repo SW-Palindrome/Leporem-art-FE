@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
 import 'package:leporemart/src/screens/buyer/review_compelete_screen.dart';
+import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -32,9 +33,8 @@ class ReviewDetailScreen extends GetView<ReviewController> {
                 () => NextButton(
                   text: '후기 작성하기',
                   value: controller.description.value != '',
-                  onTap: () {
-                    Get.to(ReviewCompeleteScreen());
-                    //controller.createReview();
+                  onTap: () async {
+                    await controller.createReview();
                   },
                 ),
               ),
