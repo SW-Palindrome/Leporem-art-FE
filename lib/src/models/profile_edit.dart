@@ -1,28 +1,21 @@
 class ProfileEdit {
   final String nickname;
-  final String profileImageUrl;
+  final String profileImage;
 
   ProfileEdit({
     required this.nickname,
-    required this.profileImageUrl,
+    required this.profileImage,
   });
 }
 
 class BuyerProfileEdit extends ProfileEdit {
   BuyerProfileEdit({
     required String nickname,
-    required String profileImageUrl,
+    required String profileImage,
   }) : super(
           nickname: nickname,
-          profileImageUrl: profileImageUrl,
+          profileImage: profileImage,
         );
-
-  factory BuyerProfileEdit.fromJson(Map<String, dynamic> json) {
-    return BuyerProfileEdit(
-      nickname: json['nickname'],
-      profileImageUrl: json['profileImageUrl'],
-    );
-  }
 }
 
 class SellerProfileEdit extends ProfileEdit {
@@ -30,18 +23,10 @@ class SellerProfileEdit extends ProfileEdit {
 
   SellerProfileEdit({
     required String nickname,
-    required String profileImageUrl,
+    required String profileImage,
     required this.description,
   }) : super(
           nickname: nickname,
-          profileImageUrl: profileImageUrl,
+          profileImage: profileImage,
         );
-
-  factory SellerProfileEdit.fromJson(Map<String, dynamic> json) {
-    return SellerProfileEdit(
-      nickname: json['nickname'],
-      profileImageUrl: json['profileImageUrl'],
-      description: json['description'],
-    );
-  }
 }

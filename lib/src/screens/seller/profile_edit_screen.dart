@@ -213,7 +213,7 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                     fit: BoxFit.cover,
                   )
                 : Image.network(
-                    controller.sellerProfileEdit.profileImageUrl,
+                    controller.sellerProfileEdit.profileImage,
                     width: Get.width * 0.3,
                     height: Get.width * 0.3,
                     fit: BoxFit.cover,

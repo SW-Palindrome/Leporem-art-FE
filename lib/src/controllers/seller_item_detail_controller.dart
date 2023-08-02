@@ -21,8 +21,8 @@ class SellerItemDetailController extends GetxController {
     title: '',
     description: '',
     price: 0,
-    imagesUrl: [],
-    videoUrl: '',
+    images: [],
+    shorts: '',
     nickname: '',
     width: null,
     height: null,
@@ -30,9 +30,9 @@ class SellerItemDetailController extends GetxController {
     category: [],
     currentAmount: 0,
     isLiked: false,
-    profileImageUrl: '',
+    profileImage: '',
     temperature: 0,
-    thumbnailUrl: '',
+    thumbnailImage: '',
   ).obs;
 
   @override
@@ -49,7 +49,7 @@ class SellerItemDetailController extends GetxController {
 
   void changeIndex(int newIndex) {
     index.value = newIndex;
-    if (index.value == itemDetail.value.imagesUrl.length + 1) {
+    if (index.value == itemDetail.value.images.length + 1) {
       videoPlayerController.play();
       isPlaying.value = true;
     } else {
@@ -88,7 +88,7 @@ class SellerItemDetailController extends GetxController {
       itemDetail.value =
           await _itemDetailRepository.fetchItemDetail(Get.arguments['item_id']);
       videoPlayerController =
-          VideoPlayerController.network(itemDetail.value.videoUrl)
+          VideoPlayerController.network(itemDetail.value.shorts)
             ..initialize().then((_) {
               videoPlayerController.setLooping(true);
             });

@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
@@ -279,6 +280,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
         Get.off(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(BuyerItemDetailController());
+        Get.find<BuyerHomeController>().view(controller.items[index].id);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -289,7 +291,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
               child: Stack(
                 children: [
                   ExtendedImage.network(
-                    controller.items[index].thumbnailUrl,
+                    controller.items[index].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.5,
                     height: Get.width * 0.5,
@@ -338,7 +340,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.items[index].creator,
+                    controller.items[index].nickname,
                     style: TextStyle(
                       color: ColorPalette.grey_4,
                       fontSize: 10,
@@ -348,7 +350,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                   SizedBox(
                     height: Get.height * 0.04,
                     child: Text(
-                      controller.items[index].name,
+                      controller.items[index].title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

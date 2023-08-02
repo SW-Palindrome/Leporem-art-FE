@@ -65,7 +65,7 @@ class ProfileRepository {
 
 final mockBuyerProfile = BuyerProfile(
   nickname: '불건전한 소환사명',
-  profileImageUrl:
+  profileImage:
       'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
   isSeller: true,
 );

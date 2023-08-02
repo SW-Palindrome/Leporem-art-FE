@@ -120,7 +120,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                       height: 40,
                       width: 40,
                       child: Image.network(
-                        controller.itemDetail.value.profileImageUrl,
+                        controller.itemDetail.value.profileImage,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -161,12 +161,12 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
           ),
           items: [
             Image.network(
-              controller.itemDetail.value.thumbnailUrl,
+              controller.itemDetail.value.thumbnailImage,
               fit: BoxFit.cover,
               width: Get.width,
               height: Get.width,
             ),
-            for (String imageUrl in controller.itemDetail.value.imagesUrl)
+            for (String imageUrl in controller.itemDetail.value.images)
               Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
@@ -234,7 +234,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                   () => Row(
                     children: [
                       for (int i = 0;
-                          i < controller.itemDetail.value.imagesUrl.length + 1;
+                          i < controller.itemDetail.value.images.length + 1;
                           i++)
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 4),
@@ -254,8 +254,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: controller.index.value ==
-                                  controller.itemDetail.value.imagesUrl.length +
-                                      1
+                                  controller.itemDetail.value.images.length + 1
                               ? ColorPalette.purple
                               : ColorPalette.purple.withOpacity(0.5),
                         ),

@@ -105,7 +105,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(Get.width * 0.1),
                     child: Image.network(
-                      controller.sellerProfile.value.profileImageUrl,
+                      controller.sellerProfile.value.profileImage,
                       width: Get.width * 0.2,
                       height: Get.width * 0.2,
                       fit: BoxFit.cover,
