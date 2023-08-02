@@ -15,9 +15,12 @@ import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 void main() async {
   // Sentry + GlitchTip
@@ -35,6 +38,8 @@ void main() async {
   Get.lazyPut(() => NicknameController());
 
   await initializeDateFormatting();
+
+  ChattingSocketSingleton();
 
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
