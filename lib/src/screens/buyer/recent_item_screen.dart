@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_home_controller.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/controllers/recent_item_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -77,7 +80,13 @@ class RecentItemScreen extends GetView<RecentItemController> {
 
   _recentItem(int index) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        Get.to(BuyerItemDetailScreen(),
+            arguments: {'item_id': controller.items[index].id});
+        Get.put(BuyerItemDetailController());
+        await Get.find<BuyerHomeController>().view(controller.items[index].id);
+        await controller.fetch();
+      },
       child: Container(
         padding: EdgeInsets.all(12),
         margin: EdgeInsets.only(bottom: 16),
