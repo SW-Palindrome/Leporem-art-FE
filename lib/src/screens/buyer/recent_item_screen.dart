@@ -155,19 +155,31 @@ class RecentItemScreen extends GetView<RecentItemController> {
                       ),
                       SizedBox(width: 8),
                       controller.items[index].isLiked
-                          ? SvgPicture.asset(
-                              'assets/icons/heart_fill.svg',
-                              width: 20,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                  ColorPalette.purple, BlendMode.srcIn),
+                          ? GestureDetector(
+                              onTap: () async {
+                                await controller
+                                    .unlike(controller.items[index].id);
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/heart_fill.svg',
+                                width: 20,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                    ColorPalette.purple, BlendMode.srcIn),
+                              ),
                             )
-                          : SvgPicture.asset(
-                              'assets/icons/heart_outline.svg',
-                              width: 20,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                  ColorPalette.grey_4, BlendMode.srcIn),
+                          : GestureDetector(
+                              onTap: () async {
+                                await controller
+                                    .like(controller.items[index].id);
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/heart_outline.svg',
+                                width: 20,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                    ColorPalette.grey_4, BlendMode.srcIn),
+                              ),
                             ),
                     ],
                   ),
