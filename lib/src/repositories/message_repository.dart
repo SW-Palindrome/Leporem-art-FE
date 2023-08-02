@@ -1,22 +1,31 @@
+import 'package:dio/dio.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
+
+import '../configs/login_config.dart';
 import '../models/message.dart';
 
 class MessageRepository {
   Future<List<ChatRoom>> fetchChatRooms(int page) async {
-    return [
-      ChatRoom(
-        nickname: '닉네임',
-        profileImage:
-            'https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg',
-        lastChatDatetime: DateTime(2023, 7, 25, 12, 14),
-        lastChatMessage: '안녕하세요...',
-      ),
-      ChatRoom(
-        nickname: '닉네임2',
-        profileImage:
-            'https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/309/59932b0eb046f9fa3e063b8875032edd_crop.jpeg',
-        lastChatDatetime: DateTime(2023, 7, 20, 12, 14),
-        lastChatMessage: '그렇군요 유감이네요..',
-      )
-    ];
+    try {
+      final response = await DioSingleton.dio.get(
+        '/chats/buyer',
+        options: Options(
+          headers: {
+            "Authorization":
+            "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      final data = response.data;
+      List<ChatRoom> chatRoomList = [];
+      for (var i = 0; i < data.length; i++) {
+        chatRoomList.add(ChatRoom.fromJson(data[i]));
+      }
+      return chatRoomList;
+    }
+    catch (e) {
+      // 에러 처리
+      throw ('Error fetching chat rooms in repository: $e');
+    }
   }
 }

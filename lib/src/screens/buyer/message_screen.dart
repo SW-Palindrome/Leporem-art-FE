@@ -15,11 +15,12 @@ class MessageScreen extends GetView<BuyerMessageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.chatRoomList.isEmpty) {
-        return _emptyItemListWidget();
+        if (controller.chatRoomList.isEmpty) {
+          return _emptyItemListWidget();
+        }
+        return _chatRoomListWidget();
       }
-      return _chatRoomListWidget();
-    });
+    );
   }
 
   _emptyItemListWidget() {
@@ -32,12 +33,14 @@ class MessageScreen extends GetView<BuyerMessageController> {
             height: 200,
           ),
           SizedBox(height: 24),
-          Text('아직 채팅 내역이 없어요.',
-              style: TextStyle(
-                fontSize: 16,
-                color: ColorPalette.grey_5,
-                fontFamily: FontPalette.pretenderd,
-              )),
+          Text(
+            '아직 채팅 내역이 없어요.',
+            style: TextStyle(
+              fontSize: 16,
+              color: ColorPalette.grey_5,
+              fontFamily: FontPalette.pretenderd,
+            )
+          ),
         ],
       ),
     );
@@ -61,7 +64,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
         borderRadius: BorderRadius.circular(12),
         child: Slidable(
           endActionPane: ActionPane(
-            extentRatio: 0.36, // Slide 된 위젯 사이즈
+            extentRatio: 0.36,  // Slide 된 위젯 사이즈
             motion: ScrollMotion(),
             children: [
               _turnOffAlarmWidget(),
@@ -75,19 +78,21 @@ class MessageScreen extends GetView<BuyerMessageController> {
   }
 
   _chatRoomInfoWidget(ChatRoom chatRoom) {
-    return Row(children: [
-      SizedBox(width: 12),
-      _profileImageWidget(chatRoom),
-      SizedBox(width: 8),
-      _profileDetailInfoWidget(chatRoom),
-    ]);
+    return Row(
+        children: [
+          SizedBox(width: 12),
+          _profileImageWidget(chatRoom),
+          SizedBox(width: 8),
+          _profileDetailInfoWidget(chatRoom),
+        ]
+    );
   }
 
   _profileImageWidget(ChatRoom chatRoom) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Get.width * 0.1),
       child: Image.network(
-        chatRoom.profileImage,
+        chatRoom.opponentProfileImageUrl,
         width: 48,
         height: 48,
       ),
@@ -98,11 +103,13 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return CustomSlidableAction(
       onPressed: (BuildContext context) {},
       backgroundColor: ColorPalette.grey_3,
-      child: Text('알림끄기',
+      child: Text(
+          '알림끄기',
           style: TextStyle(
             fontSize: 11,
             fontFamily: FontPalette.pretenderd,
-          )),
+          )
+      ),
     );
   }
 
@@ -113,25 +120,22 @@ class MessageScreen extends GetView<BuyerMessageController> {
       children: [
         Row(
           children: [
-            Text(chatRoom.nickname,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.w700)),
+            Text(
+                chatRoom.opponentNickname,
+                style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, fontWeight: FontWeight.w700)
+            ),
             SizedBox(width: 6),
-            Text(DateFormat('aa hh:mm', 'ko').format(chatRoom.lastChatDatetime),
-                style: TextStyle(
-                    fontSize: 11,
-                    fontFamily: FontPalette.pretenderd,
-                    color: ColorPalette.grey_4)),
+            Text(
+                DateFormat('aa hh:mm', 'ko').format(chatRoom.lastMessageDatetime),
+                style: TextStyle(fontSize: 11, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_4)
+            ),
           ],
         ),
         SizedBox(height: 8),
-        Text(chatRoom.lastChatMessage,
-            style: TextStyle(
-                fontSize: 12,
-                fontFamily: FontPalette.pretenderd,
-                color: ColorPalette.grey_6)),
+        Text(
+            chatRoom.lastMessage,
+            style: TextStyle(fontSize: 12, fontFamily: FontPalette.pretenderd, color: ColorPalette.grey_6)
+        ),
       ],
     );
   }
@@ -140,11 +144,13 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return CustomSlidableAction(
       onPressed: (BuildContext context) {},
       backgroundColor: ColorPalette.red,
-      child: Text('나가기',
+      child: Text(
+          '나가기',
           style: TextStyle(
             fontSize: 11,
             fontFamily: FontPalette.pretenderd,
-          )),
+          )
+      ),
     );
   }
 }
