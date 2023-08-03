@@ -66,7 +66,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
           child: Container(
             constraints: BoxConstraints(
-              maxWidth: Get.width * 0.7,
+              maxWidth: Get.width * 0.6,
             ),
             child: Text(
               message.message,
