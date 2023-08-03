@@ -106,9 +106,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '${CurrencyFormatter().numberToCurrency(
-                          controller.orders[index].price,
-                        )}원',
+                        controller.orders[index].buyerNickname,
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.bold,
@@ -123,95 +121,92 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
               ],
             ),
             SizedBox(height: 16),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: ColorPalette.grey_1,
+            if (controller.orders[index].orderStatus != '주문취소')
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: ColorPalette.grey_1,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                        controller.orders[index].orderStatus == '주문완료'
+                            ? 'assets/icons/deliver_on.svg'
+                            : 'assets/icons/deliver_off.svg',
+                        width: 16,
+                        height: 16),
+                    SizedBox(width: 6),
+                    Text(
+                      '배송 준비 중',
+                      style: TextStyle(
+                        color: controller.orders[index].orderStatus == '주문완료'
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 11,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: 31.5,
+                      height: 2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: ColorPalette.grey_3),
+                    ),
+                    SvgPicture.asset(
+                        controller.orders[index].orderStatus == '배송중'
+                            ? 'assets/icons/deliver_on.svg'
+                            : 'assets/icons/deliver_off.svg',
+                        width: 16,
+                        height: 16),
+                    SizedBox(width: 6),
+                    Text(
+                      '배송 중',
+                      style: TextStyle(
+                        color: controller.orders[index].orderStatus == '배송중'
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 11,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: 31.5,
+                      height: 2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          color: ColorPalette.grey_3),
+                    ),
+                    SvgPicture.asset(
+                        controller.orders[index].orderStatus == '배송완료'
+                            ? 'assets/icons/deliver_on.svg'
+                            : 'assets/icons/deliver_off.svg',
+                        width: 16,
+                        height: 16),
+                    SizedBox(width: 6),
+                    Text(
+                      '배송 완료',
+                      style: TextStyle(
+                        color: controller.orders[index].orderStatus == '배송완료'
+                            ? ColorPalette.black
+                            : ColorPalette.grey_4,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: controller.orders[index].orderStatus != '주문취소'
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                            controller.orders[index].orderStatus == '주문완료'
-                                ? 'assets/icons/deliver_on.svg'
-                                : 'assets/icons/deliver_off.svg',
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          '배송 준비 중',
-                          style: TextStyle(
-                            color:
-                                controller.orders[index].orderStatus == '주문완료'
-                                    ? ColorPalette.black
-                                    : ColorPalette.grey_4,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 11,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8),
-                          width: 31.5,
-                          height: 2,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2),
-                              color: ColorPalette.grey_3),
-                        ),
-                        SvgPicture.asset(
-                            controller.orders[index].orderStatus == '배송중'
-                                ? 'assets/icons/deliver_on.svg'
-                                : 'assets/icons/deliver_off.svg',
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          '배송 중',
-                          style: TextStyle(
-                            color: controller.orders[index].orderStatus == '배송중'
-                                ? ColorPalette.black
-                                : ColorPalette.grey_4,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 11,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8),
-                          width: 31.5,
-                          height: 2,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2),
-                              color: ColorPalette.grey_3),
-                        ),
-                        SvgPicture.asset(
-                            controller.orders[index].orderStatus == '배송완료'
-                                ? 'assets/icons/deliver_on.svg'
-                                : 'assets/icons/deliver_off.svg',
-                            width: 16,
-                            height: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          '배송 완료',
-                          style: TextStyle(
-                            color:
-                                controller.orders[index].orderStatus == '배송완료'
-                                    ? ColorPalette.black
-                                    : ColorPalette.grey_4,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    )
-                  : null,
-            ),
           ],
         ),
       ),
