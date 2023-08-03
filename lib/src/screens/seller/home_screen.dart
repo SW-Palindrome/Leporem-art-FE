@@ -23,8 +23,19 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _searchDropDown(),
+                  Obx(
+                    () => Text(
+                      '총 ${controller.totalCount.value}개',
+                      style: TextStyle(
+                        color: ColorPalette.grey_5,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 12,
+                      ),
+                    ),
+                  )
                 ],
               ),
               SizedBox(height: Get.height * 0.02),
