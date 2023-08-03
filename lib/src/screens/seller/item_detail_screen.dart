@@ -58,17 +58,19 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
         children: [
           Row(
             children: [
-              Text(
-                '${controller.itemDetail.value.price.toString().replaceAllMapped(
-                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},',
-                    )}원',
-                style: TextStyle(
-                  color: Color(0xff191f28),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PretendardVariable",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 18.0,
+              Obx(
+                () => Text(
+                  '${controller.itemDetail.value.price.toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},',
+                      )}원',
+                  style: TextStyle(
+                    color: Color(0xff191f28),
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PretendardVariable",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0,
+                  ),
                 ),
               ),
             ],

@@ -18,7 +18,9 @@ class BuyerItemCreatorController extends GetxController {
     profileImageUrl:
         'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
     itemCount: 0,
+    totalTransaction: 0,
     temperature: 100,
+    retentionRate: 0.0,
     description: '',
   ).obs;
 

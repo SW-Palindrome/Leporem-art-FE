@@ -3,10 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/item_management_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
+import 'package:leporemart/src/screens/seller/item_management_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_edit_screen.dart';
-import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
@@ -30,28 +31,42 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
               title: '작품 관리',
               contents: ['판매 관리'],
               icons: ['list', 'heart_outline', 'history'],
-              gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
+              onTaps: [
+                () {
+                  Get.to(ItemManagementScreen());
+                  Get.put(ItemManagementController());
+                },
+                () {},
+                () {},
+              ],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
               title: '커뮤니티 관리',
               contents: ['차단 목록'],
               icons: ['block'],
-              gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
+              onTaps: [
+                () {},
+              ],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
               title: 'SNS 연동',
               contents: ['인스타그램 연동'],
               icons: ['instagram'],
-              gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
+              onTaps: [
+                () {},
+              ],
             ),
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
               title: '기타 기능',
               contents: ['요금 플랜 가입하기', '포트폴리오'],
               icons: ['plan', 'portfolio'],
-              gotoWidgets: [SellerApp(), SellerApp(), SellerApp()],
+              onTaps: [
+                () {},
+                () {},
+              ],
             ),
           ],
         ),
@@ -271,7 +286,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      '86%',
+                      '${controller.sellerProfile.value.retentionRate.toInt().toString()}%',
                       style: TextStyle(
                         color: ColorPalette.black,
                         fontWeight: FontWeight.bold,
@@ -305,7 +320,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      '${controller.sellerProfile.value.itemCount}회',
+                      '${controller.sellerProfile.value.totalTransaction}회',
                       style: TextStyle(
                         color: ColorPalette.black,
                         fontWeight: FontWeight.bold,
@@ -328,7 +343,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
     required String title,
     required List<String> contents,
     required List<String> icons,
-    required List<Widget> gotoWidgets,
+    required List<Function()> onTaps,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -350,7 +365,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
             _menuColumnItem(
               content: contents[i],
               icon: icons[i],
-              gotoWidget: gotoWidgets[i],
+              onTap: onTaps[i],
             ),
         ],
       ),
@@ -360,52 +375,53 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
   _menuColumnItem({
     required String content,
     required String icon,
-    required Widget gotoWidget,
+    required Function() onTap,
   }) {
     return Container(
       margin: EdgeInsets.only(bottom: Get.height * 0.013),
       child: GestureDetector(
-        onTap: () {
-          Get.to(gotoWidget);
-        },
-        child: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: ColorPalette.grey_2,
-              ),
-              child: Transform.scale(
-                scale: 0.6,
-                child: icon == 'instagram'
-                    ? Image.asset(
-                        'assets/icons/$icon.png',
-                      )
-                    : ShaderMask(
-                        blendMode: BlendMode.srcIn,
-                        shaderCallback: (Rect bounds) {
-                          return ColorPalette.gradientPurple
-                              .createShader(bounds);
-                        },
-                        child: SvgPicture.asset(
-                          'assets/icons/$icon.svg',
+        onTap: onTap,
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorPalette.grey_2,
+                ),
+                child: Transform.scale(
+                  scale: 0.6,
+                  child: icon == 'instagram'
+                      ? Image.asset(
+                          'assets/icons/$icon.png',
+                        )
+                      : ShaderMask(
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: (Rect bounds) {
+                            return ColorPalette.gradientPurple
+                                .createShader(bounds);
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/$icon.svg',
+                          ),
                         ),
-                      ),
+                ),
               ),
-            ),
-            SizedBox(width: Get.width * 0.03),
-            Text(
-              content,
-              style: TextStyle(
-                color: ColorPalette.black,
-                fontFamily: "PretendardVariable",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0,
+              SizedBox(width: Get.width * 0.03),
+              Text(
+                content,
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

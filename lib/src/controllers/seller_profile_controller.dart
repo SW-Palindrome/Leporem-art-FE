@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 
@@ -10,14 +9,16 @@ class SellerProfileController extends GetxController {
     profileImageUrl:
         'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
     itemCount: 0,
+    totalTransaction: 0,
     temperature: 100,
+    retentionRate: 0.0,
     description: '',
   ).obs;
 
   @override
   void onInit() async {
-    await fetch();
     super.onInit();
+    await fetch();
   }
 
   Future<void> fetch() async {

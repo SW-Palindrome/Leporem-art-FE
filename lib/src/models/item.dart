@@ -47,7 +47,7 @@ class SellerHomeItem {
   final int price;
   final String thumbnailImage;
   final int likes;
-  final int remainAmount;
+  final int currentAmount;
   final String star;
   final String timeDiff;
   final bool isAuction;
@@ -59,7 +59,7 @@ class SellerHomeItem {
     required this.price,
     required this.thumbnailImage,
     required this.likes,
-    required this.remainAmount,
+    required this.currentAmount,
     required this.star,
     required this.timeDiff,
     required this.isAuction,
@@ -73,7 +73,7 @@ class SellerHomeItem {
       price: json['price'],
       thumbnailImage: json['thumbnail_image'],
       likes: json['like_count'],
-      remainAmount: json['remain_amount'] ?? 0,
+      currentAmount: json['current_amount'],
       star: json['avg_rating'],
       //TODO: timeAgo 시간 표시 추후 구현
       timeDiff: json['time_diff'],

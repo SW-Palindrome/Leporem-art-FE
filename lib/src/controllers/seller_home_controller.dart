@@ -8,6 +8,7 @@ import 'package:leporemart/src/repositories/home_repository.dart';
 class SellerHomeController extends GetxController {
   final HomeRepository _homeRepository = HomeRepository();
   RxList<SellerHomeItem> items = <SellerHomeItem>[].obs;
+  Rx<int> totalCount = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
   Rx<int> displayedSortType = 0.obs;

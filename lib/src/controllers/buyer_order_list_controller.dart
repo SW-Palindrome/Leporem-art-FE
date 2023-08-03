@@ -15,7 +15,7 @@ class BuyerOrderListController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      List<Order> fetchedOrders = await _orderListRepository.fetchOrders();
+      List<Order> fetchedOrders = await _orderListRepository.fetchBuyerOrders();
       orders.assignAll(fetchedOrders);
     } catch (e) {
       print('Error fetching buyer order list in controller: $e');

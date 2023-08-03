@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
+import 'package:leporemart/src/controllers/item_management_controller.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
 import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
@@ -10,8 +11,8 @@ import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
-class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
-  const BuyerOrderListScreen({super.key});
+class ItemManagementScreen extends GetView<ItemManagementController> {
+  const ItemManagementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +106,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '${CurrencyFormatter().numberToCurrency(
-                          controller.orders[index].price,
-                        )}원',
+                        controller.orders[index].buyerNickname,
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontWeight: FontWeight.bold,
@@ -215,117 +214,11 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   }
 
   _topButton(Order order) {
-    if (order.isReviewed) {
-      return _reviewText();
+    if (order.orderStatus == "주문취소") {
+      return _cancelText();
     } else {
-      switch (order.orderStatus) {
-        case "주문완료":
-          return _cancelButton(order.id);
-        case "배송중":
-          return _deliveryButton();
-        case "배송완료":
-          return _reviewButton(order);
-        case "주문취소":
-          return _cancelText();
-      }
+      return _moreButton(order);
     }
-  }
-
-  _cancelButton(int orderId) {
-    return GestureDetector(
-      onTap: () {
-        Get.bottomSheet(
-          MyBottomSheet(
-            title: '주문을 취소할까요?',
-            description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
-            height: Get.height * 0.3,
-            buttonType: BottomSheetType.twoButton,
-            onCloseButtonPressed: () {
-              Get.back();
-            },
-            leftButtonText: '이전으로',
-            onLeftButtonPressed: () {
-              Get.back();
-            },
-            rightButtonText: '주문 취소하기',
-            onRightButtonPressed: () {
-              controller.cancel(orderId);
-              controller.fetch();
-              Get.back();
-            },
-          ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30.0),
-            ),
-          ),
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: ColorPalette.grey_3,
-        ),
-        child: Text(
-          '주문 취소',
-          style: TextStyle(
-            color: ColorPalette.red,
-            fontWeight: FontWeight.bold,
-            fontFamily: "PretendardVariable",
-            fontStyle: FontStyle.normal,
-            fontSize: 11.0,
-          ),
-        ),
-      ),
-    );
-  }
-
-  _deliveryButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorPalette.grey_3,
-      ),
-      child: Text(
-        '배송 조회',
-        style: TextStyle(
-          color: ColorPalette.black,
-          fontWeight: FontWeight.bold,
-          fontFamily: "PretendardVariable",
-          fontStyle: FontStyle.normal,
-          fontSize: 11.0,
-        ),
-      ),
-    );
-  }
-
-  _reviewButton(Order order) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(ReviewStarScreen(), arguments: {'order': order});
-        Get.put(ReviewController());
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: ColorPalette.grey_3,
-        ),
-        child: Text(
-          '후기 작성',
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontWeight: FontWeight.bold,
-            fontFamily: "PretendardVariable",
-            fontStyle: FontStyle.normal,
-            fontSize: 11.0,
-          ),
-        ),
-      ),
-    );
   }
 
   _cancelText() {
@@ -341,15 +234,160 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
     );
   }
 
-  _reviewText() {
-    return Text(
-      '후기 작성완료',
-      style: TextStyle(
-        color: ColorPalette.black,
-        fontWeight: FontWeight.bold,
-        fontFamily: "PretendardVariable",
-        fontStyle: FontStyle.normal,
-        fontSize: 11.0,
+  _moreButton(Order order) {
+    return GestureDetector(
+      onTap: () {
+        Get.dialog(Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17),
+            child: Column(
+              children: [
+                Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ColorPalette.white),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: order.orderStatus == "주문완료"
+                            ? () {
+                                controller.deliveryStart(order.id);
+                                Get.back();
+                              }
+                            : () {},
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '배송 중',
+                              style: TextStyle(
+                                color: order.orderStatus == "주문완료"
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: order.orderStatus == "배송중"
+                            ? () {
+                                controller.deliveryComplete(order.id);
+                                Get.back();
+                              }
+                            : () {},
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '배송 완료',
+                              style: TextStyle(
+                                color: order.orderStatus == "주문완료"
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                          Get.bottomSheet(
+                            MyBottomSheet(
+                              title: '주문을 취소할까요?',
+                              description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
+                              height: Get.height * 0.3,
+                              buttonType: BottomSheetType.twoButton,
+                              onCloseButtonPressed: () {
+                                Get.back();
+                              },
+                              leftButtonText: '이전으로',
+                              onLeftButtonPressed: () {
+                                Get.back();
+                              },
+                              rightButtonText: '주문 취소하기',
+                              onRightButtonPressed: () {
+                                controller.cancel(order.id);
+                                controller.fetch();
+                                Get.back();
+                              },
+                            ),
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30.0),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '주문 취소',
+                              style: TextStyle(
+                                color: ColorPalette.red,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 17),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: ColorPalette.white),
+                    child: Center(
+                      child: Text(
+                        '취소',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+      },
+      child: SvgPicture.asset(
+        'assets/icons/more.svg',
+        width: 20,
+        height: 20,
+        colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
       ),
     );
   }

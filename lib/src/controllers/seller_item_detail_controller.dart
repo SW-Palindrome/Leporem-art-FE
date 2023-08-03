@@ -106,20 +106,23 @@ class SellerItemDetailController extends GetxController {
       if (itemDetail.value.currentAmount == 99) {
         throw Exception('Amount is full');
       }
-      // // API 요청
-      // final response = await DioSingleton.dio.post('/items/like',
-      //     data: {'item_id': Get.arguments['item_id']},
-      //     options: Options(
-      //       headers: {
-      //         "Authorization":
-      //             "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-      //       },
-      //     ));
-      // // 200이 아니라면 오류
-      // if (response.statusCode != 200) {
-      //   throw Exception(
-      //       'Status Code: ${response.statusCode} / Body: ${response.data}');
-      // }
+      // API 요청
+      final response = await DioSingleton.dio.patch('/sellers/current-amount',
+          data: {
+            'item_id': Get.arguments['item_id'],
+            'action': 1,
+          },
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
+      // 200이 아니라면 오류
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Status Code: ${response.statusCode} / Body: ${response.data}');
+      }
       itemDetail.value = itemDetail.value.increaseAmount();
     } catch (e) {
       // 에러 처리
@@ -133,20 +136,23 @@ class SellerItemDetailController extends GetxController {
       if (itemDetail.value.currentAmount == 0) {
         throw Exception('Amount is empty');
       }
-      // //API 요청
-      // final response = await DioSingleton.dio.delete('/items/like',
-      //     data: {'item_id': Get.arguments['item_id']},
-      //     options: Options(
-      //       headers: {
-      //         "Authorization":
-      //         "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-      //       },
-      //     ));
-      // //200이 아니라면 오류
-      // if (response.statusCode != 200) {
-      //   throw Exception(
-      //       'Status Code: ${response.statusCode} / Body: ${response.data}');
-      // }
+      //API 요청
+      final response = await DioSingleton.dio.patch('/sellers/current-amount',
+          data: {
+            'item_id': Get.arguments['item_id'],
+            'action': -1,
+          },
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            },
+          ));
+      //200이 아니라면 오류
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Status Code: ${response.statusCode} / Body: ${response.data}');
+      }
       itemDetail.value = itemDetail.value.decreaseAmount();
     } catch (e) {
       // 에러 처리

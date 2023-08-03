@@ -75,6 +75,8 @@ final mockSellerProfile = SellerProfile(
   profileImageUrl:
       'http://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg',
   itemCount: 22,
+  totalTransaction: 33,
   temperature: 36.5,
   description: '안녕하세요. 불건전한 소환사명입니다.',
+  retentionRate: 84,
 );
