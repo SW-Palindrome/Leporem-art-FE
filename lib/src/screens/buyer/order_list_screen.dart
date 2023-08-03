@@ -243,9 +243,11 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
             onCloseButtonPressed: () {
               Get.back();
             },
+            leftButtonText: '이전으로',
             onLeftButtonPressed: () {
               Get.back();
             },
+            rightButtonText: '주문 취소하기',
             onRightButtonPressed: () {
               controller.cancel(orderId);
               controller.fetch();

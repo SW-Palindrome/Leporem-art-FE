@@ -215,7 +215,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
 
   _topButton(Order order) {
     if (order.orderStatus == "주문취소") {
-      return _moreButton(order);
+      return _cancelText();
     } else {
       return _moreButton(order);
     }
@@ -308,8 +308,34 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       Divider(color: ColorPalette.grey_2, thickness: 1),
                       GestureDetector(
                         onTap: () {
-                          controller.cancel(order.id);
                           Get.back();
+                          Get.bottomSheet(
+                            MyBottomSheet(
+                              title: '주문을 취소할까요?',
+                              description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
+                              height: Get.height * 0.3,
+                              buttonType: BottomSheetType.twoButton,
+                              onCloseButtonPressed: () {
+                                Get.back();
+                              },
+                              leftButtonText: '이전으로',
+                              onLeftButtonPressed: () {
+                                Get.back();
+                              },
+                              rightButtonText: '주문 취소하기',
+                              onRightButtonPressed: () {
+                                controller.cancel(order.id);
+                                controller.fetch();
+                                Get.back();
+                              },
+                            ),
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30.0),
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 17),
