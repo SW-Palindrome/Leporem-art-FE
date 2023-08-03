@@ -32,6 +32,7 @@ class ChatRoom {
     required this.opponentProfileImageUrl,
     required this.lastMessageDatetime,
     required this.lastMessage,
+    required this.messageList,
   });
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,12 @@ class ChatRoom {
       opponentProfileImageUrl: json['opponent_profile_image'],
       lastMessageDatetime: DateTime.parse(json['last_message_datetime']),
       lastMessage: json['last_message'],
+      messageList: [
+        Message(messageId: '1', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
+        Message(messageId: '2', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
+        Message(messageId: '3', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '왜 안녕하세요?'),
+        Message(messageId: '4', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕안녕 안녕하세요'),
+      ],
     );
   }
 }
