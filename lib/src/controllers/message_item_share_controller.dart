@@ -1,19 +1,53 @@
 import 'package:get/get.dart';
+import 'package:leporemart/src/models/item.dart';
+import 'package:leporemart/src/repositories/message_item_repository.dart';
 
 class MessageItemShareController extends GetxController {
-  Rx<int> selectIndex = 0.obs;
+  final MessageItemRepository _messageItemRepository = MessageItemRepository();
+
+  List<MessageItem> items = <MessageItem>[];
+  RxList<MessageItem> displayItems = <MessageItem>[].obs;
+  Rx<int> selectItemId = 0.obs;
   Rx<bool> isSelect = false.obs;
 
-  void select(int index) {
-    if (selectIndex.value == index) {
+  @override
+  void onInit() async {
+    super.onInit();
+    await fetch();
+  }
+
+  Future<void> fetch() async {
+    try {
+      List<MessageItem> fetchedMessageItems =
+          await _messageItemRepository.fetchShareMessageItem();
+
+      items.assignAll(fetchedMessageItems);
+      displayItems.assignAll(fetchedMessageItems);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //items에서 title안에 keyword가 포함된 item들만 반환해서 displayItems에 넣어주기
+  void search(String keyword) {
+    if (keyword.isEmpty) {
+      displayItems.assignAll(items);
+      return;
+    }
+    displayItems.assignAll(
+        items.where((item) => item.title.contains(keyword)).toList());
+  }
+
+  void select(int itemId) {
+    if (selectItemId.value == itemId) {
       isSelect.value = !isSelect.value;
     } else {
-      selectIndex.value = index;
+      selectItemId.value = itemId;
       isSelect.value = true;
     }
   }
 
-  bool isSelected(int index) {
-    return selectIndex.value == index && isSelect.value;
+  bool isSelected(int itemId) {
+    return selectItemId.value == itemId && isSelect.value;
   }
 }

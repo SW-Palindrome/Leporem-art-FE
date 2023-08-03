@@ -118,3 +118,28 @@ class RecentItem {
     isLiked = false;
   }
 }
+
+class MessageItem {
+  final int id;
+  final String title;
+  final String nickname;
+  final int price;
+  final String thumbnailImage;
+  MessageItem({
+    required this.id,
+    required this.title,
+    required this.nickname,
+    required this.price,
+    required this.thumbnailImage,
+  });
+
+  factory MessageItem.fromJson(Map<String, dynamic> json) {
+    return MessageItem(
+      id: json['item_id'],
+      title: json['title'],
+      nickname: json['nickname'],
+      price: json['price'],
+      thumbnailImage: json['thumbnail_image'],
+    );
+  }
+}
