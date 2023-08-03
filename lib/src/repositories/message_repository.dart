@@ -5,7 +5,7 @@ import '../configs/login_config.dart';
 import '../models/message.dart';
 
 class MessageRepository {
-  Future<List<ChatRoom>> fetchChatRooms(int page) async {
+  Future<List<ChatRoom>> fetchChatRooms() async {
     try {
       final response = await DioSingleton.dio.get(
         '/chats/buyer',
