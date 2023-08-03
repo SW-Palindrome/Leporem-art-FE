@@ -23,11 +23,39 @@ class ItemManagementController extends GetxController {
     }
   }
 
+  Future<void> orderComplete(int orderId) async {
+    try {
+      await _orderListRepository.completeOrder(orderId);
+      await fetch();
+    } catch (e) {
+      print('Error fetching order complete in controller: $e');
+    }
+  }
+
+  Future<void> deliveryStart(int orderId) async {
+    try {
+      await _orderListRepository.deliveryStartOrder(orderId);
+      await fetch();
+    } catch (e) {
+      print('Error fetching order delivery start in controller: $e');
+    }
+  }
+
+  Future<void> deliveryComplete(int orderId) async {
+    try {
+      await _orderListRepository.deliveryCompleteOrder(orderId);
+      await fetch();
+    } catch (e) {
+      print('Error fetchin gorder delivery complete in controller: $e');
+    }
+  }
+
   Future<void> cancel(int orderId) async {
     try {
       await _orderListRepository.cancelOrder(orderId);
+      await fetch();
     } catch (e) {
-      print('Error fetching buyer order cancel in controller: $e');
+      print('Error fetching seller order cancel in controller: $e');
     }
   }
 }

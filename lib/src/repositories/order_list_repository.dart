@@ -27,25 +27,6 @@ class OrderListRepository {
     }
   }
 
-  Future<void> cancelOrder(int orderId) async {
-    try {
-      print('orderId: $orderId');
-      final response = await DioSingleton.dio.post(
-        '/orders/$orderId/cancel',
-        options: Options(
-          headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-          },
-        ),
-      );
-      print('response: ${response.statusCode} / ${response.realUri}');
-    } catch (e) {
-      // 에러 처리
-      throw ('Error fetching buyer order list in repository: $e');
-    }
-  }
-
   Future<List<SellerOrder>> fetchSellerOrders() async {
     try {
       final response = await DioSingleton.dio.get(
@@ -66,6 +47,82 @@ class OrderListRepository {
     } catch (e) {
       // 에러 처리
       throw ('Error fetching buyer order list in repository: $e');
+    }
+  }
+
+  Future<void> completeOrder(int orderId) async {
+    try {
+      print('orderId: $orderId');
+      final response = await DioSingleton.dio.post(
+        '/orders/$orderId/order-complete',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      print('response: ${response.statusCode} / ${response.realUri}');
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching order complete list in repository: $e');
+    }
+  }
+
+  Future<void> deliveryStartOrder(int orderId) async {
+    try {
+      print('orderId: $orderId');
+      final response = await DioSingleton.dio.post(
+        '/orders/$orderId/delivery-start',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      print('response: ${response.statusCode} / ${response.realUri}');
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching delivery start list in repository: $e');
+    }
+  }
+
+  Future<void> deliveryCompleteOrder(int orderId) async {
+    try {
+      print('orderId: $orderId');
+      final response = await DioSingleton.dio.post(
+        '/orders/$orderId/delivery-complete',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      print('response: ${response.statusCode} / ${response.realUri}');
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching delivery complete in repository: $e');
+    }
+  }
+
+  Future<void> cancelOrder(int orderId) async {
+    try {
+      print('orderId: $orderId');
+      final response = await DioSingleton.dio.post(
+        '/orders/$orderId/cancel',
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      print('response: ${response.statusCode} / ${response.realUri}');
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching cancel order list in repository: $e');
     }
   }
 }

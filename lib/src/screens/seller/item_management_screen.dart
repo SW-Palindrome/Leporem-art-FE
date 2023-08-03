@@ -214,6 +214,27 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
   }
 
   _topButton(Order order) {
+    if (order.orderStatus == "주문취소") {
+      return _moreButton(order);
+    } else {
+      return _moreButton(order);
+    }
+  }
+
+  _cancelText() {
+    return Text(
+      '주문 취소됨',
+      style: TextStyle(
+        color: ColorPalette.red,
+        fontWeight: FontWeight.bold,
+        fontFamily: "PretendardVariable",
+        fontStyle: FontStyle.normal,
+        fontSize: 11.0,
+      ),
+    );
+  }
+
+  _moreButton(Order order) {
     return GestureDetector(
       onTap: () {
         Get.dialog(Scaffold(
@@ -227,14 +248,20 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: ColorPalette.white),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 11),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          controller.orderComplete(order.id);
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
                           child: Center(
                             child: Text(
                               '배송 준비 중',
@@ -246,62 +273,80 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             ),
                           ),
                         ),
-                        Divider(color: ColorPalette.grey_2, thickness: 1),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 17),
-                            child: Center(
-                              child: Text(
-                                '배송 중',
-                                style: TextStyle(
-                                  color: ColorPalette.black,
-                                  fontSize: 16.0,
-                                ),
+                      ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: () {
+                          controller.deliveryStart(order.id);
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '배송 중',
+                              style: TextStyle(
+                                color: ColorPalette.black,
+                                fontSize: 16.0,
                               ),
                             ),
                           ),
                         ),
-                        Divider(color: ColorPalette.grey_2, thickness: 1),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 17),
-                            child: Center(
-                              child: Text(
-                                '배송 완료',
-                                style: TextStyle(
-                                  color: ColorPalette.black,
-                                  fontSize: 16.0,
-                                ),
+                      ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: () {
+                          controller.deliveryComplete(order.id);
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '배송 완료',
+                              style: TextStyle(
+                                color: ColorPalette.black,
+                                fontSize: 16.0,
                               ),
                             ),
                           ),
                         ),
-                        Divider(color: ColorPalette.grey_2, thickness: 1),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 17),
-                            child: Center(
-                              child: Text(
-                                '주문 취소',
-                                style: TextStyle(
-                                  color: ColorPalette.red,
-                                  fontSize: 16.0,
-                                ),
+                      ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: () {
+                          controller.cancel(order.id);
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '주문 취소',
+                              style: TextStyle(
+                                color: ColorPalette.red,
+                                fontSize: 16.0,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 8),
