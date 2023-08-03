@@ -460,7 +460,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '잔여 ${controller.items[index].remainAmount}점',
+                    '잔여 ${controller.items[index].currentAmount}점',
                     style: TextStyle(
                       color: ColorPalette.grey_5,
                       fontWeight: FontWeight.w400,
