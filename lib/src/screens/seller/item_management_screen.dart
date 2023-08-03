@@ -251,10 +251,13 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          controller.orderComplete(order.id);
-                          Get.back();
-                        },
+                        onTap: order.orderStatus == "배송중" ||
+                                order.orderStatus == "배송완료"
+                            ? () {
+                                controller.orderComplete(order.id);
+                                Get.back();
+                              }
+                            : () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 17),
                           width: Get.width,
@@ -266,7 +269,10 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             child: Text(
                               '배송 준비 중',
                               style: TextStyle(
-                                color: ColorPalette.black,
+                                color: order.orderStatus == "배송중" ||
+                                        order.orderStatus == "배송완료"
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
                                 fontFamily: FontPalette.pretenderd,
                                 fontSize: 16.0,
                               ),
@@ -276,10 +282,12 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       ),
                       Divider(color: ColorPalette.grey_2, thickness: 1),
                       GestureDetector(
-                        onTap: () {
-                          controller.deliveryStart(order.id);
-                          Get.back();
-                        },
+                        onTap: order.orderStatus == "주문완료"
+                            ? () {
+                                controller.deliveryStart(order.id);
+                                Get.back();
+                              }
+                            : () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 17),
                           width: Get.width,
@@ -291,7 +299,9 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             child: Text(
                               '배송 중',
                               style: TextStyle(
-                                color: ColorPalette.black,
+                                color: order.orderStatus == "주문완료"
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
                                 fontSize: 16.0,
                               ),
                             ),
@@ -300,10 +310,12 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       ),
                       Divider(color: ColorPalette.grey_2, thickness: 1),
                       GestureDetector(
-                        onTap: () {
-                          controller.deliveryComplete(order.id);
-                          Get.back();
-                        },
+                        onTap: order.orderStatus == "배송중"
+                            ? () {
+                                controller.deliveryComplete(order.id);
+                                Get.back();
+                              }
+                            : () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 17),
                           width: Get.width,
@@ -315,7 +327,9 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             child: Text(
                               '배송 완료',
                               style: TextStyle(
-                                color: ColorPalette.black,
+                                color: order.orderStatus == "주문완료"
+                                    ? ColorPalette.black
+                                    : ColorPalette.grey_4,
                                 fontSize: 16.0,
                               ),
                             ),
