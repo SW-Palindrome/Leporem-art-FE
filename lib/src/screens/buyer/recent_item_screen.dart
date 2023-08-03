@@ -68,7 +68,6 @@ class RecentItemScreen extends GetView<RecentItemController> {
   _recentItemList() {
     return Obx(
       () => ListView.builder(
-        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: controller.items.length,
         itemBuilder: (context, index) {
