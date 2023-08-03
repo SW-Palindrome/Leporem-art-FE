@@ -1,21 +1,25 @@
 class ChatRoom {
-  final String nickname;
-  final String profileImage;
-  final DateTime lastChatDatetime;
-  final String lastChatMessage;
+  final int chatRoomId;
+  final String opponentNickname;
+  final String opponentProfileImageUrl;
+  final DateTime lastMessageDatetime;
+  final String lastMessage;
 
   ChatRoom({
-    required this.nickname,
-    required this.profileImage,
-    required this.lastChatDatetime,
-    required this.lastChatMessage,
+    required this.chatRoomId,
+    required this.opponentNickname,
+    required this.opponentProfileImageUrl,
+    required this.lastMessageDatetime,
+    required this.lastMessage,
   });
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
     return ChatRoom(
-        nickname: json['nickname'],
-        profileImage: json['profile_image'],
-        lastChatDatetime: json['last_chat_datetime'],
-        lastChatMessage: json['last_chat_message']);
+      chatRoomId: json['chat_room_id'],
+      opponentNickname: json['opponent_nickname'],
+      opponentProfileImageUrl: json['opponent_profile_image'],
+      lastMessageDatetime: DateTime.parse(json['last_message_datetime']),
+      lastMessage: json['last_message'],
+    );
   }
 }

@@ -4,6 +4,8 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
+import '../controllers/user_global_info_controller.dart';
+
 enum LoginPlatform {
   facebook,
   google,
@@ -59,6 +61,8 @@ Future<bool> isSignup() async {
       },
     );
     if (response.statusCode == 200) {
+      UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+      userGlobalInfoController.userId = response.data['user_id'];
       return true;
     }
     return false;
