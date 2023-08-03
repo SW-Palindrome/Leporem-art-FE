@@ -5,10 +5,8 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
-import '../../controllers/user_global_info_controller.dart';
 import '../../models/message.dart';
 import '../../widgets/my_app_bar.dart';
-import '../../widgets/my_bottom_navigationbar.dart';
 
 class MessageDetailScreen extends GetView<BuyerMessageController> {
   MessageDetailScreen({super.key});
