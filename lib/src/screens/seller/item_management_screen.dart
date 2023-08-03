@@ -64,7 +64,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(4),
                   child: Image.network(
                     controller.orders[index].thumbnailImage,
                     height: Get.width * 0.23,

@@ -91,9 +91,10 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
             color: ColorPalette.white,
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(4),
                 child: Image.network(
                   "https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg",
                   height: Get.width * 0.23,
