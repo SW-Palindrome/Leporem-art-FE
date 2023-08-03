@@ -54,7 +54,11 @@ class BuyerMessageController extends GetxController {
     ));
   }
 
-  getChatRoomMessageList(chatRoomId) {
-    return chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId).messageList;
+  getChatRoom(chatRoomId) {
+    for (final chatRoom in chatRoomList) {
+      if (chatRoom.chatRoomId == chatRoomId) {
+        return chatRoom;
+      }
+    }
   }
 }

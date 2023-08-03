@@ -48,6 +48,7 @@ class ChatRoom {
         Message(messageId: '2', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
         Message(messageId: '3', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '왜 안녕하세요?'),
         Message(messageId: '4', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕안녕 안녕하세요'),
+        Message(messageId: '5', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕안녕 안녕하세요'),
       ],
     );
   }

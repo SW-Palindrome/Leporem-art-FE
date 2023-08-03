@@ -17,7 +17,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.backAppBar),
+      appBar: MyAppBar(appBarType: AppBarType.backAppBar, onTapLeadingIcon: () => Get.back()),
       body: Obx(() {return _messageListWidget();}),
       bottomNavigationBar: MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
@@ -27,58 +27,88 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       children: [
-        for (final message in controller.getChatRoomMessageList(Get.arguments['chatRoomId']))
+        for (final message in controller.getChatRoom(Get.arguments['chatRoomId']).messageList)
           _messageWidget(message)
       ],
     );
   }
 
   _messageWidget(Message message) {
-    return Column(
+    Column widget = Column(
       children: [
         if (message.userId != _currentUserId) SizedBox(height: 8),
         _innerMessageWidget(message),
         SizedBox(height: 8),
       ],
     );
+    _currentUserId = message.userId;
+    return widget;
   }
 
   _innerMessageWidget(Message message) {
-    _currentUserId = message.userId;
-    UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
-    return userGlobalInfoController.userId == message.userId
+    ChatRoom currentChatRoom = controller.getChatRoom(Get.arguments['chatRoomId']);
+    return currentChatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
   }
 
   _myMessageWidget(Message message) {
     return Container(
-      decoration: BoxDecoration(
-        color: ColorPalette.grey_2,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(message.message),
+      alignment: Alignment.centerRight,
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorPalette.grey_2,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: Text(
+              message.message,
+              style: TextStyle(
+                fontFamily: FontPalette.pretenderd,
+                fontSize: 13,
+              )
+          ),
+        ),
       ),
     );
   }
 
   _opponentMessageWidget(Message message) {
+    ChatRoom currentChatRoom = controller.getChatRoom(Get.arguments['chatRoomId']);
     return Container(
-      decoration: BoxDecoration(
-        color: ColorPalette.white,
-        border: Border.all(
-          color: ColorPalette.grey_3,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(message.message),
-      ),
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          if (_currentUserId != message.userId) CircleAvatar(
+            radius: 16,
+            backgroundImage: NetworkImage(currentChatRoom.opponentProfileImageUrl),
+          ),
+          if (_currentUserId == message.userId) SizedBox(width: 32),
+          SizedBox(width: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: ColorPalette.white,
+              border: Border.all(
+                color: ColorPalette.grey_3,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+              child: Text(
+                message.message,
+                style: TextStyle(
+                  fontFamily: FontPalette.pretenderd,
+                  fontSize: 13,
+                )
+              ),
+            ),
 
+          ),
+        ],
+      ),
     );
   }
 }
