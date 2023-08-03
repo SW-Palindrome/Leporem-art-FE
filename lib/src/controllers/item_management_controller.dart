@@ -5,7 +5,7 @@ import 'package:leporemart/src/repositories/order_list_repository.dart';
 class ItemManagementController extends GetxController {
   final OrderListRepository _orderListRepository = OrderListRepository();
 
-  RxList<Order> orders = <Order>[].obs;
+  RxList<SellerOrder> orders = <SellerOrder>[].obs;
 
   @override
   void onInit() async {
@@ -15,7 +15,8 @@ class ItemManagementController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      List<Order> fetchedOrders = await _orderListRepository.fetchOrders();
+      List<SellerOrder> fetchedOrders =
+          await _orderListRepository.fetchSellerOrders();
       orders.assignAll(fetchedOrders);
     } catch (e) {
       print('Error fetching buyer order list in controller: $e');
