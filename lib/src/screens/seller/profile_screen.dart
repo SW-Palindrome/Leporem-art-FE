@@ -381,44 +381,47 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
       margin: EdgeInsets.only(bottom: Get.height * 0.013),
       child: GestureDetector(
         onTap: onTap,
-        child: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: ColorPalette.grey_2,
-              ),
-              child: Transform.scale(
-                scale: 0.6,
-                child: icon == 'instagram'
-                    ? Image.asset(
-                        'assets/icons/$icon.png',
-                      )
-                    : ShaderMask(
-                        blendMode: BlendMode.srcIn,
-                        shaderCallback: (Rect bounds) {
-                          return ColorPalette.gradientPurple
-                              .createShader(bounds);
-                        },
-                        child: SvgPicture.asset(
-                          'assets/icons/$icon.svg',
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorPalette.grey_2,
+                ),
+                child: Transform.scale(
+                  scale: 0.6,
+                  child: icon == 'instagram'
+                      ? Image.asset(
+                          'assets/icons/$icon.png',
+                        )
+                      : ShaderMask(
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: (Rect bounds) {
+                            return ColorPalette.gradientPurple
+                                .createShader(bounds);
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/$icon.svg',
+                          ),
                         ),
-                      ),
+                ),
               ),
-            ),
-            SizedBox(width: Get.width * 0.03),
-            Text(
-              content,
-              style: TextStyle(
-                color: ColorPalette.black,
-                fontFamily: "PretendardVariable",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0,
+              SizedBox(width: Get.width * 0.03),
+              Text(
+                content,
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

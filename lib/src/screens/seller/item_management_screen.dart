@@ -261,7 +261,6 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                           padding: EdgeInsets.symmetric(vertical: 17),
                           width: Get.width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
                             color: Colors.transparent,
                           ),
                           child: Center(
