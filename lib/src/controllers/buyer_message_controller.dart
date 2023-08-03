@@ -17,7 +17,7 @@ class BuyerMessageController extends GetxController {
   }
 
   Future<void> fetch() async {
-    List<ChatRoom> fetchedChatRoomList = await _messageRepository.fetchChatRooms(currentPage);
+    List<ChatRoom> fetchedChatRoomList = await _messageRepository.fetchChatRooms();
     chatRoomList.addAll(fetchedChatRoomList);
   }
 
@@ -52,5 +52,9 @@ class BuyerMessageController extends GetxController {
         isRead: false,
         message: message,
     ));
+  }
+
+  getChatRoomMessageList(chatRoomId) {
+    return chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId).messageList;
   }
 }
