@@ -44,7 +44,7 @@ class ChatRoom {
       lastMessageDatetime: DateTime.parse(json['last_message_datetime']),
       lastMessage: json['last_message'],
       messageList: [
-        Message(messageId: '1', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
+        Message(messageId: '1', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요 너무너무좋은 밤이에요. 사실 자고싶은데 개발할 것이 산더미네요 ㅋㅋ 자고싶어요 진짜로'),
         Message(messageId: '2', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
         Message(messageId: '3', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '왜 안녕하세요?'),
         Message(messageId: '4', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕안녕 안녕하세요'),

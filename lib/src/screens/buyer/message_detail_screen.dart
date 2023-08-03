@@ -18,8 +18,10 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.backAppBar, onTapLeadingIcon: () => Get.back()),
-      body: Obx(() {return _messageListWidget();}),
-      bottomNavigationBar: MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
+      body: SafeArea(
+          child: Obx(() {return _messageListWidget();})
+      ),
+      bottomNavigationBar: _messageBottomWidget(),
     );
   }
 
@@ -62,12 +64,17 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-          child: Text(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: Get.width * 0.7,
+            ),
+            child: Text(
               message.message,
               style: TextStyle(
                 fontFamily: FontPalette.pretenderd,
                 fontSize: 13,
-              )
+              ),
+            ),
           ),
         ),
       ),
@@ -97,17 +104,60 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Text(
-                message.message,
-                style: TextStyle(
-                  fontFamily: FontPalette.pretenderd,
-                  fontSize: 13,
-                )
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: Get.width * 0.6,
+                ),
+                child: Text(
+                  message.message,
+                  style: TextStyle(
+                    fontFamily: FontPalette.pretenderd,
+                    fontSize: 13,
+                  ),
+                ),
               ),
             ),
-
           ),
         ],
+      ),
+    );
+  }
+
+  _messageBottomWidget() {
+    return Container(
+      height: 54,
+      color: ColorPalette.white,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          children: [
+            Image(
+              image: AssetImage('assets/icons/chatting_plus.png'),
+              width: 24,
+              height: 24,
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorPalette.grey_2,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  child: Text(
+                    '메시지를 입력하세요',
+                    style: TextStyle(
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 16,
+                      color: ColorPalette.grey_4,
+                    )
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
