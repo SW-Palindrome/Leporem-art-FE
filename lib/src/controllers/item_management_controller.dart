@@ -23,15 +23,6 @@ class ItemManagementController extends GetxController {
     }
   }
 
-  Future<void> orderComplete(int orderId) async {
-    try {
-      await _orderListRepository.completeOrder(orderId);
-      await fetch();
-    } catch (e) {
-      print('Error fetching order complete in controller: $e');
-    }
-  }
-
   Future<void> deliveryStart(int orderId) async {
     try {
       await _orderListRepository.deliveryStartOrder(orderId);

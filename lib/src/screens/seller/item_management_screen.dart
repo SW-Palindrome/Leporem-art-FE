@@ -251,37 +251,6 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: order.orderStatus == "배송중" ||
-                                order.orderStatus == "배송완료"
-                            ? () {
-                                controller.orderComplete(order.id);
-                                Get.back();
-                              }
-                            : () {},
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 17),
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.transparent,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '배송 준비 중',
-                              style: TextStyle(
-                                color: order.orderStatus == "배송중" ||
-                                        order.orderStatus == "배송완료"
-                                    ? ColorPalette.black
-                                    : ColorPalette.grey_4,
-                                fontFamily: FontPalette.pretenderd,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Divider(color: ColorPalette.grey_2, thickness: 1),
-                      GestureDetector(
                         onTap: order.orderStatus == "주문완료"
                             ? () {
                                 controller.deliveryStart(order.id);

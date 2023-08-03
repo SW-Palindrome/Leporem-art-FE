@@ -50,25 +50,6 @@ class OrderListRepository {
     }
   }
 
-  Future<void> completeOrder(int orderId) async {
-    try {
-      print('orderId: $orderId');
-      final response = await DioSingleton.dio.post(
-        '/orders/$orderId/order-complete',
-        options: Options(
-          headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-          },
-        ),
-      );
-      print('response: ${response.statusCode} / ${response.realUri}');
-    } catch (e) {
-      // 에러 처리
-      throw ('Error fetching order complete list in repository: $e');
-    }
-  }
-
   Future<void> deliveryStartOrder(int orderId) async {
     try {
       print('orderId: $orderId');

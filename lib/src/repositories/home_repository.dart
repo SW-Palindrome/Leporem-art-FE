@@ -105,7 +105,7 @@ class HomeRepository {
           ));
       final data = response.data;
       //items를 리스트에 넣고 파싱
-      final List<dynamic> itemsData = data['items'];
+      final List<dynamic> itemsData = data['list']['items'];
 
       // 아이템 데이터를 변환하여 리스트로 생성
       final List<SellerHomeItem> items =
