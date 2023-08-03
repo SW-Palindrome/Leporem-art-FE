@@ -32,15 +32,19 @@ class BuyerProfile extends Profile {
 
 class SellerProfile extends Profile {
   final int itemCount;
+  final int totalTransaction;
   final double temperature;
   final String description;
+  final double retentionRate;
 
   SellerProfile({
     required String nickname,
     required String profileImageUrl,
     required this.itemCount,
+    required this.totalTransaction,
     required this.temperature,
     required this.description,
+    required this.retentionRate,
   }) : super(
           nickname: nickname,
           profileImage: profileImageUrl,
@@ -51,9 +55,11 @@ class SellerProfile extends Profile {
       nickname: json['nickname'],
       profileImageUrl: json['profile_image'] ??
           'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
-      itemCount: json['item_count'],
+      itemCount: json['item_count'] ?? 0,
+      totalTransaction: json['total_transaction'] ?? 0,
       temperature: json['temperature'] ?? 36.5,
       description: json['description'] ?? '',
+      retentionRate: json['retention_rate'] ?? 0.0,
     );
   }
 }

@@ -271,7 +271,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      '86%',
+                      '${controller.sellerProfile.value.retentionRate.toInt().toString()}%',
                       style: TextStyle(
                         color: ColorPalette.black,
                         fontWeight: FontWeight.bold,
