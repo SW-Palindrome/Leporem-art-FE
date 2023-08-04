@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
 
-class MessageItemShareController extends GetxController {
+class MessageItemController extends GetxController {
   final MessageItemRepository _messageItemRepository = MessageItemRepository();
 
   List<MessageItem> items = <MessageItem>[];
@@ -10,26 +11,39 @@ class MessageItemShareController extends GetxController {
   Rx<int> selectItemId = 0.obs;
   Rx<bool> isSelect = false.obs;
 
+  // 검색을 위한 텍스트 저장
+  String keyword = '';
+
+  // 페이지네이션을 위한 페이지변수와 스크롤 컨트롤러
+  int currentPage = 1;
+  ScrollController scrollController = ScrollController();
+
   @override
   void onInit() async {
     super.onInit();
     await fetch();
   }
 
-  Future<void> fetch() async {
+  Future<void> fetch({bool isPagination = false}) async {
     try {
-      List<MessageItem> fetchedMessageItems =
-          await _messageItemRepository.fetchShareMessageItem();
+      if (isPagination!) currentPage++;
+      List<MessageItem> fetchedMessageItems = await _messageItemRepository
+          .fetchShareMessageItem(currentPage, nickname: '공예쁨');
 
-      items.assignAll(fetchedMessageItems);
-      displayItems.assignAll(fetchedMessageItems);
+      items.addAll(fetchedMessageItems);
+      if (keyword != '') {
+        displayItems.addAll(fetchedMessageItems
+            .where((item) => item.title.contains(keyword))
+            .toList());
+      }
+      displayItems.addAll(fetchedMessageItems);
     } catch (e) {
       print(e);
     }
   }
 
   //items에서 title안에 keyword가 포함된 item들만 반환해서 displayItems에 넣어주기
-  void search(String keyword) {
+  void search() {
     if (keyword.isEmpty) {
       displayItems.assignAll(items);
       return;

@@ -7,7 +7,7 @@ import 'package:leporemart/src/widgets/next_button.dart';
 
 import '../../utils/currency_formatter.dart';
 
-class MessageItemShareScreen extends GetView<MessageItemShareController> {
+class MessageItemShareScreen extends GetView<MessageItemController> {
   const MessageItemShareScreen({super.key});
 
   @override
@@ -21,17 +21,28 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                _searchField(),
-                SizedBox(height: 16),
-                _itemList(),
-                SizedBox(height: 16),
-                _bottomButton(),
-              ],
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification scrollInfo) {
+            if (scrollInfo is ScrollEndNotification) {
+              if (controller.scrollController.position.extentAfter == 0) {
+                controller.fetch(isPagination: true);
+              }
+            }
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: controller.scrollController,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  _searchField(),
+                  SizedBox(height: 16),
+                  _itemList(),
+                  SizedBox(height: 16),
+                  _bottomButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -62,7 +73,8 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
               contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
             onSubmitted: (value) {
-              controller.search(value);
+              controller.keyword = value;
+              controller.search();
             }),
       ),
     );

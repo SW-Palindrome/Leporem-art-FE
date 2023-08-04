@@ -28,7 +28,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return GestureDetector(
         onTap: () {
           Get.to(MessageItemShareScreen());
-          Get.put(MessageItemShareController());
+          Get.put(MessageItemController());
         },
         child: Text('작폼공유'));
     // return Center(
