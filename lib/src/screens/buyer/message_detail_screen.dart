@@ -240,44 +240,40 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                       padding: EdgeInsets.symmetric(
                         vertical: 16,
                       ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                              ],
-                            ),
-                            SizedBox(height: 16),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                                SizedBox(width: 32),
-                                _messageBottomPlusIcon(
-                                    '작품 공유', 'link', Color(0xff4A9dff)),
-                              ],
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _messageBottomPlusIcon(
+                                  '작품 공유', 'link', Color(0xff4A9dff)),
+                              SizedBox(width: 32),
+                              _messageBottomPlusIcon(
+                                  '앨범', 'image', ColorPalette.pink),
+                              SizedBox(width: 32),
+                              _messageBottomPlusIcon(
+                                  '카메라', 'camera', ColorPalette.green),
+                              SizedBox(width: 32),
+                              _messageBottomPlusIcon(
+                                  '주소 공유', 'location', ColorPalette.yellow),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _messageBottomPlusIcon(
+                                  '번호 공유', 'contact', ColorPalette.orange),
+                              SizedBox(width: 32),
+                              _messageBottomPlusIcon(
+                                  '주문 넣기', 'cart', Color(0xff9d00e7)),
+                              SizedBox(width: 32),
+                              _messageBottomPlusIcon('주문제작 요청', 'paper_outline',
+                                  ColorPalette.purple),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   )
@@ -298,11 +294,15 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: SvgPicture.asset(
-            'assets/icons/$icon.svg',
-            width: 24,
-            height: 24,
-            colorFilter: ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: SvgPicture.asset(
+              'assets/icons/$icon.svg',
+              width: 24,
+              height: 24,
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+            ),
           ),
         ),
         SizedBox(height: 8),
