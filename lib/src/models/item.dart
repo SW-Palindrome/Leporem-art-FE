@@ -125,12 +125,14 @@ class MessageItem {
   final String nickname;
   final int price;
   final String thumbnailImage;
+  final int currentAmount;
   MessageItem({
     required this.id,
     required this.title,
     required this.nickname,
     required this.price,
     required this.thumbnailImage,
+    required this.currentAmount,
   });
 
   factory MessageItem.fromJson(Map<String, dynamic> json) {
@@ -140,6 +142,7 @@ class MessageItem {
       nickname: json['nickname'],
       price: json['price'],
       thumbnailImage: json['thumbnail_image'],
+      currentAmount: json['current_amount'],
     );
   }
 }

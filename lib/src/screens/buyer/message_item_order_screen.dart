@@ -7,8 +7,8 @@ import 'package:leporemart/src/widgets/next_button.dart';
 
 import '../../utils/currency_formatter.dart';
 
-class MessageItemShareScreen extends GetView<MessageItemController> {
-  const MessageItemShareScreen({super.key});
+class MessageItemOrderScreen extends GetView<MessageItemController> {
+  const MessageItemOrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,15 +125,29 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    controller.displayItems[index].nickname,
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 10,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.displayItems[index].nickname,
+                        style: TextStyle(
+                          color: ColorPalette.grey_4,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "PretendardVariable",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 10,
+                        ),
+                      ),
+                      Text(
+                        '잔여 ${controller.displayItems[index].currentAmount}점',
+                        style: TextStyle(
+                          color: ColorPalette.purple,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: FontPalette.pretenderd,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -170,7 +184,7 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
     return Column(
       children: [
         Text(
-          '공유를 원하는 작품을 선택해주세요.',
+          '주문을 원하는 작품을 선택해주세요.',
           style: TextStyle(
             color: ColorPalette.grey_5,
             fontFamily: FontPalette.pretenderd,
@@ -180,7 +194,7 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
         SizedBox(height: 16),
         Obx(
           () => NextButton(
-            text: '공유하기',
+            text: '주문하기',
             value: controller.isSelect.value,
             onTap: () {},
           ),
