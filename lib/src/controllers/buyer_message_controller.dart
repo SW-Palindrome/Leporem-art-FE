@@ -42,6 +42,7 @@ class BuyerMessageController extends GetxController {
     sendChatRoom.tempMessageList.remove(tempMessage);
     tempMessage.messageId = messageId.toString();
     sendChatRoom.messageList.add(tempMessage);
+    chatRoomList.refresh();
   }
 
   receiveMessage(chatRoomId, messageId, message) {
@@ -53,6 +54,7 @@ class BuyerMessageController extends GetxController {
         isRead: false,
         message: message,
     ));
+    chatRoomList.refresh();
   }
 
   getChatRoom(chatRoomId) {
