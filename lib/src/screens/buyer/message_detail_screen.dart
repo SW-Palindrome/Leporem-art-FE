@@ -11,6 +11,7 @@ import '../../widgets/my_app_bar.dart';
 class MessageDetailScreen extends GetView<BuyerMessageController> {
   MessageDetailScreen({super.key});
   int _currentUserId = -1;
+  TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -163,11 +164,13 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                   child: TextField(
+                    controller: _textEditingController,
                     maxLines: null,
                     decoration: InputDecoration(
                       suffix: InkWell(
                         onTap: () async {
-
+                          await controller.sendMessage(Get.arguments['chatRoomId'], _textEditingController.text);
+                          _textEditingController.clear();
                         },
                         child: Text(
                           '보내기',
