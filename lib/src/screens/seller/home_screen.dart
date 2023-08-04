@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -17,11 +18,36 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.items.isEmpty && !controller.isLoading.value) {
-        return _emptyItemListWidget();
+        if (Get.find<SellerSearchController>().isSearching.value) {
+          return _emptySearchListWidget();
+        } else {
+          return _emptyItemListWidget();
+        }
       } else {
         return _sellerItemListWidget();
       }
     });
+  }
+
+  _emptySearchListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
+          ),
+          SizedBox(height: 24),
+          Text('검색한 결과가 없어요.',
+              style: TextStyle(
+                fontSize: 16,
+                color: ColorPalette.grey_5,
+                fontFamily: FontPalette.pretenderd,
+              )),
+        ],
+      ),
+    );
   }
 
   _emptyItemListWidget() {
