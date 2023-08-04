@@ -230,52 +230,59 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
           ),
         ),
         Obx(() {
-          return (controller.isPlusButtonClicked.value
-              ? Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16,
-                  ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            height: controller.isPlusButtonClicked.value ? 220 : 0,
+            child: controller.isPlusButtonClicked.value
+                ? SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                      ),
+                      child: Center(
+                        child: Column(
                           children: [
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                                SizedBox(width: 32),
+                                _messageBottomPlusIcon(
+                                    '작품 공유', 'link', Color(0xff4A9dff)),
+                              ],
+                            ),
                           ],
                         ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                            SizedBox(width: 32),
-                            _messageBottomPlusIcon(
-                                '작품 공유', 'link', Color(0xff4A9dff)),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                )
-              : SizedBox());
+                  )
+                : SizedBox(),
+          );
         }),
       ],
     );

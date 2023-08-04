@@ -8,6 +8,7 @@ import '../utils/chatting_socket_singleton.dart';
 
 class BuyerMessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
+
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
@@ -61,11 +62,11 @@ class BuyerMessageController extends GetxController {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
     receiveChatRoom.messageList.add(Message(
-        messageId: messageId.toString(),
-        userId: receiveChatRoom.opponentUserId,
-        writeDatetime: DateTime.now(),
-        isRead: false,
-        message: message,
+      messageId: messageId.toString(),
+      userId: receiveChatRoom.opponentUserId,
+      writeDatetime: DateTime.now(),
+      isRead: false,
+      message: message,
     ));
     chatRoomList.refresh();
   }
