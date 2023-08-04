@@ -70,7 +70,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
   _chatRoomListWidget() {
     return Column(
       children: [
-        for (final chatRoom in controller.chatRoomList)
+        for (final chatRoom in controller.getBuyerChatRooms())
           _chatRoomWidget(chatRoom)
       ],
     );

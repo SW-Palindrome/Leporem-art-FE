@@ -19,6 +19,7 @@ class ChatRoom {
   final int opponentUserId;
   final String opponentNickname;
   final String opponentProfileImageUrl;
+  late final bool isBuyerRoom;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];
