@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:leporemart/src/controllers/buyer_message_controller.dart';
+import 'package:leporemart/src/controllers/message_item_order_controller.dart';
+import 'package:leporemart/src/controllers/message_item_share_controller.dart';
+import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
+import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../../models/message.dart';
@@ -243,57 +247,59 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                       mainAxisSpacing: 16,
                       children: [
                         _messageBottomPlusIcon(
-                            '작품 공유', 'link', Color(0xff4A9dff)),
+                          '작품 공유',
+                          'link',
+                          Color(0xff4A9dff),
+                          () {
+                            Get.to(MessageItemShareScreen(), arguments: {
+                              'chatRoomId': Get.arguments['chatRoomId']
+                            });
+                            Get.put(MessageItemShareController());
+                          },
+                        ),
                         _messageBottomPlusIcon(
-                            '앨범', 'image', ColorPalette.pink),
+                          '앨범',
+                          'image',
+                          ColorPalette.pink,
+                          () {},
+                        ),
                         _messageBottomPlusIcon(
-                            '카메라', 'camera', ColorPalette.green),
+                          '카메라',
+                          'camera',
+                          ColorPalette.green,
+                          () {},
+                        ),
                         _messageBottomPlusIcon(
-                            '주소 공유', 'location', ColorPalette.yellow),
+                          '주소 공유',
+                          'location',
+                          ColorPalette.yellow,
+                          () {},
+                        ),
                         _messageBottomPlusIcon(
-                            '번호 공유', 'contact', ColorPalette.orange),
+                          '번호 공유',
+                          'contact',
+                          ColorPalette.orange,
+                          () {},
+                        ),
                         _messageBottomPlusIcon(
-                            '주문 넣기', 'cart', Color(0xff9d00e7)),
+                          '주문 넣기',
+                          'cart',
+                          Color(0xff9d00e7),
+                          () {
+                            Get.to(MessageItemOrderScreen(), arguments: {
+                              'chatRoomId': Get.arguments['chatRoomId']
+                            });
+                            Get.put(MessageItemOrderController());
+                          },
+                        ),
                         _messageBottomPlusIcon(
-                            '주문제작 요청', 'paper_outline', ColorPalette.purple),
+                          '주문제작 요청',
+                          'paper_outline',
+                          ColorPalette.purple,
+                          () {},
+                        ),
                       ],
                     ),
-
-                    //Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Row(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: [
-                    //         _messageBottomPlusIcon(
-                    //             '작품 공유', 'link', Color(0xff4A9dff)),
-                    //         SizedBox(width: 32),
-                    //         _messageBottomPlusIcon(
-                    //             '앨범', 'image', ColorPalette.pink),
-                    //         SizedBox(width: 32),
-                    //         _messageBottomPlusIcon(
-                    //             '카메라', 'camera', ColorPalette.green),
-                    //         SizedBox(width: 32),
-                    //         _messageBottomPlusIcon(
-                    //             '주소 공유', 'location', ColorPalette.yellow),
-                    //       ],
-                    //     ),
-                    //     SizedBox(height: 16),
-                    //     Row(
-                    //       mainAxisSize: MainAxisSize.min,
-                    //       children: [
-                    //         _messageBottomPlusIcon(
-                    //             '번호 공유', 'contact', ColorPalette.orange),
-                    //         SizedBox(width: 32),
-                    //         _messageBottomPlusIcon(
-                    //             '주문 넣기', 'cart', Color(0xff9d00e7)),
-                    //         SizedBox(width: 32),
-                    //         _messageBottomPlusIcon('주문제작 요청', 'paper_outline',
-                    //             ColorPalette.purple),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
                   )
                 : SizedBox(),
           );
@@ -302,37 +308,41 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
     );
   }
 
-  _messageBottomPlusIcon(String text, String icon, Color color) {
-    return Column(
-      children: [
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: SvgPicture.asset(
-              'assets/icons/$icon.svg',
-              width: 24,
-              height: 24,
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+  _messageBottomPlusIcon(
+      String text, String icon, Color color, Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color,
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: SvgPicture.asset(
+                'assets/icons/$icon.svg',
+                width: 24,
+                height: 24,
+                colorFilter:
+                    ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          text,
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
-            fontSize: 12,
-          ),
-        )
-      ],
+          SizedBox(height: 8),
+          Text(
+            text,
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontFamily: FontPalette.pretenderd,
+              fontSize: 12,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
