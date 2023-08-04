@@ -19,8 +19,6 @@ class ChatRoom {
   final int opponentUserId;
   final String opponentNickname;
   final String opponentProfileImageUrl;
-  final DateTime lastMessageDatetime;
-  final String lastMessage;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];
@@ -30,8 +28,6 @@ class ChatRoom {
     required this.opponentUserId,
     required this.opponentNickname,
     required this.opponentProfileImageUrl,
-    required this.lastMessageDatetime,
-    required this.lastMessage,
     required this.messageList,
   });
 
@@ -41,8 +37,6 @@ class ChatRoom {
       opponentUserId: json['opponent_user_id'],
       opponentNickname: json['opponent_nickname'],
       opponentProfileImageUrl: json['opponent_profile_image'],
-      lastMessageDatetime: DateTime.parse(json['last_message_datetime']),
-      lastMessage: json['last_message'],
       messageList: [
         Message(messageId: '1', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요 너무너무좋은 밤이에요. 사실 자고싶은데 개발할 것이 산더미네요 ㅋㅋ 자고싶어요 진짜로'),
         Message(messageId: '2', userId: 7, writeDatetime: DateTime.now(), isRead: true, message: '안녕하세요'),
@@ -51,5 +45,13 @@ class ChatRoom {
         Message(messageId: '5', userId: 1, writeDatetime: DateTime.now(), isRead: true, message: '안녕안녕 안녕하세요'),
       ],
     );
+  }
+
+  DateTime get lastMessageDatetime {
+    return messageList.last.writeDatetime;
+  }
+
+  String get lastMessage {
+    return messageList.last.message;
   }
 }
