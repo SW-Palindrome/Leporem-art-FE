@@ -25,14 +25,15 @@ class BuyerMessageController extends GetxController {
     int opponentUserId = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId).opponentUserId;
     ChatRoom chatRoom = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
     UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
-    chatRoom.tempMessageList.add(Message(
+    Message messageInfo = Message(
       messageId: Uuid().v4(),
       userId: userGlobalInfoController.userId,
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
-    ));
-    ChattingSocketSingleton().sendMessage(chatRoomId, opponentUserId, message);
+    );
+    chatRoom.tempMessageList.add(messageInfo);
+    ChattingSocketSingleton().sendMessage(chatRoomId, opponentUserId, messageInfo.message, messageInfo.messageId);
   }
 
   registerMessage(chatRoomId, messageTempId, messageId) {
@@ -55,7 +56,7 @@ class BuyerMessageController extends GetxController {
   }
 
   getChatRoom(chatRoomId) {
-    for (final chatRoom in chatRoomList) {
+    for (final chatRoom in chatRoomList.value) {
       if (chatRoom.chatRoomId == chatRoomId) {
         return chatRoom;
       }

@@ -11,7 +11,7 @@ import '../../widgets/my_app_bar.dart';
 class MessageDetailScreen extends GetView<BuyerMessageController> {
   MessageDetailScreen({super.key});
   int _currentUserId = -1;
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
