@@ -41,7 +41,7 @@ class ChattingSocketSingleton {
     isAuthenticated = true;
   }
 
-  sendMessage(chatRoomId, opponentUserId, message) async {
+  sendMessage(chatRoomId, opponentUserId, message, messageId) async {
     if (!isAuthenticated) {
       await _authenticate();
     }
@@ -49,6 +49,7 @@ class ChattingSocketSingleton {
       'chat_room_id': chatRoomId,
       'opponent_user_id': opponentUserId,
       'message': message,
+      'message_id': messageId,
     });
   }
 }

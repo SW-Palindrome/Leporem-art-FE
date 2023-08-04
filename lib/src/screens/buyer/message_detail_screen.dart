@@ -11,15 +11,35 @@ import '../../widgets/my_app_bar.dart';
 class MessageDetailScreen extends GetView<BuyerMessageController> {
   MessageDetailScreen({super.key});
   int _currentUserId = -1;
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.backAppBar, onTapLeadingIcon: () => Get.back()),
-      body: SafeArea(
-          child: Obx(() {return _messageListWidget();})
+      appBar: MyAppBar(
+        appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () => Get.back(),
+        isWhite: true,
+        title: controller.getChatRoom(Get.arguments['chatRoomId']).opponentNickname,
       ),
-      bottomNavigationBar: _messageBottomWidget(),
+      body: SafeArea(
+          child: Obx(() {
+            return Container(
+              color: ColorPalette.white,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: _messageListWidget(),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _messageBottomWidget(),
+                  ),
+                ],
+              ),
+            );
+          })
+      ),
     );
   }
 
@@ -123,7 +143,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
 
   _messageBottomWidget() {
     return Container(
-      height: 54,
+      // height: 54,
       color: ColorPalette.white,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -143,13 +163,40 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  child: Text(
-                    '메시지를 입력하세요',
+                  child: TextField(
+                    controller: _textEditingController,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      suffix: InkWell(
+                        onTap: () async {
+                          await controller.sendMessage(Get.arguments['chatRoomId'], _textEditingController.text);
+                          _textEditingController.clear();
+                        },
+                        child: Text(
+                          '보내기',
+                          style: TextStyle(
+                            fontFamily: FontPalette.pretenderd,
+                            fontSize: 14,
+                            color: ColorPalette.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      hintText: '메시지를 입력하세요.',
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 16,
+                        color: ColorPalette.grey_4,
+                      ),
+                    ),
                     style: TextStyle(
                       fontFamily: FontPalette.pretenderd,
                       fontSize: 16,
-                      color: ColorPalette.grey_4,
-                    )
+                      color: ColorPalette.black,
+                    ),
                   ),
                 ),
               ),
