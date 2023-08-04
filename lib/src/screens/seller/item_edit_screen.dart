@@ -171,7 +171,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                                   backgroundColor: ColorPalette.black,
                                   radius: 10,
                                   child: SvgPicture.asset(
-                                    'assets/icons/cancle.svg',
+                                    'assets/icons/cancel.svg',
                                     colorFilter: ColorFilter.mode(
                                       ColorPalette.white,
                                       BlendMode.srcIn,
@@ -296,7 +296,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                                   backgroundColor: ColorPalette.black,
                                   radius: 10,
                                   child: SvgPicture.asset(
-                                    'assets/icons/cancle.svg',
+                                    'assets/icons/cancel.svg',
                                     colorFilter: ColorFilter.mode(
                                       ColorPalette.white,
                                       BlendMode.srcIn,
@@ -401,7 +401,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                       controller.selectedCategoryType.value.contains(true) ==
                               false
                           ? 'assets/icons/arrow_down.svg'
-                          : 'assets/icons/cancle.svg',
+                          : 'assets/icons/cancel.svg',
                       height: 10,
                       width: 10,
                       colorFilter: ColorFilter.mode(
@@ -448,7 +448,7 @@ class ItemEditScreen extends GetView<ItemEditController> {
                       Get.back();
                     },
                     child: SvgPicture.asset(
-                      'assets/icons/cancle.svg',
+                      'assets/icons/cancel.svg',
                       height: 24,
                       width: 24,
                       colorFilter:

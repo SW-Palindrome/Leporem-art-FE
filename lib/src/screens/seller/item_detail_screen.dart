@@ -426,7 +426,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                         ),
                       ),
                       SvgPicture.asset(
-                        'assets/icons/cancle.svg',
+                        'assets/icons/cancel.svg',
                         width: 10,
                         height: 10,
                         colorFilter: ColorFilter.mode(
@@ -442,7 +442,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                         ),
                       ),
                       SvgPicture.asset(
-                        'assets/icons/cancle.svg',
+                        'assets/icons/cancel.svg',
                         width: 10,
                         height: 10,
                         colorFilter: ColorFilter.mode(

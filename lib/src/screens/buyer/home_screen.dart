@@ -360,7 +360,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               child: SvgPicture.asset(
                 controller.displayedCategoryType.value.contains(true) == false
                     ? 'assets/icons/arrow_down.svg'
-                    : 'assets/icons/cancle.svg',
+                    : 'assets/icons/cancel.svg',
                 height: 10,
                 width: 10,
                 colorFilter: ColorFilter.mode(
@@ -419,7 +419,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               child: SvgPicture.asset(
                 controller.displayedPriceRange.value == RangeValues(0, 36)
                     ? 'assets/icons/arrow_down.svg'
-                    : 'assets/icons/cancle.svg',
+                    : 'assets/icons/cancel.svg',
                 height: 10,
                 width: 10,
                 colorFilter: ColorFilter.mode(
@@ -495,7 +495,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                       Get.back();
                     },
                     child: SvgPicture.asset(
-                      'assets/icons/cancle.svg',
+                      'assets/icons/cancel.svg',
                       height: 24,
                       width: 24,
                       colorFilter:
