@@ -148,72 +148,129 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _messageBottomWidget() {
-    return Container(
-      // height: 54,
-      color: ColorPalette.white,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/plus.svg',
-              width: 24,
-              height: 24,
-              colorFilter:
-                  ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ColorPalette.grey_2,
-                  borderRadius: BorderRadius.circular(8),
+    return Column(
+      children: [
+        Container(
+          // height: 54,
+          color: ColorPalette.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    controller.isPlusButtonClicked.value =
+                        !controller.isPlusButtonClicked.value;
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/plus.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter:
+                        ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+                  ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  child: TextField(
-                    controller: _textEditingController,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      suffix: InkWell(
-                        onTap: () async {
-                          await controller.sendMessage(
-                              Get.arguments['chatRoomId'],
-                              _textEditingController.text);
-                          _textEditingController.clear();
-                        },
-                        child: Text(
-                          '보내기',
-                          style: TextStyle(
+                SizedBox(width: 16),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorPalette.grey_2,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                      child: TextField(
+                        controller: _textEditingController,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          suffix: InkWell(
+                            onTap: () async {
+                              await controller.sendMessage(
+                                  Get.arguments['chatRoomId'],
+                                  _textEditingController.text);
+                              _textEditingController.clear();
+                            },
+                            child: Text(
+                              '보내기',
+                              style: TextStyle(
+                                fontFamily: FontPalette.pretenderd,
+                                fontSize: 14,
+                                color: ColorPalette.blue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          hintText: '메시지를 입력하세요.',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
                             fontFamily: FontPalette.pretenderd,
-                            fontSize: 14,
-                            color: ColorPalette.blue,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: ColorPalette.grey_4,
                           ),
                         ),
+                        style: TextStyle(
+                          fontFamily: FontPalette.pretenderd,
+                          fontSize: 16,
+                          color: ColorPalette.black,
+                        ),
                       ),
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      hintText: '메시지를 입력하세요.',
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontFamily: FontPalette.pretenderd,
-                        fontSize: 16,
-                        color: ColorPalette.grey_4,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: FontPalette.pretenderd,
-                      fontSize: 16,
-                      color: ColorPalette.black,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        controller.isPlusButtonClicked.value
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 48,
+                  vertical: 16,
+                ),
+                child: GridView.count(
+                  crossAxisCount: 4,
+                  children: [
+                    for (int i = 0; i < 7; i++)
+                      _messageBottomPlusIcon(
+                          '작품 공유', 'link', Color(0xff4A9dff)),
+                  ],
+                ),
+              )
+            : SizedBox(),
+      ],
+    );
+  }
+
+  _messageBottomPlusIcon(String text, String icon, Color color) {
+    return Column(
+      children: [
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color,
+          ),
+          child: SvgPicture.asset(
+            'assets/icons/$icon.svg',
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          text,
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontFamily: FontPalette.pretenderd,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        )
+      ],
     );
   }
 }

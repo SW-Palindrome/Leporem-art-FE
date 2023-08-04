@@ -10,6 +10,7 @@ class BuyerMessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
+  Rx<bool> isPlusButtonClicked = false.obs;
 
   @override
   void onInit() async {
