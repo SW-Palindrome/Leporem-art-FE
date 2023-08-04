@@ -24,12 +24,43 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
         },
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            child: _orderList(),
+        child: Obx(() {
+          if (controller.orders.isEmpty) {
+            return _emptyListWidget();
+          } else {
+            return _orderListWidget();
+          }
+        }),
+      ),
+    );
+  }
+
+  _emptyListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
           ),
-        ),
+          SizedBox(height: 24),
+          Text('아직 주문 내역이 없어요.',
+              style: TextStyle(
+                fontSize: 16,
+                color: ColorPalette.grey_5,
+                fontFamily: FontPalette.pretenderd,
+              )),
+        ],
+      ),
+    );
+  }
+
+  _orderListWidget() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: SingleChildScrollView(
+        child: _orderList(),
       ),
     );
   }
