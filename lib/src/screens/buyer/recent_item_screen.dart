@@ -67,12 +67,10 @@ class RecentItemScreen extends GetView<RecentItemController> {
 
   _recentItemList() {
     return Obx(
-      () => ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: controller.items.length,
-        itemBuilder: (context, index) {
-          return _recentItem(index);
-        },
+      () => Column(
+        children: [
+          for (int i = 0; i < controller.items.length; i++) _recentItem(i)
+        ],
       ),
     );
   }
