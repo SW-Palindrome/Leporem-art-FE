@@ -101,12 +101,14 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return GestureDetector(
       child: Container(
         color: ColorPalette.white,
-        child: Row(children: [
-          SizedBox(width: 12),
-          _profileImageWidget(chatRoom),
-          SizedBox(width: 8),
-          _profileDetailInfoWidget(chatRoom),
-        ]),
+        child: Row(
+            children: [
+              SizedBox(width: 12),
+              _profileImageWidget(chatRoom),
+              SizedBox(width: 8),
+              Expanded(child: _profileDetailInfoWidget(chatRoom)),
+            ]
+        ),
       ),
       onTap: () {
         Get.to(() => MessageDetailScreen(), arguments: {
@@ -163,6 +165,8 @@ class MessageScreen extends GetView<BuyerMessageController> {
         ),
         SizedBox(height: 8),
         Text(chatRoom.lastMessage,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontSize: 12,
                 fontFamily: FontPalette.pretenderd,
