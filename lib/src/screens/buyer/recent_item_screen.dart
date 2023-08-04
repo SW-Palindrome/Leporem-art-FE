@@ -23,18 +23,49 @@ class RecentItemScreen extends GetView<RecentItemController> {
         },
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _deleteButton(),
-                SizedBox(height: 14),
-                _recentItemList(),
-              ],
-            ),
+        child: Obx(() {
+          if (controller.items.isEmpty) {
+            return _emptyItemListWidget();
+          } else {
+            return _recentItemListWidget();
+          }
+        }),
+      ),
+    );
+  }
+
+  _emptyItemListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
           ),
+          SizedBox(height: 24),
+          Text('아직 최근 본 작품이 없어요.',
+              style: TextStyle(
+                fontSize: 16,
+                color: ColorPalette.grey_5,
+                fontFamily: FontPalette.pretenderd,
+              )),
+        ],
+      ),
+    );
+  }
+
+  _recentItemListWidget() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _deleteButton(),
+            SizedBox(height: 14),
+            _recentItemList(),
+          ],
         ),
       ),
     );
