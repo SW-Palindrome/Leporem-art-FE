@@ -68,7 +68,6 @@ class RecentItemScreen extends GetView<RecentItemController> {
   _recentItemList() {
     return Obx(
       () => ListView.builder(
-        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: controller.items.length,
         itemBuilder: (context, index) {
@@ -97,7 +96,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(4),
               child: Image.network(
                 controller.items[index].thumbnailImage,
                 height: Get.width * 0.23,

@@ -91,19 +91,21 @@ class HomeRepository {
     isPagination = false,
   }) async {
     try {
-      final response = await DioSingleton.dio.get('/items/filter',
-          queryParameters: {
-            'page': page,
-            'nickname': nickname,
-            'ordering': ordering,
-            'search': keyword,
+      final response = await DioSingleton.dio.get(
+        '/items/filter',
+        queryParameters: {
+          'page': page,
+          'nickname': nickname,
+          'ordering': ordering,
+          'search': keyword,
+        },
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
           },
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+        ),
+      );
       final data = response.data;
       //items를 리스트에 넣고 파싱
       final List<dynamic> itemsData = data['list']['items'];

@@ -150,10 +150,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    '${controller.items[index].price.toString().toString().replaceAllMapped(
-                          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                          (Match m) => '${m[1]},',
-                        )}원',
+                    controller.items[index].currentAmount == 0
+                        ? '판매 완료'
+                        : '${controller.items[index].price.toString().toString().replaceAllMapped(
+                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                              (Match m) => '${m[1]},',
+                            )}원',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.black,
