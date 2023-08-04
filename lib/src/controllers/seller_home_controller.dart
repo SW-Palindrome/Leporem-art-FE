@@ -7,7 +7,10 @@ import 'package:leporemart/src/repositories/home_repository.dart';
 
 class SellerHomeController extends GetxController {
   final HomeRepository _homeRepository = HomeRepository();
+
   RxList<SellerHomeItem> items = <SellerHomeItem>[].obs;
+  Rx<bool> isLoading = false.obs;
+
   Rx<int> totalCount = 0.obs;
   List<String> sortTypes = ['최신순', '인기순', '가격 낮은 순', '가격 높은 순'];
   Rx<int> selectedSortType = 0.obs;
@@ -25,6 +28,7 @@ class SellerHomeController extends GetxController {
 
   Future<void> fetch({bool isPagination = false}) async {
     try {
+      isLoading.value = true;
       String ordering = '';
       switch (displayedSortType.value) {
         case 0:
@@ -50,6 +54,7 @@ class SellerHomeController extends GetxController {
         ordering: ordering,
       );
       items.addAll(fetchedItems);
+      isLoading.value = false;
     } catch (e) {
       // 에러 처리
       print('Error fetching seller home items in controller: $e');

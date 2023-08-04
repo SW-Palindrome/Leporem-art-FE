@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
+import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -15,6 +16,106 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
 
   @override
   Widget build(BuildContext context) {
+    return Obx(() {
+      if (controller.items.isEmpty && !controller.isLoading.value) {
+        if (Get.find<SellerSearchController>().isSearching.value) {
+          return _emptySearchListWidget();
+        } else {
+          return _emptyItemListWidget();
+        }
+      } else {
+        return _sellerItemListWidget();
+      }
+    });
+  }
+
+  _emptySearchListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
+          ),
+          SizedBox(height: 24),
+          Text('검색한 결과가 없어요.',
+              style: TextStyle(
+                fontSize: 16,
+                color: ColorPalette.grey_5,
+                fontFamily: FontPalette.pretenderd,
+              )),
+        ],
+      ),
+    );
+  }
+
+  _emptyItemListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
+          ),
+          SizedBox(height: 24),
+          Text(
+            '아직 등록한 작품이 없어요.\n작품을 등록해보세요!',
+            style: TextStyle(
+              fontSize: 16,
+              color: ColorPalette.grey_5,
+              fontFamily: FontPalette.pretenderd,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24),
+          GestureDetector(
+            onTap: () {
+              Get.to(ItemCreateScreen());
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+              decoration: ShapeDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(1.00, -0.07),
+                  end: Alignment(-1, 0.07),
+                  colors: [Color(0xFF9C00E6), Color(0xFF594BF8)],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/plus.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter:
+                        ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    '작품 등록하기',
+                    style: TextStyle(
+                      color: ColorPalette.white,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _sellerItemListWidget() {
     return Stack(
       children: [
         Container(
@@ -70,14 +171,14 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           ),
         ),
         Positioned(
-          bottom: Get.width * 0.05,
+          bottom: Get.width * 0.03,
           right: Get.width * 0.05,
           child: GestureDetector(
             onTap: () {
               Get.to(ItemCreateScreen());
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 11.5),
               decoration: ShapeDecoration(
                 gradient: LinearGradient(
                   begin: Alignment(1.00, -0.07),
@@ -97,15 +198,14 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     colorFilter:
                         ColorFilter.mode(ColorPalette.white, BlendMode.srcIn),
                   ),
-                  SizedBox(width: 5),
+                  SizedBox(width: 4),
                   Text(
                     '작품등록',
                     style: TextStyle(
                       color: ColorPalette.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14.0,
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 14,
                     ),
                   ),
                 ],

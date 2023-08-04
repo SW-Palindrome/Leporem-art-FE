@@ -6,6 +6,7 @@ class BuyerOrderListController extends GetxController {
   final OrderListRepository _orderListRepository = OrderListRepository();
 
   RxList<Order> orders = <Order>[].obs;
+  Rx<bool> isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -15,8 +16,10 @@ class BuyerOrderListController extends GetxController {
 
   Future<void> fetch() async {
     try {
+      isLoading.value = true;
       List<Order> fetchedOrders = await _orderListRepository.fetchBuyerOrders();
       orders.assignAll(fetchedOrders);
+      isLoading.value = false;
     } catch (e) {
       print('Error fetching buyer order list in controller: $e');
     }

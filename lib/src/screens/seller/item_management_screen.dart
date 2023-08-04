@@ -19,18 +19,53 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: '주문 내역',
+        title: '판매 관리',
         onTapLeadingIcon: () {
           Get.back();
         },
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            child: _orderList(),
+        child: Obx(() {
+          if (controller.orders.isEmpty && !controller.isLoading.value) {
+            return _emptyItemListWidget();
+          } else {
+            return _itemManagementListWidget();
+          }
+        }),
+      ),
+    );
+  }
+
+  _emptyItemListWidget() {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
           ),
-        ),
+          SizedBox(height: 24),
+          Text('아직 등록한 물품이 없어요.',
+              style: TextStyle(
+                fontSize: 16,
+                color: ColorPalette.grey_5,
+                fontFamily: FontPalette.pretenderd,
+              )),
+        ],
+      ),
+    );
+  }
+
+  _itemManagementListWidget() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 20,
+      ),
+      child: SingleChildScrollView(
+        child: _orderList(),
       ),
     );
   }
