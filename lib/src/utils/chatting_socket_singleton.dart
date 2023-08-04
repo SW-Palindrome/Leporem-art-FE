@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../configs/login_config.dart';
+import '../controllers/buyer_message_controller.dart';
 
 
 class ChattingSocketSingleton {
@@ -23,8 +25,12 @@ class ChattingSocketSingleton {
       _authenticate();
     });
     _socket.on('receive_message', (data) {
-      // TODO: 컨트롤러에 데이터 업데이트
-      print(data);
+      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
+      buyerMessageController.receiveMessage(data['chat_room_id'], data['message_id'], data['message']);
+    });
+    _socket.on('message_registered', (data) {
+      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
+      buyerMessageController.registerMessage(data['chat_room_id'], data['message_temp_id'], data['message_id']);
     });
   }
 

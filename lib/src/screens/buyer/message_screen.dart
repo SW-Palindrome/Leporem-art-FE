@@ -8,6 +8,7 @@ import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
+import 'package:leporemart/src/screens/buyer/message_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../../models/message.dart';
@@ -77,7 +78,6 @@ class MessageScreen extends GetView<BuyerMessageController> {
 
   _chatRoomWidget(ChatRoom chatRoom) {
     return Container(
-      color: ColorPalette.white,
       height: 72,
       margin: EdgeInsets.all(16),
       child: ClipRRect(
@@ -98,12 +98,24 @@ class MessageScreen extends GetView<BuyerMessageController> {
   }
 
   _chatRoomInfoWidget(ChatRoom chatRoom) {
-    return Row(children: [
-      SizedBox(width: 12),
-      _profileImageWidget(chatRoom),
-      SizedBox(width: 8),
-      _profileDetailInfoWidget(chatRoom),
-    ]);
+    return GestureDetector(
+      child: Container(
+        color: ColorPalette.white,
+        child: Row(
+            children: [
+              SizedBox(width: 12),
+              _profileImageWidget(chatRoom),
+              SizedBox(width: 8),
+              _profileDetailInfoWidget(chatRoom),
+            ]
+        ),
+      ),
+      onTap: () {
+        Get.to(() => MessageDetailScreen(), arguments: {
+          'chatRoomId': chatRoom.chatRoomId,
+        });
+      },
+    );
   }
 
   _profileImageWidget(ChatRoom chatRoom) {
