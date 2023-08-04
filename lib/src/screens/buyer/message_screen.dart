@@ -5,7 +5,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:intl/intl.dart';
 import 'package:leporemart/src/controllers/buyer_message_controller.dart';
-import 'package:leporemart/src/controllers/message_item_controller.dart';
+import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -31,14 +31,14 @@ class MessageScreen extends GetView<BuyerMessageController> {
         GestureDetector(
           onTap: () {
             Get.to(MessageItemShareScreen());
-            Get.put(MessageItemController());
+            Get.put(MessageItemShareController());
           },
           child: Text('작폼공유'),
         ),
         GestureDetector(
           onTap: () {
             Get.to(MessageItemOrderScreen());
-            Get.put(MessageItemController());
+            Get.put(MessageItemShareController());
           },
           child: Text('주문넣기'),
         ),

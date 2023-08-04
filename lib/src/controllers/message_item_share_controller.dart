@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
 
-class MessageItemController extends GetxController {
+class MessageItemShareController extends GetxController {
   final MessageItemRepository _messageItemRepository = MessageItemRepository();
 
   List<MessageItem> items = <MessageItem>[];

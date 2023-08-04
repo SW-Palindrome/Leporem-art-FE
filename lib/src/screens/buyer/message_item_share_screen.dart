@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/message_item_controller.dart';
+import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 import '../../utils/currency_formatter.dart';
 
-class MessageItemShareScreen extends GetView<MessageItemController> {
+class MessageItemShareScreen extends GetView<MessageItemShareController> {
   const MessageItemShareScreen({super.key});
 
   @override
