@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -20,26 +21,26 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
         appBarType: AppBarType.backAppBar,
         onTapLeadingIcon: () => Get.back(),
         isWhite: true,
-        title: controller.getChatRoom(Get.arguments['chatRoomId']).opponentNickname,
+        title: controller
+            .getChatRoom(Get.arguments['chatRoomId'])
+            .opponentNickname,
       ),
-      body: SafeArea(
-          child: Obx(() {
-            return Container(
-              color: ColorPalette.white,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: _messageListWidget(),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _messageBottomWidget(),
-                  ),
-                ],
+      body: SafeArea(child: Obx(() {
+        return Container(
+          color: ColorPalette.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: _messageListWidget(),
               ),
-            );
-          })
-      ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _messageBottomWidget(),
+              ),
+            ],
+          ),
+        );
+      })),
     );
   }
 
@@ -47,7 +48,8 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       children: [
-        for (final message in controller.getChatRoom(Get.arguments['chatRoomId']).messageList)
+        for (final message
+            in controller.getChatRoom(Get.arguments['chatRoomId']).messageList)
           _messageWidget(message)
       ],
     );
@@ -66,7 +68,8 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _innerMessageWidget(Message message) {
-    ChatRoom currentChatRoom = controller.getChatRoom(Get.arguments['chatRoomId']);
+    ChatRoom currentChatRoom =
+        controller.getChatRoom(Get.arguments['chatRoomId']);
     return currentChatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
@@ -100,15 +103,18 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _opponentMessageWidget(Message message) {
-    ChatRoom currentChatRoom = controller.getChatRoom(Get.arguments['chatRoomId']);
+    ChatRoom currentChatRoom =
+        controller.getChatRoom(Get.arguments['chatRoomId']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
-          if (_currentUserId != message.userId) CircleAvatar(
-            radius: 16,
-            backgroundImage: NetworkImage(currentChatRoom.opponentProfileImageUrl),
-          ),
+          if (_currentUserId != message.userId)
+            CircleAvatar(
+              radius: 16,
+              backgroundImage:
+                  NetworkImage(currentChatRoom.opponentProfileImageUrl),
+            ),
           if (_currentUserId == message.userId) SizedBox(width: 32),
           SizedBox(width: 8),
           Container(
@@ -149,10 +155,12 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
           children: [
-            Image(
-              image: AssetImage('assets/icons/chatting_plus.png'),
+            SvgPicture.asset(
+              'assets/icons/plus.svg',
               width: 24,
               height: 24,
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
             ),
             SizedBox(width: 16),
             Expanded(
@@ -169,7 +177,9 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                     decoration: InputDecoration(
                       suffix: InkWell(
                         onTap: () async {
-                          await controller.sendMessage(Get.arguments['chatRoomId'], _textEditingController.text);
+                          await controller.sendMessage(
+                              Get.arguments['chatRoomId'],
+                              _textEditingController.text);
                           _textEditingController.clear();
                         },
                         child: Text(
