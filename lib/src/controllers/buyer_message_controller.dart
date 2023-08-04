@@ -23,7 +23,7 @@ class BuyerMessageController extends GetxController {
     List<ChatRoom> fetchedBuyerChatRoomList =
         await _messageRepository.fetchBuyerChatRooms();
     List<ChatRoom> fetchedSellerChatRoomList =
-      await _messageRepository.fetchBuyerChatRooms();
+      await _messageRepository.fetchSellerChatRooms();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
     isLoading.value = false;
@@ -57,6 +57,8 @@ class BuyerMessageController extends GetxController {
     sendChatRoom.tempMessageList.remove(tempMessage);
     tempMessage.messageId = messageId.toString();
     sendChatRoom.messageList.add(tempMessage);
+    chatRoomList.remove(sendChatRoom);
+    chatRoomList.insert(0, sendChatRoom);
     chatRoomList.refresh();
   }
 
@@ -70,6 +72,8 @@ class BuyerMessageController extends GetxController {
         isRead: false,
         message: message,
     ));
+    chatRoomList.remove(receiveChatRoom);
+    chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
   }
 
