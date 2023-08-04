@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
@@ -15,7 +16,8 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: '홍준식님의 작품',
+        title:
+            '${Get.find<BuyerMessageController>().getChatRoom(Get.arguments['chatRoomId']).opponentNickname}님의 작품',
         onTapLeadingIcon: () {
           Get.back();
         },

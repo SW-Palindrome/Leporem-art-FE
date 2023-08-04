@@ -101,7 +101,7 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
                           onTap: () => controller
                               .removeRecentSearch(controller.recentSearches[i]),
                           child: SvgPicture.asset(
-                            'assets/icons/cancle.svg',
+                            'assets/icons/cancel.svg',
                             colorFilter: ColorFilter.mode(
                               ColorPalette.grey_4,
                               BlendMode.srcIn,

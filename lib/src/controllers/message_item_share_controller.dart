@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_message_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
 
@@ -25,8 +26,11 @@ class MessageItemShareController extends GetxController {
   Future<void> fetch() async {
     try {
       while (true) {
-        List<MessageItem> fetchedMessageItems = await _messageItemRepository
-            .fetchShareMessageItem(currentPage, nickname: '공예쁨');
+        List<MessageItem> fetchedMessageItems =
+            await _messageItemRepository.fetchShareMessageItem(currentPage,
+                nickname: Get.find<BuyerMessageController>()
+                    .getChatRoom(Get.arguments['chatRoomId'])
+                    .opponentNickname);
 
         items.addAll(fetchedMessageItems);
         displayItems.addAll(fetchedMessageItems);
