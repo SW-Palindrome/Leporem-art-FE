@@ -24,19 +24,16 @@ class MessageItemController extends GetxController {
     await fetch();
   }
 
-  Future<void> fetch({bool isPagination = false}) async {
+  Future<void> fetch() async {
     try {
-      if (isPagination!) currentPage++;
-      List<MessageItem> fetchedMessageItems = await _messageItemRepository
-          .fetchShareMessageItem(currentPage, nickname: '공예쁨');
+      while (true) {
+        List<MessageItem> fetchedMessageItems = await _messageItemRepository
+            .fetchShareMessageItem(currentPage, nickname: '공예쁨');
 
-      items.addAll(fetchedMessageItems);
-      if (keyword != '') {
-        displayItems.addAll(fetchedMessageItems
-            .where((item) => item.title.contains(keyword))
-            .toList());
+        items.addAll(fetchedMessageItems);
+        displayItems.addAll(fetchedMessageItems);
+        currentPage++;
       }
-      displayItems.addAll(fetchedMessageItems);
     } catch (e) {
       print(e);
     }

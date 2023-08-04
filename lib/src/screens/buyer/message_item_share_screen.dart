@@ -21,26 +21,16 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
         },
       ),
       body: SafeArea(
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification scrollInfo) {
-            if (scrollInfo is ScrollEndNotification) {
-              if (controller.scrollController.position.extentAfter == 0) {
-                controller.fetch(isPagination: true);
-              }
-            }
-            return false;
-          },
-          child: SingleChildScrollView(
-            controller: controller.scrollController,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  _searchField(),
-                  SizedBox(height: 16),
-                  _itemList(),
-                ],
-              ),
+        child: SingleChildScrollView(
+          controller: controller.scrollController,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                _searchField(),
+                SizedBox(height: 16),
+                _itemList(),
+              ],
             ),
           ),
         ),
