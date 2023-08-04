@@ -16,7 +16,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.items.isEmpty) {
+      if (controller.items.isEmpty && !controller.isLoading.value) {
         return _emptyItemListWidget();
       } else {
         return _sellerItemListWidget();

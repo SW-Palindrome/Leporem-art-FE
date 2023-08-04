@@ -24,7 +24,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
       ),
       body: SafeArea(
         child: Obx(() {
-          if (controller.items.isEmpty) {
+          if (controller.items.isEmpty && !controller.isLoading.value) {
             return _emptyItemListWidget();
           } else {
             return _recentItemListWidget();

@@ -25,7 +25,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
       ),
       body: SafeArea(
         child: Obx(() {
-          if (controller.orders.isEmpty) {
+          if (controller.orders.isEmpty && !controller.isLoading.value) {
             return _emptyListWidget();
           } else {
             return _orderListWidget();

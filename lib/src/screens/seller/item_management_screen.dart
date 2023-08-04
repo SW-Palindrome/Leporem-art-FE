@@ -26,7 +26,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
       ),
       body: SafeArea(
         child: Obx(() {
-          if (controller.orders.isEmpty) {
+          if (controller.orders.isEmpty && !controller.isLoading.value) {
             return _emptyItemListWidget();
           } else {
             return _itemManagementListWidget();

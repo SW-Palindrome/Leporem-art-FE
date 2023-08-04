@@ -9,6 +9,7 @@ class RecentItemController extends GetxController {
   final RecentItemRepository _recentItemRepository = RecentItemRepository();
 
   RxList<RecentItem> items = <RecentItem>[].obs;
+  Rx<bool> isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -18,9 +19,11 @@ class RecentItemController extends GetxController {
 
   Future<void> fetch() async {
     try {
+      isLoading.value = true;
       List<RecentItem> fetchedItems =
           await _recentItemRepository.fetchRecentItems();
       items.assignAll(fetchedItems);
+      isLoading.value = false;
     } catch (e) {
       // 에러 처리
       print('Error fetching recent items: $e');
