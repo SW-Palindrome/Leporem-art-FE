@@ -6,6 +6,7 @@ class BuyerHomeItem {
   final String thumbnailImage;
   int likes;
   bool isLiked;
+  int currentAmount;
 
   BuyerHomeItem({
     required this.id,
@@ -15,6 +16,7 @@ class BuyerHomeItem {
     required this.thumbnailImage,
     required this.likes,
     required this.isLiked,
+    required this.currentAmount,
   });
 
   factory BuyerHomeItem.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class BuyerHomeItem {
       thumbnailImage: json['thumbnail_image'],
       likes: json['like_count'],
       isLiked: json['is_liked'],
+      currentAmount: json['current_amount'],
     );
   }
 
