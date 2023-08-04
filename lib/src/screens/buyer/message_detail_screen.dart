@@ -234,48 +234,66 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
             duration: Duration(milliseconds: 200),
             height: controller.isPlusButtonClicked.value ? 220 : 0,
             child: controller.isPlusButtonClicked.value
-                ? SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _messageBottomPlusIcon(
-                                  '작품 공유', 'link', Color(0xff4A9dff)),
-                              SizedBox(width: 32),
-                              _messageBottomPlusIcon(
-                                  '앨범', 'image', ColorPalette.pink),
-                              SizedBox(width: 32),
-                              _messageBottomPlusIcon(
-                                  '카메라', 'camera', ColorPalette.green),
-                              SizedBox(width: 32),
-                              _messageBottomPlusIcon(
-                                  '주소 공유', 'location', ColorPalette.yellow),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _messageBottomPlusIcon(
-                                  '번호 공유', 'contact', ColorPalette.orange),
-                              SizedBox(width: 32),
-                              _messageBottomPlusIcon(
-                                  '주문 넣기', 'cart', Color(0xff9d00e7)),
-                              SizedBox(width: 32),
-                              _messageBottomPlusIcon('주문제작 요청', 'paper_outline',
-                                  ColorPalette.purple),
-                            ],
-                          ),
-                        ],
-                      ),
+                ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+                    child: GridView.count(
+                      crossAxisCount: 4,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: 16,
+                      children: [
+                        _messageBottomPlusIcon(
+                            '작품 공유', 'link', Color(0xff4A9dff)),
+                        _messageBottomPlusIcon(
+                            '앨범', 'image', ColorPalette.pink),
+                        _messageBottomPlusIcon(
+                            '카메라', 'camera', ColorPalette.green),
+                        _messageBottomPlusIcon(
+                            '주소 공유', 'location', ColorPalette.yellow),
+                        _messageBottomPlusIcon(
+                            '번호 공유', 'contact', ColorPalette.orange),
+                        _messageBottomPlusIcon(
+                            '주문 넣기', 'cart', Color(0xff9d00e7)),
+                        _messageBottomPlusIcon(
+                            '주문제작 요청', 'paper_outline', ColorPalette.purple),
+                      ],
                     ),
+
+                    //Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     Row(
+                    //       mainAxisSize: MainAxisSize.min,
+                    //       children: [
+                    //         _messageBottomPlusIcon(
+                    //             '작품 공유', 'link', Color(0xff4A9dff)),
+                    //         SizedBox(width: 32),
+                    //         _messageBottomPlusIcon(
+                    //             '앨범', 'image', ColorPalette.pink),
+                    //         SizedBox(width: 32),
+                    //         _messageBottomPlusIcon(
+                    //             '카메라', 'camera', ColorPalette.green),
+                    //         SizedBox(width: 32),
+                    //         _messageBottomPlusIcon(
+                    //             '주소 공유', 'location', ColorPalette.yellow),
+                    //       ],
+                    //     ),
+                    //     SizedBox(height: 16),
+                    //     Row(
+                    //       mainAxisSize: MainAxisSize.min,
+                    //       children: [
+                    //         _messageBottomPlusIcon(
+                    //             '번호 공유', 'contact', ColorPalette.orange),
+                    //         SizedBox(width: 32),
+                    //         _messageBottomPlusIcon(
+                    //             '주문 넣기', 'cart', Color(0xff9d00e7)),
+                    //         SizedBox(width: 32),
+                    //         _messageBottomPlusIcon('주문제작 요청', 'paper_outline',
+                    //             ColorPalette.purple),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   )
                 : SizedBox(),
           );
