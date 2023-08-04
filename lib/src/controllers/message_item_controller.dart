@@ -64,4 +64,13 @@ class MessageItemController extends GetxController {
   bool isSelected(int itemId) {
     return selectItemId.value == itemId && isSelect.value;
   }
+
+  Future<void> order() async {
+    try {
+      await _messageItemRepository.orderItem(selectItemId.value);
+      Get.back();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -33,4 +33,35 @@ class MessageItemRepository {
       throw ('Error fetching chat item share in repository: $e');
     }
   }
+
+  Future<void> orderItem(int itemId) async {
+    try {
+      final response = await DioSingleton.dio.post(
+        '/orders/register',
+        data: {
+          'item_id': itemId,
+        },
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      if (response.statusCode == 400) {
+        if (response.data['message'] == '재고가 없습니다.') {
+          throw ('재고가 없습니다.');
+        } else if (response.data['meessage'] == '자신의 상품은 주문할 수 없습니다.') {
+          throw ('자신의 상품은 주문할 수 없습니다.');
+        }
+      }
+      if (response.statusCode == 201) {
+        return;
+      }
+      throw ('response: ${response.statusCode} / ${response.realUri}');
+    } catch (e) {
+      // 에러 처리
+      throw ('Error ordering item in repository: $e');
+    }
+  }
 }
