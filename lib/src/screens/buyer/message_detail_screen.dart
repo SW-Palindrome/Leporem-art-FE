@@ -50,14 +50,18 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _messageListWidget() {
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      reverse: true,
-      children: [
-        for (final message
-            in controller.getChatRoom(Get.arguments['chatRoomId']).messageList)
-          _messageWidget(message)
-      ],
+    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomId']).messageList.reversed.toList();
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        reverse: true,
+        shrinkWrap: true,
+        itemCount: messageList.length,
+        itemBuilder: (context, index) {
+          return _messageWidget(messageList[index]);
+        },
+      ),
     );
   }
 

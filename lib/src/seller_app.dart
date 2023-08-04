@@ -72,7 +72,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
   _messageScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
-      body: MessageScreen(),
+      body: SellerMessageScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );

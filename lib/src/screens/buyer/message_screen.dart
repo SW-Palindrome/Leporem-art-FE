@@ -101,12 +101,14 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return GestureDetector(
       child: Container(
         color: ColorPalette.white,
-        child: Row(children: [
-          SizedBox(width: 12),
-          _profileImageWidget(chatRoom),
-          SizedBox(width: 8),
-          _profileDetailInfoWidget(chatRoom),
-        ]),
+        child: Row(
+            children: [
+              SizedBox(width: 12),
+              _profileImageWidget(chatRoom),
+              SizedBox(width: 8),
+              Expanded(child: _profileDetailInfoWidget(chatRoom)),
+            ]
+        ),
       ),
       onTap: () {
         Get.to(() => MessageDetailScreen(), arguments: {
@@ -163,6 +165,8 @@ class MessageScreen extends GetView<BuyerMessageController> {
         ),
         SizedBox(height: 8),
         Text(chatRoom.lastMessage,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontSize: 12,
                 fontFamily: FontPalette.pretenderd,
@@ -180,6 +184,36 @@ class MessageScreen extends GetView<BuyerMessageController> {
             fontSize: 11,
             fontFamily: FontPalette.pretenderd,
           )),
+    );
+  }
+}
+
+
+class BuyerMessageScreen extends MessageScreen {
+  BuyerMessageScreen({super.key});
+
+  @override
+  _chatRoomListWidget() {
+    return Column(
+      children: [
+        for (final chatRoom in controller.getBuyerChatRooms())
+          _chatRoomWidget(chatRoom)
+      ],
+    );
+  }
+}
+
+
+class SellerMessageScreen extends MessageScreen {
+  SellerMessageScreen({super.key});
+
+  @override
+  _chatRoomListWidget() {
+    return Column(
+      children: [
+        for (final chatRoom in controller.getSellerChatRooms())
+          _chatRoomWidget(chatRoom)
+      ],
     );
   }
 }
