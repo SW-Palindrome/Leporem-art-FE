@@ -39,14 +39,13 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
                   _searchField(),
                   SizedBox(height: 16),
                   _itemList(),
-                  SizedBox(height: 16),
-                  _bottomButton(),
                 ],
               ),
             ),
           ),
         ),
       ),
+      bottomNavigationBar: _bottomButton(),
     );
   }
 
@@ -167,25 +166,34 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
   }
 
   _bottomButton() {
-    return Column(
-      children: [
-        Text(
-          '공유를 원하는 작품을 선택해주세요.',
-          style: TextStyle(
-            color: ColorPalette.grey_5,
-            fontFamily: FontPalette.pretenderd,
-            fontSize: 12,
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        bottom: 30,
+        top: 20,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '공유를 원하는 작품을 선택해주세요.',
+            style: TextStyle(
+              color: ColorPalette.grey_5,
+              fontFamily: FontPalette.pretenderd,
+              fontSize: 12,
+            ),
           ),
-        ),
-        SizedBox(height: 16),
-        Obx(
-          () => NextButton(
-            text: '공유하기',
-            value: controller.isSelect.value,
-            onTap: () {},
+          SizedBox(height: 16),
+          Obx(
+            () => NextButton(
+              text: '공유하기',
+              value: controller.isSelect.value,
+              onTap: () {},
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
