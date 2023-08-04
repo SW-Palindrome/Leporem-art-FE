@@ -70,7 +70,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
   _chatRoomListWidget() {
     return Column(
       children: [
-        for (final chatRoom in controller.getBuyerChatRooms())
+        for (final chatRoom in controller.chatRoomList)
           _chatRoomWidget(chatRoom)
       ],
     );
@@ -184,6 +184,36 @@ class MessageScreen extends GetView<BuyerMessageController> {
             fontSize: 11,
             fontFamily: FontPalette.pretenderd,
           )),
+    );
+  }
+}
+
+
+class BuyerMessageScreen extends MessageScreen {
+  BuyerMessageScreen({super.key});
+
+  @override
+  _chatRoomListWidget() {
+    return Column(
+      children: [
+        for (final chatRoom in controller.getBuyerChatRooms())
+          _chatRoomWidget(chatRoom)
+      ],
+    );
+  }
+}
+
+
+class SellerMessageScreen extends MessageScreen {
+  SellerMessageScreen({super.key});
+
+  @override
+  _chatRoomListWidget() {
+    return Column(
+      children: [
+        for (final chatRoom in controller.getSellerChatRooms())
+          _chatRoomWidget(chatRoom)
+      ],
     );
   }
 }

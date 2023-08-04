@@ -77,7 +77,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
   _messageScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.noticeAppBar),
-      body: MessageScreen(),
+      body: BuyerMessageScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
