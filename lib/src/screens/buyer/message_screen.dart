@@ -19,7 +19,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.chatRoomList.isEmpty) {
+      if (controller.chatRoomList.isEmpty && !controller.isLoading.value) {
         return _emptyItemListWidget();
       }
       return _chatRoomListWidget();
@@ -101,14 +101,12 @@ class MessageScreen extends GetView<BuyerMessageController> {
     return GestureDetector(
       child: Container(
         color: ColorPalette.white,
-        child: Row(
-            children: [
-              SizedBox(width: 12),
-              _profileImageWidget(chatRoom),
-              SizedBox(width: 8),
-              _profileDetailInfoWidget(chatRoom),
-            ]
-        ),
+        child: Row(children: [
+          SizedBox(width: 12),
+          _profileImageWidget(chatRoom),
+          SizedBox(width: 8),
+          _profileDetailInfoWidget(chatRoom),
+        ]),
       ),
       onTap: () {
         Get.to(() => MessageDetailScreen(), arguments: {

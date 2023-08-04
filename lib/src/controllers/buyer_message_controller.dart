@@ -9,6 +9,8 @@ import '../utils/chatting_socket_singleton.dart';
 class BuyerMessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
+  Rx<bool> isLoading = false.obs;
+  Rx<bool> isPlusButtonClicked = false.obs;
 
   @override
   void onInit() async {
@@ -17,14 +19,21 @@ class BuyerMessageController extends GetxController {
   }
 
   Future<void> fetch() async {
-    List<ChatRoom> fetchedChatRoomList = await _messageRepository.fetchChatRooms();
+    isLoading.value = true;
+    List<ChatRoom> fetchedChatRoomList =
+        await _messageRepository.fetchChatRooms();
     chatRoomList.addAll(fetchedChatRoomList);
+    isLoading.value = false;
   }
 
   Future<void> sendMessage(chatRoomId, message) async {
-    int opponentUserId = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId).opponentUserId;
-    ChatRoom chatRoom = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
-    UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+    int opponentUserId = chatRoomList
+        .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId)
+        .opponentUserId;
+    ChatRoom chatRoom = chatRoomList
+        .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
+    UserGlobalInfoController userGlobalInfoController =
+        Get.find<UserGlobalInfoController>();
     Message messageInfo = Message(
       messageId: Uuid().v4(),
       userId: userGlobalInfoController.userId,
@@ -33,12 +42,15 @@ class BuyerMessageController extends GetxController {
       message: message,
     );
     chatRoom.tempMessageList.add(messageInfo);
-    ChattingSocketSingleton().sendMessage(chatRoomId, opponentUserId, messageInfo.message, messageInfo.messageId);
+    ChattingSocketSingleton().sendMessage(
+        chatRoomId, opponentUserId, messageInfo.message, messageInfo.messageId);
   }
 
   registerMessage(chatRoomId, messageTempId, messageId) {
-    ChatRoom sendChatRoom = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
-    Message tempMessage = sendChatRoom.tempMessageList.firstWhere((message) => message.messageId == messageTempId);
+    ChatRoom sendChatRoom = chatRoomList
+        .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
+    Message tempMessage = sendChatRoom.tempMessageList
+        .firstWhere((message) => message.messageId == messageTempId);
     sendChatRoom.tempMessageList.remove(tempMessage);
     tempMessage.messageId = messageId.toString();
     sendChatRoom.messageList.add(tempMessage);
@@ -46,7 +58,8 @@ class BuyerMessageController extends GetxController {
   }
 
   receiveMessage(chatRoomId, messageId, message) {
-    ChatRoom receiveChatRoom = chatRoomList.firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
+    ChatRoom receiveChatRoom = chatRoomList
+        .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
     receiveChatRoom.messageList.add(Message(
         messageId: messageId.toString(),
         userId: receiveChatRoom.opponentUserId,
