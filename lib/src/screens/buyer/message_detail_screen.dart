@@ -46,6 +46,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   _messageListWidget() {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      reverse: true,
       children: [
         for (final message in controller.getChatRoom(Get.arguments['chatRoomId']).messageList)
           _messageWidget(message)
