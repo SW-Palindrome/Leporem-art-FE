@@ -15,7 +15,6 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      print('BuyerHomeScreen: ${controller.items.length}');
       if (controller.items.isEmpty &&
           Get.find<BuyerSearchController>().isSearching.value) {
         return _emptyItemListWidget();
