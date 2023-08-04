@@ -25,6 +25,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
             .getChatRoom(Get.arguments['chatRoomId'])
             .opponentNickname,
       ),
+      backgroundColor: ColorPalette.white,
       body: SafeArea(child: Obx(() {
         return Container(
           color: ColorPalette.white,
@@ -163,12 +164,16 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                     controller.isPlusButtonClicked.value =
                         !controller.isPlusButtonClicked.value;
                   },
-                  child: SvgPicture.asset(
-                    'assets/icons/plus.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter:
-                        ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+                  child: Obx(
+                    () => SvgPicture.asset(
+                      controller.isPlusButtonClicked.value
+                          ? 'assets/icons/cancel.svg'
+                          : 'assets/icons/plus.svg',
+                      width: 24,
+                      height: 24,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_5, BlendMode.srcIn),
+                    ),
                   ),
                 ),
                 SizedBox(width: 16),
@@ -224,22 +229,54 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
             ),
           ),
         ),
-        controller.isPlusButtonClicked.value
-            ? Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 48,
-                  vertical: 16,
-                ),
-                child: GridView.count(
-                  crossAxisCount: 4,
-                  children: [
-                    for (int i = 0; i < 7; i++)
-                      _messageBottomPlusIcon(
-                          '작품 공유', 'link', Color(0xff4A9dff)),
-                  ],
-                ),
-              )
-            : SizedBox(),
+        Obx(() {
+          return (controller.isPlusButtonClicked.value
+              ? Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 16,
+                  ),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                            SizedBox(width: 32),
+                            _messageBottomPlusIcon(
+                                '작품 공유', 'link', Color(0xff4A9dff)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox());
+        }),
       ],
     );
   }
@@ -267,7 +304,6 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
           style: TextStyle(
             color: ColorPalette.black,
             fontFamily: FontPalette.pretenderd,
-            fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
         )
