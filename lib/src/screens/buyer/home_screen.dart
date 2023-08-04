@@ -7,6 +7,7 @@ import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class BuyerHomeScreen extends GetView<BuyerHomeController> {
@@ -185,10 +186,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                   Text(
                     controller.items[index].currentAmount == 0
                         ? '판매 완료'
-                        : '${controller.items[index].price.toString().toString().replaceAllMapped(
-                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                              (Match m) => '${m[1]},',
-                            )}원',
+                        : '${CurrencyFormatter().numberToCurrency(controller.items[index].price)}원',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: ColorPalette.black,

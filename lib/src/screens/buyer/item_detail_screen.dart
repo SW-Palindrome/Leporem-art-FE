@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
@@ -83,10 +84,9 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
               SizedBox(width: 10),
               Obx(
                 () => Text(
-                  '${controller.itemDetail.value.price.toString().replaceAllMapped(
-                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                        (Match m) => '${m[1]},',
-                      )}원',
+                  controller.itemDetail.value.currentAmount == 0
+                      ? '판매 완료'
+                      : '${CurrencyFormatter().numberToCurrency(controller.itemDetail.value.price)}원',
                   style: TextStyle(
                     color: Color(0xff191f28),
                     fontWeight: FontWeight.w600,
