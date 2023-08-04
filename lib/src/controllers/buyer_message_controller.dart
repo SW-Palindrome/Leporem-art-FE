@@ -61,11 +61,11 @@ class BuyerMessageController extends GetxController {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomId == chatRoomId);
     receiveChatRoom.messageList.add(Message(
-      messageId: messageId,
-      userId: receiveChatRoom.opponentUserId,
-      writeDatetime: DateTime.now(),
-      isRead: false,
-      message: message,
+        messageId: messageId.toString(),
+        userId: receiveChatRoom.opponentUserId,
+        writeDatetime: DateTime.now(),
+        isRead: false,
+        message: message,
     ));
     chatRoomList.refresh();
   }
