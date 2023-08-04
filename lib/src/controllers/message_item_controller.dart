@@ -16,7 +16,6 @@ class MessageItemController extends GetxController {
 
   // 페이지네이션을 위한 페이지변수와 스크롤 컨트롤러
   int currentPage = 1;
-  ScrollController scrollController = ScrollController();
 
   @override
   void onInit() async {

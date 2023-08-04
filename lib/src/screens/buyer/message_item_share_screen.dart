@@ -22,7 +22,6 @@ class MessageItemShareScreen extends GetView<MessageItemController> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          controller: controller.scrollController,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
