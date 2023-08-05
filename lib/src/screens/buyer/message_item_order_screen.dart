@@ -17,7 +17,7 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
         title:
-            '${Get.find<BuyerMessageController>().getChatRoom(Get.arguments['chatRoomId']).opponentNickname}님의 작품',
+            '${Get.find<BuyerMessageController>().getChatRoom(Get.arguments['chatRoomUuid']).opponentNickname}님의 작품',
         onTapLeadingIcon: () {
           Get.back();
         },

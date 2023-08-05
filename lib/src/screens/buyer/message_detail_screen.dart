@@ -26,7 +26,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
         onTapLeadingIcon: () => Get.back(),
         isWhite: true,
         title: controller
-            .getChatRoom(Get.arguments['chatRoomId'])
+            .getChatRoom(Get.arguments['chatRoomUuid'])
             .opponentNickname,
       ),
       backgroundColor: ColorPalette.white,
@@ -50,7 +50,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _messageListWidget() {
-    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomId']).messageList.reversed.toList();
+    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomUuid']).messageList.reversed.toList();
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
@@ -79,7 +79,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
 
   _innerMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomId']);
+        controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return currentChatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
@@ -114,7 +114,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
 
   _opponentMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomId']);
+        controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -200,7 +200,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                           suffix: InkWell(
                             onTap: () async {
                               await controller.sendMessage(
-                                  Get.arguments['chatRoomId'],
+                                  Get.arguments['chatRoomUuid'],
                                   _textEditingController.text);
                               _textEditingController.clear();
                             },
@@ -256,7 +256,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                           Color(0xff4A9dff),
                           () {
                             Get.to(MessageItemShareScreen(), arguments: {
-                              'chatRoomId': Get.arguments['chatRoomId']
+                              'chatRoomUuid': Get.arguments['chatRoomUuid']
                             });
                             Get.put(MessageItemShareController());
                           },
@@ -291,7 +291,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                           Color(0xff9d00e7),
                           () {
                             Get.to(MessageItemOrderScreen(), arguments: {
-                              'chatRoomId': Get.arguments['chatRoomId']
+                              'chatRoomUuid': Get.arguments['chatRoomUuid']
                             });
                             Get.put(MessageItemOrderController());
                           },

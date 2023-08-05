@@ -29,7 +29,7 @@ class MessageItemOrderController extends GetxController {
         List<MessageItem> fetchedMessageItems =
             await _messageItemRepository.fetchOrderMessageItem(currentPage,
                 nickname: Get.find<BuyerMessageController>()
-                    .getChatRoom(Get.arguments['chatRoomId'])
+                    .getChatRoom(Get.arguments['chatRoomUuid'])
                     .opponentNickname);
 
         items.addAll(fetchedMessageItems);
