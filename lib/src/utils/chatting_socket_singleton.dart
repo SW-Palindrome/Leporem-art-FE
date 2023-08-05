@@ -32,6 +32,11 @@ class ChattingSocketSingleton {
       MessageController messageController = Get.find<MessageController>();
       messageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
     });
+    _socket.on('receive_chat_room_create', (data) {
+      MessageController messageController = Get.find<MessageController>();
+      // TODO: 채팅 방 생성 시 채팅서버에서 데이터 처리
+      messageController.fetch();
+    }
   }
 
   _authenticate() async {
