@@ -3,7 +3,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../configs/login_config.dart';
-import '../controllers/buyer_message_controller.dart';
+import '../controllers/message_controller.dart';
 
 
 class ChattingSocketSingleton {
@@ -25,12 +25,17 @@ class ChattingSocketSingleton {
       _authenticate();
     });
     _socket.on('receive_message', (data) {
-      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
-      buyerMessageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
+      MessageController messageController = Get.find<MessageController>();
+      messageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
     });
     _socket.on('message_registered', (data) {
-      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
-      buyerMessageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
+      MessageController messageController = Get.find<MessageController>();
+      messageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
+    });
+    _socket.on('receive_chat_room_create', (data) {
+      MessageController messageController = Get.find<MessageController>();
+      // TODO: 채팅 방 생성 시 채팅서버에서 데이터 처리
+      messageController.fetch();
     });
   }
 
@@ -50,6 +55,19 @@ class ChattingSocketSingleton {
       'opponent_user_id': opponentUserId,
       'message': message,
       'message_uuid': messageUuid,
+    });
+  }
+
+  createChatRoom(chatRoomUuid, sellerId, message, messageUuid, opponentUserId) async {
+    if (!isAuthenticated) {
+      await _authenticate();
+    }
+    _socket.emit('create_chat_room', {
+      'chat_room_uuid': chatRoomUuid,
+      'seller_id': sellerId,
+      'message': message,
+      'message_uuid': messageUuid,
+      'opponent_user_id': opponentUserId,
     });
   }
 }

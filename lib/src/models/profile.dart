@@ -31,6 +31,8 @@ class BuyerProfile extends Profile {
 }
 
 class SellerProfile extends Profile {
+  final int sellerId;
+  final int userId;
   final int itemCount;
   final int totalTransaction;
   final double temperature;
@@ -38,6 +40,8 @@ class SellerProfile extends Profile {
   final double retentionRate;
 
   SellerProfile({
+    this.sellerId = 0,
+    this.userId = 0,
     required String nickname,
     required String profileImageUrl,
     required this.itemCount,
@@ -52,6 +56,8 @@ class SellerProfile extends Profile {
 
   factory SellerProfile.fromJson(Map<String, dynamic> json) {
     return SellerProfile(
+      sellerId: json['seller_id'] ?? 0,
+      userId: json['user_id'] ?? 0,
       nickname: json['nickname'],
       profileImageUrl: json['profile_image'] ??
           'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',

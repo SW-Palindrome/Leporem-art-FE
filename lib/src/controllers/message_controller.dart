@@ -3,10 +3,12 @@ import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/message.dart';
+import '../models/profile.dart';
 import '../repositories/message_repository.dart';
+import '../repositories/profile_repository.dart';
 import '../utils/chatting_socket_singleton.dart';
 
-class BuyerMessageController extends GetxController {
+class MessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
@@ -25,6 +27,7 @@ class BuyerMessageController extends GetxController {
         await _messageRepository.fetchBuyerChatRooms();
     List<ChatRoom> fetchedSellerChatRoomList =
       await _messageRepository.fetchSellerChatRooms();
+    chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
     isLoading.value = false;
@@ -78,9 +81,57 @@ class BuyerMessageController extends GetxController {
     chatRoomList.refresh();
   }
 
+  createTempChatRoom(sellerNickname) async {
+    final ProfileRepository profileRepository = ProfileRepository();
+    SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
+
+    String chatRoomUuid = Uuid().v4();
+
+    ChatRoom newChatRoom = ChatRoom(
+      chatRoomUuid: chatRoomUuid,
+      opponentUserId: sellerProfile.userId,
+      opponentNickname: sellerProfile.nickname,
+      opponentProfileImageUrl: sellerProfile.profileImage,
+      messageList: [],
+      isRegistered: false,
+    );
+    newChatRoom.isBuyerRoom = true;
+    chatRoomList.insert(0, newChatRoom);
+    chatRoomList.refresh();
+    return newChatRoom;
+  }
+
+  createChatRoom(chatRoomUuid, sellerNickname, message) async {
+    final ProfileRepository profileRepository = ProfileRepository();
+    SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
+    UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    String messageUuid = Uuid().v4();
+    chatRoom.messageList.add(Message(
+      messageUuid: messageUuid,
+      userId: userGlobalInfoController.userId,
+      writeDatetime: DateTime.now(),
+      isRead: false,
+      message: message,
+    ));
+    chatRoom.isRegistered = true;
+    chatRoomList.remove(chatRoom);
+    chatRoomList.insert(0, chatRoom);
+    chatRoomList.refresh();
+    ChattingSocketSingleton().createChatRoom(chatRoomUuid, sellerProfile.sellerId, message, messageUuid, sellerProfile.userId);
+  }
+
   getChatRoom(chatRoomUuid) {
     for (final chatRoom in chatRoomList.value) {
       if (chatRoom.chatRoomUuid == chatRoomUuid) {
+        return chatRoom;
+      }
+    }
+  }
+
+  getChatRoomByOpponentNickname(nickname) {
+    for (final chatRoom in chatRoomList.value) {
+      if (chatRoom.opponentNickname == nickname) {
         return chatRoom;
       }
     }
