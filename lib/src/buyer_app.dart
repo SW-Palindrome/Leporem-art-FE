@@ -23,7 +23,6 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     Get.lazyPut(() => BuyerSearchController());
     Get.lazyPut(() => BuyerHomeController());
     Get.lazyPut(() => BuyerProfileController());
-    Get.lazyPut(() => MessageController());
     return Obx(() {
       switch (controller.selectedBuyerIndex.value) {
         case 0:

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_order_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
@@ -199,6 +197,14 @@ class MessageDetailScreen extends GetView<MessageController> {
                         decoration: InputDecoration(
                           suffix: InkWell(
                             onTap: () async {
+                              ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
+                              if (!chatRoom.isRegistered) {
+                                await controller.createChatRoom(
+                                    Get.arguments['chatRoomUuid'],
+                                    chatRoom.opponentNickname,
+                                    _textEditingController.text);
+                                _textEditingController.clear();
+                              }
                               await controller.sendMessage(
                                   Get.arguments['chatRoomUuid'],
                                   _textEditingController.text);

@@ -25,12 +25,12 @@ class ChattingSocketSingleton {
       _authenticate();
     });
     _socket.on('receive_message', (data) {
-      MessageController buyerMessageController = Get.find<MessageController>();
-      buyerMessageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
+      MessageController messageController = Get.find<MessageController>();
+      messageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
     });
     _socket.on('message_registered', (data) {
-      MessageController buyerMessageController = Get.find<MessageController>();
-      buyerMessageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
+      MessageController messageController = Get.find<MessageController>();
+      messageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
     });
   }
 
@@ -48,6 +48,18 @@ class ChattingSocketSingleton {
     _socket.emit('send_message', {
       'chat_room_uuid': chatRoomUuid,
       'opponent_user_id': opponentUserId,
+      'message': message,
+      'message_uuid': messageUuid,
+    });
+  }
+
+  createChatRoom(chatRoomUuid, sellerId, message, messageUuid) async {
+    if (!isAuthenticated) {
+      await _authenticate();
+    }
+    _socket.emit('create_chat_room', {
+      'chat_room_uuid': chatRoomUuid,
+      'seller_id': sellerId,
       'message': message,
       'message_uuid': messageUuid,
     });

@@ -20,6 +20,7 @@ class ChatRoom {
   final String opponentNickname;
   final String opponentProfileImageUrl;
   late final bool isBuyerRoom;
+  bool isRegistered;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];
@@ -30,6 +31,7 @@ class ChatRoom {
     required this.opponentNickname,
     required this.opponentProfileImageUrl,
     required this.messageList,
+    this.isRegistered = true,
   });
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
@@ -52,11 +54,17 @@ class ChatRoom {
     );
   }
 
-  DateTime get lastMessageDatetime {
+  DateTime? get lastMessageDatetime {
+    if (messageList.isEmpty) {
+      return null;
+    }
     return messageList.last.writeDatetime;
   }
 
   String get lastMessage {
+    if (messageList.isEmpty) {
+      return '';
+    }
     return messageList.last.message;
   }
 }

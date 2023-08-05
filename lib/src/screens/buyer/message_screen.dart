@@ -155,8 +155,8 @@ class MessageScreen extends GetView<MessageController> {
                     fontWeight: FontWeight.w700)),
             SizedBox(width: 6),
             Text(
-                DateFormat('aa hh:mm', 'ko')
-                    .format(chatRoom.lastMessageDatetime),
+                (chatRoom.lastMessageDatetime == null) ? '-': DateFormat('aa hh:mm', 'ko')
+                    .format(chatRoom.lastMessageDatetime ?? DateTime.now()),
                 style: TextStyle(
                     fontSize: 11,
                     fontFamily: FontPalette.pretenderd,
