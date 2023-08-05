@@ -36,7 +36,7 @@ class ChattingSocketSingleton {
       MessageController messageController = Get.find<MessageController>();
       // TODO: 채팅 방 생성 시 채팅서버에서 데이터 처리
       messageController.fetch();
-    }
+    });
   }
 
   _authenticate() async {
@@ -58,7 +58,7 @@ class ChattingSocketSingleton {
     });
   }
 
-  createChatRoom(chatRoomUuid, sellerId, message, messageUuid) async {
+  createChatRoom(chatRoomUuid, sellerId, message, messageUuid, opponentUserId) async {
     if (!isAuthenticated) {
       await _authenticate();
     }
@@ -67,6 +67,7 @@ class ChattingSocketSingleton {
       'seller_id': sellerId,
       'message': message,
       'message_uuid': messageUuid,
+      'opponent_user_id': opponentUserId,
     });
   }
 }

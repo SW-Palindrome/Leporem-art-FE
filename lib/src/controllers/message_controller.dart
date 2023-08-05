@@ -23,11 +23,11 @@ class MessageController extends GetxController {
 
   Future<void> fetch() async {
     isLoading.value = true;
-    chatRoomList.clear();
     List<ChatRoom> fetchedBuyerChatRoomList =
         await _messageRepository.fetchBuyerChatRooms();
     List<ChatRoom> fetchedSellerChatRoomList =
       await _messageRepository.fetchSellerChatRooms();
+    chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
     isLoading.value = false;
@@ -118,7 +118,7 @@ class MessageController extends GetxController {
     chatRoomList.remove(chatRoom);
     chatRoomList.insert(0, chatRoom);
     chatRoomList.refresh();
-    ChattingSocketSingleton().createChatRoom(chatRoomUuid, sellerProfile.sellerId, message, messageUuid);
+    ChattingSocketSingleton().createChatRoom(chatRoomUuid, sellerProfile.sellerId, message, messageUuid, sellerProfile.userId);
   }
 
   getChatRoom(chatRoomUuid) {
