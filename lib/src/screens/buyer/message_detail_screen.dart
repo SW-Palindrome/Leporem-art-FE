@@ -163,12 +163,17 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                     ),
                   ),
                   SizedBox(height: 4),
-                  Text(
-                    '가로등 빛 받은 나뭇잎 컵',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
-                      fontSize: 12,
+                  SizedBox(
+                    width: Get.width * 0.4,
+                    child: Text(
+                      '가로등 빛 받은 나뭇잎 컵가로등 빛 받은 나뭇잎 컵',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -218,7 +223,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: Get.width * 0.6,
+                  maxWidth: Get.width * 0.8,
                 ),
                 child: Text(
                   message.message,
