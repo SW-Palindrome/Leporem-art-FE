@@ -21,6 +21,7 @@ class BuyerMessageController extends GetxController {
 
   Future<void> fetch() async {
     isLoading.value = true;
+    chatRoomList.clear();
     List<ChatRoom> fetchedBuyerChatRoomList =
         await _messageRepository.fetchBuyerChatRooms();
     List<ChatRoom> fetchedSellerChatRoomList =
