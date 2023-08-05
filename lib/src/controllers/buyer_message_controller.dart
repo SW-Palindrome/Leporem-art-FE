@@ -50,11 +50,11 @@ class BuyerMessageController extends GetxController {
         chatRoomUuid, opponentUserId, messageInfo.message, messageInfo.messageUuid);
   }
 
-  registerMessage(chatRoomUuid, messageTempId, messageUuid) {
+  registerMessage(chatRoomUuid, messageUuid) {
     ChatRoom sendChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid);
     Message tempMessage = sendChatRoom.tempMessageList
-        .firstWhere((message) => message.messageUuid == messageTempId);
+        .firstWhere((message) => message.messageUuid == messageUuid);
     sendChatRoom.tempMessageList.remove(tempMessage);
     tempMessage.messageUuid = messageUuid.toString();
     sendChatRoom.messageList.add(tempMessage);

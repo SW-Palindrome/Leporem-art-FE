@@ -30,7 +30,7 @@ class ChattingSocketSingleton {
     });
     _socket.on('message_registered', (data) {
       BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
-      buyerMessageController.registerMessage(data['chat_room_uuid'], data['message_temp_id'], data['message_uuid']);
+      buyerMessageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
     });
   }
 
