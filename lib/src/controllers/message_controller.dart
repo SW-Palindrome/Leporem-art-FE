@@ -6,7 +6,7 @@ import '../models/message.dart';
 import '../repositories/message_repository.dart';
 import '../utils/chatting_socket_singleton.dart';
 
-class BuyerMessageController extends GetxController {
+class MessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;

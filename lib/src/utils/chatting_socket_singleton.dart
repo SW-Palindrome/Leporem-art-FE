@@ -3,7 +3,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../configs/login_config.dart';
-import '../controllers/buyer_message_controller.dart';
+import '../controllers/message_controller.dart';
 
 
 class ChattingSocketSingleton {
@@ -25,11 +25,11 @@ class ChattingSocketSingleton {
       _authenticate();
     });
     _socket.on('receive_message', (data) {
-      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
+      MessageController buyerMessageController = Get.find<MessageController>();
       buyerMessageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
     });
     _socket.on('message_registered', (data) {
-      BuyerMessageController buyerMessageController = Get.find<BuyerMessageController>();
+      MessageController buyerMessageController = Get.find<MessageController>();
       buyerMessageController.registerMessage(data['chat_room_uuid'], data['message_uuid']);
     });
   }

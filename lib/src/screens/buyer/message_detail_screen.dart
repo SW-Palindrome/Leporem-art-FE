@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:leporemart/src/controllers/buyer_message_controller.dart';
+import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_order_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
@@ -13,7 +13,7 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import '../../models/message.dart';
 import '../../widgets/my_app_bar.dart';
 
-class MessageDetailScreen extends GetView<BuyerMessageController> {
+class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
   int _currentUserId = -1;
   final TextEditingController _textEditingController = TextEditingController();
