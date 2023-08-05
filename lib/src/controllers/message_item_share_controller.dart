@@ -29,7 +29,7 @@ class MessageItemShareController extends GetxController {
         List<MessageItem> fetchedMessageItems =
             await _messageItemRepository.fetchShareMessageItem(currentPage,
                 nickname: Get.find<BuyerMessageController>()
-                    .getChatRoom(Get.arguments['chatRoomId'])
+                    .getChatRoom(Get.arguments['chatRoomUuid'])
                     .opponentNickname);
 
         items.addAll(fetchedMessageItems);

@@ -112,7 +112,7 @@ class MessageScreen extends GetView<BuyerMessageController> {
       ),
       onTap: () {
         Get.to(() => MessageDetailScreen(), arguments: {
-          'chatRoomId': chatRoom.chatRoomId,
+          'chatRoomUuid': chatRoom.chatRoomUuid,
         });
       },
     );
