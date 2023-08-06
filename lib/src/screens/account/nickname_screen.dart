@@ -39,7 +39,7 @@ class NicknameScreen extends GetView<NicknameController> {
                 onFocusChange: (focused) {
                   logAnalytics(
                       name: 'signup',
-                      parameters: {'action': 'nickname-form-focus'});
+                      parameters: {'action': 'nickname_form_focus'});
                   controller.setFocus(focused);
                   if (!focused) {
                     controller
@@ -94,7 +94,7 @@ class NicknameScreen extends GetView<NicknameController> {
                     onFieldSubmitted: (text) {
                       logAnalytics(name: 'signup', parameters: {
                         'step': 'agreement',
-                        'action': 'nickname-submit: $text'
+                        'action': 'nickname_submit: $text'
                       });
                     },
                   ),
@@ -125,14 +125,14 @@ class NicknameScreen extends GetView<NicknameController> {
                             onCloseButtonPressed: () {
                               logAnalytics(name: 'signup', parameters: {
                                 'step': 'nickname',
-                                'action': 'next-button'
+                                'action': 'next_button'
                               });
                               Get.offAll(AccountType());
                             },
                             onLeftButtonPressed: () {
                               logAnalytics(name: 'signup', parameters: {
                                 'step': 'nickname',
-                                'action': 'next-button'
+                                'action': 'next_button'
                               });
                               Get.offAll(AccountType());
                             },

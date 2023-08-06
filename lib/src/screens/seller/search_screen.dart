@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
 class SellerSearchScreen extends GetView<SellerSearchController> {
@@ -47,7 +48,12 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
                 ),
               ),
               GestureDetector(
-                onTap: () => controller.clearRecentSearches(),
+                onTap: () {
+                  logAnalytics(
+                      name: "seller_search",
+                      parameters: {"action": "delete_all_recent_searches"});
+                  controller.clearRecentSearches();
+                },
                 child: Text(
                   '전체 삭제',
                   style: TextStyle(
@@ -70,6 +76,10 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
               for (int i = 0; i < controller.recentSearches.length; i++)
                 GestureDetector(
                   onTap: () async {
+                    logAnalytics(name: "seller_search", parameters: {
+                      "action": "recent_search",
+                      "keyword": controller.recentSearches[i]
+                    });
                     controller.searchController.text =
                         controller.recentSearches[i];
                     controller.isSearching.value = true;
@@ -98,8 +108,14 @@ class SellerSearchScreen extends GetView<SellerSearchController> {
                         ),
                         SizedBox(width: 5),
                         GestureDetector(
-                          onTap: () => controller
-                              .removeRecentSearch(controller.recentSearches[i]),
+                          onTap: () {
+                            logAnalytics(name: "seller_search", parameters: {
+                              "action": "delete_recent_search",
+                              "keyword": controller.recentSearches[i]
+                            });
+                            controller.removeRecentSearch(
+                                controller.recentSearches[i]);
+                          },
                           child: SvgPicture.asset(
                             'assets/icons/cancel.svg',
                             colorFilter: ColorFilter.mode(

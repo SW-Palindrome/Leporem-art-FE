@@ -40,17 +40,13 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               icons: ['list', 'heart_outline', 'history'],
               onTaps: [
                 () {
-                  logAnalytics(
-                      name: 'buyer-profile',
-                      parameters: {'action': 'order-list'});
+                  logAnalytics(name: 'enter_order_list');
                   Get.to(BuyerOrderListScreen());
                   Get.put(BuyerOrderListController());
                 },
                 () {},
                 () {
-                  logAnalytics(
-                      name: 'buyer-profile',
-                      parameters: {'action': 'recent-item'});
+                  logAnalytics(name: 'enter_recent_item');
                   Get.to(RecentItemScreen());
                   Get.put(RecentItemController());
                 }
@@ -75,9 +71,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 icons: ['mail'],
                 onTaps: [
                   () {
-                    logAnalytics(
-                        name: 'buyer-profile',
-                        parameters: {'action': 'seller-signup'});
+                    logAnalytics(name: 'enter_seller_signup');
                     Get.to(EmailScreen());
                     Get.put(EmailController());
                   },
@@ -143,9 +137,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
-                    logAnalytics(
-                        name: 'buyer-profile',
-                        parameters: {'action': 'profile-edit'});
+                    logAnalytics(name: 'enter_buyer_profile_edit');
                     Get.to(BuyerProfileEditScreen());
                     Get.put(BuyerProfileEditController());
                   },
@@ -214,9 +206,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
           if (controller.buyerProfile.value.isSeller)
             GestureDetector(
               onTap: () async {
-                logAnalytics(
-                    name: 'buyer-profile',
-                    parameters: {'action': 'seller-change'});
+                logAnalytics(name: 'swap_seller');
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
                 Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());

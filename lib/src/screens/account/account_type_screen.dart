@@ -111,7 +111,7 @@ class AccountType extends GetView<AccountTypeController> {
                         value: controller.isSelect.value,
                         onTap: () {
                           logAnalytics(name: 'signup', parameters: {
-                            'step': 'account-type',
+                            'step': 'account_type',
                             'action': 'buyer'
                           });
                           Get.offAll(BuyerApp());
@@ -122,7 +122,7 @@ class AccountType extends GetView<AccountTypeController> {
                         value: controller.isSelect.value,
                         onTap: () {
                           logAnalytics(name: 'signup', parameters: {
-                            'step': 'account-type',
+                            'step': 'account_type',
                             'action': 'seller'
                           });
                           Get.to(EmailScreen());

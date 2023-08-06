@@ -89,7 +89,7 @@ class AgreementScreen extends GetView<AgreementController> {
                   onTap: () {
                     logAnalytics(name: 'signup', parameters: {
                       'step': 'agreement',
-                      'action': 'next-button',
+                      'action': 'next_button',
                     });
                     Get.to(NicknameScreen());
                   },

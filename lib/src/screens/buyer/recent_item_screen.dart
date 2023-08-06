@@ -76,7 +76,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
     return GestureDetector(
       onTap: () {
         logAnalytics(
-            name: 'recent-item', parameters: {'action': 'total-delete'});
+            name: 'recent_item', parameters: {'action': 'total_delete'});
         controller.totalDelete();
       },
       child: Container(
@@ -112,8 +112,8 @@ class RecentItemScreen extends GetView<RecentItemController> {
   _recentItem(int index) {
     return GestureDetector(
       onTap: () async {
-        logAnalytics(name: 'recent-item', parameters: {
-          'action': 'item-detail ${controller.items[index].id}'
+        logAnalytics(name: 'recent_item', parameters: {
+          'action': 'item_detail ${controller.items[index].id}'
         });
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
@@ -159,7 +159,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          logAnalytics(name: 'recent-item', parameters: {
+                          logAnalytics(name: 'recent_item', parameters: {
                             'action': 'delete ${controller.items[index].id}'
                           });
                           await controller.delete(controller.items[index].id);
@@ -213,7 +213,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
                       controller.items[index].isLiked
                           ? GestureDetector(
                               onTap: () async {
-                                logAnalytics(name: 'recent-item', parameters: {
+                                logAnalytics(name: 'recent_item', parameters: {
                                   'action':
                                       'unlike ${controller.items[index].id}'
                                 });
@@ -230,7 +230,7 @@ class RecentItemScreen extends GetView<RecentItemController> {
                             )
                           : GestureDetector(
                               onTap: () async {
-                                logAnalytics(name: 'recent-item', parameters: {
+                                logAnalytics(name: 'recent_item', parameters: {
                                   'action': 'like ${controller.items[index].id}'
                                 });
                                 await controller

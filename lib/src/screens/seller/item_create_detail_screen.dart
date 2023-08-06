@@ -8,6 +8,7 @@ import 'package:leporemart/src/screens/seller/home_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -50,6 +51,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   text: "작품 등록하기",
                   value: controller.isValidCreate(),
                   onTap: () async {
+                    logAnalytics(name: "create_item");
                     await controller.createItem();
                     Get.offAll(SellerApp());
                   },
@@ -85,7 +87,10 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => controller.selectImages(),
+                  onTap: () {
+                    logAnalytics(name: "item_create_select_image");
+                    controller.selectImages();
+                  },
                   child: DottedBorder(
                     borderType: BorderType.RRect,
                     color: ColorPalette.grey_4,
@@ -157,7 +162,11 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                               top: 10,
                               right: 10,
                               child: GestureDetector(
-                                onTap: () => controller.removeImage(i),
+                                onTap: () {
+                                  logAnalytics(
+                                      name: "item_create_remove_image");
+                                  controller.removeImage(i);
+                                },
                                 child: CircleAvatar(
                                   backgroundColor: ColorPalette.black,
                                   radius: 10,
@@ -208,7 +217,10 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
           () => Row(
             children: [
               GestureDetector(
-                onTap: () => controller.selectVideo(),
+                onTap: () {
+                  logAnalytics(name: "item_create_select_video");
+                  controller.selectVideo();
+                },
                 child: DottedBorder(
                   borderType: BorderType.RRect,
                   color: ColorPalette.grey_4,
@@ -282,7 +294,11 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                               top: 10,
                               right: 10,
                               child: GestureDetector(
-                                onTap: () => controller.removeVideo(0),
+                                onTap: () {
+                                  logAnalytics(
+                                      name: "item_create_remove_video");
+                                  controller.removeVideo(0);
+                                },
                                 child: CircleAvatar(
                                   backgroundColor: ColorPalette.black,
                                   radius: 10,
@@ -330,6 +346,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         ),
         GestureDetector(
           onTap: () {
+            logAnalytics(name: "item_create_select_category");
             Get.bottomSheet(
               _searchSheetWidget(),
               backgroundColor: Colors.white,
@@ -386,6 +403,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   SizedBox(width: 5),
                   GestureDetector(
                     onTap: () {
+                      logAnalytics(name: "item_create_reset_category");
                       controller.resetSelectedCategoryType();
                     },
                     child: SvgPicture.asset(
@@ -465,7 +483,12 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
       children: [
         for (int i = 0; i < controller.categoryTypes.length; i++)
           GestureDetector(
-            onTap: () => controller.changeSelectedCategoryType(i),
+            onTap: () {
+              logAnalytics(
+                  name: "item_create_select_category",
+                  parameters: {"category": controller.categoryTypes[i]});
+              controller.changeSelectedCategoryType(i);
+            },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(

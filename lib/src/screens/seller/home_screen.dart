@@ -9,6 +9,7 @@ import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class SellerHomeScreen extends GetView<SellerHomeController> {
@@ -72,6 +73,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           SizedBox(height: 24),
           GestureDetector(
             onTap: () {
+              logAnalytics(name: "enter_item_create");
               Get.to(ItemCreateScreen());
             },
             child: Container(
@@ -151,11 +153,13 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                           if (controller
                                   .scrollController.position.extentAfter ==
                               0) {
+                            logAnalytics(name: 'seller_scroll_pagination');
                             controller.fetch(isPagination: true);
                           }
                           if (controller
                                   .scrollController.position.extentBefore ==
                               0) {
+                            logAnalytics(name: 'seller_scroll_refresh');
                             controller.pageReset();
                           }
                         }
@@ -181,6 +185,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           right: Get.width * 0.05,
           child: GestureDetector(
             onTap: () {
+              logAnalytics(name: "enter_item_create");
               Get.to(ItemCreateScreen());
             },
             child: Container(
@@ -226,6 +231,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
   _searchDropDown() {
     return GestureDetector(
       onTap: () {
+        logAnalytics(
+            name: "seller_search_filter_change",
+            parameters: {"search_type": "sort"});
         Get.bottomSheet(
           _searchSheetWidget(),
           backgroundColor: Colors.white,
@@ -273,7 +281,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () => controller.changeSelectedSortType(0),
+          onTap: () {
+            logAnalytics(
+                name: "seller_sort_filter_change",
+                parameters: {"sort_type": "recent"});
+            controller.changeSelectedSortType(0);
+          },
           child: Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -304,7 +317,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         ),
         Divider(color: ColorPalette.grey_2),
         GestureDetector(
-          onTap: () => controller.changeSelectedSortType(1),
+          onTap: () {
+            logAnalytics(
+                name: "seller_sort_filter_change",
+                parameters: {"sort_type": "like"});
+            controller.changeSelectedSortType(1);
+          },
           child: Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -335,7 +353,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         ),
         Divider(color: ColorPalette.grey_2),
         GestureDetector(
-          onTap: () => controller.changeSelectedSortType(2),
+          onTap: () {
+            logAnalytics(
+                name: "seller_sort_filter_change",
+                parameters: {"sort_type": "price_low"});
+            controller.changeSelectedSortType(2);
+          },
           child: Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -366,7 +389,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         ),
         Divider(color: ColorPalette.grey_2),
         GestureDetector(
-          onTap: () => controller.changeSelectedSortType(3),
+          onTap: () {
+            logAnalytics(
+                name: "seller_sort_filter_change",
+                parameters: {"sort_type": "price_high"});
+            controller.changeSelectedSortType(3);
+          },
           child: Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Row(
@@ -405,6 +433,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
         Expanded(
           child: GestureDetector(
             onTap: () {
+              logAnalytics(name: "seller_filter_reset");
               controller.resetSelected();
               Get.back();
             },
@@ -454,6 +483,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           text: '적용하기',
           value: controller.isResetValid(),
           onTap: () {
+            logAnalytics(name: "seller_filter_apply");
             controller.applyFilter();
             Get.back();
           },
@@ -500,6 +530,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
   _itemWidget(int index) {
     return GestureDetector(
       onTap: () {
+        logAnalytics(
+            name: "enter_seller_item_detail",
+            parameters: {"item_id": controller.items[index].id});
         Get.to(SellerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(SellerItemDetailController());

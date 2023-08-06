@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/item_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/screens/seller/item_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
@@ -23,6 +24,9 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
           Get.back();
         },
         onTapSecondActionIcon: () {
+          logAnalytics(
+              name: "enter_item_edit",
+              parameters: {"item_id": controller.itemDetail.value.id});
           Get.to(ItemEditScreen());
           Get.put(ItemEditController());
         },
@@ -320,6 +324,9 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      logAnalytics(name: "decrease_amount", parameters: {
+                        "item_id": controller.itemDetail.value.id
+                      });
                       controller.decreaseAmount();
                     },
                     child: Container(
@@ -354,6 +361,9 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                   SizedBox(width: 8),
                   GestureDetector(
                     onTap: () {
+                      logAnalytics(name: "increase_amount", parameters: {
+                        "item_id": controller.itemDetail.value.id
+                      });
                       controller.increaseAmount();
                     },
                     child: Container(
