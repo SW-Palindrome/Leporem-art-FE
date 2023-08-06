@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _logEvent(String eventName) async {
-    logAnalytics(name: "Login", parameters: {"로그인 방법": eventName});
+    logAnalytics(name: "login", parameters: {"로그인 방법": eventName});
   }
 
   @override

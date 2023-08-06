@@ -42,7 +42,8 @@ class MyBottomNavigationbarController extends GetxController {
     }
 
     if (kDebugMode) {
-      logAnalytics(name: "Page View", parameters: {"Page Name": pageStr});
+      logAnalytics(
+          name: "buyer_index_change", parameters: {"Page Name": pageStr});
     }
   }
 
@@ -66,7 +67,8 @@ class MyBottomNavigationbarController extends GetxController {
     }
 
     if (kDebugMode) {
-      logAnalytics(name: "Page View", parameters: {"Page Name": pageStr});
+      logAnalytics(
+          name: "seller_index_change", parameters: {"Page Name": pageStr});
     }
   }
 }

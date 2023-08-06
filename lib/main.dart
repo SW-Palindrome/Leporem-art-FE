@@ -57,13 +57,15 @@ void main() async {
     AmplitudeConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
 
-    SentryFlutter.init(
-      (options) {
-        options.dsn = dotenv.get('GLITCHTIP_DSN');
-        options.attachStacktrace = true;
-      },
-      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-    );
+    // SentryFlutter.init(
+    //   (options) {
+    //     options.dsn = dotenv.get('GLITCHTIP_DSN');
+    //     options.attachStacktrace = true;
+    //   },
+    //   appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+    // );
+
+    runApp(MyApp(isLoginProceed: isLoginProceed));
   } else {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
