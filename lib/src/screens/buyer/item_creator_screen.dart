@@ -126,7 +126,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () async {
-                      ChatRoom chatRoom = await controller.getOrCreateChatRoom()
+                      ChatRoom chatRoom = await controller.getOrCreateChatRoom();
                       Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
                     },
                     child: Text(
