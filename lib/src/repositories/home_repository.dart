@@ -49,6 +49,43 @@ class HomeRepository {
     }
   }
 
+  Future<List<BuyerHomeItem>> fetchGuestHomeItems(
+    int page, {
+    String? keyword,
+    String? ordering,
+    String? category,
+    String? price,
+    isPagination = false,
+  }) async {
+    try {
+      final response = await DioSingleton.dio.get(
+        '/items/guest',
+        queryParameters: {
+          'page': page,
+          'search': keyword,
+          'ordering': ordering,
+          'category': category,
+          'price': price,
+        },
+      );
+      //rseponse의 message가 EmptyPage라면 데이터가 없는 것이므로 빈 리스트를 반환, 또한 pagination용 요청이면 currentPage를 1 감소시킴
+      if (response.data['message'] == 'EmptyPage') {
+        if (isPagination) Get.find<BuyerHomeController>().currentPage--;
+        return [];
+      }
+      final data = response.data;
+      //items를 리스트에 넣고 파싱
+      final List<dynamic> itemsData = data['items'];
+      // 아이템 데이터를 변환하여 리스트로 생성
+      final List<BuyerHomeItem> items =
+          itemsData.map((json) => BuyerHomeItem.fromJson(json)).toList();
+      return items;
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching buyer home items in repository: $e');
+    }
+  }
+
   Future<List<BuyerHomeItem>> fetchBuyerCreatorItems(
     int page, {
     String? nickname,
