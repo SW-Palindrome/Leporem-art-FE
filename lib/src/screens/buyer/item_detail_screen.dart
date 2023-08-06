@@ -59,30 +59,32 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
         children: [
           Row(
             children: [
-              Obx(
-                () => GestureDetector(
-                  onTap: controller.itemDetail.value.isLiked
-                      ? () async {
-                          await controller.unlike();
-                        }
-                      : () async {
-                          await controller.like();
-                        },
-                  child: Obx(
-                    () => SvgPicture.asset(
-                      controller.itemDetail.value.isLiked
-                          ? 'assets/icons/heart_fill.svg'
-                          : 'assets/icons/heart_outline.svg',
-                      width: 30,
-                      colorFilter: ColorFilter.mode(
-                          controller.itemDetail.value.isLiked
-                              ? ColorPalette.purple
-                              : ColorPalette.grey_4,
-                          BlendMode.srcIn),
+              if (Get.find<UserGlobalInfoController>().userType ==
+                  UserType.member)
+                Obx(
+                  () => GestureDetector(
+                    onTap: controller.itemDetail.value.isLiked
+                        ? () async {
+                            await controller.unlike();
+                          }
+                        : () async {
+                            await controller.like();
+                          },
+                    child: Obx(
+                      () => SvgPicture.asset(
+                        controller.itemDetail.value.isLiked
+                            ? 'assets/icons/heart_fill.svg'
+                            : 'assets/icons/heart_outline.svg',
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                            controller.itemDetail.value.isLiked
+                                ? ColorPalette.purple
+                                : ColorPalette.grey_4,
+                            BlendMode.srcIn),
+                      ),
                     ),
                   ),
                 ),
-              ),
               SizedBox(width: 10),
               Obx(
                 () => Text(
@@ -103,7 +105,9 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           NextButton(
             text: "채팅하기",
             value: true,
-            onTap: () {},
+            onTap: () {
+              induceMembership(() => null);
+            },
             width: Get.width * 0.35,
           ),
         ],

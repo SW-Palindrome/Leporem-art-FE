@@ -4,6 +4,11 @@ import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
@@ -66,6 +71,11 @@ class LoginScreen extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () async {
+        Get.lazyPut(() => MyBottomNavigationbarController());
+        Get.lazyPut(() => AgreementController());
+        Get.lazyPut(() => AccountTypeController());
+        Get.lazyPut(() => EmailController());
+        Get.lazyPut(() => NicknameController());
         switch (icon) {
           case 'kakao':
             Get.find<UserGlobalInfoController>().userType = UserType.member;

@@ -1,6 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -65,6 +70,11 @@ Future<bool> isSignup() async {
           Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];
       userGlobalInfoController.userType = UserType.member;
+      Get.lazyPut(() => MyBottomNavigationbarController());
+      Get.lazyPut(() => AgreementController());
+      Get.lazyPut(() => AccountTypeController());
+      Get.lazyPut(() => EmailController());
+      Get.lazyPut(() => NicknameController());
       return true;
     }
     return false;

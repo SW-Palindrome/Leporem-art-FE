@@ -31,11 +31,6 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   Get.put(UserGlobalInfoController());
-  Get.lazyPut(() => MyBottomNavigationbarController());
-  Get.lazyPut(() => AgreementController());
-  Get.lazyPut(() => AccountTypeController());
-  Get.lazyPut(() => EmailController());
-  Get.lazyPut(() => NicknameController());
 
   await initializeDateFormatting();
 
