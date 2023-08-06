@@ -49,7 +49,7 @@ class ItemDetail {
       images: List<String>.from(json['images']),
       category: List<String>.from(json['category']),
       shorts: json['shorts'],
-      isLiked: json['like'],
+      isLiked: json['is_liked'],
       width: json['width'],
       depth: json['depth'],
       height: json['height'],
