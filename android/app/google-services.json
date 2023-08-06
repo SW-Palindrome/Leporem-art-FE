@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:762662226057:android:e1fd5308002e8526239e58",
+        "mobilesdk_app_id": "1:762662226057:android:a8e9e3d27891c823239e58",
         "android_client_info": {
           "package_name": "com.palindrome.leporemart"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "762662226057-8m113tupr57s6jp93n4u4svob4o6vvge.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "762662226057-dvhleu55pr1sfre5t6dl48pqecrgoned.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.art.leporem.leporemart"
+              }
             }
           ]
         }

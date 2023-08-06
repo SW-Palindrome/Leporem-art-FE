@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/review_controller.dart';
 import 'package:leporemart/src/screens/buyer/review_compelete_screen.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -34,6 +35,9 @@ class ReviewDetailScreen extends GetView<ReviewController> {
                   text: '후기 작성하기',
                   value: controller.description.value != '',
                   onTap: () async {
+                    logAnalytics(
+                        name: 'review',
+                        parameters: {'action': 'review-complete'});
                     await controller.createReview();
                   },
                 ),
@@ -71,28 +75,35 @@ class ReviewDetailScreen extends GetView<ReviewController> {
               width: 1,
             ),
           ),
-          child: TextField(
-            maxLength: 255,
-            maxLines: null,
-            controller: controller.descriptionController,
-            onChanged: (value) {
-              controller.description.value = value;
+          child: Focus(
+            onFocusChange: (value) {
+              logAnalytics(
+                  name: 'review',
+                  parameters: {'action': 'description-form-focus'});
             },
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontFamily: "PretendardVariable",
-              fontSize: 14.0,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '구매하신 작품의 후기를 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
-              hintMaxLines: 2,
-              hintStyle: TextStyle(
-                color: ColorPalette.grey_4,
-                fontWeight: FontWeight.w600,
+            child: TextField(
+              maxLength: 255,
+              maxLines: null,
+              controller: controller.descriptionController,
+              onChanged: (value) {
+                controller.description.value = value;
+              },
+              style: TextStyle(
+                color: ColorPalette.black,
                 fontFamily: "PretendardVariable",
-                fontStyle: FontStyle.normal,
                 fontSize: 14.0,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '구매하신 작품의 후기를 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
+                hintMaxLines: 2,
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
               ),
             ),
           ),

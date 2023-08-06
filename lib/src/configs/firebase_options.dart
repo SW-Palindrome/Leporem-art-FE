@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB3S1RqesVqsyMc2F5-Xl7pkNPV0A0gCx4',
-    appId: '1:762662226057:android:e1fd5308002e8526239e58',
+    appId: '1:762662226057:android:a8e9e3d27891c823239e58',
     messagingSenderId: '762662226057',
     projectId: 'leporem-art-fe',
     storageBucket: 'leporem-art-fe.appspot.com',
@@ -59,12 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDoSBTSHu8Gv4S7r3ZkHM8SV9Riqb-uWOU',
-    appId: '1:762662226057:ios:5682a09db14cfd84239e58',
+    appId: '1:762662226057:ios:0eca3e294f3274b7239e58',
     messagingSenderId: '762662226057',
     projectId: 'leporem-art-fe',
     storageBucket: 'leporem-art-fe.appspot.com',
-    iosClientId:
-        '762662226057-dvhleu55pr1sfre5t6dl48pqecrgoned.apps.googleusercontent.com',
+    iosClientId: '762662226057-7c2d19p4rbkhi2gs4cb12ot8cae55nh0.apps.googleusercontent.com',
     iosBundleId: 'com.palindrome.leporemart',
   );
 }

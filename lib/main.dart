@@ -53,17 +53,19 @@ void main() async {
     }
   });
   bool isLoginProceed = await isSignup();
-  if (!kDebugMode) {
+  if (kDebugMode) {
     AmplitudeConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
 
-    SentryFlutter.init(
-      (options) {
-        options.dsn = dotenv.get('GLITCHTIP_DSN');
-        options.attachStacktrace = true;
-      },
-      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-    );
+    // SentryFlutter.init(
+    //   (options) {
+    //     options.dsn = dotenv.get('GLITCHTIP_DSN');
+    //     options.attachStacktrace = true;
+    //   },
+    //   appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+    // );
+
+    runApp(MyApp(isLoginProceed: isLoginProceed));
   } else {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: isLoginProceed ? BuyerApp() : LoginScreen(),
       navigatorObservers: [
-        if (!kDebugMode)
+        if (kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );

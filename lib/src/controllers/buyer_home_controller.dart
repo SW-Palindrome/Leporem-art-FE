@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/home_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
@@ -100,16 +102,31 @@ class BuyerHomeController extends GetxController {
           '${priceRange[displayedPriceRange.value.start.toInt()]},${priceRange[displayedPriceRange.value.end.toInt()]}';
 
       if (isPagination!) currentPage++;
-      final List<BuyerHomeItem> fetchedItems =
-          await _homeRepository.fetchBuyerHomeItems(
-        currentPage,
-        keyword: Get.find<BuyerSearchController>().searchController.text,
-        price: price,
-        category: category,
-        ordering: ordering,
-        isPagination: isPagination,
-      );
-      items.addAll(fetchedItems);
+
+      if (Get.find<UserGlobalInfoController>().userType == UserType.member) {
+        final List<BuyerHomeItem> fetchedItems =
+            await _homeRepository.fetchBuyerHomeItems(
+          currentPage,
+          keyword: Get.find<BuyerSearchController>().searchController.text,
+          price: price,
+          category: category,
+          ordering: ordering,
+          isPagination: isPagination,
+        );
+        items.addAll(fetchedItems);
+      } else if (Get.find<UserGlobalInfoController>().userType ==
+          UserType.guest) {
+        final List<BuyerHomeItem> fetchedItems =
+            await _homeRepository.fetchGuestHomeItems(
+          currentPage,
+          keyword: Get.find<BuyerSearchController>().searchController.text,
+          price: price,
+          category: category,
+          ordering: ordering,
+          isPagination: isPagination,
+        );
+        items.addAll(fetchedItems);
+      }
       FlutterNativeSplash.remove();
     } catch (e) {
       // 에러 처리

@@ -11,14 +11,13 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
-import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _logEvent(String eventName) async {
-    await AmplitudeConfig.analytics.logEvent("Login");
-    await FirebaseConfig.analytics.logLogin();
+    logAnalytics(name: "login", parameters: {"로그인 방법": eventName});
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:leporemart/src/controllers/recent_item_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
 class RecentItemScreen extends GetView<RecentItemController> {
@@ -74,6 +75,8 @@ class RecentItemScreen extends GetView<RecentItemController> {
   _deleteButton() {
     return GestureDetector(
       onTap: () {
+        logAnalytics(
+            name: 'recent-item', parameters: {'action': 'total-delete'});
         controller.totalDelete();
       },
       child: Container(
@@ -109,6 +112,9 @@ class RecentItemScreen extends GetView<RecentItemController> {
   _recentItem(int index) {
     return GestureDetector(
       onTap: () async {
+        logAnalytics(name: 'recent-item', parameters: {
+          'action': 'item-detail ${controller.items[index].id}'
+        });
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(BuyerItemDetailController());
@@ -153,6 +159,9 @@ class RecentItemScreen extends GetView<RecentItemController> {
                       ),
                       GestureDetector(
                         onTap: () async {
+                          logAnalytics(name: 'recent-item', parameters: {
+                            'action': 'delete ${controller.items[index].id}'
+                          });
                           await controller.delete(controller.items[index].id);
                         },
                         child: Text(
@@ -204,6 +213,10 @@ class RecentItemScreen extends GetView<RecentItemController> {
                       controller.items[index].isLiked
                           ? GestureDetector(
                               onTap: () async {
+                                logAnalytics(name: 'recent-item', parameters: {
+                                  'action':
+                                      'unlike ${controller.items[index].id}'
+                                });
                                 await controller
                                     .unlike(controller.items[index].id);
                               },
@@ -217,6 +230,9 @@ class RecentItemScreen extends GetView<RecentItemController> {
                             )
                           : GestureDetector(
                               onTap: () async {
+                                logAnalytics(name: 'recent-item', parameters: {
+                                  'action': 'like ${controller.items[index].id}'
+                                });
                                 await controller
                                     .like(controller.items[index].id);
                               },

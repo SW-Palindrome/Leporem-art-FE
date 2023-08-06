@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
 import 'package:leporemart/src/screens/buyer/review_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
@@ -90,6 +91,9 @@ class ReviewStarScreen extends GetView<ReviewController> {
                   () => NextButton(
                       text: '별점 메기기',
                       onTap: () {
+                        logAnalytics(name: 'review', parameters: {
+                          'action': 'star ${controller.star.value}'
+                        });
                         Get.to(ReviewDetailScreen(), arguments: {
                           'order': Get.arguments['order'],
                         });

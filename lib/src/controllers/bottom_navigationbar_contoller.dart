@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/utils/induce_membership.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class MyBottomNavigationbarController extends GetxController {
   static MyBottomNavigationbarController get to => Get.find();
@@ -40,10 +41,9 @@ class MyBottomNavigationbarController extends GetxController {
         break;
     }
 
-    if (!kDebugMode) {
-      AmplitudeConfig.analytics
-          .logEvent("Page View", eventProperties: {"Page Name": pageStr});
-      FirebaseConfig.analytics.logEvent(name: pageStr);
+    if (kDebugMode) {
+      logAnalytics(
+          name: "buyer_index_change", parameters: {"Page Name": pageStr});
     }
   }
 
@@ -66,10 +66,9 @@ class MyBottomNavigationbarController extends GetxController {
         break;
     }
 
-    if (!kDebugMode) {
-      AmplitudeConfig.analytics
-          .logEvent("Page View", eventProperties: {"Page Name": pageStr});
-      FirebaseConfig.analytics.logEvent(name: pageStr);
+    if (kDebugMode) {
+      logAnalytics(
+          name: "seller_index_change", parameters: {"Page Name": pageStr});
     }
   }
 }

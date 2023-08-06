@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
   const BuyerProfileEditScreen({super.key});
@@ -35,6 +36,9 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
             () => GestureDetector(
               onTap: controller.isEditable()
                   ? () {
+                      logAnalytics(
+                          name: 'buyer-profile-edit',
+                          parameters: {'action': 'complete'});
                       controller.edit();
                     }
                   : null,
@@ -94,6 +98,9 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
         Obx(
           () => Focus(
             onFocusChange: (focused) {
+              logAnalytics(
+                  name: 'buyer-profile-edit',
+                  parameters: {'action': 'nickname-form-focus'});
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
@@ -171,6 +178,9 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
           right: 0,
           child: GestureDetector(
             onTap: () {
+              logAnalytics(
+                  name: 'buyer-profile-edit',
+                  parameters: {'action': 'edit-image'});
               controller.selectImage();
             },
             child: Container(

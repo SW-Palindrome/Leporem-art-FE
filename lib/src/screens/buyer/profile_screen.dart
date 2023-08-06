@@ -7,6 +7,7 @@ import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
+import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/recent_item_controller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
@@ -18,6 +19,7 @@ import 'package:leporemart/src/screens/buyer/profile_edit_screen.dart';
 import 'package:leporemart/src/screens/buyer/recent_item_screen.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class BuyerProfileScreen extends GetView<BuyerProfileController> {
   BuyerProfileScreen({super.key});
@@ -38,11 +40,17 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               icons: ['list', 'heart_outline', 'history'],
               onTaps: [
                 () {
+                  logAnalytics(
+                      name: 'buyer-profile',
+                      parameters: {'action': 'order-list'});
                   Get.to(BuyerOrderListScreen());
                   Get.put(BuyerOrderListController());
                 },
                 () {},
                 () {
+                  logAnalytics(
+                      name: 'buyer-profile',
+                      parameters: {'action': 'recent-item'});
                   Get.to(RecentItemScreen());
                   Get.put(RecentItemController());
                 }
@@ -66,7 +74,13 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 contents: ['학교 이메일 인증'],
                 icons: ['mail'],
                 onTaps: [
-                  () {},
+                  () {
+                    logAnalytics(
+                        name: 'buyer-profile',
+                        parameters: {'action': 'seller-signup'});
+                    Get.to(EmailScreen());
+                    Get.put(EmailController());
+                  },
                 ],
               ),
           ],
@@ -129,6 +143,9 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 right: 0,
                 child: GestureDetector(
                   onTap: () {
+                    logAnalytics(
+                        name: 'buyer-profile',
+                        parameters: {'action': 'profile-edit'});
                     Get.to(BuyerProfileEditScreen());
                     Get.put(BuyerProfileEditController());
                   },
@@ -197,6 +214,9 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
           if (controller.buyerProfile.value.isSeller)
             GestureDetector(
               onTap: () async {
+                logAnalytics(
+                    name: 'buyer-profile',
+                    parameters: {'action': 'seller-change'});
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
                 Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());
