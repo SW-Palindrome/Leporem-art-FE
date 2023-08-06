@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
+
+import '../models/message.dart';
 
 class MessageItemShareController extends GetxController {
   final MessageItemRepository _messageItemRepository = MessageItemRepository();
@@ -27,10 +30,8 @@ class MessageItemShareController extends GetxController {
     try {
       while (true) {
         List<MessageItem> fetchedMessageItems =
-            await _messageItemRepository.fetchShareMessageItem(currentPage,
-                nickname: Get.find<MessageController>()
-                    .getChatRoom(Get.arguments['chatRoomUuid'])
-                    .opponentNickname);
+        await _messageItemRepository.fetchShareMessageItem(currentPage,
+            nickname: sellerNickname);
 
         items.addAll(fetchedMessageItems);
         displayItems.addAll(fetchedMessageItems);
@@ -64,12 +65,18 @@ class MessageItemShareController extends GetxController {
     return selectItemId.value == itemId && isSelect.value;
   }
 
-  Future<void> order() async {
-    try {
-      await _messageItemRepository.orderItem(selectItemId.value);
-      Get.back();
-    } catch (e) {
-      print(e);
-    }
+  String get sellerNickname {
+    ChatRoom chatRoom = Get.find<MessageController>().getChatRoom(Get.arguments['chatRoomUuid']);
+    return chatRoom.isBuyerRoom
+        ? chatRoom.opponentNickname
+        : Get.find<UserGlobalInfoController>().nickname;
+  }
+
+  void sendMessage() {
+    Get.find<MessageController>().sendMessage(
+        Get.arguments['chatRoomUuid'],
+        selectItemId.value.toString(),
+        MessageType.itemShare,
+    );
   }
 }

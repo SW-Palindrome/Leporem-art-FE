@@ -38,10 +38,7 @@ void main() async {
   Get.lazyPut(() => AccountTypeController());
   Get.lazyPut(() => EmailController());
   Get.lazyPut(() => NicknameController());
-  Get.put(MessageController());
   await initializeDateFormatting();
-
-  ChattingSocketSingleton();
 
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');

@@ -3,6 +3,8 @@ import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
 
+import '../models/message.dart';
+
 class MessageItemOrderController extends GetxController {
   final MessageItemRepository _messageItemRepository = MessageItemRepository();
 
@@ -67,6 +69,11 @@ class MessageItemOrderController extends GetxController {
   Future<void> order() async {
     try {
       await _messageItemRepository.orderItem(selectItemId.value);
+      await Get.find<MessageController>().sendMessage(
+        Get.arguments['chatRoomUuid'],
+        selectItemId.value.toString(),
+        MessageType.order,
+      );
       Get.back();
     } catch (e) {
       print(e);

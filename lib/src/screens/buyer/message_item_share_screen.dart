@@ -17,7 +17,7 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
         title:
-            '${Get.find<MessageController>().getChatRoom(Get.arguments['chatRoomUuid']).opponentNickname}님의 작품',
+            '${controller.sellerNickname}님의 작품',
         onTapLeadingIcon: () {
           Get.back();
         },
@@ -180,7 +180,10 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
             () => NextButton(
               text: '공유하기',
               value: controller.isSelect.value,
-              onTap: () {},
+              onTap: () {
+                controller.sendMessage();
+                Get.back();
+              },
             ),
           ),
         ],

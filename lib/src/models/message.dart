@@ -1,9 +1,50 @@
+enum MessageType {
+  text,
+  image,
+  itemShare,
+  itemInquiry,
+  order;
+
+  factory MessageType.fromText(String text) {
+    switch (text) {
+      case 'TEXT':
+        return MessageType.text;
+      case 'IMAGE':
+        return MessageType.image;
+      case 'ITEM_SHARE':
+        return MessageType.itemShare;
+      case 'ITEM_INQUIRY':
+        return MessageType.itemInquiry;
+      case 'ORDER':
+        return MessageType.order;
+      default:
+        throw Exception('Unknown MessageType: $text');
+    }
+  }
+
+  String toText() {
+    switch (this) {
+      case MessageType.text:
+        return 'TEXT';
+      case MessageType.image:
+        return 'IMAGE';
+      case MessageType.itemShare:
+        return 'ITEM_SHARE';
+      case MessageType.itemInquiry:
+        return 'ITEM_INQUIRY';
+      case MessageType.order:
+        return 'ORDER';
+    }
+  }
+}
+
 class Message {
   String messageUuid;
   final int userId;
   final DateTime writeDatetime;
   final bool isRead;
   final String message;
+  final MessageType type;
 
   Message({
     required this.messageUuid,
@@ -11,6 +52,7 @@ class Message {
     required this.writeDatetime,
     required this.isRead,
     required this.message,
+    required this.type,
   });
 }
 
@@ -42,7 +84,8 @@ class ChatRoom {
         userId: message['user_id'],
         writeDatetime: DateTime.parse(message['write_datetime']),
         isRead: message['is_read'],
-        message: message['text'],
+        message: message['message'],
+        type: MessageType.fromText(message['type']),
       ));
     }
     return ChatRoom(
@@ -64,6 +107,18 @@ class ChatRoom {
   String get lastMessage {
     if (messageList.isEmpty) {
       return '';
+    }
+    if (messageList.last.type == MessageType.image) {
+      return '[사진]';
+    }
+    if (messageList.last.type == MessageType.itemShare) {
+      return '[작품 공유]';
+    }
+    if (messageList.last.type == MessageType.itemInquiry) {
+      return '[작품 문의]';
+    }
+    if (messageList.last.type == MessageType.order) {
+      return '[주문]';
     }
     return messageList.last.message;
   }

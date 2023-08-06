@@ -71,6 +71,7 @@ Future<bool> isSignup() async {
           Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];
       userGlobalInfoController.userType = UserType.member;
+      userGlobalInfoController.nickname = response.data['nickname'];
       Get.lazyPut(() => MyBottomNavigationbarController());
       Get.lazyPut(() => AgreementController());
       Get.lazyPut(() => AccountTypeController());

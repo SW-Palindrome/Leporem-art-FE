@@ -123,25 +123,18 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 logAnalytics(name: "item_detail_message", parameters: {
                   "nickname": controller.itemDetail.value.nickname
                 });
-                MessageController messageController =
-                    Get.find<MessageController>();
-                ChatRoom? chatRoom =
-                    messageController.getChatRoomByOpponentNickname(
-                        controller.itemDetail.value.nickname);
+                MessageController messageController = Get.find<MessageController>();
+                ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
                 if (chatRoom != null) {
                   Get.to(() => MessageDetailScreen(), arguments: {
-                    'chatRoomUuid': messageController
-                        .getChatRoomByOpponentNickname(
-                            controller.itemDetail.value.nickname)
-                        .chatRoomUuid
+                    'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid,
+                    'fromItemId': controller.itemDetail.value.id,
                   });
                   return;
                 }
-                ChatRoom newChatRoom = await messageController
-                    .createTempChatRoom(controller.itemDetail.value.nickname);
-                Get.to(() => MessageDetailScreen(),
-                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
-              });
+                ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
+                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+             });
             },
             width: Get.width * 0.35,
           ),

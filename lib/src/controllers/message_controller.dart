@@ -2,14 +2,17 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/item_detail.dart';
 import '../models/message.dart';
 import '../models/profile.dart';
+import '../repositories/item_detail_repository.dart';
 import '../repositories/message_repository.dart';
 import '../repositories/profile_repository.dart';
 import '../utils/chatting_socket_singleton.dart';
 
 class MessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
+  final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
@@ -33,7 +36,11 @@ class MessageController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> sendMessage(chatRoomUuid, message) async {
+  Future<void> sendMessage(
+    String chatRoomUuid,
+    String message,
+    MessageType messageType
+  ) async {
     int opponentUserId = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid)
         .opponentUserId;
@@ -47,10 +54,16 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: messageType,
     );
     chatRoom.tempMessageList.add(messageInfo);
     ChattingSocketSingleton().sendMessage(
-        chatRoomUuid, opponentUserId, messageInfo.message, messageInfo.messageUuid);
+      chatRoomUuid,
+      opponentUserId,
+      messageInfo.message,
+      messageInfo.messageUuid,
+      messageType,
+    );
   }
 
   registerMessage(chatRoomUuid, messageUuid) {
@@ -75,6 +88,7 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: MessageType.text,
     ));
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
@@ -101,7 +115,12 @@ class MessageController extends GetxController {
     return newChatRoom;
   }
 
-  createChatRoom(chatRoomUuid, sellerNickname, message) async {
+  createChatRoom(
+    String chatRoomUuid,
+    String sellerNickname,
+    String message,
+    MessageType messageType,
+  ) async {
     final ProfileRepository profileRepository = ProfileRepository();
     SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
     UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
@@ -113,12 +132,20 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: messageType,
     ));
     chatRoom.isRegistered = true;
     chatRoomList.remove(chatRoom);
     chatRoomList.insert(0, chatRoom);
     chatRoomList.refresh();
-    ChattingSocketSingleton().createChatRoom(chatRoomUuid, sellerProfile.sellerId, message, messageUuid, sellerProfile.userId);
+    ChattingSocketSingleton().createChatRoom(
+      chatRoomUuid,
+      sellerProfile.sellerId,
+      message,
+      messageUuid,
+      sellerProfile.userId,
+      messageType,
+    );
   }
 
   getChatRoom(chatRoomUuid) {
@@ -143,5 +170,10 @@ class MessageController extends GetxController {
 
   getSellerChatRooms() {
     return chatRoomList.where((chatRoom) => !chatRoom.isBuyerRoom);
+  }
+
+  Future<ItemDetail> getItemInfo(int itemId) async {
+    ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(itemId);
+    return itemDetail;
   }
 }

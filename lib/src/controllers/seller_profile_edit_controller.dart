@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -117,6 +118,9 @@ class SellerProfileEditController extends GetxController {
 
           if (response.statusCode != 200) {
             throw Exception('Status code: ${response.statusCode}');
+          }
+          else {
+            Get.find<UserGlobalInfoController>().nickname = nicknameController.text;
           }
         } catch (e) {
           throw ('Error editing nickname: $e');
