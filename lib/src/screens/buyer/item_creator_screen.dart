@@ -24,27 +24,31 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
         },
         isWhite: true,
       ),
-      body: NotificationListener(
-        onNotification: (ScrollNotification scrollInfo) {
-          if (scrollInfo is ScrollEndNotification) {
-            if (controller.scrollController.position.extentAfter == 0) {
-              controller.fetch(isPagination: true);
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        color: ColorPalette.purple,
+        child: NotificationListener(
+          onNotification: (ScrollNotification scrollInfo) {
+            if (scrollInfo is ScrollEndNotification) {
+              if (controller.scrollController.position.extentAfter == 0) {
+                controller.fetch(isPagination: true);
+              }
+              if (controller.scrollController.position.extentBefore == 0) {
+                controller.pageReset();
+              }
             }
-            if (controller.scrollController.position.extentBefore == 0) {
-              controller.pageReset();
-            }
-          }
-          return false;
-        },
-        child: SingleChildScrollView(
-          controller: controller.scrollController,
-          child: Container(
-            child: Column(
-              children: [
-                _profileInfo(),
-                SizedBox(height: 20),
-                _itemGrid(),
-              ],
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: controller.scrollController,
+            child: Container(
+              child: Column(
+                children: [
+                  _profileInfo(),
+                  SizedBox(height: 20),
+                  _itemGrid(),
+                ],
+              ),
             ),
           ),
         ),

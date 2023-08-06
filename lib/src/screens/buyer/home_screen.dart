@@ -65,30 +65,35 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           SizedBox(height: 20),
           Expanded(
             child: Obx(
-              () => NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo is ScrollEndNotification) {
-                    if (controller.scrollController.position.extentAfter == 0) {
-                      controller.fetch(isPagination: true);
+              () => RefreshIndicator(
+                onRefresh: () async {},
+                color: ColorPalette.purple,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification) {
+                      if (controller.scrollController.position.extentAfter ==
+                          0) {
+                        controller.fetch(isPagination: true);
+                      }
+                      if (controller.scrollController.position.extentBefore ==
+                          0) {
+                        controller.pageReset();
+                      }
                     }
-                    if (controller.scrollController.position.extentBefore ==
-                        0) {
-                      controller.pageReset();
-                    }
-                  }
-                  return false;
-                },
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15,
-                    childAspectRatio: 4 / 7,
-                  ),
-                  controller: controller.scrollController,
-                  itemCount: controller.items.length,
-                  itemBuilder: (context, index) {
-                    return _itemWidget(index);
+                    return false;
                   },
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      childAspectRatio: 4 / 7,
+                    ),
+                    controller: controller.scrollController,
+                    itemCount: controller.items.length,
+                    itemBuilder: (context, index) {
+                      return _itemWidget(index);
+                    },
+                  ),
                 ),
               ),
             ),
