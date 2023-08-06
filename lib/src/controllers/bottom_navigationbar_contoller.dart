@@ -14,7 +14,7 @@ class MyBottomNavigationbarController extends GetxController {
 
   // 탭 이벤트가 발생할 시 selectedIndex값을 변경해줄 함수
   void changeBuyerIndex(int index) {
-    if (index == 2 || index == 4) {
+    if (index == 1 || index == 2) {
       induceMembership(() {
         selectedBuyerIndex.value = index;
       });

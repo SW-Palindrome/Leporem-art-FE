@@ -27,13 +27,13 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
           return _homeScaffold();
+        // case 1:
+        //   return _auctionScaffold();
         case 1:
-          return _auctionScaffold();
-        case 2:
           return _messageScaffold();
-        case 3:
-          return _flopScaffold();
-        case 4:
+        // case 3:
+        //   return _flopScaffold();
+        case 2:
           return _profileScaffold();
         default:
           return _homeScaffold();
