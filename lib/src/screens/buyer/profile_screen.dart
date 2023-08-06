@@ -214,6 +214,9 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
           if (controller.buyerProfile.value.isSeller)
             GestureDetector(
               onTap: () async {
+                logAnalytics(
+                    name: 'buyer-profile',
+                    parameters: {'action': 'seller-change'});
                 MyBottomNavigationbarController.to.changeSellerIndex(3);
                 Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());
