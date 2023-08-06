@@ -35,13 +35,14 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "공예쁨",
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                    ),
+                  Image.asset(
+                    'assets/images/app_description.png',
+                    width: Get.width * 0.47,
+                  ),
+                  SizedBox(height: 10),
+                  Image.asset(
+                    'assets/images/app_title.png',
+                    width: Get.width * 0.38,
                   ),
                   SizedBox(height: Get.height * 0.15),
                   _loginButton(
