@@ -27,7 +27,12 @@ class ChattingSocketSingleton {
     });
     _socket.on('receive_message', (data) {
       MessageController messageController = Get.find<MessageController>();
-      messageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
+      messageController.receiveMessage(
+          data['chat_room_uuid'],
+          data['message_uuid'],
+          data['message'],
+          MessageType.fromText(data['message_type']),
+      );
     });
     _socket.on('message_registered', (data) {
       MessageController messageController = Get.find<MessageController>();

@@ -79,7 +79,7 @@ class MessageController extends GetxController {
     chatRoomList.refresh();
   }
 
-  receiveMessage(chatRoomUuid, messageUuid, message) {
+  receiveMessage(chatRoomUuid, messageUuid, message, messageType) {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid);
     receiveChatRoom.messageList.add(Message(
@@ -88,7 +88,7 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
-      type: MessageType.text,
+      type: messageType,
     ));
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
