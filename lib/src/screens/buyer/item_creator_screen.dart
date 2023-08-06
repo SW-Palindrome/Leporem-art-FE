@@ -126,16 +126,8 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () async {
-                      MessageController messageController = Get.find<MessageController>();
-                      ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.creatorProfile.value.nickname);
-                      if (chatRoom != null) {
-                        Get.to(() => MessageDetailScreen(), arguments: {
-                          'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.creatorProfile.value.nickname).chatRoomUuid,
-                        });
-                        return;
-                      }
-                      ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.creatorProfile.value.nickname);
-                      Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+                      ChatRoom chatRoom = await controller.getOrCreateChatRoom()
+                      Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
                     },
                     child: Text(
                       '채팅하기',

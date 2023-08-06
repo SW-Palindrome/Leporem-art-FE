@@ -8,6 +8,9 @@ import 'package:leporemart/src/repositories/home_repository.dart';
 import 'package:leporemart/src/repositories/profile_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
+import '../models/message.dart';
+import 'message_controller.dart';
+
 class BuyerItemCreatorController extends GetxController {
   final ProfileRepository _profileRepository = ProfileRepository();
   final HomeRepository _homeRepository = HomeRepository();
@@ -117,5 +120,14 @@ class BuyerItemCreatorController extends GetxController {
       // 에러 처리
       print('Error fetching like $itemId in home $e');
     }
+  }
+
+  Future<ChatRoom> getOrCreateChatRoom() async {
+    MessageController messageController = Get.find<MessageController>();
+    ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.creatorProfile.value.nickname);
+    if (chatRoom != null) {
+      return chatRoom;
+    }
+    return await messageController.createTempChatRoom(controller.creatorProfile.value.nickname);
   }
 }
