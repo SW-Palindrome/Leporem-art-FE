@@ -4,6 +4,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:video_player/video_player.dart';
 
 class SellerItemDetailController extends GetxController {
@@ -48,6 +49,9 @@ class SellerItemDetailController extends GetxController {
   }
 
   void changeIndex(int newIndex) {
+    logAnalytics(
+        name: "seller_item_detail_change_index",
+        parameters: {"item_id": itemDetail.value.id, "index": newIndex});
     index.value = newIndex;
     if (index.value == itemDetail.value.images.length + 1) {
       videoPlayerController.play();

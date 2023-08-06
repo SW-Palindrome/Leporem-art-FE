@@ -262,6 +262,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TextField(
             controller: Get.find<SellerSearchController>().searchController,
             onSubmitted: (value) async {
+              logAnalytics(
+                  name: "seller_search",
+                  parameters: {"action": "search", "keyword": value});
               Get.find<SellerSearchController>().addRecentSearch(value);
               Get.find<SellerSearchController>().isSearching.value = true;
               await Get.find<SellerHomeController>().pageReset();

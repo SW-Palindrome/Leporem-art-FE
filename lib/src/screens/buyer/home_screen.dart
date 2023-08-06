@@ -110,7 +110,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
     return GestureDetector(
       onTap: () {
         logAnalytics(
-            name: "enter_item_detail",
+            name: "enter_buyer_item_detail",
             parameters: {"item_id": controller.items[index].id});
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
