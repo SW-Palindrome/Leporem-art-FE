@@ -12,6 +12,7 @@ import 'package:leporemart/src/screens/buyer/profile_screen.dart';
 import 'package:leporemart/src/screens/buyer/flop_screen.dart';
 import 'package:leporemart/src/screens/buyer/search_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
@@ -24,6 +25,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
   Widget build(BuildContext context) {
     if (Get.find<UserGlobalInfoController>().userType == UserType.member) {
       Get.put(MessageController());
+      ChattingSocketSingleton();
     }
     Get.lazyPut(() => BuyerSearchController());
     Get.lazyPut(() => BuyerHomeController());
