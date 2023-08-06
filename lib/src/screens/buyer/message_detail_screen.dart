@@ -217,7 +217,7 @@ class MessageDetailScreen extends GetView<MessageController> {
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: Get.width * 0.8,
+                  maxWidth: Get.width * 0.7,
                 ),
                 child: Text(
                   message.message,

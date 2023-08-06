@@ -47,6 +47,7 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: MessageType.text,
     );
     chatRoom.tempMessageList.add(messageInfo);
     ChattingSocketSingleton().sendMessage(
@@ -75,6 +76,7 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: MessageType.text,
     ));
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
@@ -113,6 +115,7 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
+      type: MessageType.text,
     ));
     chatRoom.isRegistered = true;
     chatRoomList.remove(chatRoom);

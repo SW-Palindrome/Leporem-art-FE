@@ -1,9 +1,35 @@
+enum MessageType {
+  text,
+  image,
+  itemShare,
+  itemInquiry,
+  order;
+
+  factory MessageType.fromText(String text) {
+    switch (text) {
+      case 'TEXT':
+        return MessageType.text;
+      case 'IMAGE':
+        return MessageType.image;
+      case 'ITEM_SHARE':
+        return MessageType.itemShare;
+      case 'ITEM_INQUIRY':
+        return MessageType.itemInquiry;
+      case 'ORDER':
+        return MessageType.order;
+      default:
+        throw Exception('Unknown MessageType: $text');
+    }
+  }
+}
+
 class Message {
   String messageUuid;
   final int userId;
   final DateTime writeDatetime;
   final bool isRead;
   final String message;
+  final MessageType type;
 
   Message({
     required this.messageUuid,
@@ -11,6 +37,7 @@ class Message {
     required this.writeDatetime,
     required this.isRead,
     required this.message,
+    required this.type,
   });
 }
 
@@ -42,7 +69,8 @@ class ChatRoom {
         userId: message['user_id'],
         writeDatetime: DateTime.parse(message['write_datetime']),
         isRead: message['is_read'],
-        message: message['text'],
+        message: message['message'],
+        type: MessageType.fromText(message['type']),
       ));
     }
     return ChatRoom(
