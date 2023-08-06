@@ -220,7 +220,7 @@ class ItemCreateDetailController extends GetxController {
       'depth': depth,
       'height': height,
       'price': price,
-      'mount': amount,
+      'amount': amount,
       'thumbnail_image': await MultipartFile.fromFile(
         images.first.path,
         filename: images.first.path.split('/').last,
