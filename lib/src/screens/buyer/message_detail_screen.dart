@@ -81,127 +81,27 @@ class MessageDetailScreen extends GetView<MessageController> {
     ChatRoom currentChatRoom =
         controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return currentChatRoom.opponentUserId != message.userId
-        ? _itemShareWidget(40)
+        ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
   }
 
   _myMessageWidget(Message message) {
     return Container(
       alignment: Alignment.centerRight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorPalette.grey_2,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: Get.width * 0.6,
-            ),
-            child: Text(
-              message.message,
-              style: TextStyle(
-                fontFamily: FontPalette.pretenderd,
-                fontSize: 13,
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: _messageProcessWidget(message, _myMessageBoxDecoration()),
     );
   }
 
-  _itemShareWidget(int itemId) {
-    return FutureBuilder<ItemDetail>(
-      future: controller.getItemInfo(itemId),
-      builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
-          return CircularProgressIndicator();
-        }
-        ItemDetail item = snapshot.data!;
-        return Container(
-          alignment: Alignment.centerRight,
-          child: Container(
-            decoration: BoxDecoration(
-              color: ColorPalette.grey_2,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      item.thumbnailImage,
-                      width: Get.width * 0.215,
-                      height: Get.width * 0.215,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '작품 공유',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        item.nickname,
-                        style: TextStyle(
-                          color: ColorPalette.grey_5,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      SizedBox(
-                        width: Get.width * 0.4,
-                        child: Text(
-                          item.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }
+  _myMessageBoxDecoration() {
+    return BoxDecoration(
+      color: ColorPalette.grey_2,
+      borderRadius: BorderRadius.circular(18),
     );
   }
 
   _opponentMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomUuid']);
+    controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -210,36 +110,140 @@ class MessageDetailScreen extends GetView<MessageController> {
             CircleAvatar(
               radius: 16,
               backgroundImage:
-                  NetworkImage(currentChatRoom.opponentProfileImageUrl),
+              NetworkImage(currentChatRoom.opponentProfileImageUrl),
             ),
           if (_currentUserId == message.userId) SizedBox(width: 32),
           SizedBox(width: 8),
-          Container(
-            decoration: BoxDecoration(
-              color: ColorPalette.white,
-              border: Border.all(
-                color: ColorPalette.grey_3,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: Get.width * 0.7,
-                ),
-                child: Text(
-                  message.message,
-                  style: TextStyle(
-                    fontFamily: FontPalette.pretenderd,
-                    fontSize: 13,
+          _messageProcessWidget(message, _opponentMessageBoxDecoration()),
+        ],
+      ),
+    );
+  }
+
+  _opponentMessageBoxDecoration() {
+    return BoxDecoration(
+      color: ColorPalette.white,
+      border: Border.all(
+        color: ColorPalette.grey_3,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(18),
+    );
+  }
+
+  _messageProcessWidget(Message message, BoxDecoration boxDecoration) {
+    switch (message.type) {
+      case MessageType.text:
+        return _textMessageWidget(message, boxDecoration);
+      case MessageType.image:
+        return Container();
+      case MessageType.itemShare:
+        return _itemShareWidget(int.parse(message.message), boxDecoration);
+      case MessageType.itemInquiry:
+        return Container();
+      case MessageType.order:
+        return Container();
+    }
+  }
+
+  _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
+    return FutureBuilder<ItemDetail>(
+      future: controller.getItemInfo(itemId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData == false) {
+          return CircularProgressIndicator();
+        }
+        ItemDetail item = snapshot.data!;
+        return Container(
+          decoration: boxDecoration,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    item.thumbnailImage,
+                    width: Get.width * 0.215,
+                    height: Get.width * 0.215,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
+                SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '작품 공유',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: FontPalette.pretenderd,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      item.nickname,
+                      style: TextStyle(
+                        color: ColorPalette.grey_5,
+                        fontFamily: FontPalette.pretenderd,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    SizedBox(
+                      width: Get.width * 0.4,
+                      child: Text(
+                        item.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: FontPalette.pretenderd,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: FontPalette.pretenderd,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
+        );
+      }
+    );
+  }
+
+  _textMessageWidget(Message message, BoxDecoration boxDecoration) {
+    return Container(
+      decoration: boxDecoration,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: Get.width * 0.6,
+          ),
+          child: Text(
+            message.message,
+            style: TextStyle(
+              fontFamily: FontPalette.pretenderd,
+              fontSize: 13,
+            ),
+          ),
+        ),
       ),
     );
   }

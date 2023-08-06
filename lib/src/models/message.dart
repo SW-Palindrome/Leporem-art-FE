@@ -93,6 +93,18 @@ class ChatRoom {
     if (messageList.isEmpty) {
       return '';
     }
+    if (messageList.last.type == MessageType.image) {
+      return '[사진]';
+    }
+    if (messageList.last.type == MessageType.itemShare) {
+      return '[작품 공유]';
+    }
+    if (messageList.last.type == MessageType.itemInquiry) {
+      return '[작품 문의]';
+    }
+    if (messageList.last.type == MessageType.order) {
+      return '[주문]';
+    }
     return messageList.last.message;
   }
 }
