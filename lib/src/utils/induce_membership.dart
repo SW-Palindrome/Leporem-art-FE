@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 
 void induceMembership(Function() callback) {
@@ -18,6 +19,7 @@ void induceMembership(Function() callback) {
           buttonType: BottomSheetType.oneButton,
           leftButtonText: '로그인하고 계속하기',
           onLeftButtonPressed: () {
+            logAnalytics(name: "induce_login");
             Get.offAll(LoginScreen());
           },
           onCloseButtonPressed: () {

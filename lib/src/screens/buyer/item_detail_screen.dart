@@ -9,6 +9,7 @@ import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/utils/induce_membership.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
@@ -69,9 +70,17 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                   () => GestureDetector(
                     onTap: controller.itemDetail.value.isLiked
                         ? () async {
+                            logAnalytics(
+                                name: "item_detail_unlike",
+                                parameters: {
+                                  "item_id": controller.itemDetail.value.id
+                                });
                             await controller.unlike();
                           }
                         : () async {
+                            logAnalytics(name: "item_detail_like", parameters: {
+                              "item_id": controller.itemDetail.value.id
+                            });
                             await controller.like();
                           },
                     child: Obx(
@@ -111,15 +120,28 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
             value: true,
             onTap: () {
               induceMembership(() async {
-                MessageController messageController = Get.find<MessageController>();
-                ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
+                logAnalytics(name: "item_detail_message", parameters: {
+                  "nickname": controller.itemDetail.value.nickname
+                });
+                MessageController messageController =
+                    Get.find<MessageController>();
+                ChatRoom? chatRoom =
+                    messageController.getChatRoomByOpponentNickname(
+                        controller.itemDetail.value.nickname);
                 if (chatRoom != null) {
-                  Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid});
+                  Get.to(() => MessageDetailScreen(), arguments: {
+                    'chatRoomUuid': messageController
+                        .getChatRoomByOpponentNickname(
+                            controller.itemDetail.value.nickname)
+                        .chatRoomUuid
+                  });
                   return;
                 }
-                ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
-                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
-             });
+                ChatRoom newChatRoom = await messageController
+                    .createTempChatRoom(controller.itemDetail.value.nickname);
+                Get.to(() => MessageDetailScreen(),
+                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+              });
             },
             width: Get.width * 0.35,
           ),
@@ -158,6 +180,9 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           InkWell(
             onTap: () {
               induceMembership(() {
+                logAnalytics(name: "enter_seller_profile", parameters: {
+                  "nickname": controller.itemDetail.value.nickname,
+                });
                 Get.off(ItemCreatorScreen(), arguments: {
                   'nickname': controller.itemDetail.value.nickname
                 });
