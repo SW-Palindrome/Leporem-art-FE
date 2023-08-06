@@ -38,7 +38,6 @@ void main() async {
   Get.lazyPut(() => AccountTypeController());
   Get.lazyPut(() => EmailController());
   Get.lazyPut(() => NicknameController());
-  Get.put(MessageController());
   await initializeDateFormatting();
 
   ChattingSocketSingleton();
@@ -79,6 +78,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoginProceed) {
+      Get.put(MessageController());
+    }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
