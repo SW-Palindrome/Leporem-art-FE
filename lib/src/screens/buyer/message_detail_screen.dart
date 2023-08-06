@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:leporemart/src/controllers/buyer_message_controller.dart';
+import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_order_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
@@ -14,7 +12,7 @@ import 'package:leporemart/src/utils/currency_formatter.dart';
 import '../../models/message.dart';
 import '../../widgets/my_app_bar.dart';
 
-class MessageDetailScreen extends GetView<BuyerMessageController> {
+class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
   int _currentUserId = -1;
   final TextEditingController _textEditingController = TextEditingController();
@@ -27,7 +25,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
         onTapLeadingIcon: () => Get.back(),
         isWhite: true,
         title: controller
-            .getChatRoom(Get.arguments['chatRoomId'])
+            .getChatRoom(Get.arguments['chatRoomUuid'])
             .opponentNickname,
       ),
       backgroundColor: ColorPalette.white,
@@ -51,11 +49,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
   }
 
   _messageListWidget() {
-    List<Message> messageList = controller
-        .getChatRoom(Get.arguments['chatRoomId'])
-        .messageList
-        .reversed
-        .toList();
+    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomUuid']).messageList.reversed.toList();
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
@@ -84,7 +78,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
 
   _innerMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomId']);
+        controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return currentChatRoom.opponentUserId != message.userId
         ? _myMessageWidget2(message)
         : _opponentMessageWidget(message);
@@ -197,7 +191,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
 
   _opponentMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomId']);
+        controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -282,8 +276,16 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                         decoration: InputDecoration(
                           suffix: InkWell(
                             onTap: () async {
+                              ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
+                              if (!chatRoom.isRegistered) {
+                                await controller.createChatRoom(
+                                    Get.arguments['chatRoomUuid'],
+                                    chatRoom.opponentNickname,
+                                    _textEditingController.text);
+                                _textEditingController.clear();
+                              }
                               await controller.sendMessage(
-                                  Get.arguments['chatRoomId'],
+                                  Get.arguments['chatRoomUuid'],
                                   _textEditingController.text);
                               _textEditingController.clear();
                             },
@@ -339,7 +341,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                           Color(0xff4A9dff),
                           () {
                             Get.to(MessageItemShareScreen(), arguments: {
-                              'chatRoomId': Get.arguments['chatRoomId']
+                              'chatRoomUuid': Get.arguments['chatRoomUuid']
                             });
                             Get.put(MessageItemShareController());
                           },
@@ -374,7 +376,7 @@ class MessageDetailScreen extends GetView<BuyerMessageController> {
                           Color(0xff9d00e7),
                           () {
                             Get.to(MessageItemOrderScreen(), arguments: {
-                              'chatRoomId': Get.arguments['chatRoomId']
+                              'chatRoomUuid': Get.arguments['chatRoomUuid']
                             });
                             Get.put(MessageItemOrderController());
                           },

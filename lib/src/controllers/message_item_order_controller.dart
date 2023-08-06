@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/buyer_message_controller.dart';
+import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/message_item_repository.dart';
 
@@ -28,8 +28,8 @@ class MessageItemOrderController extends GetxController {
       while (true) {
         List<MessageItem> fetchedMessageItems =
             await _messageItemRepository.fetchOrderMessageItem(currentPage,
-                nickname: Get.find<BuyerMessageController>()
-                    .getChatRoom(Get.arguments['chatRoomId'])
+                nickname: Get.find<MessageController>()
+                    .getChatRoom(Get.arguments['chatRoomUuid'])
                     .opponentNickname);
 
         items.addAll(fetchedMessageItems);

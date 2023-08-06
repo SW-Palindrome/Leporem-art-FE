@@ -13,6 +13,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
@@ -32,7 +33,12 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   Get.put(UserGlobalInfoController());
-
+  Get.lazyPut(() => MyBottomNavigationbarController());
+  Get.lazyPut(() => AgreementController());
+  Get.lazyPut(() => AccountTypeController());
+  Get.lazyPut(() => EmailController());
+  Get.lazyPut(() => NicknameController());
+  Get.put(MessageController());
   await initializeDateFormatting();
 
   ChattingSocketSingleton();

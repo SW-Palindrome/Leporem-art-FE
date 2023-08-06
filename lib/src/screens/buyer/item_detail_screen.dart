@@ -14,6 +14,10 @@ import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../controllers/message_controller.dart';
+import '../../models/message.dart';
+import 'message_detail_screen.dart';
+
 class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
   const BuyerItemDetailScreen({super.key});
   @override
@@ -106,7 +110,16 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
             text: "채팅하기",
             value: true,
             onTap: () {
-              induceMembership(() => null);
+              induceMembership(() async {
+                MessageController messageController = Get.find<MessageController>();
+                ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
+                if (chatRoom != null) {
+                  Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid});
+                  return;
+                }
+                ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
+                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+             });
             },
             width: Get.width * 0.35,
           ),
