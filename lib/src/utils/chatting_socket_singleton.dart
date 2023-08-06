@@ -67,7 +67,7 @@ class ChattingSocketSingleton {
       'opponent_user_id': opponentUserId,
       'message': message,
       'message_uuid': messageUuid,
-      'type': messageType.toText(),
+      'message_type': messageType.toText(),
     });
   }
 
