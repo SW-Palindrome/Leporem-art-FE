@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
@@ -22,6 +23,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
     return Scaffold(
       backgroundColor: Color(0xffFAFAFA),
       body: SafeArea(
