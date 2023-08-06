@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -156,6 +157,9 @@ class EmailScreen extends GetView<EmailController> {
                         text: "인증하기",
                         value: controller.isCodeValid.value,
                         onTap: () async {
+                          logAnalytics(
+                              name: 'seller-signup',
+                              parameters: {'action': 'code-verify'});
                           await controller.checkCode();
                           if (controller.isCodeError.value == false) {
                             Get.bottomSheet(
@@ -188,6 +192,9 @@ class EmailScreen extends GetView<EmailController> {
                         value: !controller.isDisplayError.value &&
                             controller.isEmailValid.value,
                         onTap: () {
+                          logAnalytics(
+                              name: 'seller-signup',
+                              parameters: {'action': 'email-send'});
                           controller.sendEmail();
                           controller.setSendClicked(true);
                         },

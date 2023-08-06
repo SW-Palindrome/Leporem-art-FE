@@ -74,10 +74,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                     if (scrollInfo is ScrollEndNotification) {
                       if (controller.scrollController.position.extentAfter ==
                           0) {
+                        logAnalytics(name: 'buyer_scroll_pagination');
                         controller.fetch(isPagination: true);
                       }
                       if (controller.scrollController.position.extentBefore ==
                           0) {
+                        logAnalytics(name: 'buyer_scroll_refresh');
                         controller.pageReset();
                       }
                     }

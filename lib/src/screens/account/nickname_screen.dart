@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/account_type_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -87,6 +88,12 @@ class NicknameScreen extends GetView<NicknameController> {
                     onChanged: (text) {
                       controller.checkNickname(text);
                     },
+                    onFieldSubmitted: (text) {
+                      logAnalytics(name: 'signup', parameters: {
+                        'step': 'agreement',
+                        'action': 'nickname-submit: $text'
+                      });
+                    },
                   ),
                 ),
               ),
@@ -113,9 +120,17 @@ class NicknameScreen extends GetView<NicknameController> {
                             buttonType: BottomSheetType.oneButton,
                             leftButtonText: "계정종류 선택하기",
                             onCloseButtonPressed: () {
+                              logAnalytics(name: 'signup', parameters: {
+                                'step': 'nickname',
+                                'action': 'next-button'
+                              });
                               Get.offAll(AccountType());
                             },
                             onLeftButtonPressed: () {
+                              logAnalytics(name: 'signup', parameters: {
+                                'step': 'nickname',
+                                'action': 'next-button'
+                              });
                               Get.offAll(AccountType());
                             },
                           ),
