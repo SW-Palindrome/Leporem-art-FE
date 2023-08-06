@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '762662226057',
     projectId: 'leporem-art-fe',
     storageBucket: 'leporem-art-fe.appspot.com',
-    iosClientId: '762662226057-dvhleu55pr1sfre5t6dl48pqecrgoned.apps.googleusercontent.com',
-    iosBundleId: 'com.art.leporem.leporemart',
+    iosClientId:
+        '762662226057-dvhleu55pr1sfre5t6dl48pqecrgoned.apps.googleusercontent.com',
+    iosBundleId: 'com.palindrome.leporemart',
   );
 }
