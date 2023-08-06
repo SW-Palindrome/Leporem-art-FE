@@ -153,11 +153,13 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                           if (controller
                                   .scrollController.position.extentAfter ==
                               0) {
+                            logAnalytics(name: 'seller_scroll_pagination');
                             controller.fetch(isPagination: true);
                           }
                           if (controller
                                   .scrollController.position.extentBefore ==
                               0) {
+                            logAnalytics(name: 'seller_scroll_refresh');
                             controller.pageReset();
                           }
                         }
