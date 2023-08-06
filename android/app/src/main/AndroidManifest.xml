@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.art.leporem.leporemart">
+    package="com.palindrome.leporemart">
     <application
         android:label="leporemart"
         android:name="${applicationName}"
