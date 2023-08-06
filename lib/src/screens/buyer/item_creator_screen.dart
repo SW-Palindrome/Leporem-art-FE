@@ -10,6 +10,10 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
+import '../../controllers/message_controller.dart';
+import '../../models/message.dart';
+import 'message_detail_screen.dart';
+
 class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
   const ItemCreatorScreen({super.key});
 
@@ -120,14 +124,28 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                     ),
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    '채팅하기',
-                    style: TextStyle(
-                      color: ColorPalette.white,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16.0,
+                  GestureDetector(
+                    onTap: () async {
+                      MessageController messageController = Get.find<MessageController>();
+                      ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.creatorProfile.value.nickname);
+                      if (chatRoom != null) {
+                        Get.to(() => MessageDetailScreen(), arguments: {
+                          'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.creatorProfile.value.nickname).chatRoomUuid,
+                        });
+                        return;
+                      }
+                      ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.creatorProfile.value.nickname);
+                      Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+                    },
+                    child: Text(
+                      '채팅하기',
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "PretendardVariable",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                      ),
                     ),
                   )
                 ],
