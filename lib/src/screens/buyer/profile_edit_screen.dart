@@ -37,7 +37,7 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
               onTap: controller.isEditable()
                   ? () {
                       logAnalytics(
-                          name: 'buyer-profile-edit',
+                          name: 'buyer_profile_edit',
                           parameters: {'action': 'complete'});
                       controller.edit();
                     }
@@ -99,8 +99,8 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
           () => Focus(
             onFocusChange: (focused) {
               logAnalytics(
-                  name: 'buyer-profile-edit',
-                  parameters: {'action': 'nickname-form-focus'});
+                  name: 'buyer_profile_edit',
+                  parameters: {'action': 'nickname_form_focus'});
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
@@ -179,8 +179,8 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
           child: GestureDetector(
             onTap: () {
               logAnalytics(
-                  name: 'buyer-profile-edit',
-                  parameters: {'action': 'edit-image'});
+                  name: 'buyer_profile_edit',
+                  parameters: {'action': 'edit_image'});
               controller.selectImage();
             },
             child: Container(

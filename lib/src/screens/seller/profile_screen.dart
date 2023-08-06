@@ -9,6 +9,7 @@ import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/screens/seller/item_management_screen.dart';
 import 'package:leporemart/src/screens/seller/profile_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
 
 class SellerProfileScreen extends GetView<SellerProfileController> {
@@ -33,6 +34,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
               icons: ['list', 'heart_outline', 'history'],
               onTaps: [
                 () {
+                  logAnalytics(name: "enter_item_management");
                   Get.to(ItemManagementScreen());
                   Get.put(ItemManagementController());
                 },
@@ -131,6 +133,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                     right: 0,
                     child: GestureDetector(
                       onTap: () {
+                        logAnalytics(name: "enter_seller_profile_edit");
                         Get.to(SellerProfileEditScreen());
                         Get.put(SellerProfileEditController());
                       },
@@ -198,6 +201,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
               Spacer(),
               GestureDetector(
                 onTap: () async {
+                  logAnalytics(name: "swap_buyer");
                   MyBottomNavigationbarController.to.changeBuyerIndex(4);
                   Get.offAll(() => BuyerApp());
                 },

@@ -5,6 +5,7 @@ import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 import '../controllers/seller_search_controller.dart';
 
@@ -183,6 +184,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TextField(
             controller: Get.find<BuyerSearchController>().searchController,
             onSubmitted: (value) async {
+              logAnalytics(
+                  name: "buyer_search",
+                  parameters: {"action": "search", "keyword": value});
               Get.find<BuyerSearchController>().addRecentSearch(value);
               Get.find<BuyerSearchController>().isSearching.value = true;
               await Get.find<BuyerHomeController>().pageReset();
@@ -258,6 +262,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TextField(
             controller: Get.find<SellerSearchController>().searchController,
             onSubmitted: (value) async {
+              logAnalytics(
+                  name: "seller_search",
+                  parameters: {"action": "search", "keyword": value});
               Get.find<SellerSearchController>().addRecentSearch(value);
               Get.find<SellerSearchController>().isSearching.value = true;
               await Get.find<SellerHomeController>().pageReset();

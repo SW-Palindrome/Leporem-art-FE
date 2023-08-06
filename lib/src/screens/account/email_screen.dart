@@ -47,8 +47,8 @@ class EmailScreen extends GetView<EmailController> {
                     child: Focus(
                       onFocusChange: (value) {
                         logAnalytics(
-                            name: 'seller-signup',
-                            parameters: {'action': 'code-form-focus'});
+                            name: 'seller_signup',
+                            parameters: {'action': 'code_form_focus'});
                       },
                       child: TextFormField(
                         onChanged: (text) {
@@ -103,8 +103,8 @@ class EmailScreen extends GetView<EmailController> {
                 () => Focus(
                   onFocusChange: (focused) {
                     logAnalytics(
-                        name: 'seller-signup',
-                        parameters: {'action': 'email-form-focus'});
+                        name: 'seller_signup',
+                        parameters: {'action': 'email_form_focus'});
                     controller.setFocus(focused);
                     if (!focused) {
                       controller
@@ -168,8 +168,8 @@ class EmailScreen extends GetView<EmailController> {
                         value: controller.isCodeValid.value,
                         onTap: () async {
                           logAnalytics(
-                              name: 'seller-signup',
-                              parameters: {'action': 'code-verify'});
+                              name: 'seller_signup',
+                              parameters: {'action': 'code_verify'});
                           await controller.checkCode();
                           if (controller.isCodeError.value == false) {
                             Get.bottomSheet(
@@ -203,8 +203,8 @@ class EmailScreen extends GetView<EmailController> {
                             controller.isEmailValid.value,
                         onTap: () {
                           logAnalytics(
-                              name: 'seller-signup',
-                              parameters: {'action': 'email-send'});
+                              name: 'seller_signup',
+                              parameters: {'action': 'email_send'});
                           controller.sendEmail();
                           controller.setSendClicked(true);
                         },

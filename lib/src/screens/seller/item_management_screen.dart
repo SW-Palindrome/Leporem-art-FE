@@ -8,6 +8,7 @@ import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
@@ -272,6 +273,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
   _moreButton(Order order) {
     return GestureDetector(
       onTap: () {
+        logAnalytics(name: "order_detail", parameters: {"order_id": order.id});
         Get.dialog(Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
@@ -288,6 +290,10 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       GestureDetector(
                         onTap: order.orderStatus == "주문완료"
                             ? () {
+                                logAnalytics(name: "order_detail", parameters: {
+                                  "order_id": order.id,
+                                  "status": "배송 중"
+                                });
                                 controller.deliveryStart(order.id);
                                 Get.back();
                               }
@@ -315,6 +321,10 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       GestureDetector(
                         onTap: order.orderStatus == "배송중"
                             ? () {
+                                logAnalytics(name: "order_detail", parameters: {
+                                  "order_id": order.id,
+                                  "status": "배송 완료"
+                                });
                                 controller.deliveryComplete(order.id);
                                 Get.back();
                               }
@@ -342,6 +352,10 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       Divider(color: ColorPalette.grey_2, thickness: 1),
                       GestureDetector(
                         onTap: () {
+                          logAnalytics(name: "order_detail", parameters: {
+                            "order_id": order.id,
+                            "status": "주문 취소 확인"
+                          });
                           Get.back();
                           Get.bottomSheet(
                             MyBottomSheet(
@@ -358,6 +372,10 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                               },
                               rightButtonText: '주문 취소하기',
                               onRightButtonPressed: () {
+                                logAnalytics(name: "order_detail", parameters: {
+                                  "order_id": order.id,
+                                  "status": "주문 취소 확정"
+                                });
                                 controller.cancel(order.id);
                                 controller.fetch();
                                 Get.back();

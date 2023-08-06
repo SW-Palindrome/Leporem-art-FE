@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
   const SellerProfileEditScreen({super.key});
@@ -35,6 +36,9 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
             () => GestureDetector(
               onTap: controller.isEditable()
                   ? () {
+                      logAnalytics(
+                          name: 'seller_profile_edit',
+                          parameters: {'action': 'complete'});
                       controller.edit();
                     }
                   : null,
@@ -102,24 +106,31 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
               width: 1,
             ),
           ),
-          child: TextFormField(
-            controller: controller.descriptionController,
-            maxLength: 60,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '자신에 대한 설명을 적어주세요.',
-              hintStyle: TextStyle(
-                color: ColorPalette.grey_4,
-                fontWeight: FontWeight.w600,
-                fontFamily: "PretendardVariable",
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0,
-              ),
-            ),
-            onChanged: (value) {
-              controller.checkDescriptionChanged(value);
+          child: Focus(
+            onFocusChange: (value) {
+              logAnalytics(
+                  name: 'buyer_profile_edit',
+                  parameters: {'action': 'description_form_focus'});
             },
+            child: TextFormField(
+              controller: controller.descriptionController,
+              maxLength: 60,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '자신에 대한 설명을 적어주세요.',
+                hintStyle: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+              onChanged: (value) {
+                controller.checkDescriptionChanged(value);
+              },
+            ),
           ),
         ),
       ],
@@ -148,6 +159,9 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
         Obx(
           () => Focus(
             onFocusChange: (focused) {
+              logAnalytics(
+                  name: 'seller_profile_edit',
+                  parameters: {'action': 'nickname_form_focus'});
               controller.setFocus(focused);
               if (!focused) {
                 controller.checkNickname(controller.nicknameController.text);
@@ -225,6 +239,9 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
           right: 0,
           child: GestureDetector(
             onTap: () {
+              logAnalytics(
+                  name: 'seller_profile_edit',
+                  parameters: {'action': 'edit_image'});
               controller.selectImage();
             },
             child: Container(

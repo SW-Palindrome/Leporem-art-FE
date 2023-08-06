@@ -110,8 +110,8 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
     return GestureDetector(
       onTap: () {
         logAnalytics(
-            name: "buyer_item_detail",
-            parameters: {"Item ID": controller.items[index].id});
+            name: "enter_buyer_item_detail",
+            parameters: {"item_id": controller.items[index].id});
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.items[index].id});
         Get.put(BuyerItemDetailController());
@@ -143,7 +143,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                                 logAnalytics(
                                     name: "buyer_item_unlike",
                                     parameters: {
-                                      "Item ID": controller.items[index].id
+                                      "item_id": controller.items[index].id
                                     });
                                 await controller
                                     .unlike(controller.items[index].id);
@@ -161,7 +161,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                                 logAnalytics(
                                     name: "buyer_item_like",
                                     parameters: {
-                                      "Item ID": controller.items[index].id
+                                      "item_id": controller.items[index].id
                                     });
                                 await controller
                                     .like(controller.items[index].id);
@@ -259,7 +259,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_search_filter_change",
-                parameters: {"Search Type": "sort"});
+                parameters: {"search_type": "sort"});
             controller.changeSelectedSearchType(0);
             Get.bottomSheet(
               _searchSheetWidget(),
@@ -278,7 +278,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_search_filter_change",
-                parameters: {"Search Type": "category"});
+                parameters: {"search_type": "category"});
             controller.changeSelectedSearchType(1);
             Get.bottomSheet(
               _searchSheetWidget(),
@@ -297,7 +297,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_search_filter_change",
-                parameters: {"Search Type": "price"});
+                parameters: {"search_type": "price"});
             controller.changeSelectedSearchType(2);
             Get.bottomSheet(
               _searchSheetWidget(),
@@ -391,7 +391,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               onTap: () {
                 logAnalytics(
                     name: "buyer_search_filter_reset",
-                    parameters: {"Search Type": "category"});
+                    parameters: {"search_type": "category"});
                 controller.resetSelectedCategoryType();
               },
               child: SvgPicture.asset(
@@ -489,7 +489,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                     onTap: () {
                       logAnalytics(
                           name: "buyer_search_filter_change",
-                          parameters: {"Search Type": "sort"});
+                          parameters: {"search_type": "sort"});
                       controller.changeSelectedSearchType(0);
                     },
                     child: Text(
@@ -508,7 +508,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                     onTap: () {
                       logAnalytics(
                           name: "buyer_search_filter_change",
-                          parameters: {"Search Type": "category"});
+                          parameters: {"search_type": "category"});
                       controller.changeSelectedSearchType(1);
                     },
                     child: Text(
@@ -527,7 +527,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                     onTap: () {
                       logAnalytics(
                           name: "buyer_search_filter_change",
-                          parameters: {"Search Type": "price"});
+                          parameters: {"search_type": "price"});
                       controller.changeSelectedSearchType(2);
                     },
                     child: Text(
@@ -581,7 +581,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "recent"});
+                parameters: {"sort_type": "recent"});
             controller.changeSelectedSortType(0);
           },
           child: Padding(
@@ -617,7 +617,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "like"});
+                parameters: {"sort_type": "like"});
             controller.changeSelectedSortType(1);
           },
           child: Padding(
@@ -653,7 +653,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "price-low"});
+                parameters: {"sort_type": "price_low"});
             controller.changeSelectedSortType(2);
           },
           child: Padding(
@@ -689,7 +689,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "price-high"});
+                parameters: {"sort_type": "price_-high"});
             controller.changeSelectedSortType(3);
           },
           child: Padding(
@@ -732,10 +732,11 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
         for (int i = 0; i < controller.categoryTypes.length; i++)
           GestureDetector(
             onTap: () {
-              logAnalytics(
-                  name: "buyer_category_filter_change",
-                  parameters: {"Category Type": i});
               controller.changeSelectedCategoryType(i);
+              logAnalytics(name: "buyer_category_filter_change", parameters: {
+                "category_type": i,
+                "value": controller.selectedCategoryType.value[i]
+              });
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

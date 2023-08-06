@@ -61,7 +61,7 @@ class BuyerProfileEditController extends GetxController {
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       logAnalytics(
-          name: 'buyer-profile-edit', parameters: {'action': 'select-image'});
+          name: 'buyer_profile_edit', parameters: {'action': 'select_image'});
       profileImage.value = File(pickedFile.path);
       isProfileImageChanged.value = true;
     }
