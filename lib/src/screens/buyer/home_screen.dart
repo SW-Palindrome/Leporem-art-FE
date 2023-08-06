@@ -653,7 +653,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "price-low"});
+                parameters: {"Sort Type": "price_low"});
             controller.changeSelectedSortType(2);
           },
           child: Padding(
@@ -689,7 +689,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
           onTap: () {
             logAnalytics(
                 name: "buyer_sort_filter_change",
-                parameters: {"Sort Type": "price-high"});
+                parameters: {"Sort Type": "price_-high"});
             controller.changeSelectedSortType(3);
           },
           child: Padding(

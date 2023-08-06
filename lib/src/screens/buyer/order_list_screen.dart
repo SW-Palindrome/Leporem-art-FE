@@ -84,8 +84,8 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   _orderItem(int index) {
     return GestureDetector(
       onTap: () {
-        logAnalytics(name: 'order-list', parameters: {
-          'action': 'item-detail ${controller.orders[index].itemId}'
+        logAnalytics(name: 'order_list', parameters: {
+          'action': 'item_detail ${controller.orders[index].itemId}'
         });
         Get.to(BuyerItemDetailScreen(),
             arguments: {'item_id': controller.orders[index].itemId});
@@ -276,7 +276,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
     return GestureDetector(
       onTap: () {
         logAnalytics(
-            name: 'order-list', parameters: {'action': 'cancel-start'});
+            name: 'order_list', parameters: {'action': 'cancel_start'});
         Get.bottomSheet(
           MyBottomSheet(
             title: '주문을 취소할까요?',
@@ -293,8 +293,8 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
             rightButtonText: '주문 취소하기',
             onRightButtonPressed: () {
               logAnalytics(
-                  name: 'order-list',
-                  parameters: {'action': 'cancel-complete'});
+                  name: 'order_list',
+                  parameters: {'action': 'cancel_complete'});
               controller.cancel(orderId);
               controller.fetch();
               Get.back();
@@ -351,7 +351,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   _reviewButton(Order order) {
     return GestureDetector(
       onTap: () {
-        logAnalytics(name: 'order-list', parameters: {'action': 'review'});
+        logAnalytics(name: 'order_list', parameters: {'action': 'review'});
         Get.to(ReviewStarScreen(), arguments: {'order': order});
         Get.put(ReviewController());
       },
