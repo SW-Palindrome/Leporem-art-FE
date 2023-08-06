@@ -40,8 +40,6 @@ void main() async {
   Get.lazyPut(() => NicknameController());
   await initializeDateFormatting();
 
-  ChattingSocketSingleton();
-
   FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
@@ -78,9 +76,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoginProceed) {
-      Get.put(MessageController());
-    }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
