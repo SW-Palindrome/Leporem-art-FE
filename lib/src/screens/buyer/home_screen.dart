@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_home_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
@@ -120,36 +121,39 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                     height: Get.width * 0.5,
                     cache: true,
                   ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: controller.items[index].isLiked
-                        ? GestureDetector(
-                            onTap: () async {
-                              await controller
-                                  .unlike(controller.items[index].id);
-                            },
-                            child: SvgPicture.asset(
-                              'assets/icons/heart_fill.svg',
-                              height: 24,
-                              width: 24,
-                              colorFilter: ColorFilter.mode(
-                                  ColorPalette.purple, BlendMode.srcIn),
+                  if (Get.find<UserGlobalInfoController>().userType ==
+                      UserType.member)
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: controller.items[index].isLiked
+                          ? GestureDetector(
+                              onTap: () async {
+                                await controller
+                                    .unlike(controller.items[index].id);
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/heart_fill.svg',
+                                height: 24,
+                                width: 24,
+                                colorFilter: ColorFilter.mode(
+                                    ColorPalette.purple, BlendMode.srcIn),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () async {
+                                await controller
+                                    .like(controller.items[index].id);
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/heart_outline.svg',
+                                height: 24,
+                                width: 24,
+                                colorFilter: ColorFilter.mode(
+                                    ColorPalette.white, BlendMode.srcIn),
+                              ),
                             ),
-                          )
-                        : GestureDetector(
-                            onTap: () async {
-                              await controller.like(controller.items[index].id);
-                            },
-                            child: SvgPicture.asset(
-                              'assets/icons/heart_outline.svg',
-                              height: 24,
-                              width: 24,
-                              colorFilter: ColorFilter.mode(
-                                  ColorPalette.white, BlendMode.srcIn),
-                            ),
-                          ),
-                  ),
+                    ),
                 ],
               ),
             ),
