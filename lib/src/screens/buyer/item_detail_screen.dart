@@ -114,7 +114,10 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 MessageController messageController = Get.find<MessageController>();
                 ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
                 if (chatRoom != null) {
-                  Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid});
+                  Get.to(() => MessageDetailScreen(), arguments: {
+                    'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid,
+                    'fromItemId': controller.itemDetail.value.id,
+                  });
                   return;
                 }
                 ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);

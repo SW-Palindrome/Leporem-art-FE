@@ -372,16 +372,38 @@ class MessageDetailScreen extends GetView<MessageController> {
                           suffix: InkWell(
                             onTap: () async {
                               ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
-                              if (!chatRoom.isRegistered) {
-                                await controller.createChatRoom(
+                              if (Get.arguments['fromItemId'] != null) {
+                                if (!chatRoom.isRegistered) {
+                                  await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
                                     chatRoom.opponentNickname,
-                                    _textEditingController.text);
+                                    Get.arguments['fromItemId'].toString(),
+                                    MessageType.itemInquiry,
+                                  );
+                                }
+                                else {
+                                  await controller.sendMessage(
+                                    Get.arguments['chatRoomUuid'],
+                                    Get.arguments['fromItemId'].toString(),
+                                    MessageType.itemInquiry,
+                                  );
+                                }
+                                Get.arguments['fromItemId'] = null;
+                              }
+                              if (!chatRoom.isRegistered) {
+                                await controller.createChatRoom(
+                                  Get.arguments['chatRoomUuid'],
+                                  chatRoom.opponentNickname,
+                                  _textEditingController.text,
+                                  MessageType.text
+                                );
                                 _textEditingController.clear();
                               }
                               await controller.sendMessage(
-                                  Get.arguments['chatRoomUuid'],
-                                  _textEditingController.text);
+                                Get.arguments['chatRoomUuid'],
+                                _textEditingController.text,
+                                MessageType.text
+                              );
                               _textEditingController.clear();
                             },
                             child: Text(

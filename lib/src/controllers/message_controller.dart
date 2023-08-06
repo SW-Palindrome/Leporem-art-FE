@@ -36,7 +36,11 @@ class MessageController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> sendMessage(chatRoomUuid, message) async {
+  Future<void> sendMessage(
+    String chatRoomUuid,
+    String message,
+    MessageType messageType
+  ) async {
     int opponentUserId = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid)
         .opponentUserId;
@@ -50,11 +54,16 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
-      type: MessageType.text,
+      type: messageType,
     );
     chatRoom.tempMessageList.add(messageInfo);
     ChattingSocketSingleton().sendMessage(
-        chatRoomUuid, opponentUserId, messageInfo.message, messageInfo.messageUuid);
+      chatRoomUuid,
+      opponentUserId,
+      messageInfo.message,
+      messageInfo.messageUuid,
+      messageType,
+    );
   }
 
   registerMessage(chatRoomUuid, messageUuid) {
@@ -106,7 +115,12 @@ class MessageController extends GetxController {
     return newChatRoom;
   }
 
-  createChatRoom(chatRoomUuid, sellerNickname, message) async {
+  createChatRoom(
+    String chatRoomUuid,
+    String sellerNickname,
+    String message,
+    MessageType messageType,
+  ) async {
     final ProfileRepository profileRepository = ProfileRepository();
     SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
     UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
@@ -118,13 +132,20 @@ class MessageController extends GetxController {
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
-      type: MessageType.text,
+      type: messageType,
     ));
     chatRoom.isRegistered = true;
     chatRoomList.remove(chatRoom);
     chatRoomList.insert(0, chatRoom);
     chatRoomList.refresh();
-    ChattingSocketSingleton().createChatRoom(chatRoomUuid, sellerProfile.sellerId, message, messageUuid, sellerProfile.userId);
+    ChattingSocketSingleton().createChatRoom(
+      chatRoomUuid,
+      sellerProfile.sellerId,
+      message,
+      messageUuid,
+      sellerProfile.userId,
+      messageType,
+    );
   }
 
   getChatRoom(chatRoomUuid) {

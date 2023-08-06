@@ -21,6 +21,21 @@ enum MessageType {
         throw Exception('Unknown MessageType: $text');
     }
   }
+
+  String toText() {
+    switch (this) {
+      case MessageType.text:
+        return 'TEXT';
+      case MessageType.image:
+        return 'IMAGE';
+      case MessageType.itemShare:
+        return 'ITEM_SHARE';
+      case MessageType.itemInquiry:
+        return 'ITEM_INQUIRY';
+      case MessageType.order:
+        return 'ORDER';
+    }
+  }
 }
 
 class Message {
