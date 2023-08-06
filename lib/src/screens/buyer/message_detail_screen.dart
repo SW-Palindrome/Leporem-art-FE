@@ -9,6 +9,7 @@ import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 
+import '../../models/item_detail.dart';
 import '../../models/message.dart';
 import '../../widgets/my_app_bar.dart';
 
@@ -80,7 +81,7 @@ class MessageDetailScreen extends GetView<MessageController> {
     ChatRoom currentChatRoom =
         controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return currentChatRoom.opponentUserId != message.userId
-        ? _myMessageWidget2(message)
+        ? _itemShareWidget(40)
         : _opponentMessageWidget(message);
   }
 
@@ -111,81 +112,90 @@ class MessageDetailScreen extends GetView<MessageController> {
     );
   }
 
-  _myMessageWidget2(Message message) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorPalette.grey_2,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  "https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg",
-                  width: Get.width * 0.215,
-                  height: Get.width * 0.215,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  _itemShareWidget(int itemId) {
+    return FutureBuilder<ItemDetail>(
+      future: controller.getItemInfo(itemId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData == false) {
+          return CircularProgressIndicator();
+        }
+        ItemDetail item = snapshot.data!;
+        return Container(
+          alignment: Alignment.centerRight,
+          child: Container(
+            decoration: BoxDecoration(
+              color: ColorPalette.grey_2,
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    '작품 공유',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      item.thumbnailImage,
+                      width: Get.width * 0.215,
+                      height: Get.width * 0.215,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    '홍준식',
-                    style: TextStyle(
-                      color: ColorPalette.grey_5,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  SizedBox(
-                    width: Get.width * 0.4,
-                    child: Text(
-                      '가로등 빛 받은 나뭇잎 컵가로등 빛 받은 나뭇잎 컵',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: ColorPalette.black,
-                        fontFamily: FontPalette.pretenderd,
-                        fontSize: 12,
+                  SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '작품 공유',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '${CurrencyFormatter().numberToCurrency(10000)}원',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                      SizedBox(height: 10),
+                      Text(
+                        item.nickname,
+                        style: TextStyle(
+                          color: ColorPalette.grey_5,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      SizedBox(
+                        width: Get.width * 0.4,
+                        child: Text(
+                          item.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: FontPalette.pretenderd,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 

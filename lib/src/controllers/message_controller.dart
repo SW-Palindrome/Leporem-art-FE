@@ -2,14 +2,17 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/item_detail.dart';
 import '../models/message.dart';
 import '../models/profile.dart';
+import '../repositories/item_detail_repository.dart';
 import '../repositories/message_repository.dart';
 import '../repositories/profile_repository.dart';
 import '../utils/chatting_socket_singleton.dart';
 
 class MessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
+  final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
@@ -146,5 +149,10 @@ class MessageController extends GetxController {
 
   getSellerChatRooms() {
     return chatRoomList.where((chatRoom) => !chatRoom.isBuyerRoom);
+  }
+
+  Future<ItemDetail> getItemInfo(int itemId) async {
+    ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(itemId);
+    return itemDetail;
   }
 }
