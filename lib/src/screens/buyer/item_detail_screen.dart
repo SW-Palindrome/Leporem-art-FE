@@ -4,9 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/induce_membership.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
@@ -138,10 +140,12 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           SizedBox(height: 8),
           InkWell(
             onTap: () {
-              Get.off(ItemCreatorScreen(), arguments: {
-                'nickname': controller.itemDetail.value.nickname
+              induceMembership(() {
+                Get.off(ItemCreatorScreen(), arguments: {
+                  'nickname': controller.itemDetail.value.nickname
+                });
+                Get.put(BuyerItemCreatorController());
               });
-              Get.put(BuyerItemCreatorController());
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

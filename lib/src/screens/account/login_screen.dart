@@ -4,6 +4,7 @@ import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -67,6 +68,7 @@ class LoginScreen extends StatelessWidget {
       onTap: () async {
         switch (icon) {
           case 'kakao':
+            Get.find<UserGlobalInfoController>().userType = UserType.member;
             await kakaoLogin();
             break;
           case 'naver':
@@ -74,6 +76,7 @@ class LoginScreen extends StatelessWidget {
           case 'apple':
             break;
           case null:
+            Get.find<UserGlobalInfoController>().userType = UserType.guest;
             Get.offAll(BuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');

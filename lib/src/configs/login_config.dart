@@ -61,8 +61,10 @@ Future<bool> isSignup() async {
       },
     );
     if (response.statusCode == 200) {
-      UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+      UserGlobalInfoController userGlobalInfoController =
+          Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];
+      userGlobalInfoController.userType = UserType.member;
       return true;
     }
     return false;

@@ -34,19 +34,19 @@ class MyBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 24),
+            padding: EdgeInsets.only(top: 20.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    color: const Color(0xff191f28),
+                  style: TextStyle(
+                    color: ColorPalette.black,
                     fontWeight: FontWeight.w600,
                     fontFamily: "PretendardVariable",
                     fontStyle: FontStyle.normal,
