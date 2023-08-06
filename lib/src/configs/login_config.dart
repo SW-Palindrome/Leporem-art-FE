@@ -1,6 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:leporemart/src/buyer_app.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
@@ -61,8 +67,15 @@ Future<bool> isSignup() async {
       },
     );
     if (response.statusCode == 200) {
-      UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+      UserGlobalInfoController userGlobalInfoController =
+          Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];
+      userGlobalInfoController.userType = UserType.member;
+      Get.lazyPut(() => MyBottomNavigationbarController());
+      Get.lazyPut(() => AgreementController());
+      Get.lazyPut(() => AccountTypeController());
+      Get.lazyPut(() => EmailController());
+      Get.lazyPut(() => NicknameController());
       return true;
     }
     return false;
@@ -77,7 +90,7 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoTalk();
       print('카카오톡으로 로그인 성공');
-      await isSignup() ? Get.offAllNamed('/buyer') : Get.to(AgreementScreen());
+      await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
 
@@ -90,9 +103,7 @@ Future<void> kakaoLogin() async {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         print('카카오계정으로 로그인 성공');
-        await isSignup()
-            ? Get.offAllNamed('/buyer')
-            : Get.to(AgreementScreen());
+        await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
       }
@@ -101,7 +112,7 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공');
-      await isSignup() ? Get.offAllNamed('/buyer') : Get.to(AgreementScreen());
+      await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
     } catch (error) {
       print('카카오계정으로 로그인 실패 $error');
     }

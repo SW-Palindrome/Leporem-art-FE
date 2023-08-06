@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+import 'package:leporemart/src/controllers/email_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,6 +23,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
     return Scaffold(
       backgroundColor: Color(0xffFAFAFA),
       body: SafeArea(
@@ -27,13 +35,14 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "공예쁨",
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                    ),
+                  Image.asset(
+                    'assets/images/app_description.png',
+                    width: Get.width * 0.47,
+                  ),
+                  SizedBox(height: 10),
+                  Image.asset(
+                    'assets/images/app_title.png',
+                    width: Get.width * 0.38,
                   ),
                   SizedBox(height: Get.height * 0.15),
                   _loginButton(
@@ -65,8 +74,14 @@ class LoginScreen extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () async {
+        Get.lazyPut(() => MyBottomNavigationbarController());
+        Get.lazyPut(() => AgreementController());
+        Get.lazyPut(() => AccountTypeController());
+        Get.lazyPut(() => EmailController());
+        Get.lazyPut(() => NicknameController());
         switch (icon) {
           case 'kakao':
+            Get.find<UserGlobalInfoController>().userType = UserType.member;
             await kakaoLogin();
             break;
           case 'naver':
@@ -74,6 +89,7 @@ class LoginScreen extends StatelessWidget {
           case 'apple':
             break;
           case null:
+            Get.find<UserGlobalInfoController>().userType = UserType.guest;
             Get.offAll(BuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');

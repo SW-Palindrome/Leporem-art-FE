@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -38,7 +39,6 @@ void main() async {
   Get.lazyPut(() => EmailController());
   Get.lazyPut(() => NicknameController());
   Get.put(MessageController());
-
   await initializeDateFormatting();
 
   ChattingSocketSingleton();
@@ -65,6 +65,8 @@ void main() async {
       appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
     );
   } else {
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(MyApp(isLoginProceed: isLoginProceed));
   }
 }

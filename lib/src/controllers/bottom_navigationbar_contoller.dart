@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/utils/induce_membership.dart';
 
 class MyBottomNavigationbarController extends GetxController {
   static MyBottomNavigationbarController get to => Get.find();
@@ -12,7 +13,13 @@ class MyBottomNavigationbarController extends GetxController {
 
   // 탭 이벤트가 발생할 시 selectedIndex값을 변경해줄 함수
   void changeBuyerIndex(int index) {
-    selectedBuyerIndex(index);
+    if (index == 2 || index == 4) {
+      induceMembership(() {
+        selectedBuyerIndex.value = index;
+      });
+    } else {
+      selectedBuyerIndex.value = index;
+    }
     //하단바 선택시 로그
     late String pageStr;
     switch (index) {
@@ -29,7 +36,7 @@ class MyBottomNavigationbarController extends GetxController {
         pageStr = "Chat";
         break;
       case 4:
-        pageStr = "Mypage";
+        pageStr = "MyPage";
         break;
     }
 
@@ -55,7 +62,7 @@ class MyBottomNavigationbarController extends GetxController {
         pageStr = "Chat";
         break;
       case 3:
-        pageStr = "Mypage";
+        pageStr = "MyPage";
         break;
     }
 

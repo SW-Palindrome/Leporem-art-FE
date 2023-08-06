@@ -1,4 +1,4 @@
-package com.art.leporem.leporemart
+package com.palindrome.leporemart
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -49,9 +49,9 @@ class BuyerItemCreatorController extends GetxController {
         throw ('Error fetching buyer home items in controller: $e');
       }
       try {
-        final fetchSellerProfile = await _profileRepository
+        final fetchCreatorProfile = await _profileRepository
             .fetchCreatorProfile(Get.arguments['nickname']);
-        creatorProfile.value = fetchSellerProfile;
+        creatorProfile.value = fetchCreatorProfile;
       } catch (e) {
         // 에러 처리
         throw ('Error fetching seller profile: $e');

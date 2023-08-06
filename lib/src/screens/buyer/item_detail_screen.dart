@@ -4,9 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_creator_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/induce_membership.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
@@ -61,30 +63,32 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
         children: [
           Row(
             children: [
-              Obx(
-                () => GestureDetector(
-                  onTap: controller.itemDetail.value.isLiked
-                      ? () async {
-                          await controller.unlike();
-                        }
-                      : () async {
-                          await controller.like();
-                        },
-                  child: Obx(
-                    () => SvgPicture.asset(
-                      controller.itemDetail.value.isLiked
-                          ? 'assets/icons/heart_fill.svg'
-                          : 'assets/icons/heart_outline.svg',
-                      width: 30,
-                      colorFilter: ColorFilter.mode(
-                          controller.itemDetail.value.isLiked
-                              ? ColorPalette.purple
-                              : ColorPalette.grey_4,
-                          BlendMode.srcIn),
+              if (Get.find<UserGlobalInfoController>().userType ==
+                  UserType.member)
+                Obx(
+                  () => GestureDetector(
+                    onTap: controller.itemDetail.value.isLiked
+                        ? () async {
+                            await controller.unlike();
+                          }
+                        : () async {
+                            await controller.like();
+                          },
+                    child: Obx(
+                      () => SvgPicture.asset(
+                        controller.itemDetail.value.isLiked
+                            ? 'assets/icons/heart_fill.svg'
+                            : 'assets/icons/heart_outline.svg',
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                            controller.itemDetail.value.isLiked
+                                ? ColorPalette.purple
+                                : ColorPalette.grey_4,
+                            BlendMode.srcIn),
+                      ),
                     ),
                   ),
                 ),
-              ),
               SizedBox(width: 10),
               Obx(
                 () => Text(
@@ -105,15 +109,17 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           NextButton(
             text: "채팅하기",
             value: true,
-            onTap: () async {
-              MessageController messageController = Get.find<MessageController>();
-              ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
-              if (chatRoom != null) {
-                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid});
-                return;
-              }
-              ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
-              Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+            onTap: () {
+              induceMembership(() async {
+                MessageController messageController = Get.find<MessageController>();
+                ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
+                if (chatRoom != null) {
+                  Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid});
+                  return;
+                }
+                ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
+                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+             });
             },
             width: Get.width * 0.35,
           ),
@@ -151,10 +157,12 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           SizedBox(height: 8),
           InkWell(
             onTap: () {
-              Get.off(ItemCreatorScreen(), arguments: {
-                'nickname': controller.itemDetail.value.nickname
+              induceMembership(() {
+                Get.off(ItemCreatorScreen(), arguments: {
+                  'nickname': controller.itemDetail.value.nickname
+                });
+                Get.put(BuyerItemCreatorController());
               });
-              Get.put(BuyerItemCreatorController());
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
