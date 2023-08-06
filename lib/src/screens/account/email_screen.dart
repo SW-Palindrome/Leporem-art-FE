@@ -44,47 +44,54 @@ class EmailScreen extends GetView<EmailController> {
                   visible: controller.isSendClicked.value,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child: TextFormField(
-                      onChanged: (text) {
-                        controller.isCodeValidated(text);
+                    child: Focus(
+                      onFocusChange: (value) {
+                        logAnalytics(
+                            name: 'seller-signup',
+                            parameters: {'action': 'code-form-focus'});
                       },
-                      controller: controller.codeController,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                      style: TextStyle(
-                        color: ColorPalette.black,
-                        fontSize: 20,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: "인증 번호",
-                        labelStyle: TextStyle(
-                          color: controller.isCodeError.value
-                              ? ColorPalette.red
-                              : ColorPalette.grey_6,
-                          fontSize: 11,
-                        ),
-                        hintText: "000000",
-                        hintStyle: TextStyle(
-                          color: ColorPalette.grey_3,
+                      child: TextFormField(
+                        onChanged: (text) {
+                          controller.isCodeValidated(text);
+                        },
+                        controller: controller.codeController,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        style: TextStyle(
+                          color: ColorPalette.black,
                           fontSize: 20,
                         ),
-                        errorText: controller.isCodeError.value
-                            ? "인증번호를 다시 확인해주세요."
-                            : null,
-                        errorStyle: TextStyle(
-                          color: ColorPalette.red,
-                          fontSize: 11,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
+                        decoration: InputDecoration(
+                          labelText: "인증 번호",
+                          labelStyle: TextStyle(
                             color: controller.isCodeError.value
                                 ? ColorPalette.red
-                                : ColorPalette.grey_3,
+                                : ColorPalette.grey_6,
+                            fontSize: 11,
                           ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorPalette.purple,
+                          hintText: "000000",
+                          hintStyle: TextStyle(
+                            color: ColorPalette.grey_3,
+                            fontSize: 20,
+                          ),
+                          errorText: controller.isCodeError.value
+                              ? "인증번호를 다시 확인해주세요."
+                              : null,
+                          errorStyle: TextStyle(
+                            color: ColorPalette.red,
+                            fontSize: 11,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: controller.isCodeError.value
+                                  ? ColorPalette.red
+                                  : ColorPalette.grey_3,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: ColorPalette.purple,
+                            ),
                           ),
                         ),
                       ),
@@ -95,6 +102,9 @@ class EmailScreen extends GetView<EmailController> {
               Obx(
                 () => Focus(
                   onFocusChange: (focused) {
+                    logAnalytics(
+                        name: 'seller-signup',
+                        parameters: {'action': 'email-form-focus'});
                     controller.setFocus(focused);
                     if (!focused) {
                       controller

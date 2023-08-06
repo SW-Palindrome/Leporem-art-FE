@@ -37,6 +37,9 @@ class NicknameScreen extends GetView<NicknameController> {
               SizedBox(height: Get.height * 0.05),
               Focus(
                 onFocusChange: (focused) {
+                  logAnalytics(
+                      name: 'signup',
+                      parameters: {'action': 'nickname-form-focus'});
                   controller.setFocus(focused);
                   if (!focused) {
                     controller

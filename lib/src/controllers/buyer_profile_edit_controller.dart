@@ -9,6 +9,7 @@ import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 
 class BuyerProfileEditController extends GetxController {
   TextEditingController nicknameController = TextEditingController();
@@ -59,6 +60,8 @@ class BuyerProfileEditController extends GetxController {
     final XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
+      logAnalytics(
+          name: 'buyer-profile-edit', parameters: {'action': 'select-image'});
       profileImage.value = File(pickedFile.path);
       isProfileImageChanged.value = true;
     }

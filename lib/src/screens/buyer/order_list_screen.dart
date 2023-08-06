@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/buyer_item_detail_controller.dart';
 import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
 import 'package:leporemart/src/models/order.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 
@@ -80,7 +83,14 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
 
   _orderItem(int index) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        logAnalytics(name: 'order-list', parameters: {
+          'action': 'item-detail ${controller.orders[index].itemId}'
+        });
+        Get.to(BuyerItemDetailScreen(),
+            arguments: {'item_id': controller.orders[index].itemId});
+        Get.put(BuyerItemDetailController());
+      },
       child: Container(
         padding: EdgeInsets.all(12),
         margin: EdgeInsets.only(bottom: 16),
@@ -265,6 +275,8 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   _cancelButton(int orderId) {
     return GestureDetector(
       onTap: () {
+        logAnalytics(
+            name: 'order-list', parameters: {'action': 'cancel-start'});
         Get.bottomSheet(
           MyBottomSheet(
             title: '주문을 취소할까요?',
@@ -280,6 +292,9 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
             },
             rightButtonText: '주문 취소하기',
             onRightButtonPressed: () {
+              logAnalytics(
+                  name: 'order-list',
+                  parameters: {'action': 'cancel-complete'});
               controller.cancel(orderId);
               controller.fetch();
               Get.back();
@@ -336,6 +351,7 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
   _reviewButton(Order order) {
     return GestureDetector(
       onTap: () {
+        logAnalytics(name: 'order-list', parameters: {'action': 'review'});
         Get.to(ReviewStarScreen(), arguments: {'order': order});
         Get.put(ReviewController());
       },
