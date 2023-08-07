@@ -79,15 +79,29 @@ class ItemEditScreen extends GetView<ItemEditController> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Text(
-            '사진과 플롭영상을 올려주세요.',
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 16.0,
-            ),
+          child: Row(
+            children: [
+              Text(
+                '사진과 플롭영상을 올려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '(영상 15초 제한)',
+                style: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
           ),
         ),
         Obx(
