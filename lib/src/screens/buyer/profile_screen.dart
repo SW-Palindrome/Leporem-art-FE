@@ -36,15 +36,15 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             Divider(color: ColorPalette.grey_2, thickness: 10),
             _menuColumn(
               title: '작품관리',
-              contents: ['주문 내역', '관심 작품', '최근 본 작품'],
-              icons: ['list', 'heart_outline', 'history'],
+              contents: ['주문 내역', /*'관심 작품',*/ '최근 본 작품'],
+              icons: ['list', /*'heart_outline',*/ 'history'],
               onTaps: [
                 () {
                   logAnalytics(name: 'enter_order_list');
                   Get.to(BuyerOrderListScreen());
                   Get.put(BuyerOrderListController());
                 },
-                () {},
+                /*() {},*/
                 () {
                   logAnalytics(name: 'enter_recent_item');
                   Get.to(RecentItemScreen());
@@ -52,16 +52,16 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 }
               ],
             ),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: '커뮤니티 관리',
-              contents: ['팔로잉 목록', '차단 목록'],
-              icons: ['followers', 'block'],
-              onTaps: [
-                () {},
-                () {},
-              ],
-            ),
+            // Divider(color: ColorPalette.grey_2, thickness: 10),
+            // _menuColumn(
+            //   title: '커뮤니티 관리',
+            //   contents: ['팔로잉 목록', '차단 목록'],
+            //   icons: ['followers', 'block'],
+            //   onTaps: [
+            //     () {},
+            //     () {},
+            //   ],
+            // ),
             if (!controller.buyerProfile.value.isSeller)
               Divider(color: ColorPalette.grey_2, thickness: 10),
             if (!controller.buyerProfile.value.isSeller)
@@ -99,18 +99,18 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               fontSize: 24.0,
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: SvgPicture.asset(
-              'assets/icons/setting.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                ColorPalette.grey_4,
-                BlendMode.srcIn,
-              ),
-            ),
-          )
+          // GestureDetector(
+          //   onTap: () {},
+          //   child: SvgPicture.asset(
+          //     'assets/icons/setting.svg',
+          //     width: 24,
+          //     height: 24,
+          //     colorFilter: ColorFilter.mode(
+          //       ColorPalette.grey_4,
+          //       BlendMode.srcIn,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -207,7 +207,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
             GestureDetector(
               onTap: () async {
                 logAnalytics(name: 'swap_seller');
-                MyBottomNavigationbarController.to.changeSellerIndex(3);
+                MyBottomNavigationbarController.to.changeSellerIndex(2);
                 Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());
               },

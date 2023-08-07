@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/controllers/seller_search_controller.dart';
+import 'package:leporemart/src/screens/seller/item_create_detail_screen.dart';
 import 'package:leporemart/src/screens/seller/item_create_screen.dart';
 import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -186,7 +188,8 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: GestureDetector(
             onTap: () {
               logAnalytics(name: "enter_item_create");
-              Get.to(ItemCreateScreen());
+              Get.to(ItemCreateDetailScreen());
+              Get.put(ItemCreateDetailController());
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 11.5),

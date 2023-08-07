@@ -42,34 +42,34 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                 () {},
               ],
             ),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: '커뮤니티 관리',
-              contents: ['차단 목록'],
-              icons: ['block'],
-              onTaps: [
-                () {},
-              ],
-            ),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: 'SNS 연동',
-              contents: ['인스타그램 연동'],
-              icons: ['instagram'],
-              onTaps: [
-                () {},
-              ],
-            ),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: '기타 기능',
-              contents: ['요금 플랜 가입하기', '포트폴리오'],
-              icons: ['plan', 'portfolio'],
-              onTaps: [
-                () {},
-                () {},
-              ],
-            ),
+            // Divider(color: ColorPalette.grey_2, thickness: 10),
+            // _menuColumn(
+            //   title: '커뮤니티 관리',
+            //   contents: ['차단 목록'],
+            //   icons: ['block'],
+            //   onTaps: [
+            //     () {},
+            //   ],
+            // ),
+            // Divider(color: ColorPalette.grey_2, thickness: 10),
+            // _menuColumn(
+            //   title: 'SNS 연동',
+            //   contents: ['인스타그램 연동'],
+            //   icons: ['instagram'],
+            //   onTaps: [
+            //     () {},
+            //   ],
+            // ),
+            // Divider(color: ColorPalette.grey_2, thickness: 10),
+            // _menuColumn(
+            //   title: '기타 기능',
+            //   contents: ['요금 플랜 가입하기', '포트폴리오'],
+            //   icons: ['plan', 'portfolio'],
+            //   onTaps: [
+            //     () {},
+            //     () {},
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -92,18 +92,18 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
               fontSize: 24.0,
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: SvgPicture.asset(
-              'assets/icons/setting.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                ColorPalette.grey_4,
-                BlendMode.srcIn,
-              ),
-            ),
-          )
+          // GestureDetector(
+          //   onTap: () {},
+          //   child: SvgPicture.asset(
+          //     'assets/icons/setting.svg',
+          //     width: 24,
+          //     height: 24,
+          //     colorFilter: ColorFilter.mode(
+          //       ColorPalette.grey_4,
+          //       BlendMode.srcIn,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -202,7 +202,7 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
               GestureDetector(
                 onTap: () async {
                   logAnalytics(name: "swap_buyer");
-                  MyBottomNavigationbarController.to.changeBuyerIndex(4);
+                  MyBottomNavigationbarController.to.changeBuyerIndex(2);
                   Get.offAll(() => BuyerApp());
                 },
                 child: Container(

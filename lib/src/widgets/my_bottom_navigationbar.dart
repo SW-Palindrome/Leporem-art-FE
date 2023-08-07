@@ -49,19 +49,19 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                       ),
                       label: '홈',
                     ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        'assets/icons/auction.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/auction.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
-                      ),
-                      label: '경매',
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: SvgPicture.asset(
+                    //     'assets/icons/auction.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.grey_4, BlendMode.srcIn),
+                    //   ),
+                    //   activeIcon: SvgPicture.asset(
+                    //     'assets/icons/auction.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.purple, BlendMode.srcIn),
+                    //   ),
+                    //   label: '경매',
+                    // ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         'assets/icons/message_fill.svg',
@@ -75,19 +75,19 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                       ),
                       label: '채팅',
                     ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        'assets/icons/flop.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/flop.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
-                      ),
-                      label: '플롭',
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: SvgPicture.asset(
+                    //     'assets/icons/flop.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.grey_4, BlendMode.srcIn),
+                    //   ),
+                    //   activeIcon: SvgPicture.asset(
+                    //     'assets/icons/flop.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.purple, BlendMode.srcIn),
+                    //   ),
+                    //   label: '플롭',
+                    // ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         'assets/icons/profile.svg',
@@ -116,19 +116,19 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                       ),
                       label: '작품목록',
                     ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        'assets/icons/paper_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/paper_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
-                      ),
-                      label: '주문제작',
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: SvgPicture.asset(
+                    //     'assets/icons/paper_fill.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.grey_4, BlendMode.srcIn),
+                    //   ),
+                    //   activeIcon: SvgPicture.asset(
+                    //     'assets/icons/paper_fill.svg',
+                    //     colorFilter: ColorFilter.mode(
+                    //         ColorPalette.purple, BlendMode.srcIn),
+                    //   ),
+                    //   label: '주문제작',
+                    // ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         'assets/icons/message_fill.svg',

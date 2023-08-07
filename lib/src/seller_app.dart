@@ -25,11 +25,11 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
       switch (controller.selectedSellerIndex.value) {
         case 0:
           return _homeScaffold();
+        // case 1:
+        //   return _customOrderScaffold();
         case 1:
-          return _customOrderScaffold();
-        case 2:
           return _messageScaffold();
-        case 3:
+        case 2:
           return _profileScaffold();
         default:
           return _homeScaffold();

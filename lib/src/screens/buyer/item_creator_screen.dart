@@ -67,41 +67,41 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
       margin: EdgeInsets.only(bottom: 16),
       child: Row(
         children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: ColorPalette.grey_6,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset('assets/icons/plus.svg',
-                      width: 20,
-                      height: 20,
-                      colorFilter: ColorFilter.mode(
-                        ColorPalette.black,
-                        BlendMode.srcIn,
-                      )),
-                  SizedBox(width: 10),
-                  Text(
-                    '팔로우',
-                    style: TextStyle(
-                      color: ColorPalette.grey_7,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "PretendardVariable",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16.0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(width: 15),
+          // Expanded(
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 15),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(12),
+          //       border: Border.all(
+          //         color: ColorPalette.grey_6,
+          //       ),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         SvgPicture.asset('assets/icons/plus.svg',
+          //             width: 20,
+          //             height: 20,
+          //             colorFilter: ColorFilter.mode(
+          //               ColorPalette.black,
+          //               BlendMode.srcIn,
+          //             )),
+          //         SizedBox(width: 10),
+          //         Text(
+          //           '팔로우',
+          //           style: TextStyle(
+          //             color: ColorPalette.grey_7,
+          //             fontWeight: FontWeight.w600,
+          //             fontFamily: "PretendardVariable",
+          //             fontStyle: FontStyle.normal,
+          //             fontSize: 16.0,
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(width: 15),
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -191,40 +191,40 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
             SizedBox(height: 10),
             Row(
               children: [
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: ColorPalette.grey_1,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          '팔로워',
-                          style: TextStyle(
-                            color: ColorPalette.grey_6,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '150',
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: "PretendardVariable",
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
+                // Expanded(
+                //   child: Container(
+                //     padding: EdgeInsets.symmetric(vertical: 15),
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12),
+                //       color: ColorPalette.grey_1,
+                //     ),
+                //     child: Column(
+                //       children: [
+                //         Text(
+                //           '팔로워',
+                //           style: TextStyle(
+                //             color: ColorPalette.grey_6,
+                //             fontFamily: "PretendardVariable",
+                //             fontStyle: FontStyle.normal,
+                //             fontSize: 12.0,
+                //           ),
+                //         ),
+                //         SizedBox(height: 5),
+                //         Text(
+                //           '150',
+                //           style: TextStyle(
+                //             color: ColorPalette.black,
+                //             fontFamily: "PretendardVariable",
+                //             fontWeight: FontWeight.w600,
+                //             fontStyle: FontStyle.normal,
+                //             fontSize: 12.0,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(width: 10),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 15),
