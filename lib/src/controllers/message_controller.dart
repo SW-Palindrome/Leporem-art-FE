@@ -57,6 +57,7 @@ class MessageController extends GetxController {
       message: message,
       type: messageType,
     );
+    await fetchItemInfo(messageInfo);
     chatRoom.tempMessageList.add(messageInfo);
     ChattingSocketSingleton().sendMessage(
       chatRoomUuid,
@@ -83,14 +84,16 @@ class MessageController extends GetxController {
   receiveMessage(chatRoomUuid, messageUuid, message, messageType) {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid);
-    receiveChatRoom.messageList.add(Message(
+    Message receiveMessage = Message(
       messageUuid: messageUuid,
       userId: receiveChatRoom.opponentUserId,
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
       type: messageType,
-    ));
+    );
+    fetchItemInfo(receiveMessage);
+    receiveChatRoom.messageList.add(receiveMessage);
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
