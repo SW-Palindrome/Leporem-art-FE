@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -126,8 +127,10 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () async {
-                      ChatRoom chatRoom = await controller.getOrCreateChatRoom();
-                      Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
+                      ChatRoom chatRoom =
+                          await controller.getOrCreateChatRoom();
+                      Get.to(() => MessageDetailScreen(),
+                          arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
                     },
                     child: Text(
                       '채팅하기',
@@ -157,8 +160,9 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(Get.width * 0.25),
-              child: Image.network(
-                'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+              child: CachedNetworkImage(
+                imageUrl:
+                    'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
                 width: Get.width * 0.25,
                 height: Get.width * 0.25,
               ),
@@ -304,12 +308,11 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
               aspectRatio: 1,
               child: Stack(
                 children: [
-                  ExtendedImage.network(
-                    controller.items[index].thumbnailImage,
+                  CachedNetworkImage(
+                    imageUrl: controller.items[index].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.5,
                     height: Get.width * 0.5,
-                    cache: true,
                   ),
                   Positioned(
                     bottom: 10,

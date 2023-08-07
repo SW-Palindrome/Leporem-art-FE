@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -125,8 +126,8 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                     child: SizedBox(
                       height: 40,
                       width: 40,
-                      child: Image.network(
-                        controller.itemDetail.value.profileImage,
+                      child: CachedNetworkImage(
+                        imageUrl: controller.itemDetail.value.profileImage,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -166,15 +167,15 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
             },
           ),
           items: [
-            Image.network(
-              controller.itemDetail.value.thumbnailImage,
+            CachedNetworkImage(
+              imageUrl: controller.itemDetail.value.thumbnailImage,
               fit: BoxFit.cover,
               width: Get.width,
               height: Get.width,
             ),
             for (String imageUrl in controller.itemDetail.value.images)
-              Image.network(
-                imageUrl,
+              CachedNetworkImage(
+                imageUrl: imageUrl,
                 fit: BoxFit.cover,
                 width: Get.width,
                 height: Get.width,

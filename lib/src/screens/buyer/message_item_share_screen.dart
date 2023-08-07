@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
@@ -16,8 +17,7 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title:
-            '${controller.sellerNickname}님의 작품',
+        title: '${controller.sellerNickname}님의 작품',
         onTapLeadingIcon: () {
           Get.back();
         },
@@ -103,8 +103,8 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                controller.displayItems[index].thumbnailImage,
+              child: CachedNetworkImage(
+                imageUrl: controller.displayItems[index].thumbnailImage,
                 height: Get.width * 0.23,
                 width: Get.width * 0.23,
                 fit: BoxFit.cover,

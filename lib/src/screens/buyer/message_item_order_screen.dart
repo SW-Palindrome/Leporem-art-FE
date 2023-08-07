@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
@@ -103,8 +104,8 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                controller.displayItems[index].thumbnailImage,
+              child: CachedNetworkImage(
+                imageUrl: controller.displayItems[index].thumbnailImage,
                 height: Get.width * 0.23,
                 width: Get.width * 0.23,
                 fit: BoxFit.cover,

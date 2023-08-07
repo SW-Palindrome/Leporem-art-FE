@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -556,8 +557,8 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                controller.items[index].thumbnailImage,
+              child: CachedNetworkImage(
+                imageUrl: controller.items[index].thumbnailImage,
                 height: Get.width * 0.23,
                 width: Get.width * 0.23,
                 fit: BoxFit.cover,

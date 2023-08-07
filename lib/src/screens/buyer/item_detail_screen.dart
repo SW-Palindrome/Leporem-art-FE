@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -123,18 +124,26 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 logAnalytics(name: "item_detail_message", parameters: {
                   "nickname": controller.itemDetail.value.nickname
                 });
-                MessageController messageController = Get.find<MessageController>();
-                ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname);
+                MessageController messageController =
+                    Get.find<MessageController>();
+                ChatRoom? chatRoom =
+                    messageController.getChatRoomByOpponentNickname(
+                        controller.itemDetail.value.nickname);
                 if (chatRoom != null) {
                   Get.to(() => MessageDetailScreen(), arguments: {
-                    'chatRoomUuid': messageController.getChatRoomByOpponentNickname(controller.itemDetail.value.nickname).chatRoomUuid,
+                    'chatRoomUuid': messageController
+                        .getChatRoomByOpponentNickname(
+                            controller.itemDetail.value.nickname)
+                        .chatRoomUuid,
                     'fromItemId': controller.itemDetail.value.id,
                   });
                   return;
                 }
-                ChatRoom newChatRoom = await messageController.createTempChatRoom(controller.itemDetail.value.nickname);
-                Get.to(() => MessageDetailScreen(), arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
-             });
+                ChatRoom newChatRoom = await messageController
+                    .createTempChatRoom(controller.itemDetail.value.nickname);
+                Get.to(() => MessageDetailScreen(),
+                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+              });
             },
             width: Get.width * 0.35,
           ),
@@ -192,8 +201,8 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                       child: SizedBox(
                         height: 40,
                         width: 40,
-                        child: Image.network(
-                          controller.itemDetail.value.profileImage,
+                        child: CachedNetworkImage(
+                          imageUrl: controller.itemDetail.value.profileImage,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -240,15 +249,15 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
               },
             ),
             items: [
-              Image.network(
-                controller.itemDetail.value.thumbnailImage,
+              CachedNetworkImage(
+                imageUrl: controller.itemDetail.value.thumbnailImage,
                 fit: BoxFit.cover,
                 width: Get.width,
                 height: Get.width,
               ),
               for (String imageUrl in controller.itemDetail.value.images)
-                Image.network(
-                  imageUrl,
+                CachedNetworkImage(
+                  imageUrl: imageUrl,
                   fit: BoxFit.cover,
                   width: Get.width,
                   height: Get.width,

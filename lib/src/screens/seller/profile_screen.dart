@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -121,8 +122,8 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(Get.width * 0.1),
-                    child: Image.network(
-                      controller.sellerProfile.value.profileImage,
+                    child: CachedNetworkImage(
+                      imageUrl: controller.sellerProfile.value.profileImage,
                       width: Get.width * 0.2,
                       height: Get.width * 0.2,
                       fit: BoxFit.cover,

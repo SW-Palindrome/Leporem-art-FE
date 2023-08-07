@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -226,8 +227,8 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                     height: Get.width * 0.3,
                     fit: BoxFit.cover,
                   )
-                : Image.network(
-                    controller.sellerProfileEdit.profileImage,
+                : CachedNetworkImage(
+                    imageUrl: controller.sellerProfileEdit.profileImage,
                     width: Get.width * 0.3,
                     height: Get.width * 0.3,
                     fit: BoxFit.cover,

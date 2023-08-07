@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -112,7 +113,7 @@ class MessageDetailScreen extends GetView<MessageController> {
             CircleAvatar(
               radius: 16,
               backgroundImage:
-              NetworkImage(controller.chatRoom.opponentProfileImageUrl),
+                  NetworkImage(controller.chatRoom.opponentProfileImageUrl),
             ),
           if (!controller.isDifferentUserIndex(index)) SizedBox(width: 32),
           SizedBox(width: 8),
@@ -148,18 +149,16 @@ class MessageDetailScreen extends GetView<MessageController> {
     }
   }
 
-  _itemInfoWidget(
-    String description,
-    Message message,
-    BoxDecoration boxDecoration,
-    Function onTapAction
-  ) {
+  _itemInfoWidget(String description, Message message,
+      BoxDecoration boxDecoration, Function onTapAction) {
     ItemInfo? item = message.itemInfo;
     if (item == null) {
       return CircularProgressIndicator();
     }
     return GestureDetector(
-      onTap: () { onTapAction(item); },
+      onTap: () {
+        onTapAction(item);
+      },
       child: Container(
         decoration: boxDecoration,
         child: Padding(
@@ -169,8 +168,8 @@ class MessageDetailScreen extends GetView<MessageController> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  item.thumbnailImage,
+                child: CachedNetworkImage(
+                  imageUrl: item.thumbnailImage,
                   width: Get.width * 0.215,
                   height: Get.width * 0.215,
                   fit: BoxFit.cover,
@@ -233,25 +232,15 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _itemShareWidget(Message message, BoxDecoration boxDecoration) {
-    return _itemInfoWidget(
-        '작품 공유',
-        message,
-        boxDecoration,
-            (item) {
-          if (controller.chatRoom.isBuyerRoom) {
-            Get.lazyPut(() => BuyerItemDetailController());
-            Get.to(BuyerItemDetailScreen(), arguments: {
-              'item_id': item.itemId
-            });
-          }
-          else {
-            Get.lazyPut(() => SellerItemDetailController());
-            Get.to(SellerItemDetailScreen(), arguments: {
-              'item_id': item.itemId
-            });
-          }
-        }
-    );
+    return _itemInfoWidget('작품 공유', message, boxDecoration, (item) {
+      if (controller.chatRoom.isBuyerRoom) {
+        Get.lazyPut(() => BuyerItemDetailController());
+        Get.to(BuyerItemDetailScreen(), arguments: {'item_id': item.itemId});
+      } else {
+        Get.lazyPut(() => SellerItemDetailController());
+        Get.to(SellerItemDetailScreen(), arguments: {'item_id': item.itemId});
+      }
+    });
   }
 
   _itemInquiryWidget(Message message, BoxDecoration boxDecoration) {
@@ -262,38 +251,27 @@ class MessageDetailScreen extends GetView<MessageController> {
       (item) {
         if (controller.chatRoom.isBuyerRoom) {
           Get.lazyPut(() => BuyerItemDetailController());
-          Get.to(BuyerItemDetailScreen(), arguments: {
-            'item_id': item.itemId
-          });
-        }
-        else {
+          Get.to(BuyerItemDetailScreen(), arguments: {'item_id': item.itemId});
+        } else {
           Get.lazyPut(() => SellerItemDetailController());
-          Get.to(SellerItemDetailScreen(), arguments: {
-            'item_id': item.itemId
-          });
+          Get.to(SellerItemDetailScreen(), arguments: {'item_id': item.itemId});
         }
       },
     );
   }
 
   _orderWidget(Message message, BoxDecoration boxDecoration) {
-    return _itemInfoWidget(
-      '주문 신청',
-      message,
-      boxDecoration,
-      (item) {
-        if (controller.chatRoom.isBuyerRoom) {
-          logAnalytics(name: 'enter_order_list');
-          Get.to(BuyerOrderListScreen());
-          Get.put(BuyerOrderListController());
-        }
-        else {
-          logAnalytics(name: "enter_item_management");
-          Get.to(ItemManagementScreen());
-          Get.put(ItemManagementController());
-        }
+    return _itemInfoWidget('주문 신청', message, boxDecoration, (item) {
+      if (controller.chatRoom.isBuyerRoom) {
+        logAnalytics(name: 'enter_order_list');
+        Get.to(BuyerOrderListScreen());
+        Get.put(BuyerOrderListController());
+      } else {
+        logAnalytics(name: "enter_item_management");
+        Get.to(ItemManagementScreen());
+        Get.put(ItemManagementController());
       }
-    );
+    });
   }
 
   _textMessageWidget(Message message, BoxDecoration boxDecoration) {
@@ -367,8 +345,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                                     Get.arguments['fromItemId'].toString(),
                                     MessageType.itemInquiry,
                                   );
-                                }
-                                else {
+                                } else {
                                   await controller.sendMessage(
                                     Get.arguments['chatRoomUuid'],
                                     Get.arguments['fromItemId'].toString(),
@@ -379,18 +356,16 @@ class MessageDetailScreen extends GetView<MessageController> {
                               }
                               if (!controller.chatRoom.isRegistered) {
                                 await controller.createChatRoom(
-                                  Get.arguments['chatRoomUuid'],
-                                  controller.chatRoom.opponentNickname,
-                                  _textEditingController.text,
-                                  MessageType.text
-                                );
+                                    Get.arguments['chatRoomUuid'],
+                                    controller.chatRoom.opponentNickname,
+                                    _textEditingController.text,
+                                    MessageType.text);
                                 _textEditingController.clear();
                               }
                               await controller.sendMessage(
-                                Get.arguments['chatRoomUuid'],
-                                _textEditingController.text,
-                                MessageType.text
-                              );
+                                  Get.arguments['chatRoomUuid'],
+                                  _textEditingController.text,
+                                  MessageType.text);
                               _textEditingController.clear();
                             },
                             child: Text(

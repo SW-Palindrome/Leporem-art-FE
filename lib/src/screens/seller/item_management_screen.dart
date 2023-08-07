@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -101,8 +102,8 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: Image.network(
-                    controller.orders[index].thumbnailImage,
+                  child: CachedNetworkImage(
+                    imageUrl: controller.orders[index].thumbnailImage,
                     height: Get.width * 0.23,
                     width: Get.width * 0.23,
                     fit: BoxFit.cover,

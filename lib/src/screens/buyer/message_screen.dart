@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -101,14 +102,12 @@ class MessageScreen extends GetView<MessageController> {
     return GestureDetector(
       child: Container(
         color: ColorPalette.white,
-        child: Row(
-            children: [
-              SizedBox(width: 12),
-              _profileImageWidget(chatRoom),
-              SizedBox(width: 8),
-              Expanded(child: _profileDetailInfoWidget(chatRoom)),
-            ]
-        ),
+        child: Row(children: [
+          SizedBox(width: 12),
+          _profileImageWidget(chatRoom),
+          SizedBox(width: 8),
+          Expanded(child: _profileDetailInfoWidget(chatRoom)),
+        ]),
       ),
       onTap: () {
         Get.to(() => MessageDetailScreen(), arguments: {
@@ -121,8 +120,8 @@ class MessageScreen extends GetView<MessageController> {
   _profileImageWidget(ChatRoom chatRoom) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Get.width * 0.1),
-      child: Image.network(
-        chatRoom.opponentProfileImageUrl,
+      child: CachedNetworkImage(
+        imageUrl: chatRoom.opponentProfileImageUrl,
         width: 48,
         height: 48,
         fit: BoxFit.cover,
@@ -156,8 +155,10 @@ class MessageScreen extends GetView<MessageController> {
                     fontWeight: FontWeight.w700)),
             SizedBox(width: 6),
             Text(
-                (chatRoom.lastMessageDatetime == null) ? '-': DateFormat('aa hh:mm', 'ko')
-                    .format(chatRoom.lastMessageDatetime ?? DateTime.now()),
+                (chatRoom.lastMessageDatetime == null)
+                    ? '-'
+                    : DateFormat('aa hh:mm', 'ko')
+                        .format(chatRoom.lastMessageDatetime ?? DateTime.now()),
                 style: TextStyle(
                     fontSize: 11,
                     fontFamily: FontPalette.pretenderd,
@@ -189,7 +190,6 @@ class MessageScreen extends GetView<MessageController> {
   }
 }
 
-
 class BuyerMessageScreen extends MessageScreen {
   BuyerMessageScreen({super.key});
 
@@ -203,7 +203,6 @@ class BuyerMessageScreen extends MessageScreen {
     );
   }
 }
-
 
 class SellerMessageScreen extends MessageScreen {
   SellerMessageScreen({super.key});

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -125,12 +126,11 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               aspectRatio: 1,
               child: Stack(
                 children: [
-                  ExtendedImage.network(
-                    controller.items[index].thumbnailImage,
+                  CachedNetworkImage(
+                    imageUrl: controller.items[index].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.5,
                     height: Get.width * 0.5,
-                    cache: true,
                   ),
                   if (Get.find<UserGlobalInfoController>().userType ==
                       UserType.member)

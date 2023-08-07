@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,8 +30,8 @@ class ReviewStarScreen extends GetView<ReviewController> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    Get.arguments['order'].thumbnailImage,
+                  child: CachedNetworkImage(
+                    imageUrl: Get.arguments['order'].thumbnailImage,
                     fit: BoxFit.cover,
                     width: Get.width * 0.33,
                     height: Get.width * 0.33,
