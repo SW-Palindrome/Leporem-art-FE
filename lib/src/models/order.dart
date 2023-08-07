@@ -90,3 +90,42 @@ class SellerOrder extends Order {
     );
   }
 }
+
+
+class OrderInfo extends Order {
+  final String sellerNickname;
+
+  OrderInfo({
+    required id,
+    required itemId,
+    required title,
+    required thumbnailImage,
+    required price,
+    required orderedDatetime,
+    required orderStatus,
+    required this.sellerNickname,
+    isReviewed = false,
+  }) : super(
+    id: id,
+    itemId: itemId,
+    title: title,
+    thumbnailImage: thumbnailImage,
+    price: price,
+    orderedDatetime: orderedDatetime,
+    orderStatus: orderStatus,
+    isReviewed: isReviewed,
+  );
+
+  factory OrderInfo.fromJson(Map<String, dynamic> json) {
+    return OrderInfo(
+      id: json['order_id'],
+      itemId: json['item_id'],
+      title: json['item_title'],
+      thumbnailImage: json['item_thumbnail_image'],
+      price: json['price'],
+      orderedDatetime: json['ordered_datetime'],
+      orderStatus: json['order_status'],
+      sellerNickname: json['seller_nickname'],
+    );
+  }
+}

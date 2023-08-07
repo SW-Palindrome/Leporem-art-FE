@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
+import 'package:leporemart/src/models/order.dart';
+import 'package:leporemart/src/repositories/order_list_repository.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/item_detail.dart';
@@ -13,6 +15,7 @@ import '../utils/chatting_socket_singleton.dart';
 class MessageController extends GetxController {
   final MessageRepository _messageRepository = MessageRepository();
   final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
+  final OrderInfoRepository _orderInfoRepository = OrderInfoRepository();
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
@@ -33,6 +36,7 @@ class MessageController extends GetxController {
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
+    await fetchItemInfoList();
     isLoading.value = false;
   }
 
@@ -56,6 +60,7 @@ class MessageController extends GetxController {
       message: message,
       type: messageType,
     );
+    await fetchItemInfo(messageInfo);
     chatRoom.tempMessageList.add(messageInfo);
     ChattingSocketSingleton().sendMessage(
       chatRoomUuid,
@@ -82,14 +87,16 @@ class MessageController extends GetxController {
   receiveMessage(chatRoomUuid, messageUuid, message, messageType) {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid);
-    receiveChatRoom.messageList.add(Message(
+    Message receiveMessage = Message(
       messageUuid: messageUuid,
       userId: receiveChatRoom.opponentUserId,
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
       type: messageType,
-    ));
+    );
+    fetchItemInfo(receiveMessage);
+    receiveChatRoom.messageList.add(receiveMessage);
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
@@ -172,8 +179,53 @@ class MessageController extends GetxController {
     return chatRoomList.where((chatRoom) => !chatRoom.isBuyerRoom);
   }
 
-  Future<ItemDetail> getItemInfo(int itemId) async {
-    ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(itemId);
-    return itemDetail;
+  fetchItemInfo(Message message) async {
+    switch (message.type) {
+      case MessageType.itemInquiry:
+        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
+            int.parse(message.message));
+        message.itemInfo = ItemInfo(
+          itemId: itemDetail.id,
+          thumbnailImage: itemDetail.thumbnailImage,
+          sellerNickname: itemDetail.nickname,
+          title: itemDetail.title,
+          price: itemDetail.price,
+        );
+        break;
+      case MessageType.itemShare:
+        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
+            int.parse(message.message));
+        message.itemInfo = ItemInfo(
+          itemId: itemDetail.id,
+          thumbnailImage: itemDetail.thumbnailImage,
+          sellerNickname: itemDetail.nickname,
+          title: itemDetail.title,
+          price: itemDetail.price,
+        );
+        break;
+      case MessageType.order:
+        OrderInfo orderInfo = await _orderInfoRepository.fetch(
+            int.parse(message.message));
+        message.itemInfo = ItemInfo(
+          itemId: orderInfo.itemId,
+          thumbnailImage: orderInfo.thumbnailImage,
+          sellerNickname: orderInfo.sellerNickname,
+          title: orderInfo.title,
+          price: orderInfo.price
+        );
+        break;
+      default:
+        break;
+    }
   }
+
+  fetchItemInfoList() async {
+    for (final chatRoom in chatRoomList) {
+      for (final message in chatRoom.messageList) {
+        await fetchItemInfo(message);
+      }
+    }
+  }
+
+  ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 }

@@ -11,11 +11,16 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 
 import '../../controllers/buyer_item_detail_controller.dart';
+import '../../controllers/buyer_order_list_controller.dart';
+import '../../controllers/item_management_controller.dart';
 import '../../controllers/seller_item_detail_controller.dart';
 import '../../models/item_detail.dart';
 import '../../models/message.dart';
+import '../../utils/log_analytics.dart';
 import '../../widgets/my_app_bar.dart';
 import '../seller/item_detail_screen.dart';
+import '../seller/item_management_screen.dart';
+import 'order_list_screen.dart';
 
 class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
@@ -29,9 +34,7 @@ class MessageDetailScreen extends GetView<MessageController> {
         appBarType: AppBarType.backAppBar,
         onTapLeadingIcon: () => Get.back(),
         isWhite: true,
-        title: controller
-            .getChatRoom(Get.arguments['chatRoomUuid'])
-            .opponentNickname,
+        title: controller.chatRoom.opponentNickname,
       ),
       backgroundColor: ColorPalette.white,
       body: SafeArea(child: Obx(() {
@@ -54,7 +57,7 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _messageListWidget() {
-    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomUuid']).messageList.reversed.toList();
+    List<Message> messageList = controller.chatRoom.messageList.reversed.toList();
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
@@ -82,9 +85,7 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _innerMessageWidget(Message message) {
-    ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomUuid']);
-    return currentChatRoom.opponentUserId != message.userId
+    return controller.chatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
   }
@@ -104,8 +105,6 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _opponentMessageWidget(Message message) {
-    ChatRoom currentChatRoom =
-    controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -114,7 +113,7 @@ class MessageDetailScreen extends GetView<MessageController> {
             CircleAvatar(
               radius: 16,
               backgroundImage:
-              NetworkImage(currentChatRoom.opponentProfileImageUrl),
+              NetworkImage(controller.chatRoom.opponentProfileImageUrl),
             ),
           if (_currentUserId == message.userId) SizedBox(width: 32),
           SizedBox(width: 8),
@@ -142,205 +141,159 @@ class MessageDetailScreen extends GetView<MessageController> {
       case MessageType.image:
         return Container();
       case MessageType.itemShare:
-        return _itemShareWidget(int.parse(message.message), boxDecoration);
+        return _itemShareWidget(message, boxDecoration);
       case MessageType.itemInquiry:
-        return _itemInquiryWidget(int.parse(message.message), boxDecoration);
+        return _itemInquiryWidget(message, boxDecoration);
       case MessageType.order:
-        return Container();
+        return _orderWidget(message, boxDecoration);
     }
   }
 
-  _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
-    return FutureBuilder<ItemDetail>(
-      future: controller.getItemInfo(itemId),
-      builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
-          return CircularProgressIndicator();
-        }
-        ItemDetail item = snapshot.data!;
-        return GestureDetector(
-          onTap: () {
-            if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
-              Get.lazyPut(() => BuyerItemDetailController());
-              Get.to(BuyerItemDetailScreen(), arguments: {
-                'item_id': item.id
-              });
-            }
-            else {
-              Get.lazyPut(() => SellerItemDetailController());
-              Get.to(SellerItemDetailScreen(), arguments: {
-                'item_id': item.id
-              });
-            }
-          },
-          child: Container(
-            decoration: boxDecoration,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+  _itemInfoWidget(
+    String description,
+    Message message,
+    BoxDecoration boxDecoration,
+    Function onTapAction
+  ) {
+    ItemInfo? item = message.itemInfo;
+    if (item == null) {
+      return CircularProgressIndicator();
+    }
+    return GestureDetector(
+      onTap: () { onTapAction(item); },
+      child: Container(
+        decoration: boxDecoration,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  item.thumbnailImage,
+                  width: Get.width * 0.215,
+                  height: Get.width * 0.215,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      item.thumbnailImage,
-                      width: Get.width * 0.215,
-                      height: Get.width * 0.215,
-                      fit: BoxFit.cover,
+                  Text(
+                    description,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '작품 공유',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
+                  SizedBox(height: 10),
+                  Text(
+                    item.sellerNickname,
+                    style: TextStyle(
+                      color: ColorPalette.grey_5,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  SizedBox(
+                    width: Get.width * 0.4,
+                    child: Text(
+                      item.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 12,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        item.nickname,
-                        style: TextStyle(
-                          color: ColorPalette.grey_5,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      SizedBox(
-                        width: Get.width * 0.4,
-                        child: Text(
-                          item.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        );
-      }
+        ),
+      ),
     );
   }
 
-  _itemInquiryWidget(int itemId, BoxDecoration boxDecoration) {
-    return FutureBuilder<ItemDetail>(
-        future: controller.getItemInfo(itemId),
-        builder: (context, snapshot) {
-          if (snapshot.hasData == false) {
-            return CircularProgressIndicator();
+  _itemShareWidget(Message message, BoxDecoration boxDecoration) {
+    return _itemInfoWidget(
+        '작품 공유',
+        message,
+        boxDecoration,
+            (item) {
+          if (controller.chatRoom.isBuyerRoom) {
+            Get.lazyPut(() => BuyerItemDetailController());
+            Get.to(BuyerItemDetailScreen(), arguments: {
+              'item_id': item.itemId
+            });
           }
-          ItemDetail item = snapshot.data!;
-          return GestureDetector(
-            onTap: () {
-              if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
-                Get.lazyPut(() => BuyerItemDetailController());
-                Get.to(BuyerItemDetailScreen(), arguments: {
-                  'item_id': item.id
-                });
-              }
-              else {
-                Get.lazyPut(() => SellerItemDetailController());
-                Get.to(SellerItemDetailScreen(), arguments: {
-                  'item_id': item.id
-                });
-              }
-            },
-            child: Container(
-              decoration: boxDecoration,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        item.thumbnailImage,
-                        width: Get.width * 0.215,
-                        height: Get.width * 0.215,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '작품 문의',
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          item.nickname,
-                          style: TextStyle(
-                            color: ColorPalette.grey_5,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        SizedBox(
-                          width: Get.width * 0.4,
-                          child: Text(
-                            item.title,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: ColorPalette.black,
-                              fontFamily: FontPalette.pretenderd,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+          else {
+            Get.lazyPut(() => SellerItemDetailController());
+            Get.to(SellerItemDetailScreen(), arguments: {
+              'item_id': item.itemId
+            });
+          }
         }
+    );
+  }
+
+  _itemInquiryWidget(Message message, BoxDecoration boxDecoration) {
+    return _itemInfoWidget(
+      '작품 문의',
+      message,
+      boxDecoration,
+      (item) {
+        if (controller.chatRoom.isBuyerRoom) {
+          Get.lazyPut(() => BuyerItemDetailController());
+          Get.to(BuyerItemDetailScreen(), arguments: {
+            'item_id': item.itemId
+          });
+        }
+        else {
+          Get.lazyPut(() => SellerItemDetailController());
+          Get.to(SellerItemDetailScreen(), arguments: {
+            'item_id': item.itemId
+          });
+        }
+      },
+    );
+  }
+
+  _orderWidget(Message message, BoxDecoration boxDecoration) {
+    return _itemInfoWidget(
+      '주문 신청',
+      message,
+      boxDecoration,
+      (item) {
+        if (controller.chatRoom.isBuyerRoom) {
+          logAnalytics(name: 'enter_order_list');
+          Get.to(BuyerOrderListScreen());
+          Get.put(BuyerOrderListController());
+        }
+        else {
+          logAnalytics(name: "enter_item_management");
+          Get.to(ItemManagementScreen());
+          Get.put(ItemManagementController());
+        }
+      }
     );
   }
 
@@ -407,12 +360,11 @@ class MessageDetailScreen extends GetView<MessageController> {
                         decoration: InputDecoration(
                           suffix: InkWell(
                             onTap: () async {
-                              ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
                               if (Get.arguments['fromItemId'] != null) {
-                                if (!chatRoom.isRegistered) {
+                                if (!controller.chatRoom.isRegistered) {
                                   await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
-                                    chatRoom.opponentNickname,
+                                    controller.chatRoom.opponentNickname,
                                     Get.arguments['fromItemId'].toString(),
                                     MessageType.itemInquiry,
                                   );
@@ -426,10 +378,10 @@ class MessageDetailScreen extends GetView<MessageController> {
                                 }
                                 Get.arguments['fromItemId'] = null;
                               }
-                              if (!chatRoom.isRegistered) {
+                              if (!controller.chatRoom.isRegistered) {
                                 await controller.createChatRoom(
                                   Get.arguments['chatRoomUuid'],
-                                  chatRoom.opponentNickname,
+                                  controller.chatRoom.opponentNickname,
                                   _textEditingController.text,
                                   MessageType.text
                                 );
@@ -478,7 +430,7 @@ class MessageDetailScreen extends GetView<MessageController> {
         Obx(() {
           return AnimatedContainer(
             duration: Duration(milliseconds: 200),
-            height: controller.isPlusButtonClicked.value ? 220 : 0,
+            height: controller.isPlusButtonClicked.value ? 110 : 0,
             child: controller.isPlusButtonClicked.value
                 ? Padding(
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 40),
@@ -499,47 +451,49 @@ class MessageDetailScreen extends GetView<MessageController> {
                             Get.put(MessageItemShareController());
                           },
                         ),
-                        _messageBottomPlusIcon(
-                          '앨범',
-                          'image',
-                          ColorPalette.pink,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '카메라',
-                          'camera',
-                          ColorPalette.green,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '주소 공유',
-                          'location',
-                          ColorPalette.yellow,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '번호 공유',
-                          'contact',
-                          ColorPalette.orange,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '주문 넣기',
-                          'cart',
-                          Color(0xff9d00e7),
-                          () {
-                            Get.to(MessageItemOrderScreen(), arguments: {
-                              'chatRoomUuid': Get.arguments['chatRoomUuid']
-                            });
-                            Get.put(MessageItemOrderController());
-                          },
-                        ),
-                        _messageBottomPlusIcon(
-                          '주문제작 요청',
-                          'paper_outline',
-                          ColorPalette.purple,
-                          () {},
-                        ),
+                        // _messageBottomPlusIcon(
+                        //   '앨범',
+                        //   'image',
+                        //   ColorPalette.pink,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '카메라',
+                        //   'camera',
+                        //   ColorPalette.green,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '주소 공유',
+                        //   'location',
+                        //   ColorPalette.yellow,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '번호 공유',
+                        //   'contact',
+                        //   ColorPalette.orange,
+                        //   () {},
+                        // ),
+                        if (controller.chatRoom.isBuyerRoom)
+                          _messageBottomPlusIcon(
+                            '주문 넣기',
+                            'cart',
+                            Color(0xff9d00e7),
+                            () {
+                              Get.to(MessageItemOrderScreen(), arguments: {
+                                'chatRoomUuid': Get.arguments['chatRoomUuid']
+                              });
+                              Get.put(MessageItemOrderController());
+                            },
+                          ),
+                        // if (controller.chatRoom.isBuyerRoom)
+                        //   _messageBottomPlusIcon(
+                        //     '주문제작 요청',
+                        //     'paper_outline',
+                        //     ColorPalette.purple,
+                        //     () {},
+                        //   ),
                       ],
                     ),
                   )

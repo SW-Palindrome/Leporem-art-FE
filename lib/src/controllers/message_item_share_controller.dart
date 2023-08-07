@@ -66,7 +66,7 @@ class MessageItemShareController extends GetxController {
   }
 
   String get sellerNickname {
-    ChatRoom chatRoom = Get.find<MessageController>().getChatRoom(Get.arguments['chatRoomUuid']);
+    ChatRoom chatRoom = Get.find<MessageController>().chatRoom;
     return chatRoom.isBuyerRoom
         ? chatRoom.opponentNickname
         : Get.find<UserGlobalInfoController>().nickname;

@@ -69,7 +69,7 @@ class MessageItemRepository {
     }
   }
 
-  Future<void> orderItem(int itemId) async {
+  Future<int> orderItem(int itemId) async {
     try {
       final response = await DioSingleton.dio.post(
         '/orders/register',
@@ -91,7 +91,7 @@ class MessageItemRepository {
         }
       }
       if (response.statusCode == 201) {
-        return;
+        return response.data['order_id'];
       }
       throw ('response: ${response.statusCode} / ${response.realUri}');
     } catch (e) {
