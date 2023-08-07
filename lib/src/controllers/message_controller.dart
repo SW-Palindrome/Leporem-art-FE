@@ -217,6 +217,7 @@ class MessageController extends GetxController {
       default:
         break;
     }
+    chatRoomList.refresh();
   }
 
   fetchItemInfoList() async {
