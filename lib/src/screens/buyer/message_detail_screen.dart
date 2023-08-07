@@ -11,11 +11,16 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 
 import '../../controllers/buyer_item_detail_controller.dart';
+import '../../controllers/buyer_order_list_controller.dart';
+import '../../controllers/item_management_controller.dart';
 import '../../controllers/seller_item_detail_controller.dart';
 import '../../models/item_detail.dart';
 import '../../models/message.dart';
+import '../../utils/log_analytics.dart';
 import '../../widgets/my_app_bar.dart';
 import '../seller/item_detail_screen.dart';
+import '../seller/item_management_screen.dart';
+import 'order_list_screen.dart';
 
 class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
@@ -287,7 +292,20 @@ class MessageDetailScreen extends GetView<MessageController> {
       '주문 신청',
       message,
       boxDecoration,
-      () {}
+      (item) {
+        if (controller
+            .getChatRoom(Get.arguments['chatRoomUuid'])
+            .isBuyerRoom) {
+          logAnalytics(name: 'enter_order_list');
+          Get.to(BuyerOrderListScreen());
+          Get.put(BuyerOrderListController());
+        }
+        else {
+          logAnalytics(name: "enter_item_management");
+          Get.to(ItemManagementScreen());
+          Get.put(ItemManagementController());
+        }
+      }
     );
   }
 
