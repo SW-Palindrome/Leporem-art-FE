@@ -273,6 +273,55 @@ class ItemEditController extends ItemCreateDetailController {
   }
 
   Future<void> editItem() async {
+    final response = await DioSingleton.dio.get(
+      '/sellers/shorts/upload-url',
+      queryParameters: {'extension': videos.first.path.split('.').last},
+      options: Options(
+        headers: {
+          "Authorization":
+          "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+        },
+      ),
+    );
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    final String presignedUrl = response.data['url'];
+    Map<String, dynamic> payload = response.data['fields'];
+    final shortsUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        videos.first.path,
+        filename: videos.first.path.split('/').last,
+      ),
+    });
+
+    final uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+
+    print(uploadResponse.statusCode);
+
+    if (uploadResponse.statusCode != 204) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     // 데이터 모델에서 필요한 정보 가져오기
     String title = titleController.text;
     String description = descriptionController.text;
@@ -293,10 +342,7 @@ class ItemEditController extends ItemCreateDetailController {
         images.first.path,
         filename: images.first.path.split('/').last,
       ),
-      'shorts': await MultipartFile.fromFile(
-        videos.first.path,
-        filename: videos.first.path.split('/').last,
-      ),
+      'shorts_url': shortsUrl,
     });
     //images에서 1번인덱스부터 끝까지의 이미지를 리스트에 넣고 formData에 추가
 
