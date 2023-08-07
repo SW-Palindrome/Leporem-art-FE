@@ -150,6 +150,78 @@ class MessageDetailScreen extends GetView<MessageController> {
     }
   }
 
+  _itemInfoWidget(thumbnailImage, nickname, title, price, description, boxDecoration) {
+    return Container(
+      decoration: boxDecoration,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                thumbnailImage,
+                width: Get.width * 0.215,
+                height: Get.width * 0.215,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  description,
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontFamily: FontPalette.pretenderd,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  nickname,
+                  style: TextStyle(
+                    color: ColorPalette.grey_5,
+                    fontFamily: FontPalette.pretenderd,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  ),
+                ),
+                SizedBox(height: 4),
+                SizedBox(
+                  width: Get.width * 0.4,
+                  child: Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '${CurrencyFormatter().numberToCurrency(price)}원',
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontFamily: FontPalette.pretenderd,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    )
+  }
+
   _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
     return FutureBuilder<ItemDetail>(
       future: controller.getItemInfo(itemId),
@@ -173,74 +245,13 @@ class MessageDetailScreen extends GetView<MessageController> {
               });
             }
           },
-          child: Container(
-            decoration: boxDecoration,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      item.thumbnailImage,
-                      width: Get.width * 0.215,
-                      height: Get.width * 0.215,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '작품 공유',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        item.nickname,
-                        style: TextStyle(
-                          color: ColorPalette.grey_5,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      SizedBox(
-                        width: Get.width * 0.4,
-                        child: Text(
-                          item.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: FontPalette.pretenderd,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          child: _itemInfoWidget(
+            item.thumbnailImage,
+            item.nickname,
+            item.title,
+            item.price,
+            '작품 공유',
+            boxDecoration,
           ),
         );
       }
@@ -270,74 +281,13 @@ class MessageDetailScreen extends GetView<MessageController> {
                 });
               }
             },
-            child: Container(
-              decoration: boxDecoration,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        item.thumbnailImage,
-                        width: Get.width * 0.215,
-                        height: Get.width * 0.215,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '작품 문의',
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          item.nickname,
-                          style: TextStyle(
-                            color: ColorPalette.grey_5,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        SizedBox(
-                          width: Get.width * 0.4,
-                          child: Text(
-                            item.title,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: ColorPalette.black,
-                              fontFamily: FontPalette.pretenderd,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          '${CurrencyFormatter().numberToCurrency(item.price)}원',
-                          style: TextStyle(
-                            color: ColorPalette.black,
-                            fontFamily: FontPalette.pretenderd,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            child: _itemInfoWidget(
+              item.thumbnailImage,
+              item.nickname,
+              item.title,
+              item.price,
+              '작품 문의',
+              boxDecoration,
             ),
           );
         }
