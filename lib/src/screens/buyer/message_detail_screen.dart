@@ -475,17 +475,19 @@ class MessageDetailScreen extends GetView<MessageController> {
                           ColorPalette.orange,
                           () {},
                         ),
-                        _messageBottomPlusIcon(
-                          '주문 넣기',
-                          'cart',
-                          Color(0xff9d00e7),
-                          () {
-                            Get.to(MessageItemOrderScreen(), arguments: {
-                              'chatRoomUuid': Get.arguments['chatRoomUuid']
-                            });
-                            Get.put(MessageItemOrderController());
-                          },
-                        ),
+                        if (controller.chatRoom.isBuyerRoom)
+                          _messageBottomPlusIcon(
+                            '주문 넣기',
+                            'cart',
+                            Color(0xff9d00e7),
+                            () {
+                              Get.to(MessageItemOrderScreen(), arguments: {
+                                'chatRoomUuid': Get.arguments['chatRoomUuid']
+                              });
+                              Get.put(MessageItemOrderController());
+                            },
+                          ),
+                        if (controller.chatRoom.isBuyerRoom)
                         _messageBottomPlusIcon(
                           '주문제작 요청',
                           'paper_outline',
