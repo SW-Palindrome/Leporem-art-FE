@@ -205,13 +205,17 @@ class MessageController extends GetxController {
   fetchItemInfoList() async {
     for (final chatRoom in chatRoomList) {
       for (final message in chatRoom.messageList) {
-        fetchItemInfo(message);
+        await fetchItemInfo(message);
       }
     }
   }
 
   getItemInfo(itemId) {
     ChatRoom chatRoom = getChatRoom(Get.arguments['chatRoomUuid']);
-    return chatRoom.messageList.firstWhere((message) => message.message == itemId.toString()).itemInfo;
+    for (final message in chatRoom.messageList) {
+      if ((message.itemInfo != null) && message.itemInfo!.itemId == itemId) {
+        return message.itemInfo;
+      }
+    }
   }
 }

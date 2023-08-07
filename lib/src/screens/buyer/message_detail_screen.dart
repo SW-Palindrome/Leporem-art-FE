@@ -253,39 +253,33 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _itemInquiryWidget(int itemId, BoxDecoration boxDecoration) {
-    return FutureBuilder<ItemDetail>(
-      future: controller.getItemInfo(itemId),
-      builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
-          return CircularProgressIndicator();
-        }
-        ItemDetail item = snapshot.data!;
-        return GestureDetector(
-          onTap: () {
-            if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
-              Get.lazyPut(() => BuyerItemDetailController());
-              Get.to(BuyerItemDetailScreen(), arguments: {
-                'item_id': item.id
-              });
-            }
-            else {
-              Get.lazyPut(() => SellerItemDetailController());
-              Get.to(SellerItemDetailScreen(), arguments: {
-                'item_id': item.id
-              });
-            }
-          },
-          child: _itemInfoWidget(
-            item.thumbnailImage,
-            item.nickname,
-            item.title,
-            item.price,
-            '작품 문의',
-            boxDecoration,
-          ),
-        );
-      }
-    );
+    return Obx(() {
+      ItemInfo item = controller.getItemInfo(itemId);
+      return GestureDetector(
+        onTap: () {
+          if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
+            Get.lazyPut(() => BuyerItemDetailController());
+            Get.to(BuyerItemDetailScreen(), arguments: {
+              'item_id': item.itemId
+            });
+          }
+          else {
+            Get.lazyPut(() => SellerItemDetailController());
+            Get.to(SellerItemDetailScreen(), arguments: {
+              'item_id': item.itemId
+            });
+          }
+        },
+        child: _itemInfoWidget(
+          item.thumbnailImage,
+          item.sellerNickname,
+          item.title,
+          item.price,
+          '작품 문의',
+          boxDecoration,
+        ),
+      );
+    });
   }
 
   _textMessageWidget(Message message, BoxDecoration boxDecoration) {
