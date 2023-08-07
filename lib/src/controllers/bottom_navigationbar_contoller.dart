@@ -27,16 +27,16 @@ class MyBottomNavigationbarController extends GetxController {
       case 0:
         pageStr = "Home";
         break;
+      // case 1:
+      //   pageStr = "Auction";
+      //   break;
       case 1:
-        pageStr = "Auction";
-        break;
-      case 2:
-        pageStr = "Shorts";
-        break;
-      case 3:
         pageStr = "Chat";
         break;
-      case 4:
+      // case 3:
+      //   pageStr = "Flop";
+      //   break;
+      case 2:
         pageStr = "MyPage";
         break;
     }
@@ -55,13 +55,13 @@ class MyBottomNavigationbarController extends GetxController {
       case 0:
         pageStr = "List";
         break;
+      // case 1:
+      //   pageStr = "Custom Order";
+      //   break;
       case 1:
-        pageStr = "Custom Order";
-        break;
-      case 2:
         pageStr = "Chat";
         break;
-      case 3:
+      case 2:
         pageStr = "MyPage";
         break;
     }
