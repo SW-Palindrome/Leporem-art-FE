@@ -226,4 +226,6 @@ class MessageController extends GetxController {
       }
     }
   }
+
+  ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 }

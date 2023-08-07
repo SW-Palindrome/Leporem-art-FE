@@ -34,9 +34,7 @@ class MessageDetailScreen extends GetView<MessageController> {
         appBarType: AppBarType.backAppBar,
         onTapLeadingIcon: () => Get.back(),
         isWhite: true,
-        title: controller
-            .getChatRoom(Get.arguments['chatRoomUuid'])
-            .opponentNickname,
+        title: controller.chatRoom.opponentNickname,
       ),
       backgroundColor: ColorPalette.white,
       body: SafeArea(child: Obx(() {
@@ -59,7 +57,7 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _messageListWidget() {
-    List<Message> messageList = controller.getChatRoom(Get.arguments['chatRoomUuid']).messageList.reversed.toList();
+    List<Message> messageList = controller.chatRoom.messageList.reversed.toList();
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
@@ -87,9 +85,7 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _innerMessageWidget(Message message) {
-    ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomUuid']);
-    return currentChatRoom.opponentUserId != message.userId
+    return controller.chatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
   }
@@ -109,8 +105,6 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _opponentMessageWidget(Message message) {
-    ChatRoom currentChatRoom =
-    controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -119,7 +113,7 @@ class MessageDetailScreen extends GetView<MessageController> {
             CircleAvatar(
               radius: 16,
               backgroundImage:
-              NetworkImage(currentChatRoom.opponentProfileImageUrl),
+              NetworkImage(controller.chatRoom.opponentProfileImageUrl),
             ),
           if (_currentUserId == message.userId) SizedBox(width: 32),
           SizedBox(width: 8),
@@ -245,9 +239,7 @@ class MessageDetailScreen extends GetView<MessageController> {
         message,
         boxDecoration,
             (item) {
-          if (controller
-              .getChatRoom(Get.arguments['chatRoomUuid'])
-              .isBuyerRoom) {
+          if (controller.chatRoom.isBuyerRoom) {
             Get.lazyPut(() => BuyerItemDetailController());
             Get.to(BuyerItemDetailScreen(), arguments: {
               'item_id': item.itemId
@@ -269,9 +261,7 @@ class MessageDetailScreen extends GetView<MessageController> {
       message,
       boxDecoration,
       (item) {
-        if (controller
-            .getChatRoom(Get.arguments['chatRoomUuid'])
-            .isBuyerRoom) {
+        if (controller.chatRoom.isBuyerRoom) {
           Get.lazyPut(() => BuyerItemDetailController());
           Get.to(BuyerItemDetailScreen(), arguments: {
             'item_id': item.itemId
@@ -293,9 +283,7 @@ class MessageDetailScreen extends GetView<MessageController> {
       message,
       boxDecoration,
       (item) {
-        if (controller
-            .getChatRoom(Get.arguments['chatRoomUuid'])
-            .isBuyerRoom) {
+        if (controller.chatRoom.isBuyerRoom) {
           logAnalytics(name: 'enter_order_list');
           Get.to(BuyerOrderListScreen());
           Get.put(BuyerOrderListController());
@@ -372,12 +360,11 @@ class MessageDetailScreen extends GetView<MessageController> {
                         decoration: InputDecoration(
                           suffix: InkWell(
                             onTap: () async {
-                              ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
                               if (Get.arguments['fromItemId'] != null) {
-                                if (!chatRoom.isRegistered) {
+                                if (!controller.chatRoom.isRegistered) {
                                   await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
-                                    chatRoom.opponentNickname,
+                                    controller.chatRoom.opponentNickname,
                                     Get.arguments['fromItemId'].toString(),
                                     MessageType.itemInquiry,
                                   );
@@ -391,10 +378,10 @@ class MessageDetailScreen extends GetView<MessageController> {
                                 }
                                 Get.arguments['fromItemId'] = null;
                               }
-                              if (!chatRoom.isRegistered) {
+                              if (!controller.chatRoom.isRegistered) {
                                 await controller.createChatRoom(
                                   Get.arguments['chatRoomUuid'],
-                                  chatRoom.opponentNickname,
+                                  controller.chatRoom.opponentNickname,
                                   _textEditingController.text,
                                   MessageType.text
                                 );
