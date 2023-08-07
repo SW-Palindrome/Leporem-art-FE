@@ -83,17 +83,18 @@ class MessageScreen extends GetView<MessageController> {
       margin: EdgeInsets.all(16),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Slidable(
-          endActionPane: ActionPane(
-            extentRatio: 0.36, // Slide 된 위젯 사이즈
-            motion: ScrollMotion(),
-            children: [
-              _turnOffAlarmWidget(),
-              _leaveChatRoomWidget(),
-            ],
-          ),
-          child: _chatRoomInfoWidget(chatRoom),
-        ),
+        child: _chatRoomInfoWidget(chatRoom)
+        // Slidable(
+        //   endActionPane: ActionPane(
+        //     extentRatio: 0.36, // Slide 된 위젯 사이즈
+        //     motion: ScrollMotion(),
+        //     children: [
+        //       _turnOffAlarmWidget(),
+        //       _leaveChatRoomWidget(),
+        //     ],
+        //   ),
+        //   child: _chatRoomInfoWidget(chatRoom),
+        // ),
       ),
     );
   }
