@@ -150,84 +150,94 @@ class MessageDetailScreen extends GetView<MessageController> {
     }
   }
 
-  _itemInfoWidget(thumbnailImage, nickname, title, price, description, boxDecoration) {
-    return Container(
-      decoration: boxDecoration,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                thumbnailImage,
-                width: Get.width * 0.215,
-                height: Get.width * 0.215,
-                fit: BoxFit.cover,
+  _itemInfoWidget(description, itemId, boxDecoration, onTapAction) {
+    ItemInfo? item = controller.getItemInfo(itemId);
+    if (item == null) {
+      return CircularProgressIndicator();
+    }
+    return GestureDetector(
+      onTap: () { onTapAction(item); },
+      child: Container(
+        decoration: boxDecoration,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  item.thumbnailImage,
+                  width: Get.width * 0.215,
+                  height: Get.width * 0.215,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  description,
-                  style: TextStyle(
-                    color: ColorPalette.black,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  nickname,
-                  style: TextStyle(
-                    color: ColorPalette.grey_5,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                  ),
-                ),
-                SizedBox(height: 4),
-                SizedBox(
-                  width: Get.width * 0.4,
-                  child: Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+              SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    description,
                     style: TextStyle(
                       color: ColorPalette.black,
                       fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    item.sellerNickname,
+                    style: TextStyle(
+                      color: ColorPalette.grey_5,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  SizedBox(
+                    width: Get.width * 0.4,
+                    child: Text(
+                      item.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: ColorPalette.black,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  '${CurrencyFormatter().numberToCurrency(price)}원',
-                  style: TextStyle(
-                    color: ColorPalette.black,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
-    return Obx(() {
-      ItemInfo item = controller.getItemInfo(itemId);
-      return GestureDetector(
-        onTap: () {
-          if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
+    return _itemInfoWidget(
+        '작품 공유',
+        itemId,
+        boxDecoration,
+            (item) {
+          if (controller
+              .getChatRoom(Get.arguments['chatRoomUuid'])
+              .isBuyerRoom) {
             Get.lazyPut(() => BuyerItemDetailController());
             Get.to(BuyerItemDetailScreen(), arguments: {
               'item_id': item.itemId
@@ -239,47 +249,32 @@ class MessageDetailScreen extends GetView<MessageController> {
               'item_id': item.itemId
             });
           }
-        },
-        child: _itemInfoWidget(
-          item.thumbnailImage,
-          item.sellerNickname,
-          item.title,
-          item.price,
-          '작품 공유',
-          boxDecoration,
-        ),
-      );
-    });
+        }
+    );
   }
 
   _itemInquiryWidget(int itemId, BoxDecoration boxDecoration) {
-    return Obx(() {
-      ItemInfo item = controller.getItemInfo(itemId);
-      return GestureDetector(
-        onTap: () {
-          if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
-            Get.lazyPut(() => BuyerItemDetailController());
-            Get.to(BuyerItemDetailScreen(), arguments: {
-              'item_id': item.itemId
-            });
-          }
-          else {
-            Get.lazyPut(() => SellerItemDetailController());
-            Get.to(SellerItemDetailScreen(), arguments: {
-              'item_id': item.itemId
-            });
-          }
-        },
-        child: _itemInfoWidget(
-          item.thumbnailImage,
-          item.sellerNickname,
-          item.title,
-          item.price,
-          '작품 문의',
-          boxDecoration,
-        ),
-      );
-    });
+    return _itemInfoWidget(
+      '작품 문의',
+      itemId,
+      boxDecoration,
+      (item) {
+        if (controller
+            .getChatRoom(Get.arguments['chatRoomUuid'])
+            .isBuyerRoom) {
+          Get.lazyPut(() => BuyerItemDetailController());
+          Get.to(BuyerItemDetailScreen(), arguments: {
+            'item_id': item.itemId
+          });
+        }
+        else {
+          Get.lazyPut(() => SellerItemDetailController());
+          Get.to(SellerItemDetailScreen(), arguments: {
+            'item_id': item.itemId
+          });
+        }
+      },
+    );
   }
 
   _textMessageWidget(Message message, BoxDecoration boxDecoration) {
