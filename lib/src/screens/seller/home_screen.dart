@@ -269,10 +269,11 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: Get.width * 0.1),
+              SizedBox(height: 20),
               _sortModal(),
-              SizedBox(height: Get.width * 0.1),
+              SizedBox(height: 48),
               _searchModalBottom(),
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -290,8 +291,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 parameters: {"sort_type": "recent"});
             controller.changeSelectedSortType(0);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -313,12 +315,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -326,8 +328,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 parameters: {"sort_type": "like"});
             controller.changeSelectedSortType(1);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -349,12 +352,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -362,8 +365,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 parameters: {"sort_type": "price_low"});
             controller.changeSelectedSortType(2);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -385,12 +389,12 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -398,8 +402,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                 parameters: {"sort_type": "price_high"});
             controller.changeSelectedSortType(3);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -421,7 +426,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),

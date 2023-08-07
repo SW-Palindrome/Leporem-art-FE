@@ -474,101 +474,94 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
   }
 
   _searchSheetWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Obx(
-        () => Container(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      logAnalytics(
-                          name: "buyer_search_filter_change",
-                          parameters: {"search_type": "sort"});
-                      controller.changeSelectedSearchType(0);
-                    },
-                    child: Text(
-                      '정렬',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: controller.selectedSearchType.value == 0
-                            ? ColorPalette.black
-                            : ColorPalette.grey_4,
-                        fontSize: 18,
-                      ),
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    logAnalytics(
+                        name: "buyer_search_filter_change",
+                        parameters: {"search_type": "sort"});
+                    controller.changeSelectedSearchType(0);
+                  },
+                  child: Text(
+                    '정렬',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: controller.selectedSearchType.value == 0
+                          ? ColorPalette.black
+                          : ColorPalette.grey_4,
+                      fontSize: 18,
                     ),
                   ),
-                  SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      logAnalytics(
-                          name: "buyer_search_filter_change",
-                          parameters: {"search_type": "category"});
-                      controller.changeSelectedSearchType(1);
-                    },
-                    child: Text(
-                      '작품 종류',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: controller.selectedSearchType.value == 1
-                            ? ColorPalette.black
-                            : ColorPalette.grey_4,
-                        fontSize: 18,
-                      ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    logAnalytics(
+                        name: "buyer_search_filter_change",
+                        parameters: {"search_type": "category"});
+                    controller.changeSelectedSearchType(1);
+                  },
+                  child: Text(
+                    '작품 종류',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: controller.selectedSearchType.value == 1
+                          ? ColorPalette.black
+                          : ColorPalette.grey_4,
+                      fontSize: 18,
                     ),
                   ),
-                  SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      logAnalytics(
-                          name: "buyer_search_filter_change",
-                          parameters: {"search_type": "price"});
-                      controller.changeSelectedSearchType(2);
-                    },
-                    child: Text(
-                      '가격대',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: controller.selectedSearchType.value == 2
-                            ? ColorPalette.black
-                            : ColorPalette.grey_4,
-                        fontSize: 18,
-                      ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    logAnalytics(
+                        name: "buyer_search_filter_change",
+                        parameters: {"search_type": "price"});
+                    controller.changeSelectedSearchType(2);
+                  },
+                  child: Text(
+                    '가격대',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: controller.selectedSearchType.value == 2
+                          ? ColorPalette.black
+                          : ColorPalette.grey_4,
+                      fontSize: 18,
                     ),
                   ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/cancel.svg',
-                      height: 24,
-                      width: 24,
-                      colorFilter:
-                          ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
-                    ),
+                ),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/cancel.svg',
+                    height: 24,
+                    width: 24,
+                    colorFilter:
+                        ColorFilter.mode(ColorPalette.black, BlendMode.srcIn),
                   ),
-                ],
-              ),
-              SizedBox(height: Get.width * 0.1),
-              IndexedStack(
-                index: controller.selectedSearchType.value,
-                children: [
-                  _sortModal(),
-                  _categoryModal(),
-                  _priceModal(),
-                ],
-              ),
-              SizedBox(height: Get.width * 0.1),
-              _searchModalBottom(),
-            ],
-          ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            if (controller.selectedSearchType.value == 0) _sortModal(),
+            if (controller.selectedSearchType.value == 1) _categoryModal(),
+            if (controller.selectedSearchType.value == 2) _priceModal(),
+            SizedBox(height: 48),
+            _searchModalBottom(),
+            SizedBox(height: 20),
+          ],
         ),
       ),
     );
@@ -584,8 +577,9 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 parameters: {"sort_type": "recent"});
             controller.changeSelectedSortType(0);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -607,12 +601,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -620,8 +614,9 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 parameters: {"sort_type": "like"});
             controller.changeSelectedSortType(1);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -643,12 +638,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -656,8 +651,9 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 parameters: {"sort_type": "price_low"});
             controller.changeSelectedSortType(2);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -679,12 +675,12 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
         ),
-        Divider(color: ColorPalette.grey_2),
+        Divider(color: ColorPalette.grey_2, thickness: 2),
         GestureDetector(
           onTap: () {
             logAnalytics(
@@ -692,8 +688,9 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                 parameters: {"sort_type": "price_-high"});
             controller.changeSelectedSortType(3);
           },
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
+          child: Container(
+            color: Colors.transparent,
+            padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 Text(
@@ -715,7 +712,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       )
-                    : SizedBox(),
+                    : SizedBox(height: 24),
               ],
             ),
           ),
@@ -735,7 +732,7 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
               controller.changeSelectedCategoryType(i);
               logAnalytics(name: "buyer_category_filter_change", parameters: {
                 "category_type": i,
-                "value": controller.selectedCategoryType.value[i]
+                "value": controller.selectedCategoryType[i].toString()
               });
             },
             child: Container(
