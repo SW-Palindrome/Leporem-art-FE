@@ -226,13 +226,4 @@ class MessageController extends GetxController {
       }
     }
   }
-
-  getItemInfo(itemId) {
-    ChatRoom chatRoom = getChatRoom(Get.arguments['chatRoomUuid']);
-    for (final message in chatRoom.messageList) {
-      if ((message.itemInfo != null) && message.itemInfo!.itemId == itemId) {
-        return message.itemInfo;
-      }
-    }
-  }
 }

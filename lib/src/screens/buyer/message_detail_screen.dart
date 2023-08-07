@@ -142,16 +142,21 @@ class MessageDetailScreen extends GetView<MessageController> {
       case MessageType.image:
         return Container();
       case MessageType.itemShare:
-        return _itemShareWidget(int.parse(message.message), boxDecoration);
+        return _itemShareWidget(message, boxDecoration);
       case MessageType.itemInquiry:
-        return _itemInquiryWidget(int.parse(message.message), boxDecoration);
+        return _itemInquiryWidget(message, boxDecoration);
       case MessageType.order:
-        return Container();
+        return _orderWidget(message, boxDecoration);
     }
   }
 
-  _itemInfoWidget(description, itemId, boxDecoration, onTapAction) {
-    ItemInfo? item = controller.getItemInfo(itemId);
+  _itemInfoWidget(
+    String description,
+    Message message,
+    BoxDecoration boxDecoration,
+    Function onTapAction
+  ) {
+    ItemInfo? item = message.itemInfo;
     if (item == null) {
       return CircularProgressIndicator();
     }
@@ -229,10 +234,10 @@ class MessageDetailScreen extends GetView<MessageController> {
     );
   }
 
-  _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
+  _itemShareWidget(Message message, BoxDecoration boxDecoration) {
     return _itemInfoWidget(
         '작품 공유',
-        itemId,
+        message,
         boxDecoration,
             (item) {
           if (controller
@@ -253,10 +258,10 @@ class MessageDetailScreen extends GetView<MessageController> {
     );
   }
 
-  _itemInquiryWidget(int itemId, BoxDecoration boxDecoration) {
+  _itemInquiryWidget(Message message, BoxDecoration boxDecoration) {
     return _itemInfoWidget(
       '작품 문의',
-      itemId,
+      message,
       boxDecoration,
       (item) {
         if (controller
@@ -274,6 +279,15 @@ class MessageDetailScreen extends GetView<MessageController> {
           });
         }
       },
+    );
+  }
+
+  _orderWidget(Message message, BoxDecoration boxDecoration) {
+    return _itemInfoWidget(
+      '주문 신청',
+      message,
+      boxDecoration,
+      () {}
     );
   }
 
