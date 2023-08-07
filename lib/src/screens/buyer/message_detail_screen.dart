@@ -57,7 +57,7 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _messageListWidget() {
-    List<Message> messageList = controller.chatRoom.messageList.reversed.toList();
+    List<Message> messageList = controller.reversedMessageList;
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
@@ -66,28 +66,27 @@ class MessageDetailScreen extends GetView<MessageController> {
         shrinkWrap: true,
         itemCount: messageList.length,
         itemBuilder: (context, index) {
-          return _messageWidget(messageList[index]);
+          return _messageWidget(messageList[index], index);
         },
       ),
     );
   }
 
-  _messageWidget(Message message) {
+  _messageWidget(Message message, int index) {
     Column widget = Column(
       children: [
-        if (message.userId != _currentUserId) SizedBox(height: 8),
-        _innerMessageWidget(message),
+        if (controller.isDifferentUserIndex(index)) SizedBox(height: 8),
+        _innerMessageWidget(message, index),
         SizedBox(height: 8),
       ],
     );
-    _currentUserId = message.userId;
     return widget;
   }
 
-  _innerMessageWidget(Message message) {
+  _innerMessageWidget(Message message, int index) {
     return controller.chatRoom.opponentUserId != message.userId
         ? _myMessageWidget(message)
-        : _opponentMessageWidget(message);
+        : _opponentMessageWidget(message, index);
   }
 
   _myMessageWidget(Message message) {
@@ -104,18 +103,18 @@ class MessageDetailScreen extends GetView<MessageController> {
     );
   }
 
-  _opponentMessageWidget(Message message) {
+  _opponentMessageWidget(Message message, int index) {
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
-          if (_currentUserId != message.userId)
+          if (controller.isDifferentUserIndex(index))
             CircleAvatar(
               radius: 16,
               backgroundImage:
               NetworkImage(controller.chatRoom.opponentProfileImageUrl),
             ),
-          if (_currentUserId == message.userId) SizedBox(width: 32),
+          if (!controller.isDifferentUserIndex(index)) SizedBox(width: 32),
           SizedBox(width: 8),
           _messageProcessWidget(message, _opponentMessageBoxDecoration()),
         ],

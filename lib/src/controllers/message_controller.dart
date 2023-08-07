@@ -228,5 +228,18 @@ class MessageController extends GetxController {
     }
   }
 
+  isDifferentUserIndex(int index) {
+    if (index == 0 || index == reversedMessageList.length - 1) {
+      return true;
+    }
+    if (reversedMessageList[index].userId !=
+        reversedMessageList[index + 1].userId) {
+      return true;
+    }
+    return false;
+  }
+
   ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
+
+  List<Message> get reversedMessageList => chatRoom.messageList.reversed.toList();
 }
