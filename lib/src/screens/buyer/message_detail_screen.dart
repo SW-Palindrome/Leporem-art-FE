@@ -4,13 +4,18 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_order_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
+import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 
+import '../../controllers/buyer_item_detail_controller.dart';
+import '../../controllers/seller_item_detail_controller.dart';
+import '../../models/item_detail.dart';
 import '../../models/message.dart';
 import '../../widgets/my_app_bar.dart';
+import '../seller/item_detail_screen.dart';
 
 class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
@@ -80,118 +85,27 @@ class MessageDetailScreen extends GetView<MessageController> {
     ChatRoom currentChatRoom =
         controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return currentChatRoom.opponentUserId != message.userId
-        ? _myMessageWidget2(message)
+        ? _myMessageWidget(message)
         : _opponentMessageWidget(message);
   }
 
   _myMessageWidget(Message message) {
     return Container(
       alignment: Alignment.centerRight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorPalette.grey_2,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: Get.width * 0.6,
-            ),
-            child: Text(
-              message.message,
-              style: TextStyle(
-                fontFamily: FontPalette.pretenderd,
-                fontSize: 13,
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: _messageProcessWidget(message, _myMessageBoxDecoration()),
     );
   }
 
-  _myMessageWidget2(Message message) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorPalette.grey_2,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  "https://leporem-art-media-dev.s3.amazonaws.com/items/item_image/1e6a2881-fb08-41f5-85ef-ed448b331697.jpg",
-                  width: Get.width * 0.215,
-                  height: Get.width * 0.215,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '작품 공유',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '홍준식',
-                    style: TextStyle(
-                      color: ColorPalette.grey_5,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  SizedBox(
-                    width: Get.width * 0.4,
-                    child: Text(
-                      '가로등 빛 받은 나뭇잎 컵가로등 빛 받은 나뭇잎 컵',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: ColorPalette.black,
-                        fontFamily: FontPalette.pretenderd,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '${CurrencyFormatter().numberToCurrency(10000)}원',
-                    style: TextStyle(
-                      color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+  _myMessageBoxDecoration() {
+    return BoxDecoration(
+      color: ColorPalette.grey_2,
+      borderRadius: BorderRadius.circular(18),
     );
   }
 
   _opponentMessageWidget(Message message) {
     ChatRoom currentChatRoom =
-        controller.getChatRoom(Get.arguments['chatRoomUuid']);
+    controller.getChatRoom(Get.arguments['chatRoomUuid']);
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
@@ -200,36 +114,253 @@ class MessageDetailScreen extends GetView<MessageController> {
             CircleAvatar(
               radius: 16,
               backgroundImage:
-                  NetworkImage(currentChatRoom.opponentProfileImageUrl),
+              NetworkImage(currentChatRoom.opponentProfileImageUrl),
             ),
           if (_currentUserId == message.userId) SizedBox(width: 32),
           SizedBox(width: 8),
-          Container(
-            decoration: BoxDecoration(
-              color: ColorPalette.white,
-              border: Border.all(
-                color: ColorPalette.grey_3,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(18),
-            ),
+          _messageProcessWidget(message, _opponentMessageBoxDecoration()),
+        ],
+      ),
+    );
+  }
+
+  _opponentMessageBoxDecoration() {
+    return BoxDecoration(
+      color: ColorPalette.white,
+      border: Border.all(
+        color: ColorPalette.grey_3,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(18),
+    );
+  }
+
+  _messageProcessWidget(Message message, BoxDecoration boxDecoration) {
+    switch (message.type) {
+      case MessageType.text:
+        return _textMessageWidget(message, boxDecoration);
+      case MessageType.image:
+        return Container();
+      case MessageType.itemShare:
+        return _itemShareWidget(int.parse(message.message), boxDecoration);
+      case MessageType.itemInquiry:
+        return _itemInquiryWidget(int.parse(message.message), boxDecoration);
+      case MessageType.order:
+        return Container();
+    }
+  }
+
+  _itemShareWidget(int itemId, BoxDecoration boxDecoration) {
+    return FutureBuilder<ItemDetail>(
+      future: controller.getItemInfo(itemId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData == false) {
+          return CircularProgressIndicator();
+        }
+        ItemDetail item = snapshot.data!;
+        return GestureDetector(
+          onTap: () {
+            if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
+              Get.lazyPut(() => BuyerItemDetailController());
+              Get.to(BuyerItemDetailScreen(), arguments: {
+                'item_id': item.id
+              });
+            }
+            else {
+              Get.lazyPut(() => SellerItemDetailController());
+              Get.to(SellerItemDetailScreen(), arguments: {
+                'item_id': item.id
+              });
+            }
+          },
+          child: Container(
+            decoration: boxDecoration,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: Get.width * 0.8,
-                ),
-                child: Text(
-                  message.message,
-                  style: TextStyle(
-                    fontFamily: FontPalette.pretenderd,
-                    fontSize: 13,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      item.thumbnailImage,
+                      width: Get.width * 0.215,
+                      height: Get.width * 0.215,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
+                  SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '작품 공유',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        item.nickname,
+                        style: TextStyle(
+                          color: ColorPalette.grey_5,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      SizedBox(
+                        width: Get.width * 0.4,
+                        child: Text(
+                          item.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: FontPalette.pretenderd,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontFamily: FontPalette.pretenderd,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-        ],
+        );
+      }
+    );
+  }
+
+  _itemInquiryWidget(int itemId, BoxDecoration boxDecoration) {
+    return FutureBuilder<ItemDetail>(
+        future: controller.getItemInfo(itemId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData == false) {
+            return CircularProgressIndicator();
+          }
+          ItemDetail item = snapshot.data!;
+          return GestureDetector(
+            onTap: () {
+              if (controller.getChatRoom(Get.arguments['chatRoomUuid']).isBuyerRoom) {
+                Get.lazyPut(() => BuyerItemDetailController());
+                Get.to(BuyerItemDetailScreen(), arguments: {
+                  'item_id': item.id
+                });
+              }
+              else {
+                Get.lazyPut(() => SellerItemDetailController());
+                Get.to(SellerItemDetailScreen(), arguments: {
+                  'item_id': item.id
+                });
+              }
+            },
+            child: Container(
+              decoration: boxDecoration,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        item.thumbnailImage,
+                        width: Get.width * 0.215,
+                        height: Get.width * 0.215,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '작품 문의',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: FontPalette.pretenderd,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          item.nickname,
+                          style: TextStyle(
+                            color: ColorPalette.grey_5,
+                            fontFamily: FontPalette.pretenderd,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        SizedBox(
+                          width: Get.width * 0.4,
+                          child: Text(
+                            item.title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: ColorPalette.black,
+                              fontFamily: FontPalette.pretenderd,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          '${CurrencyFormatter().numberToCurrency(item.price)}원',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: FontPalette.pretenderd,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+    );
+  }
+
+  _textMessageWidget(Message message, BoxDecoration boxDecoration) {
+    return Container(
+      decoration: boxDecoration,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: Get.width * 0.6,
+          ),
+          child: Text(
+            message.message,
+            style: TextStyle(
+              fontFamily: FontPalette.pretenderd,
+              fontSize: 13,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -277,16 +408,38 @@ class MessageDetailScreen extends GetView<MessageController> {
                           suffix: InkWell(
                             onTap: () async {
                               ChatRoom chatRoom = controller.getChatRoom(Get.arguments['chatRoomUuid']);
-                              if (!chatRoom.isRegistered) {
-                                await controller.createChatRoom(
+                              if (Get.arguments['fromItemId'] != null) {
+                                if (!chatRoom.isRegistered) {
+                                  await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
                                     chatRoom.opponentNickname,
-                                    _textEditingController.text);
+                                    Get.arguments['fromItemId'].toString(),
+                                    MessageType.itemInquiry,
+                                  );
+                                }
+                                else {
+                                  await controller.sendMessage(
+                                    Get.arguments['chatRoomUuid'],
+                                    Get.arguments['fromItemId'].toString(),
+                                    MessageType.itemInquiry,
+                                  );
+                                }
+                                Get.arguments['fromItemId'] = null;
+                              }
+                              if (!chatRoom.isRegistered) {
+                                await controller.createChatRoom(
+                                  Get.arguments['chatRoomUuid'],
+                                  chatRoom.opponentNickname,
+                                  _textEditingController.text,
+                                  MessageType.text
+                                );
                                 _textEditingController.clear();
                               }
                               await controller.sendMessage(
-                                  Get.arguments['chatRoomUuid'],
-                                  _textEditingController.text);
+                                Get.arguments['chatRoomUuid'],
+                                _textEditingController.text,
+                                MessageType.text
+                              );
                               _textEditingController.clear();
                             },
                             child: Text(

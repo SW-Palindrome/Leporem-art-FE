@@ -4,6 +4,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import '../configs/login_config.dart';
 import '../controllers/message_controller.dart';
+import '../models/message.dart';
 
 
 class ChattingSocketSingleton {
@@ -26,7 +27,12 @@ class ChattingSocketSingleton {
     });
     _socket.on('receive_message', (data) {
       MessageController messageController = Get.find<MessageController>();
-      messageController.receiveMessage(data['chat_room_uuid'], data['message_uuid'], data['message']);
+      messageController.receiveMessage(
+          data['chat_room_uuid'],
+          data['message_uuid'],
+          data['message'],
+          MessageType.fromText(data['message_type']),
+      );
     });
     _socket.on('message_registered', (data) {
       MessageController messageController = Get.find<MessageController>();
@@ -46,7 +52,13 @@ class ChattingSocketSingleton {
     isAuthenticated = true;
   }
 
-  sendMessage(chatRoomUuid, opponentUserId, message, messageUuid) async {
+  sendMessage(
+      String chatRoomUuid,
+      int opponentUserId,
+      String message,
+      String messageUuid,
+      MessageType messageType,
+  ) async {
     if (!isAuthenticated) {
       await _authenticate();
     }
@@ -55,10 +67,18 @@ class ChattingSocketSingleton {
       'opponent_user_id': opponentUserId,
       'message': message,
       'message_uuid': messageUuid,
+      'message_type': messageType.toText(),
     });
   }
 
-  createChatRoom(chatRoomUuid, sellerId, message, messageUuid, opponentUserId) async {
+  createChatRoom(
+    String chatRoomUuid,
+    int sellerId,
+    String message,
+    String messageUuid,
+    int opponentUserId,
+    MessageType messageType,
+  ) async {
     if (!isAuthenticated) {
       await _authenticate();
     }
@@ -68,6 +88,7 @@ class ChattingSocketSingleton {
       'message': message,
       'message_uuid': messageUuid,
       'opponent_user_id': opponentUserId,
+      'message_type': messageType.toText(),
     });
   }
 }

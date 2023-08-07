@@ -125,6 +125,7 @@ class MessageScreen extends GetView<MessageController> {
         chatRoom.opponentProfileImageUrl,
         width: 48,
         height: 48,
+        fit: BoxFit.cover,
       ),
     );
   }

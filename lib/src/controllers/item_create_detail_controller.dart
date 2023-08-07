@@ -11,6 +11,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_compress/video_compress.dart';
+import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ItemCreateDetailController extends GetxController {
@@ -110,11 +111,23 @@ class ItemCreateDetailController extends GetxController {
 
   Future<void> selectVideo() async {
     // ImagePicker로 비디오를 선택 받음
-    final pickedFile = await ImagePicker().pickVideo(
+    var pickedFile = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
       maxDuration: const Duration(seconds: 15),
     );
     if (pickedFile == null) {
+      return;
+    }
+
+    VideoPlayerController testLengthController =
+        VideoPlayerController.file(File(pickedFile.path));
+    await testLengthController.initialize();
+    if (testLengthController.value.duration.inSeconds > 15) {
+      Get.snackbar(
+        '동영상 길이 제한',
+        '15초 이하의 동영상을 선택해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
       return;
     }
     // 썸네일 생성을 위해 isVideoLoading을 true로 변경
@@ -220,7 +233,7 @@ class ItemCreateDetailController extends GetxController {
       'depth': depth,
       'height': height,
       'price': price,
-      'mount': amount,
+      'amount': amount,
       'thumbnail_image': await MultipartFile.fromFile(
         images.first.path,
         filename: images.first.path.split('/').last,

@@ -6,7 +6,6 @@ import 'package:leporemart/src/utils/dio_singleton.dart';
 class ItemDetailRepository {
   Future<ItemDetail> fetchItemDetail(int itemID) async {
     try {
-      print('현재 요청 페이지: $itemID');
       // API 요청
       final response = await DioSingleton.dio.get(
         '/items/detail/buyer',

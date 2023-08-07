@@ -26,38 +26,40 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
         },
         isWhite: false,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          color: ColorPalette.grey_1,
-          child: Column(
-            children: [
-              _mediaInput(),
-              SizedBox(height: 20),
-              _categoryInput(),
-              SizedBox(height: 20),
-              _titleInput(),
-              SizedBox(height: 20),
-              _descriptionInput(),
-              SizedBox(height: 20),
-              _sizeInput(),
-              SizedBox(height: 20),
-              _priceInput(),
-              SizedBox(height: 20),
-              _amountInput(),
-              SizedBox(height: 20),
-              Obx(
-                () => NextButton(
-                  text: "작품 등록하기",
-                  value: controller.isValidCreate(),
-                  onTap: () async {
-                    logAnalytics(name: "create_item");
-                    await controller.createItem();
-                    Get.offAll(SellerApp());
-                  },
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            color: ColorPalette.grey_1,
+            child: Column(
+              children: [
+                _mediaInput(),
+                SizedBox(height: 20),
+                _categoryInput(),
+                SizedBox(height: 20),
+                _titleInput(),
+                SizedBox(height: 20),
+                _descriptionInput(),
+                SizedBox(height: 20),
+                _sizeInput(),
+                SizedBox(height: 20),
+                _priceInput(),
+                SizedBox(height: 20),
+                _amountInput(),
+                SizedBox(height: 20),
+                Obx(
+                  () => NextButton(
+                    text: "작품 등록하기",
+                    value: controller.isValidCreate(),
+                    onTap: () async {
+                      logAnalytics(name: "create_item");
+                      await controller.createItem();
+                      Get.offAll(SellerApp());
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -70,15 +72,29 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Text(
-            '사진과 플롭영상을 올려주세요.',
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: "PretendardVariable",
-              fontStyle: FontStyle.normal,
-              fontSize: 16.0,
-            ),
+          child: Row(
+            children: [
+              Text(
+                '사진과 플롭영상을 올려주세요.',
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '(영상 15초 제한)',
+                style: TextStyle(
+                  color: ColorPalette.grey_4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "PretendardVariable",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
           ),
         ),
         Obx(
