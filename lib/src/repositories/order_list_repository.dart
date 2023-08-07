@@ -107,3 +107,19 @@ class OrderListRepository {
     }
   }
 }
+
+
+class OrderInfoRepository {
+  Future<OrderInfo> fetch(int orderId) async {
+    final response = await DioSingleton.dio.get(
+      '/orders/$orderId',
+      options: Options(
+        headers: {
+          "Authorization":
+              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+        },
+      ),
+    );
+    return OrderInfo.fromJson(response.data);
+  }
+}
