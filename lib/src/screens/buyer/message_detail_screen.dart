@@ -430,7 +430,7 @@ class MessageDetailScreen extends GetView<MessageController> {
         Obx(() {
           return AnimatedContainer(
             duration: Duration(milliseconds: 200),
-            height: controller.isPlusButtonClicked.value ? 220 : 0,
+            height: controller.isPlusButtonClicked.value ? 110 : 0,
             child: controller.isPlusButtonClicked.value
                 ? Padding(
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 40),
@@ -451,30 +451,30 @@ class MessageDetailScreen extends GetView<MessageController> {
                             Get.put(MessageItemShareController());
                           },
                         ),
-                        _messageBottomPlusIcon(
-                          '앨범',
-                          'image',
-                          ColorPalette.pink,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '카메라',
-                          'camera',
-                          ColorPalette.green,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '주소 공유',
-                          'location',
-                          ColorPalette.yellow,
-                          () {},
-                        ),
-                        _messageBottomPlusIcon(
-                          '번호 공유',
-                          'contact',
-                          ColorPalette.orange,
-                          () {},
-                        ),
+                        // _messageBottomPlusIcon(
+                        //   '앨범',
+                        //   'image',
+                        //   ColorPalette.pink,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '카메라',
+                        //   'camera',
+                        //   ColorPalette.green,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '주소 공유',
+                        //   'location',
+                        //   ColorPalette.yellow,
+                        //   () {},
+                        // ),
+                        // _messageBottomPlusIcon(
+                        //   '번호 공유',
+                        //   'contact',
+                        //   ColorPalette.orange,
+                        //   () {},
+                        // ),
                         if (controller.chatRoom.isBuyerRoom)
                           _messageBottomPlusIcon(
                             '주문 넣기',
@@ -487,13 +487,13 @@ class MessageDetailScreen extends GetView<MessageController> {
                               Get.put(MessageItemOrderController());
                             },
                           ),
-                        if (controller.chatRoom.isBuyerRoom)
-                        _messageBottomPlusIcon(
-                          '주문제작 요청',
-                          'paper_outline',
-                          ColorPalette.purple,
-                          () {},
-                        ),
+                        // if (controller.chatRoom.isBuyerRoom)
+                        //   _messageBottomPlusIcon(
+                        //     '주문제작 요청',
+                        //     'paper_outline',
+                        //     ColorPalette.purple,
+                        //     () {},
+                        //   ),
                       ],
                     ),
                   )
