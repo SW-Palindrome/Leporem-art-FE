@@ -33,6 +33,7 @@ class MessageController extends GetxController {
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
+    await fetchItemInfoList();
     isLoading.value = false;
   }
 
@@ -172,8 +173,45 @@ class MessageController extends GetxController {
     return chatRoomList.where((chatRoom) => !chatRoom.isBuyerRoom);
   }
 
-  Future<ItemDetail> getItemInfo(int itemId) async {
-    ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(itemId);
-    return itemDetail;
+  fetchItemInfo(Message message) async {
+    switch (message.type) {
+      case MessageType.itemInquiry:
+        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
+            int.parse(message.message));
+        message.itemInfo = ItemInfo(
+          itemId: itemDetail.id,
+          thumbnailImage: itemDetail.thumbnailImage,
+          sellerNickname: itemDetail.nickname,
+          title: itemDetail.title,
+          price: itemDetail.price,
+        );
+        break;
+      case MessageType.itemShare:
+        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
+            int.parse(message.message));
+        message.itemInfo = ItemInfo(
+          itemId: itemDetail.id,
+          thumbnailImage: itemDetail.thumbnailImage,
+          sellerNickname: itemDetail.nickname,
+          title: itemDetail.title,
+          price: itemDetail.price,
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  fetchItemInfoList() async {
+    for (final chatRoom in chatRoomList) {
+      for (final message in chatRoom.messageList) {
+        fetchItemInfo(message);
+      }
+    }
+  }
+
+  getItemInfo(itemId) {
+    ChatRoom chatRoom = getChatRoom(Get.arguments['chatRoomUuid']);
+    return chatRoom.messageList.firstWhere((message) => message.message == itemId.toString()).itemInfo;
   }
 }

@@ -38,6 +38,22 @@ enum MessageType {
   }
 }
 
+class ItemInfo {
+  int itemId;
+  String thumbnailImage;
+  String sellerNickname;
+  String title;
+  int price;
+
+  ItemInfo({
+    required this.itemId,
+    required this.thumbnailImage,
+    required this.sellerNickname,
+    required this.title,
+    required this.price,
+  });
+}
+
 class Message {
   String messageUuid;
   final int userId;
@@ -45,6 +61,7 @@ class Message {
   final bool isRead;
   final String message;
   final MessageType type;
+  ItemInfo? itemInfo;
 
   Message({
     required this.messageUuid,
