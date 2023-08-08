@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../buyer_app.dart';
+import '../../configs/login_config.dart';
 import '../../controllers/message_controller.dart';
 import '../../utils/chatting_socket_singleton.dart';
 import 'login_screen.dart';
@@ -18,6 +19,8 @@ class HomeScreen extends StatelessWidget {
 
   _onAfterBuild() {
     if (isLoginProceed) {
+      // FIXME: 이 부분은 추후 삭제되어야함
+      isSignup();
       Get.put(MessageController());
       ChattingSocketSingleton();
       Get.to(BuyerApp());
