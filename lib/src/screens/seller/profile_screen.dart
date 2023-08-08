@@ -18,62 +18,65 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.initialized) {
-      return CircularProgressIndicator();
-    }
     return Obx(
-      () => SingleChildScrollView(
-        child: Column(
-          children: [
-            _titleRow(),
-            SizedBox(height: Get.height * 0.03),
-            _profileRow(),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: '작품 관리',
-              contents: ['판매 관리'],
-              icons: ['list', 'heart_outline', 'history'],
-              onTaps: [
-                () {
-                  logAnalytics(name: "enter_item_management");
-                  Get.to(ItemManagementScreen());
-                  Get.put(ItemManagementController());
-                },
-                () {},
-                () {},
+      () {
+        if (controller.isLoading.value) {
+          return CircularProgressIndicator();
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _titleRow(),
+                SizedBox(height: Get.height * 0.03),
+                _profileRow(),
+                Divider(color: ColorPalette.grey_2, thickness: 10),
+                _menuColumn(
+                  title: '작품 관리',
+                  contents: ['판매 관리'],
+                  icons: ['list', 'heart_outline', 'history'],
+                  onTaps: [
+                    () {
+                      logAnalytics(name: "enter_item_management");
+                      Get.to(ItemManagementScreen());
+                      Get.put(ItemManagementController());
+                    },
+                    () {},
+                    () {},
+                  ],
+                ),
+                // Divider(color: ColorPalette.grey_2, thickness: 10),
+                // _menuColumn(
+                //   title: '커뮤니티 관리',
+                //   contents: ['차단 목록'],
+                //   icons: ['block'],
+                //   onTaps: [
+                //     () {},
+                //   ],
+                // ),
+                // Divider(color: ColorPalette.grey_2, thickness: 10),
+                // _menuColumn(
+                //   title: 'SNS 연동',
+                //   contents: ['인스타그램 연동'],
+                //   icons: ['instagram'],
+                //   onTaps: [
+                //     () {},
+                //   ],
+                // ),
+                // Divider(color: ColorPalette.grey_2, thickness: 10),
+                // _menuColumn(
+                //   title: '기타 기능',
+                //   contents: ['요금 플랜 가입하기', '포트폴리오'],
+                //   icons: ['plan', 'portfolio'],
+                //   onTaps: [
+                //     () {},
+                //     () {},
+                //   ],
+                // ),
               ],
             ),
-            // Divider(color: ColorPalette.grey_2, thickness: 10),
-            // _menuColumn(
-            //   title: '커뮤니티 관리',
-            //   contents: ['차단 목록'],
-            //   icons: ['block'],
-            //   onTaps: [
-            //     () {},
-            //   ],
-            // ),
-            // Divider(color: ColorPalette.grey_2, thickness: 10),
-            // _menuColumn(
-            //   title: 'SNS 연동',
-            //   contents: ['인스타그램 연동'],
-            //   icons: ['instagram'],
-            //   onTaps: [
-            //     () {},
-            //   ],
-            // ),
-            // Divider(color: ColorPalette.grey_2, thickness: 10),
-            // _menuColumn(
-            //   title: '기타 기능',
-            //   contents: ['요금 플랜 가입하기', '포트폴리오'],
-            //   icons: ['plan', 'portfolio'],
-            //   onTaps: [
-            //     () {},
-            //     () {},
-            //   ],
-            // ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 

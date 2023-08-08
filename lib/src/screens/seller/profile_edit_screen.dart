@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
@@ -22,6 +23,7 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
               width: 24,
             ),
             onPressed: () {
+              Get.find<SellerProfileController>().fetch();
               Get.back();
             }),
         title: Text(
