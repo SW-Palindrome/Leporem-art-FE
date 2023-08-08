@@ -17,6 +17,7 @@ import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
+import 'package:leporemart/src/screens/account/home.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
@@ -78,11 +79,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '공예쁨',
       theme: AppTheme.lightTheme,
-      home: isLoginProceed ? BuyerApp() : LoginScreen(),
+      home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
         if (kDebugMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
