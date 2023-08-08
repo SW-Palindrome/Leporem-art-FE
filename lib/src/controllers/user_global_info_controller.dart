@@ -4,6 +4,7 @@ class UserGlobalInfoController extends GetxController {
   late final int userId;
   late UserType userType;
   late String nickname;
+  late bool isSeller;
 }
 
 enum UserType {

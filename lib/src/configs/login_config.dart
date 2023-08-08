@@ -92,6 +92,7 @@ Future<bool> isSignup() async {
       userGlobalInfoController.userId = response.data['user_id'];
       userGlobalInfoController.userType = UserType.member;
       userGlobalInfoController.nickname = response.data['nickname'];
+      userGlobalInfoController.isSeller = response.data['is_seller'];
       Get.lazyPut(() => AgreementController());
       Get.lazyPut(() => AccountTypeController());
       Get.lazyPut(() => EmailController());

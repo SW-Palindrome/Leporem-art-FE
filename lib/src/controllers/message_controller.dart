@@ -31,8 +31,10 @@ class MessageController extends GetxService {
     isLoading.value = true;
     List<ChatRoom> fetchedBuyerChatRoomList =
         await _messageRepository.fetchBuyerChatRooms();
-    List<ChatRoom> fetchedSellerChatRoomList =
-        await _messageRepository.fetchSellerChatRooms();
+    List<ChatRoom> fetchedSellerChatRoomList = [];
+    if (Get.find<UserGlobalInfoController>().isSeller) {
+      fetchedSellerChatRoomList.addAll(await _messageRepository.fetchSellerChatRooms());
+    }
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
