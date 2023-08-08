@@ -104,35 +104,34 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
           // ),
           // SizedBox(width: 15),
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              decoration: ShapeDecoration(
-                gradient: ColorPalette.gradientPurple,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/message_fill.svg',
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalette.white,
-                      BlendMode.srcIn,
-                    ),
+            child: GestureDetector(
+              onTap: () async {
+                ChatRoom chatRoom = await controller.getOrCreateChatRoom();
+                Get.to(() => MessageDetailScreen(),
+                    arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: ShapeDecoration(
+                  gradient: ColorPalette.gradientPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () async {
-                      ChatRoom chatRoom =
-                          await controller.getOrCreateChatRoom();
-                      Get.to(() => MessageDetailScreen(),
-                          arguments: {'chatRoomUuid': chatRoom.chatRoomUuid});
-                    },
-                    child: Text(
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/message_fill.svg',
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        ColorPalette.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
                       '채팅하기',
                       style: TextStyle(
                         color: ColorPalette.white,
@@ -142,8 +141,8 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
                         fontSize: 16.0,
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -161,8 +160,7 @@ class ItemCreatorScreen extends GetView<BuyerItemCreatorController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(Get.width * 0.25),
               child: CachedNetworkImage(
-                imageUrl:
-                    'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
+                imageUrl: controller.creatorProfile.value.profileImage,
                 width: Get.width * 0.25,
                 height: Get.width * 0.25,
               ),
