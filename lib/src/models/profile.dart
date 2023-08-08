@@ -62,7 +62,7 @@ class SellerProfile extends Profile {
       profileImageUrl: json['profile_image'] ??
           'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       itemCount: json['item_count'] ?? 0,
-      totalTransaction: json['total_transaction'] ?? 0,
+      totalTransaction: json['total_transactions'] ?? 0,
       temperature: json['temperature'] ?? 36.5,
       description: json['description'] ?? '',
       retentionRate: json['retention_rate'] ?? 0.0,

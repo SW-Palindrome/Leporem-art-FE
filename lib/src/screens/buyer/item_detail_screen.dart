@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,11 @@ import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/utils/induce_membership.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 import 'package:leporemart/src/widgets/plant_temperature.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/message_controller.dart';
@@ -30,6 +34,36 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
         appBarType: AppBarType.buyerItemDetailAppBar,
         onTapLeadingIcon: () {
           Get.back();
+        },
+        onTapFirstActionIcon: () {
+          Get.bottomSheet(
+            MyBottomSheet(
+              title: '게시물 신고',
+              description: "해당 게시물을 신고하시겠습니까?",
+              height: Get.height * 0.3,
+              buttonType: BottomSheetType.twoButton,
+              onCloseButtonPressed: () {
+                Get.back();
+              },
+              leftButtonText: '이전으로',
+              onLeftButtonPressed: () {
+                Get.back();
+              },
+              rightButtonText: '신고하기',
+              onRightButtonPressed: () {
+                logAnalytics(name: 'item_detail_report');
+                launchUrl(Uri.parse(
+                    'mailto:swm.palindrome@gmail.com?subject=[게시물 신고] ${controller.itemDetail.value.id}번 게시물&body=신고 사유를 적어주세요.\n'));
+                Get.back();
+              },
+            ),
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30.0),
+              ),
+            ),
+          );
         },
         isWhite: true,
       ),
