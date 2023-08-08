@@ -23,10 +23,6 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
 
   @override
   Widget build(BuildContext context) {
-    if (Get.find<UserGlobalInfoController>().userType == UserType.member) {
-      Get.put(MessageController());
-      ChattingSocketSingleton();
-    }
     Get.lazyPut(() => BuyerSearchController());
     Get.lazyPut(() => BuyerHomeController());
     Get.lazyPut(() => BuyerProfileController());

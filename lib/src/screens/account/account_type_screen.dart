@@ -8,6 +8,8 @@ import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
+import 'home.dart';
+
 class AccountType extends GetView<AccountTypeController> {
   const AccountType({super.key});
 
@@ -114,7 +116,7 @@ class AccountType extends GetView<AccountTypeController> {
                             'step': 'account_type',
                             'action': 'buyer'
                           });
-                          Get.offAll(BuyerApp());
+                          Get.offAll(HomeScreen(isLoginProceed: true));
                         },
                       )
                     : NextButton(
