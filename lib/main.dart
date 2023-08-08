@@ -29,7 +29,7 @@ void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
 
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -42,7 +42,6 @@ void main() async {
   Get.lazyPut(() => NicknameController());
   await initializeDateFormatting();
 
-  FirebaseConfig.init();
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
 
   getOAuthToken().then((value) async {
@@ -52,8 +51,10 @@ void main() async {
     }
   });
   bool isLoginProceed = await isSignup();
+  print("디버깅 모드: $kDebugMode");
   if (kDebugMode) {
-    AmplitudeConfig.init();
+    await FirebaseConfig.init();
+    await AmplitudeConfig.init();
     await dotenv.load(fileName: 'assets/config/.env');
 
     // SentryFlutter.init(
@@ -67,7 +68,6 @@ void main() async {
     runApp(MyApp(isLoginProceed: isLoginProceed));
   } else {
     await dotenv.load(fileName: 'assets/config/.env');
-    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(MyApp(isLoginProceed: isLoginProceed));
   }

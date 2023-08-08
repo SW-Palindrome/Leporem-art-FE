@@ -5,11 +5,11 @@ class AmplitudeConfig {
   static Amplitude analytics =
       Amplitude.getInstance(instanceName: "leporem-art");
 
-  static void init() async {
+  static Future<void> init() async {
     await dotenv.load(fileName: 'assets/config/.env');
     String amplitudeAPIKey = dotenv.get('AMPLITUDE_APIKEY');
 
     // Initialize SDK
-    analytics.init(amplitudeAPIKey);
+    await analytics.init(amplitudeAPIKey);
   }
 }

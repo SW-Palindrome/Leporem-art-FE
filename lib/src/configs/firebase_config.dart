@@ -5,7 +5,7 @@ import 'package:leporemart/src/configs/firebase_options.dart';
 class FirebaseConfig {
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
-  static void init() async {
+  static Future<void> init() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
   }
