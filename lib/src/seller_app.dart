@@ -27,12 +27,14 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
       Get.lazyPut(() => SellerSearchController());
       switch (controller.selectedSellerIndex.value) {
         case 0:
+          Get.find<SellerHomeController>().fetch();
           return _homeScaffold();
         // case 1:
         //   return _customOrderScaffold();
         case 1:
           return _messageScaffold();
         case 2:
+          Get.find<SellerProfileController>().fetch();
           return _profileScaffold();
         default:
           return _homeScaffold();

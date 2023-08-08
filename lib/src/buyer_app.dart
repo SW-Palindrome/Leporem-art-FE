@@ -33,6 +33,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     return Obx(() {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
+          Get.find<BuyerHomeController>().fetch();
           return _homeScaffold();
         // case 1:
         //   return _auctionScaffold();
@@ -41,6 +42,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
         // case 3:
         //   return _flopScaffold();
         case 2:
+          Get.find<BuyerProfileController>().fetch();
           return _profileScaffold();
         default:
           return _homeScaffold();

@@ -15,6 +15,7 @@ class SellerProfileController extends GetxController {
     description: '',
   ).obs;
 
+  Rx<bool> isLoading = true.obs;
   @override
   void onInit() async {
     super.onInit();
@@ -25,6 +26,7 @@ class SellerProfileController extends GetxController {
     try {
       final fetchSellerProfile = await _profileRepository.fetchSellerProfile();
       sellerProfile.value = fetchSellerProfile;
+      isLoading.value = false;
     } catch (e) {
       // 에러 처리
       print('Error fetching seller profile: $e');
