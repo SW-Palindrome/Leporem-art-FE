@@ -73,7 +73,6 @@ class LoginScreen extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () async {
-        Get.lazyPut(() => MyBottomNavigationbarController());
         Get.lazyPut(() => AgreementController());
         Get.lazyPut(() => AccountTypeController());
         Get.lazyPut(() => EmailController());
