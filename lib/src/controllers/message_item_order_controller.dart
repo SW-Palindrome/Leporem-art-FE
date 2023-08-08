@@ -72,7 +72,6 @@ class MessageItemOrderController extends GetxController {
         orderId.toString(),
         MessageType.order,
       );
-      Get.back();
     } catch (e) {
       print(e);
     }

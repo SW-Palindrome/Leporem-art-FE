@@ -197,6 +197,7 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
               value: controller.isSelect.value,
               onTap: () {
                 controller.order();
+                Get.back();
               },
             ),
           ),
