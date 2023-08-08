@@ -28,44 +28,26 @@ class MessageScreen extends GetView<MessageController> {
   }
 
   _emptyItemListWidget() {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.to(MessageItemShareScreen());
-            Get.put(MessageItemShareController());
-          },
-          child: Text('작폼공유'),
-        ),
-        GestureDetector(
-          onTap: () {
-            Get.to(MessageItemOrderScreen());
-            Get.put(MessageItemShareController());
-          },
-          child: Text('주문넣기'),
-        ),
-      ],
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 144),
+          Image.asset(
+            'assets/images/rabbit.png',
+            height: 200,
+          ),
+          SizedBox(height: 24),
+          Text(
+            '아직 채팅 내역이 없어요.',
+            style: TextStyle(
+              fontSize: 16,
+              color: ColorPalette.grey_5,
+              fontFamily: FontPalette.pretenderd,
+            )
+          ),
+        ],
+      ),
     );
-    // return Center(
-    //   child: Column(
-    //     children: [
-    //       SizedBox(height: 144),
-    //       Image.asset(
-    //         'assets/images/rabbit.png',
-    //         height: 200,
-    //       ),
-    //       SizedBox(height: 24),
-    //       Text(
-    //         '아직 채팅 내역이 없어요.',
-    //         style: TextStyle(
-    //           fontSize: 16,
-    //           color: ColorPalette.grey_5,
-    //           fontFamily: FontPalette.pretenderd,
-    //         )
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
   _chatRoomListWidget() {

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/buyer_app.dart';
@@ -62,7 +63,7 @@ void getKakaoUserInfo() async {
 Future<bool> isSignup() async {
   try {
     Dio dio = Dio();
-    dio.options.baseUrl = "https://dev.leporem.art";
+    dio.options.baseUrl = dotenv.get("BASE_URL");
     dio.options.validateStatus = (status) {
       return status! < 500;
     };
