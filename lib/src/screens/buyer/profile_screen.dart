@@ -216,7 +216,6 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               onTap: () async {
                 logAnalytics(name: 'swap_seller');
                 MyBottomNavigationbarController.to.changeSellerIndex(2);
-                Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());
               },
               child: Container(

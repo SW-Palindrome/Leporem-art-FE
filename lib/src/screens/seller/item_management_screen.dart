@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_order_list_controller.dart';
 import 'package:leporemart/src/controllers/item_management_controller.dart';
 import 'package:leporemart/src/controllers/review_controller.dart';
+import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/screens/buyer/review_star_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -23,6 +24,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
         appBarType: AppBarType.backAppBar,
         title: '판매 관리',
         onTapLeadingIcon: () {
+          Get.find<SellerProfileController>().fetch();
           Get.back();
         },
       ),
