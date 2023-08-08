@@ -9,6 +9,8 @@ import 'package:leporemart/src/widgets/bottom_sheet.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
+import '../../buyer_app.dart';
+
 class EmailScreen extends GetView<EmailController> {
   const EmailScreen({super.key});
 
@@ -181,10 +183,10 @@ class EmailScreen extends GetView<EmailController> {
                                 buttonType: BottomSheetType.oneButton,
                                 leftButtonText: "공예쁨 시작하기",
                                 onCloseButtonPressed: () {
-                                  Get.offNamed('/buyer');
+                                  Get.offAll(BuyerApp());
                                 },
                                 onLeftButtonPressed: () {
-                                  Get.offNamed('/buyer');
+                                  Get.offAll(BuyerApp());
                                 },
                               ),
                               backgroundColor: Colors.white,
