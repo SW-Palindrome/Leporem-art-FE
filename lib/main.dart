@@ -16,6 +16,7 @@ import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
+import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/screens/account/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/chatting_socket_singleton.dart';

@@ -38,8 +38,7 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
           // isLoading 변수에 따라 로딩창 또는 원래 화면을 표시
           return controller.isLoading.value
               ? Center(
-                  child: CircularProgressIndicator(),
-                )
+                  child: CircularProgressIndicator(color: ColorPalette.purple))
               : SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

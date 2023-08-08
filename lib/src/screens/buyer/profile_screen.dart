@@ -28,59 +28,66 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SingleChildScrollView(
-        child: Column(
-          children: [
-            _titleRow(),
-            SizedBox(height: Get.height * 0.03),
-            _profileRow(),
-            Divider(color: ColorPalette.grey_2, thickness: 10),
-            _menuColumn(
-              title: '작품관리',
-              contents: ['주문 내역', /*'관심 작품',*/ '최근 본 작품'],
-              icons: ['list', /*'heart_outline',*/ 'history'],
-              onTaps: [
-                () {
-                  logAnalytics(name: 'enter_order_list');
-                  Get.to(BuyerOrderListScreen());
-                  Get.put(BuyerOrderListController());
-                },
-                /*() {},*/
-                () {
-                  logAnalytics(name: 'enter_recent_item');
-                  Get.to(RecentItemScreen());
-                  Get.put(RecentItemController());
-                }
+      () {
+        if (controller.isLoading.value) {
+          return Center(
+              child: CircularProgressIndicator(color: ColorPalette.purple));
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _titleRow(),
+                SizedBox(height: Get.height * 0.03),
+                _profileRow(),
+                Divider(color: ColorPalette.grey_2, thickness: 10),
+                _menuColumn(
+                  title: '작품관리',
+                  contents: ['주문 내역', /*'관심 작품',*/ '최근 본 작품'],
+                  icons: ['list', /*'heart_outline',*/ 'history'],
+                  onTaps: [
+                    () {
+                      logAnalytics(name: 'enter_order_list');
+                      Get.to(BuyerOrderListScreen());
+                      Get.put(BuyerOrderListController());
+                    },
+                    /*() {},*/
+                    () {
+                      logAnalytics(name: 'enter_recent_item');
+                      Get.to(RecentItemScreen());
+                      Get.put(RecentItemController());
+                    }
+                  ],
+                ),
+                // Divider(color: ColorPalette.grey_2, thickness: 10),
+                // _menuColumn(
+                //   title: '커뮤니티 관리',
+                //   contents: ['팔로잉 목록', '차단 목록'],
+                //   icons: ['followers', 'block'],
+                //   onTaps: [
+                //     () {},
+                //     () {},
+                //   ],
+                // ),
+                if (!controller.buyerProfile.value.isSeller)
+                  Divider(color: ColorPalette.grey_2, thickness: 10),
+                if (!controller.buyerProfile.value.isSeller)
+                  _menuColumn(
+                    title: '판매자 인증',
+                    contents: ['학교 이메일 인증'],
+                    icons: ['mail'],
+                    onTaps: [
+                      () {
+                        logAnalytics(name: 'enter_seller_signup');
+                        Get.to(EmailScreen());
+                        Get.put(EmailController());
+                      },
+                    ],
+                  ),
               ],
             ),
-            // Divider(color: ColorPalette.grey_2, thickness: 10),
-            // _menuColumn(
-            //   title: '커뮤니티 관리',
-            //   contents: ['팔로잉 목록', '차단 목록'],
-            //   icons: ['followers', 'block'],
-            //   onTaps: [
-            //     () {},
-            //     () {},
-            //   ],
-            // ),
-            if (!controller.buyerProfile.value.isSeller)
-              Divider(color: ColorPalette.grey_2, thickness: 10),
-            if (!controller.buyerProfile.value.isSeller)
-              _menuColumn(
-                title: '판매자 인증',
-                contents: ['학교 이메일 인증'],
-                icons: ['mail'],
-                onTaps: [
-                  () {
-                    logAnalytics(name: 'enter_seller_signup');
-                    Get.to(EmailScreen());
-                    Get.put(EmailController());
-                  },
-                ],
-              ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 
@@ -209,6 +216,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               onTap: () async {
                 logAnalytics(name: 'swap_seller');
                 MyBottomNavigationbarController.to.changeSellerIndex(2);
+                Get.put(MyBottomNavigationbarController());
                 Get.put(SellerProfileController());
                 Get.offAll(() => SellerApp());
               },

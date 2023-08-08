@@ -11,6 +11,7 @@ class BuyerProfileController extends GetxController {
     isSeller: false,
   ).obs;
 
+  Rx<bool> isLoading = false.obs;
   @override
   void onInit() async {
     await fetch();
@@ -19,8 +20,10 @@ class BuyerProfileController extends GetxController {
 
   Future<void> fetch() async {
     try {
+      isLoading.value = true;
       final fetchBuyerProfile = await _profileRepository.fetchBuyerProfile();
       buyerProfile.value = fetchBuyerProfile;
+      isLoading.value = false;
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer profile: $e');
