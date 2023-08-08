@@ -69,8 +69,7 @@ Future<bool> isSignup() async {
     var response = await dio.post(
       "/users/login/kakao",
       data: {
-        "id_token":
-            "eyJraWQiOiI5ZjI1MmRhZGQ1ZjIzM2Y5M2QyZmE1MjhkMTJmZWEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI4YWVhYzliYjE4ZjQyMDYwYTIzMzI4ODU1NzdiOGNiOSIsInN1YiI6IjI4OTc5MTQzODciLCJhdXRoX3RpbWUiOjE2OTA2NTE1MjgsImlzcyI6Imh0dHBzOi8va2F1dGgua2FrYW8uY29tIiwiZXhwIjoxNjkxMTIyMzQ3LCJpYXQiOjE2OTEwNzkxNDd9.QHqgrhKFCm-krExWV4cAVBABNohLylryPx7HtcaycMhLszzYErK3oCeifXOPH78k3-wqdoWNUpWkuIkjzR0_zACN4yV-YRw-s4VRykCnqxtHpV8iz0FWomjGDc0iYXy_nY0dP-VwFdMy2pCc0WsakZRhdE6VhzdNiSSLXp0USw1UBiwGlfBJBvYtGlPzW0rJbFz2bnioxtJCzZC4jKx03Y8NLp1Fr1BW8Arpbvqzf9QnOV3hHHU6p8z2dKkOP3U_l00piRb-qN9SGxvWrXbpSZy_JtnNC-QyZbBDc0X_y9F-rVx-1IR5mtPLu5bydcRA-60-Nm3wlLPKCv7jWbTF0w",
+        "id_token": await getOAuthToken().then((value) => value!.idToken),
       },
     );
     if (response.statusCode == 403) {
@@ -84,6 +83,7 @@ Future<bool> isSignup() async {
       );
     }
     if (response.statusCode == 200) {
+      print('회원가입 여부 확인');
       UserGlobalInfoController userGlobalInfoController =
           Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];
@@ -103,7 +103,6 @@ Future<bool> isSignup() async {
 }
 
 Future<void> kakaoLogin() async {
-  print('testtestdsf${await isKakaoTalkInstalled()}');
   if (await isKakaoTalkInstalled()) {
     try {
       await UserApi.instance.loginWithKakaoTalk();
