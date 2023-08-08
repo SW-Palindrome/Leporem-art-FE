@@ -32,7 +32,7 @@ class MessageController extends GetxController {
     List<ChatRoom> fetchedBuyerChatRoomList =
         await _messageRepository.fetchBuyerChatRooms();
     List<ChatRoom> fetchedSellerChatRoomList =
-      await _messageRepository.fetchSellerChatRooms();
+        await _messageRepository.fetchSellerChatRooms();
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
@@ -41,10 +41,7 @@ class MessageController extends GetxController {
   }
 
   Future<void> sendMessage(
-    String chatRoomUuid,
-    String message,
-    MessageType messageType
-  ) async {
+      String chatRoomUuid, String message, MessageType messageType) async {
     int opponentUserId = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid)
         .opponentUserId;
@@ -104,7 +101,8 @@ class MessageController extends GetxController {
 
   createTempChatRoom(sellerNickname) async {
     final ProfileRepository profileRepository = ProfileRepository();
-    SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
+    SellerProfile sellerProfile =
+        await profileRepository.fetchCreatorProfile(sellerNickname);
 
     String chatRoomUuid = Uuid().v4();
 
@@ -129,8 +127,10 @@ class MessageController extends GetxController {
     MessageType messageType,
   ) async {
     final ProfileRepository profileRepository = ProfileRepository();
-    SellerProfile sellerProfile = await profileRepository.fetchCreatorProfile(sellerNickname);
-    UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+    SellerProfile sellerProfile =
+        await profileRepository.fetchCreatorProfile(sellerNickname);
+    UserGlobalInfoController userGlobalInfoController =
+        Get.find<UserGlobalInfoController>();
     ChatRoom chatRoom = getChatRoom(chatRoomUuid);
     String messageUuid = Uuid().v4();
     chatRoom.messageList.add(Message(
@@ -182,8 +182,8 @@ class MessageController extends GetxController {
   fetchItemInfo(Message message) async {
     switch (message.type) {
       case MessageType.itemInquiry:
-        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
-            int.parse(message.message));
+        BuyerItemDetail itemDetail = await _itemDetailRepository
+            .fetchBuyerItemDetail(int.parse(message.message));
         message.itemInfo = ItemInfo(
           itemId: itemDetail.id,
           thumbnailImage: itemDetail.thumbnailImage,
@@ -193,8 +193,8 @@ class MessageController extends GetxController {
         );
         break;
       case MessageType.itemShare:
-        ItemDetail itemDetail = await _itemDetailRepository.fetchItemDetail(
-            int.parse(message.message));
+        BuyerItemDetail itemDetail = await _itemDetailRepository
+            .fetchBuyerItemDetail(int.parse(message.message));
         message.itemInfo = ItemInfo(
           itemId: itemDetail.id,
           thumbnailImage: itemDetail.thumbnailImage,
@@ -204,15 +204,14 @@ class MessageController extends GetxController {
         );
         break;
       case MessageType.order:
-        OrderInfo orderInfo = await _orderInfoRepository.fetch(
-            int.parse(message.message));
+        OrderInfo orderInfo =
+            await _orderInfoRepository.fetch(int.parse(message.message));
         message.itemInfo = ItemInfo(
-          itemId: orderInfo.itemId,
-          thumbnailImage: orderInfo.thumbnailImage,
-          sellerNickname: orderInfo.sellerNickname,
-          title: orderInfo.title,
-          price: orderInfo.price
-        );
+            itemId: orderInfo.itemId,
+            thumbnailImage: orderInfo.thumbnailImage,
+            sellerNickname: orderInfo.sellerNickname,
+            title: orderInfo.title,
+            price: orderInfo.price);
         break;
       default:
         break;
@@ -241,5 +240,6 @@ class MessageController extends GetxController {
 
   ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 
-  List<Message> get reversedMessageList => chatRoom.messageList.reversed.toList();
+  List<Message> get reversedMessageList =>
+      chatRoom.messageList.reversed.toList();
 }

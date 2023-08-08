@@ -23,7 +23,7 @@ class ItemEditController extends ItemCreateDetailController {
   Rx<bool> isPriceChanged = false.obs;
   Rx<bool> isAmountChanged = false.obs;
 
-  ItemDetail itemDetail =
+  SellerItemDetail itemDetail =
       Get.find<SellerItemDetailController>().itemDetail.value;
   @override
   void onInit() async {
@@ -279,7 +279,7 @@ class ItemEditController extends ItemCreateDetailController {
       options: Options(
         headers: {
           "Authorization":
-          "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
         },
       ),
     );

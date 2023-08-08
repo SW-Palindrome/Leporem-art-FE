@@ -341,7 +341,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             child: Text(
                               '배송 완료',
                               style: TextStyle(
-                                color: order.orderStatus == "주문완료"
+                                color: order.orderStatus == "배송중"
                                     ? ColorPalette.black
                                     : ColorPalette.grey_4,
                                 fontSize: 16.0,
@@ -352,44 +352,48 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                       ),
                       Divider(color: ColorPalette.grey_2, thickness: 1),
                       GestureDetector(
-                        onTap: () {
-                          logAnalytics(name: "order_detail", parameters: {
-                            "order_id": order.id,
-                            "status": "주문 취소 확인"
-                          });
-                          Get.back();
-                          Get.bottomSheet(
-                            MyBottomSheet(
-                              title: '주문을 취소할까요?',
-                              description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
-                              height: Get.height * 0.3,
-                              buttonType: BottomSheetType.twoButton,
-                              onCloseButtonPressed: () {
-                                Get.back();
-                              },
-                              leftButtonText: '이전으로',
-                              onLeftButtonPressed: () {
-                                Get.back();
-                              },
-                              rightButtonText: '주문 취소하기',
-                              onRightButtonPressed: () {
+                        onTap: order.orderStatus == "주문완료"
+                            ? () {
                                 logAnalytics(name: "order_detail", parameters: {
                                   "order_id": order.id,
-                                  "status": "주문 취소 확정"
+                                  "status": "주문 취소 확인"
                                 });
-                                controller.cancel(order.id);
-                                controller.fetch();
                                 Get.back();
-                              },
-                            ),
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(30.0),
-                              ),
-                            ),
-                          );
-                        },
+                                Get.bottomSheet(
+                                  MyBottomSheet(
+                                    title: '주문을 취소할까요?',
+                                    description: "선택하신 주문 건의 주문을 취소하시겠습니까?",
+                                    height: Get.height * 0.3,
+                                    buttonType: BottomSheetType.twoButton,
+                                    onCloseButtonPressed: () {
+                                      Get.back();
+                                    },
+                                    leftButtonText: '이전으로',
+                                    onLeftButtonPressed: () {
+                                      Get.back();
+                                    },
+                                    rightButtonText: '주문 취소하기',
+                                    onRightButtonPressed: () {
+                                      logAnalytics(
+                                          name: "order_detail",
+                                          parameters: {
+                                            "order_id": order.id,
+                                            "status": "주문 취소 확정"
+                                          });
+                                      controller.cancel(order.id);
+                                      controller.fetch();
+                                      Get.back();
+                                    },
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(30.0),
+                                    ),
+                                  ),
+                                );
+                              }
+                            : () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 17),
                           width: Get.width,
@@ -401,7 +405,9 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                             child: Text(
                               '주문 취소',
                               style: TextStyle(
-                                color: ColorPalette.red,
+                                color: order.orderStatus == "주문완료"
+                                    ? ColorPalette.red
+                                    : ColorPalette.grey_4,
                                 fontSize: 16.0,
                               ),
                             ),

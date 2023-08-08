@@ -13,7 +13,7 @@ import 'package:leporemart/src/screens/seller/item_detail_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/currency_formatter.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
-import 'package:leporemart/src/utils/time_diff_to_string.dart';
+import 'package:leporemart/src/utils/datetime_to_string.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
 
 class SellerHomeScreen extends GetView<SellerHomeController> {

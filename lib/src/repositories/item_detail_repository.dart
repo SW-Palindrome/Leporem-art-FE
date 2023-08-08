@@ -4,7 +4,7 @@ import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 class ItemDetailRepository {
-  Future<ItemDetail> fetchItemDetail(int itemID) async {
+  Future<BuyerItemDetail> fetchBuyerItemDetail(int itemID) async {
     try {
       // API 요청
       final response = await DioSingleton.dio.get(
@@ -19,19 +19,43 @@ class ItemDetailRepository {
       );
       final data = response.data['detail'];
       // API 응답을 Item 모델로 변환
-      final ItemDetail itemDetail = ItemDetail.fromJson(data);
+      final BuyerItemDetail itemDetail = BuyerItemDetail.fromJson(data);
 
       return itemDetail;
     } catch (e) {
       // 에러 처리
       print('Error fetching item detail in repository: $e');
       // 목업 데이터 반환
-      return mockItemDetail;
+      return mockSellerItemDetail;
+    }
+  }
+
+  Future<SellerItemDetail> fetchSellerItemDetail(int itemID) async {
+    try {
+      // API 요청
+      final response = await DioSingleton.dio.get(
+        '/items/detail/seller',
+        queryParameters: {'item_id': itemID},
+        options: Options(
+          headers: {
+            "Authorization":
+                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          },
+        ),
+      );
+      final data = response.data['detail'];
+      // API 응답을 Item 모델로 변환
+      final SellerItemDetail itemDetail = SellerItemDetail.fromJson(data);
+
+      return itemDetail;
+    } catch (e) {
+      // 에러 처리
+      throw ('Error fetching item detail in repository: $e');
     }
   }
 }
 
-final mockItemDetail = ItemDetail(
+final mockSellerItemDetail = BuyerItemDetail(
   id: 1,
   profileImage:
       'https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg',

@@ -17,7 +17,7 @@ class SellerItemDetailController extends GetxController {
   Rx<bool> isIconVisible = false.obs;
 
   final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
-  Rx<ItemDetail> itemDetail = ItemDetail(
+  Rx<SellerItemDetail> itemDetail = SellerItemDetail(
     id: 0,
     title: '',
     description: '',
@@ -30,10 +30,10 @@ class SellerItemDetailController extends GetxController {
     depth: null,
     category: [],
     currentAmount: 0,
-    isLiked: false,
     profileImage: '',
     temperature: 0,
     thumbnailImage: '',
+    reviews: [],
   ).obs;
 
   @override
@@ -89,8 +89,8 @@ class SellerItemDetailController extends GetxController {
     try {
       print('컨트롤러에서: ${Get.arguments['item_id']}');
       isLoading.value = true;
-      itemDetail.value =
-          await _itemDetailRepository.fetchItemDetail(Get.arguments['item_id']);
+      itemDetail.value = await _itemDetailRepository
+          .fetchSellerItemDetail(Get.arguments['item_id']);
       videoPlayerController =
           VideoPlayerController.network(itemDetail.value.shorts)
             ..initialize().then((_) {

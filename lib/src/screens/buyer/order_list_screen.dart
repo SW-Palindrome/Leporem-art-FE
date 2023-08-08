@@ -131,7 +131,9 @@ class BuyerOrderListScreen extends GetView<BuyerOrderListController> {
                               fontSize: 10,
                             ),
                           ),
-                          _topButton(controller.orders[index]),
+                          Obx(() {
+                            return _topButton(controller.orders[index]);
+                          }),
                         ],
                       ),
                       SizedBox(height: 8),

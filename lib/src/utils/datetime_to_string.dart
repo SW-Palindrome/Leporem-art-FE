@@ -32,3 +32,7 @@ String timeDiffToString(String timeDiff) {
     }
   }
 }
+
+String datetimeToString(String time) {
+  return time.substring(0, 16).replaceAll('-', '/').replaceAll('T', ' ');
+}

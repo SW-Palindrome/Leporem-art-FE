@@ -16,7 +16,7 @@ class Order {
     required this.price,
     required this.orderedDatetime,
     required this.orderStatus,
-    this.isReviewed = false,
+    required this.isReviewed,
   });
 }
 
@@ -29,7 +29,7 @@ class BuyerOrder extends Order {
     required price,
     required orderedDatetime,
     required orderStatus,
-    isReviewed = false,
+    required isReviewed,
   }) : super(
           id: id,
           itemId: itemId,
@@ -50,6 +50,7 @@ class BuyerOrder extends Order {
       price: json['price'],
       orderedDatetime: json['ordered_datetime'],
       orderStatus: json['order_status'],
+      isReviewed: json['is_reviewed'],
     );
   }
 }
@@ -91,7 +92,6 @@ class SellerOrder extends Order {
   }
 }
 
-
 class OrderInfo extends Order {
   final String sellerNickname;
 
@@ -106,15 +106,15 @@ class OrderInfo extends Order {
     required this.sellerNickname,
     isReviewed = false,
   }) : super(
-    id: id,
-    itemId: itemId,
-    title: title,
-    thumbnailImage: thumbnailImage,
-    price: price,
-    orderedDatetime: orderedDatetime,
-    orderStatus: orderStatus,
-    isReviewed: isReviewed,
-  );
+          id: id,
+          itemId: itemId,
+          title: title,
+          thumbnailImage: thumbnailImage,
+          price: price,
+          orderedDatetime: orderedDatetime,
+          orderStatus: orderStatus,
+          isReviewed: isReviewed,
+        );
 
   factory OrderInfo.fromJson(Map<String, dynamic> json) {
     return OrderInfo(

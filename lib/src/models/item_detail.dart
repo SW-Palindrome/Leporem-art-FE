@@ -1,4 +1,4 @@
-class ItemDetail {
+class BuyerItemDetail {
   final int id;
   final String profileImage;
   final String nickname;
@@ -16,7 +16,7 @@ class ItemDetail {
   final String? depth;
   final String? height;
 
-  ItemDetail({
+  BuyerItemDetail({
     required this.id,
     required this.profileImage,
     required this.nickname,
@@ -35,8 +35,8 @@ class ItemDetail {
     required this.height,
   });
 
-  factory ItemDetail.fromJson(Map<String, dynamic> json) {
-    return ItemDetail(
+  factory BuyerItemDetail.fromJson(Map<String, dynamic> json) {
+    return BuyerItemDetail(
       id: json['item_id'],
       profileImage: json['profile_image'],
       nickname: json['nickname'],
@@ -56,8 +56,8 @@ class ItemDetail {
     );
   }
 
-  ItemDetail like() {
-    return ItemDetail(
+  BuyerItemDetail like() {
+    return BuyerItemDetail(
       id: id,
       profileImage: profileImage,
       nickname: nickname,
@@ -77,8 +77,8 @@ class ItemDetail {
     );
   }
 
-  ItemDetail unlike() {
-    return ItemDetail(
+  BuyerItemDetail unlike() {
+    return BuyerItemDetail(
       id: id,
       profileImage: profileImage,
       nickname: nickname,
@@ -97,9 +97,72 @@ class ItemDetail {
       height: height,
     );
   }
+}
 
-  ItemDetail decreaseAmount() {
-    return ItemDetail(
+class SellerItemDetail {
+  final int id;
+  final String profileImage;
+  final String nickname;
+  final double? temperature;
+  final String title;
+  final String description;
+  final int price;
+  final List<String> category;
+  int currentAmount;
+  final String thumbnailImage;
+  final List<String> images;
+  final String shorts;
+  final String? width;
+  final String? depth;
+  final String? height;
+  final List<Review> reviews;
+
+  SellerItemDetail({
+    required this.id,
+    required this.profileImage,
+    required this.nickname,
+    required this.temperature,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.category,
+    required this.currentAmount,
+    required this.thumbnailImage,
+    required this.images,
+    required this.shorts,
+    required this.width,
+    required this.depth,
+    required this.height,
+    required this.reviews,
+  });
+
+  factory SellerItemDetail.fromJson(Map<String, dynamic> json) {
+    List<dynamic> reviewsList = json['reviews'];
+    List<Review> reviews =
+        reviewsList.map((review) => Review.fromJson(review)).toList();
+    print('제이슨: ${json}');
+    return SellerItemDetail(
+      id: json['item_id'],
+      profileImage: json['profile_image'],
+      nickname: json['nickname'],
+      temperature: json['temperature'],
+      title: json['title'],
+      description: json['description'],
+      price: json['price'],
+      currentAmount: json['current_amount'],
+      thumbnailImage: json['thumbnail_image'],
+      images: List<String>.from(json['images']),
+      category: List<String>.from(json['category']),
+      shorts: json['shorts'],
+      width: json['width'],
+      depth: json['depth'],
+      height: json['height'],
+      reviews: reviews,
+    );
+  }
+
+  SellerItemDetail decreaseAmount() {
+    return SellerItemDetail(
       id: id,
       profileImage: profileImage,
       nickname: nickname,
@@ -112,15 +175,15 @@ class ItemDetail {
       images: images,
       category: category,
       shorts: shorts,
-      isLiked: isLiked,
       width: width,
       depth: depth,
       height: height,
+      reviews: reviews,
     );
   }
 
-  ItemDetail increaseAmount() {
-    return ItemDetail(
+  SellerItemDetail increaseAmount() {
+    return SellerItemDetail(
       id: id,
       profileImage: profileImage,
       nickname: nickname,
@@ -133,10 +196,33 @@ class ItemDetail {
       images: images,
       category: category,
       shorts: shorts,
-      isLiked: isLiked,
       width: width,
       depth: depth,
       height: height,
+      reviews: reviews,
+    );
+  }
+}
+
+class Review {
+  final String comment;
+  final String rating;
+  final String writer;
+  final String writeDateTime;
+
+  Review({
+    required this.comment,
+    required this.rating,
+    required this.writer,
+    required this.writeDateTime,
+  });
+
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(
+      comment: json['comment'],
+      rating: json['rating'],
+      writer: json['writer'],
+      writeDateTime: json['write_dt'],
     );
   }
 }

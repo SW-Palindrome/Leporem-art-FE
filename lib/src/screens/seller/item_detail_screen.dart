@@ -7,6 +7,7 @@ import 'package:leporemart/src/controllers/item_edit_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/screens/seller/item_edit_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/datetime_to_string.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/next_button.dart';
@@ -45,6 +46,8 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                       _itemTitle(),
                       _itemThumbnail(),
                       _itemDescription(),
+                      if (controller.itemDetail.value.reviews.isNotEmpty)
+                        _itemReviewList(),
                     ],
                   ),
                 ),
@@ -475,6 +478,98 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
             ),
         ],
       ),
+    );
+  }
+
+  _itemReviewList() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: controller.itemDetail.value.reviews.length,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.fromLTRB(16, 0, 16, 12),
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: ColorPalette.grey_2,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    controller.itemDetail.value.reviews[index].writer,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Text(
+                    datetimeToString(controller
+                        .itemDetail.value.reviews[index].writeDateTime),
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4),
+              Row(
+                children: [
+                  for (int i = 0;
+                      i <
+                          int.parse(controller
+                              .itemDetail.value.reviews[index].rating[0]);
+                      i++)
+                    SvgPicture.asset(
+                      'assets/icons/star_fill.svg',
+                      width: 16,
+                      height: 16,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.yellow, BlendMode.srcIn),
+                    ),
+                  for (int i = int.parse(
+                          controller.itemDetail.value.reviews[index].rating[0]);
+                      i < 5;
+                      i++)
+                    SvgPicture.asset(
+                      'assets/icons/star_fill.svg',
+                      width: 16,
+                      height: 16,
+                      colorFilter: ColorFilter.mode(
+                          ColorPalette.grey_3, BlendMode.srcIn),
+                    ),
+                  SizedBox(width: 4),
+                  Text(
+                    controller.itemDetail.value.reviews[index].rating,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontFamily: FontPalette.pretenderd,
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 8),
+              Text(
+                controller.itemDetail.value.reviews[index].comment,
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontFamily: FontPalette.pretenderd,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
