@@ -51,11 +51,14 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                   () => NextButton(
                     text: "작품 등록하기",
                     value: controller.isValidCreate(),
-                    onTap: () async {
-                      logAnalytics(name: "create_item");
-                      await controller.createItem();
-                      Get.offAll(SellerApp());
-                    },
+                    onTap: controller.isCreateClicked.value
+                        ? () {}
+                        : () async {
+                            controller.isCreateClicked.value = true;
+                            print('생성');
+                            logAnalytics(name: "create_item");
+                            await controller.createItem();
+                          },
                   ),
                 ),
               ],

@@ -8,6 +8,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:video_compress/video_compress.dart';
@@ -29,6 +30,7 @@ class ItemCreateDetailController extends GetxController {
   Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(0);
+  Rx<bool> isCreateClicked = false.obs;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -256,8 +258,6 @@ class ItemCreateDetailController extends GetxController {
       ),
     );
 
-    print(uploadResponse.statusCode);
-
     if (uploadResponse.statusCode != 204) {
       Get.snackbar(
         '작품 등록 실패',
@@ -312,8 +312,6 @@ class ItemCreateDetailController extends GetxController {
     }
     formData.fields.addAll(categoryList);
 
-    print(formData.files);
-    print(formData.fields);
     try {
       final response = await DioSingleton.dio.post(
         '/sellers/items',
@@ -333,6 +331,7 @@ class ItemCreateDetailController extends GetxController {
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        await Get.find<SellerHomeController>().fetch();
         Get.offAll(SellerApp());
       } else {
         Get.snackbar(
