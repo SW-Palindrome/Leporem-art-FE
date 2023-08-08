@@ -12,11 +12,11 @@ String timeDiffToString(String timeDiff) {
       }
       return '$days일 전';
     } else if (hours != '00') {
-      return '$hours시간 전';
+      return '${int.parse(hours).toString()}시간 전';
     } else if (minutes != '00') {
-      return '$minutes분 전';
+      return '${int.parse(minutes).toString()}분 전';
     } else {
-      return '$seconds초 전';
+      return '${int.parse(seconds).toString()}초 전';
     }
   } else {
     List<String> timeDiffHMS = timeDiff.split(':');
@@ -24,11 +24,11 @@ String timeDiffToString(String timeDiff) {
     String minutes = timeDiffHMS[1];
     String seconds = timeDiffHMS[2].split('.')[0];
     if (hours != '00') {
-      return '$hours시간 전';
+      return '${int.parse(hours).toString()}시간 전';
     } else if (minutes != '00') {
-      return '$minutes분 전';
+      return '${int.parse(minutes).toString()}분 전';
     } else {
-      return '$seconds초 전';
+      return '${int.parse(seconds).toString()}초 전';
     }
   }
 }

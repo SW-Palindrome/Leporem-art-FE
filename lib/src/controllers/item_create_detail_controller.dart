@@ -113,7 +113,6 @@ class ItemCreateDetailController extends GetxController {
     // ImagePicker로 비디오를 선택 받음
     var pickedFile = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
-      maxDuration: const Duration(seconds: 15),
     );
     if (pickedFile == null) {
       return;
@@ -122,10 +121,10 @@ class ItemCreateDetailController extends GetxController {
     VideoPlayerController testLengthController =
         VideoPlayerController.file(File(pickedFile.path));
     await testLengthController.initialize();
-    if (testLengthController.value.duration.inSeconds > 15) {
+    if (testLengthController.value.duration.inSeconds > 30) {
       Get.snackbar(
         '동영상 길이 제한',
-        '15초 이하의 동영상을 선택해주세요.',
+        '30초 이하의 동영상을 선택해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
       return;
@@ -155,10 +154,10 @@ class ItemCreateDetailController extends GetxController {
       videos.clear();
       videos.add(originalFile);
       isVideoLoading.value = false;
-      // print('original video length: ${originalFile.lengthSync()}');
-      // print('original video path: ${originalFile.path}');
-      // print('compressed video length: ${compressedFile.lengthSync()}');
-      // print('compressed video path: ${compressedFile.path}');
+      print('original video length: ${originalFile.lengthSync()}');
+      print('original video path: ${originalFile.path}');
+      print('compressed video length: ${compressedFile.lengthSync()}');
+      print('compressed video path: ${compressedFile.path}');
       // // 압축한 비디오를 폰에 저장시키기
       // final result = await ImageGallerySaver.saveFile(
       //   info.path!,

@@ -85,7 +85,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
                 ),
               ),
               Text(
-                '(영상 15초 제한)',
+                '(영상 30초 제한)',
                 style: TextStyle(
                   color: ColorPalette.grey_4,
                   fontWeight: FontWeight.w600,

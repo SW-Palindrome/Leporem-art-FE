@@ -51,7 +51,7 @@ class SellerHomeItem {
   final String thumbnailImage;
   final int likes;
   final int currentAmount;
-  final String star;
+  final String? star;
   final String timeDiff;
   final bool isAuction;
 

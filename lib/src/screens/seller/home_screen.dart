@@ -583,28 +583,29 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                           fontSize: 14,
                         ),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/star_fill.svg',
-                            height: 12,
-                            width: 12,
-                            colorFilter: ColorFilter.mode(
-                                ColorPalette.yellow, BlendMode.srcIn),
-                          ),
-                          SizedBox(width: 2),
-                          Text(
-                            controller.items[index].star.toString(),
-                            style: TextStyle(
-                              color: ColorPalette.yellow,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "PretendardVariable",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 11.0,
+                      if (controller.items[index].star != null)
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/star_fill.svg',
+                              height: 12,
+                              width: 12,
+                              colorFilter: ColorFilter.mode(
+                                  ColorPalette.yellow, BlendMode.srcIn),
                             ),
-                          )
-                        ],
-                      ),
+                            SizedBox(width: 2),
+                            Text(
+                              controller.items[index].star.toString(),
+                              style: TextStyle(
+                                color: ColorPalette.yellow,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "PretendardVariable",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 11.0,
+                              ),
+                            )
+                          ],
+                        ),
                     ],
                   ),
                   SizedBox(height: 8),
