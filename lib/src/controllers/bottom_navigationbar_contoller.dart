@@ -5,7 +5,7 @@ import 'package:leporemart/src/configs/firebase_config.dart';
 import 'package:leporemart/src/utils/induce_membership.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
 
-class MyBottomNavigationbarController extends GetxController {
+class MyBottomNavigationbarController extends GetxService {
   static MyBottomNavigationbarController get to => Get.find();
 
   // 현재 선택된 탭 아이템 번호 저장

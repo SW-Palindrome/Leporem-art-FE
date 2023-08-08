@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/buyer_app.dart';
@@ -11,7 +12,9 @@ import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
+import '../controllers/message_controller.dart';
 import '../controllers/user_global_info_controller.dart';
+import '../utils/chatting_socket_singleton.dart';
 
 enum LoginPlatform {
   facebook,
@@ -62,7 +65,7 @@ void getKakaoUserInfo() async {
 Future<bool> isSignup() async {
   try {
     Dio dio = Dio();
-    dio.options.baseUrl = "https://dev.leporem.art";
+    dio.options.baseUrl = dotenv.get("BASE_URL");
     dio.options.validateStatus = (status) {
       return status! < 500;
     };
@@ -89,7 +92,6 @@ Future<bool> isSignup() async {
       userGlobalInfoController.userId = response.data['user_id'];
       userGlobalInfoController.userType = UserType.member;
       userGlobalInfoController.nickname = response.data['nickname'];
-      Get.lazyPut(() => MyBottomNavigationbarController());
       Get.lazyPut(() => AgreementController());
       Get.lazyPut(() => AccountTypeController());
       Get.lazyPut(() => EmailController());

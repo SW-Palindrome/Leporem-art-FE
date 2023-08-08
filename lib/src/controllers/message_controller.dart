@@ -12,7 +12,7 @@ import '../repositories/message_repository.dart';
 import '../repositories/profile_repository.dart';
 import '../utils/chatting_socket_singleton.dart';
 
-class MessageController extends GetxController {
+class MessageController extends GetxService {
   final MessageRepository _messageRepository = MessageRepository();
   final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
   final OrderInfoRepository _orderInfoRepository = OrderInfoRepository();

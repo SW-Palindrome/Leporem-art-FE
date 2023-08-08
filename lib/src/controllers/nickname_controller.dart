@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
+import 'agreement_controller.dart';
+
 class NicknameController extends GetxController {
   static NicknameController get to => Get.find();
 
@@ -20,8 +22,8 @@ class NicknameController extends GetxController {
   Future<bool> isDuplicate(String value) async {
     try {
       final response =
-          await DioSingleton.dio.post("/users/validate/nickname/$value");
-      if (response.statusCode != 200) {
+          await DioSingleton.dio.get("/users/validate/nickname/$value");
+      if (response.statusCode == 200) {
         return false;
       }
       return true;
@@ -46,7 +48,8 @@ class NicknameController extends GetxController {
         "id_token": idToken,
         "nickname": nicknameController.text,
         "is_agree_privacy": true,
-        "is_agree_ads": true,
+        "is_agree_terms": true,
+        "is_agree_ads": Get.find<AgreementController>().agreedList[2],
       });
       if (response.statusCode == 201) {
         print("회원가입 성공 ${response.data}");

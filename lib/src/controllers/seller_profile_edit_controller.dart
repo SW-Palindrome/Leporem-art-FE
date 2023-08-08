@@ -75,8 +75,8 @@ class SellerProfileEditController extends GetxController {
   Future<void> isDuplicate(String value) async {
     try {
       final response =
-          await DioSingleton.dio.post("/users/validate/nickname/$value");
-      if (response.statusCode != 200) {
+          await DioSingleton.dio.get("/users/validate/nickname/$value");
+      if (response.statusCode == 200) {
         isNicknameDuplicate.value = false;
       }
       isNicknameDuplicate.value = true;
