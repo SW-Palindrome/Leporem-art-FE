@@ -52,7 +52,7 @@ void main() async {
   bool isLoginProceed = await isSignup();
   if (kDebugMode) {
     AmplitudeConfig.init();
-    await dotenv.load(fileName: 'assets/config/.env');
+    await dotenv.load(fileName: 'assets/config/.env.dev');
 
     // SentryFlutter.init(
     //   (options) {
@@ -64,6 +64,7 @@ void main() async {
 
     runApp(MyApp(isLoginProceed: isLoginProceed));
   } else {
+    await dotenv.load(fileName: 'assets/config/.env');
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(MyApp(isLoginProceed: isLoginProceed));

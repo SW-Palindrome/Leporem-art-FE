@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -19,7 +20,7 @@ class ChattingSocketSingleton {
   }
 
   ChattingSocketSingleton._internal() {
-    _socket = IO.io('http://13.125.126.42', OptionBuilder()
+    _socket = IO.io(dotenv.get('CHATTING_SERVER_URL'), OptionBuilder()
         .setTransports(['websocket'])
         .build());
     _socket.onConnect((_) {
