@@ -28,7 +28,11 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
-
+  if (kDebugMode) {
+    await dotenv.load(fileName: 'assets/config/.env.dev');
+  } else if (kReleaseMode) {
+    await dotenv.load(fileName: 'assets/config/.env');
+  }
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -55,8 +59,6 @@ void main() async {
   if (kDebugMode) {
     await FirebaseConfig.init();
     await AmplitudeConfig.init();
-    await dotenv.load(fileName: 'assets/config/.env');
-
     // SentryFlutter.init(
     //   (options) {
     //     options.dsn = dotenv.get('GLITCHTIP_DSN');
@@ -67,7 +69,6 @@ void main() async {
 
     runApp(MyApp(isLoginProceed: isLoginProceed));
   } else {
-    await dotenv.load(fileName: 'assets/config/.env');
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     runApp(MyApp(isLoginProceed: isLoginProceed));
   }
