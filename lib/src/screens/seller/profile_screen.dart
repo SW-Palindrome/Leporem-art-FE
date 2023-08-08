@@ -21,7 +21,8 @@ class SellerProfileScreen extends GetView<SellerProfileController> {
     return Obx(
       () {
         if (controller.isLoading.value) {
-          return CircularProgressIndicator();
+          return Center(
+              child: CircularProgressIndicator(color: ColorPalette.purple));
         } else {
           return SingleChildScrollView(
             child: Column(

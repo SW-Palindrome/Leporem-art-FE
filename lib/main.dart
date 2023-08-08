@@ -54,7 +54,7 @@ void main() async {
   bool isLoginProceed = await isSignup();
   if (kDebugMode) {
     AmplitudeConfig.init();
-    await dotenv.load(fileName: 'assets/config/.env.dev');
+    await dotenv.load(fileName: 'assets/config/.env');
 
     // SentryFlutter.init(
     //   (options) {
@@ -79,7 +79,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: '공예쁨',

@@ -137,6 +137,7 @@ class NicknameScreen extends GetView<NicknameController> {
                               Get.offAll(AccountType());
                             },
                           ),
+                          enableDrag: false,
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
