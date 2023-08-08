@@ -338,7 +338,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                       height: 20,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: ColorPalette.grey_2,
+                        color: ColorPalette.grey_1,
                       ),
                       child: SvgPicture.asset(
                         'assets/icons/minus.svg',

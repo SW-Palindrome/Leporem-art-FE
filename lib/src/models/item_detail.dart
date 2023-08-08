@@ -140,7 +140,6 @@ class SellerItemDetail {
     List<dynamic> reviewsList = json['reviews'];
     List<Review> reviews =
         reviewsList.map((review) => Review.fromJson(review)).toList();
-    print('제이슨: ${json}');
     return SellerItemDetail(
       id: json['item_id'],
       profileImage: json['profile_image'],
