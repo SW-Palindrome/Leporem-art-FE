@@ -196,6 +196,7 @@ class EmailScreen extends GetView<EmailController> {
                                   top: Radius.circular(30.0),
                                 ),
                               ),
+                              isDismissible: false,
                             );
                           }
                         },
