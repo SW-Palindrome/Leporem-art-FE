@@ -10,6 +10,7 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
+import 'package:leporemart/src/screens/account/home.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 
 import '../controllers/message_controller.dart';
@@ -110,7 +111,7 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoTalk();
       print('카카오톡으로 로그인 성공');
-      await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
+      await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
 
@@ -123,7 +124,7 @@ Future<void> kakaoLogin() async {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         print('카카오계정으로 로그인 성공');
-        await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
+        await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
       }
@@ -132,7 +133,7 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공');
-      await isSignup() ? Get.offAll(BuyerApp()) : Get.to(AgreementScreen());
+      await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
     } catch (error) {
       print('카카오계정으로 로그인 실패 $error');
     }
