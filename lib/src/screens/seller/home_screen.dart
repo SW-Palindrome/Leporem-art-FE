@@ -275,7 +275,6 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
               _sortModal(),
               SizedBox(height: 48),
               _searchModalBottom(),
-              SizedBox(height: 20),
             ],
           ),
         ),

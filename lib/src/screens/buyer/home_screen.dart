@@ -560,7 +560,6 @@ class BuyerHomeScreen extends GetView<BuyerHomeController> {
             if (controller.selectedSearchType.value == 2) _priceModal(),
             SizedBox(height: 48),
             _searchModalBottom(),
-            SizedBox(height: 20),
           ],
         ),
       ),
