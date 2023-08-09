@@ -43,16 +43,16 @@ class LoginScreen extends StatelessWidget {
                     'assets/images/app_title.png',
                     width: Get.width * 0.38,
                   ),
-                  SizedBox(height: Get.height * 0.15),
+                  SizedBox(height: Get.height * 0.3),
                   _loginButton(
                       "kakao", "카카오로 시작하기", 0xffFEE500, 0xff181503, false),
                   SizedBox(height: Get.height * 0.02),
-                  _loginButton(
-                      "naver", "네이버로 시작하기", 0xff06BE34, 0xffffffff, false),
-                  SizedBox(height: Get.height * 0.02),
-                  _loginButton(
-                      "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
-                  SizedBox(height: Get.height * 0.02),
+                  // _loginButton(
+                  //     "naver", "네이버로 시작하기", 0xff06BE34, 0xffffffff, false),
+                  // SizedBox(height: Get.height * 0.02),
+                  // _loginButton(
+                  //     "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
+                  // SizedBox(height: Get.height * 0.02),
                   _loginButton(
                       null, "회원가입 없이 시작하기", 0xffffffff, 0xff191f28, true),
                 ],
