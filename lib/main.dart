@@ -31,7 +31,7 @@ void main() async {
   if (kReleaseMode) {
     await dotenv.load(fileName: 'assets/config/.env');
   } else if (kDebugMode) {
-    await dotenv.load(fileName: 'assets/config/.env');
+    await dotenv.load(fileName: 'assets/config/.env.dev');
   }
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
