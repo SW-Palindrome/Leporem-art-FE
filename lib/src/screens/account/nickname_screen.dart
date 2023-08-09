@@ -111,8 +111,6 @@ class NicknameScreen extends GetView<NicknameController> {
                     bool isDuplicate = await controller
                         .isDuplicate(controller.nicknameController.text);
                     bool isSignupSuccessed = await controller.signup();
-                    print(
-                        "isDuplicate: $isDuplicate isSignupSuccess: $isSignupSuccessed");
                     if (!isDuplicate) {
                       if (isSignupSuccessed) {
                         Get.bottomSheet(

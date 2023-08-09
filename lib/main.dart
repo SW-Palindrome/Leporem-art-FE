@@ -29,7 +29,7 @@ void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
   if (kReleaseMode) {
-    await dotenv.load(fileName: 'assets/config/.env.dev');
+    await dotenv.load(fileName: 'assets/config/.env');
   } else if (kDebugMode) {
     await dotenv.load(fileName: 'assets/config/.env');
   }

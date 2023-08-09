@@ -28,7 +28,7 @@ class NicknameController extends GetxController {
       }
       return true;
     } catch (e) {
-      return false;
+      return true;
     }
   }
 
