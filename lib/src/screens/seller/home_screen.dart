@@ -78,7 +78,9 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           GestureDetector(
             onTap: () {
               logAnalytics(name: "enter_item_create");
-              Get.to(ItemCreateScreen());
+              // Get.to(ItemCreateScreen());
+              Get.to(ItemCreateDetailScreen());
+              Get.put(ItemCreateDetailController());
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 17),
