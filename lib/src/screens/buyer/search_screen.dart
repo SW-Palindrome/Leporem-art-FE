@@ -24,8 +24,8 @@ class BuyerSearchScreen extends GetView<BuyerSearchController> {
         color: ColorPalette.grey_1,
         child: Column(
           children: [
-            _otherSearchView(),
-            SizedBox(height: 20),
+            // _otherSearchView(),
+            // SizedBox(height: 20),
             _recentSearchView(),
           ],
         ),
