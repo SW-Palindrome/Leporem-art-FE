@@ -28,7 +28,7 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
-  if (kDebugMode) {
+  if (kReleaseMode) {
     await dotenv.load(fileName: 'assets/config/.env.dev');
   } else if (kReleaseMode) {
     await dotenv.load(fileName: 'assets/config/.env');
@@ -55,8 +55,7 @@ void main() async {
     }
   });
   bool isLoginProceed = await isSignup();
-  print("디버깅 모드: $kDebugMode");
-  if (kDebugMode) {
+  if (kReleaseMode) {
     await FirebaseConfig.init();
     await AmplitudeConfig.init();
     // SentryFlutter.init(
@@ -86,7 +85,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        if (kDebugMode)
+        if (kReleaseMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );

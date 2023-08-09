@@ -18,7 +18,7 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: value ? onTap : null,
       child: Container(
         width: width,
