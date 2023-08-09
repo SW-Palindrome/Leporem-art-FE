@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/account_type_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
@@ -128,6 +129,7 @@ class NicknameScreen extends GetView<NicknameController> {
                                 'action': 'next_button'
                               });
                               Get.offAll(AccountType());
+                              Get.put(AccountTypeController());
                             },
                             onLeftButtonPressed: () {
                               logAnalytics(name: 'signup', parameters: {
@@ -135,6 +137,7 @@ class NicknameScreen extends GetView<NicknameController> {
                                 'action': 'next_button'
                               });
                               Get.offAll(AccountType());
+                              Get.put(AccountTypeController());
                             },
                           ),
                           enableDrag: false,

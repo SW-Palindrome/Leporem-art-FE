@@ -30,20 +30,17 @@ void main() async {
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
   if (kReleaseMode) {
     await dotenv.load(fileName: 'assets/config/.env.dev');
-  } else if (kReleaseMode) {
+  } else if (kDebugMode) {
     await dotenv.load(fileName: 'assets/config/.env');
   }
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   Get.put(UserGlobalInfoController());
   Get.lazyPut(() => MyBottomNavigationbarController());
-  Get.lazyPut(() => AgreementController());
-  Get.lazyPut(() => AccountTypeController());
-  Get.lazyPut(() => EmailController());
-  Get.lazyPut(() => NicknameController());
   await initializeDateFormatting();
 
   KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
@@ -55,22 +52,16 @@ void main() async {
     }
   });
   bool isLoginProceed = await isSignup();
-  if (kReleaseMode) {
-    await FirebaseConfig.init();
-    await AmplitudeConfig.init();
-    // SentryFlutter.init(
-    //   (options) {
-    //     options.dsn = dotenv.get('GLITCHTIP_DSN');
-    //     options.attachStacktrace = true;
-    //   },
-    //   appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-    // );
-
-    runApp(MyApp(isLoginProceed: isLoginProceed));
-  } else {
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    runApp(MyApp(isLoginProceed: isLoginProceed));
-  }
+  await FirebaseConfig.init();
+  await AmplitudeConfig.init();
+  // SentryFlutter.init(
+  //   (options) {
+  //     options.dsn = dotenv.get('GLITCHTIP_DSN');
+  //     options.attachStacktrace = true;
+  //   },
+  //   appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+  // );
+  runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
 class MyApp extends StatelessWidget {
@@ -85,8 +76,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        if (kReleaseMode)
-          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );
   }

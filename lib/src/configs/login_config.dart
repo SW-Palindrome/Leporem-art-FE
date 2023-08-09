@@ -94,10 +94,6 @@ Future<bool> isSignup() async {
       userGlobalInfoController.userType = UserType.member;
       userGlobalInfoController.nickname = response.data['nickname'];
       userGlobalInfoController.isSeller = response.data['is_seller'];
-      Get.lazyPut(() => AgreementController());
-      Get.lazyPut(() => AccountTypeController());
-      Get.lazyPut(() => EmailController());
-      Get.lazyPut(() => NicknameController());
       return true;
     }
     return false;
@@ -111,7 +107,12 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoTalk();
       print('카카오톡으로 로그인 성공');
-      await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
+      if (await isSignup()) {
+        Get.offAll(HomeScreen(isLoginProceed: true));
+      } else {
+        Get.to(AgreementScreen());
+        Get.put(AgreementController());
+      }
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
 
@@ -124,7 +125,12 @@ Future<void> kakaoLogin() async {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         print('카카오계정으로 로그인 성공');
-        await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
+        if (await isSignup()) {
+          Get.offAll(HomeScreen(isLoginProceed: true));
+        } else {
+          Get.to(AgreementScreen());
+          Get.put(AgreementController());
+        }
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
       }
@@ -133,7 +139,12 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공');
-      await isSignup() ? Get.offAll(HomeScreen(isLoginProceed: true)) : Get.to(AgreementScreen());
+      if (await isSignup()) {
+        Get.offAll(HomeScreen(isLoginProceed: true));
+      } else {
+        Get.to(AgreementScreen());
+        Get.put(AgreementController());
+      }
     } catch (error) {
       print('카카오계정으로 로그인 실패 $error');
     }

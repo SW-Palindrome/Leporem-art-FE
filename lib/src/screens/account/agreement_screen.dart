@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/nickname_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
@@ -93,6 +94,7 @@ class AgreementScreen extends GetView<AgreementController> {
                       'action': 'next_button',
                     });
                     Get.to(NicknameScreen());
+                    Get.put(NicknameController());
                   },
                 ),
               ),
