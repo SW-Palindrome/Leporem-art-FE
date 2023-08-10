@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/seller_app.dart';
 
 import '../../buyer_app.dart';
 import '../../configs/login_config.dart';
@@ -23,10 +24,9 @@ class HomeScreen extends StatelessWidget {
       isSignup();
       Get.put(MessageController());
       ChattingSocketSingleton();
-      Get.to(BuyerApp());
-    }
-    else {
-      Get.to(LoginScreen());
+      Get.offAll(BuyerApp());
+    } else {
+      Get.offAll(LoginScreen());
     }
   }
 }
