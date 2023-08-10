@@ -326,13 +326,13 @@ class ItemCreateDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        await Get.find<SellerHomeController>().pageReset();
+        Get.back();
         Get.snackbar(
           '작품 등록',
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
-        await Get.find<SellerHomeController>().fetch();
-        Get.offAll(SellerApp());
       } else {
         Get.snackbar(
           '작품 등록 실패',
