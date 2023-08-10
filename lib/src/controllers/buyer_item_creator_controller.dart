@@ -124,7 +124,7 @@ class BuyerItemCreatorController extends GetxController {
 
   Future<ChatRoom> getOrCreateChatRoom() async {
     MessageController messageController = Get.find<MessageController>();
-    ChatRoom? chatRoom = messageController.getChatRoomByOpponentNickname(creatorProfile.value.nickname);
+    ChatRoom? chatRoom = messageController.getChatRoomByOpponentNicknameFromBuyer(creatorProfile.value.nickname);
     if (chatRoom != null) {
       return chatRoom;
     }

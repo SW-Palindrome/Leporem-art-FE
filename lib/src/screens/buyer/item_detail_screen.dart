@@ -160,12 +160,12 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 MessageController messageController =
                     Get.find<MessageController>();
                 ChatRoom? chatRoom =
-                    messageController.getChatRoomByOpponentNickname(
+                    messageController.getChatRoomByOpponentNicknameFromBuyer(
                         controller.itemDetail.value.nickname);
                 if (chatRoom != null) {
                   Get.to(() => MessageDetailScreen(), arguments: {
                     'chatRoomUuid': messageController
-                        .getChatRoomByOpponentNickname(
+                        .getChatRoomByOpponentNicknameFromBuyer(
                             controller.itemDetail.value.nickname)
                         .chatRoomUuid,
                     'fromItemId': controller.itemDetail.value.id,

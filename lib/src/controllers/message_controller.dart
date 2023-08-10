@@ -165,9 +165,9 @@ class MessageController extends GetxService {
     }
   }
 
-  getChatRoomByOpponentNickname(nickname) {
+  getChatRoomByOpponentNicknameFromBuyer(nickname) {
     for (final chatRoom in chatRoomList.value) {
-      if (chatRoom.opponentNickname == nickname) {
+      if (chatRoom.opponentNickname == nickname && chatRoom.isBuyerRoom) {
         return chatRoom;
       }
     }
