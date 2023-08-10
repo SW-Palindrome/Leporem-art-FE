@@ -337,6 +337,11 @@ class MessageDetailScreen extends GetView<MessageController> {
                         decoration: InputDecoration(
                           suffix: InkWell(
                             onTap: () async {
+                              String text = _textEditingController.text;
+                              if (text.isEmpty) {
+                                return;
+                              }
+                              _textEditingController.clear();
                               if (Get.arguments['fromItemId'] != null) {
                                 if (!controller.chatRoom.isRegistered) {
                                   await controller.createChatRoom(
@@ -358,15 +363,14 @@ class MessageDetailScreen extends GetView<MessageController> {
                                 await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
                                     controller.chatRoom.opponentNickname,
-                                    _textEditingController.text,
+                                    text,
                                     MessageType.text);
                                 _textEditingController.clear();
                               }
                               await controller.sendMessage(
                                   Get.arguments['chatRoomUuid'],
-                                  _textEditingController.text,
+                                  text,
                                   MessageType.text);
-                              _textEditingController.clear();
                             },
                             child: Text(
                               '보내기',

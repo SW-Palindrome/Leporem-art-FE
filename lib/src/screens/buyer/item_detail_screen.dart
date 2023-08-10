@@ -175,7 +175,8 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 ChatRoom newChatRoom = await messageController
                     .createTempChatRoom(controller.itemDetail.value.nickname);
                 Get.to(() => MessageDetailScreen(),
-                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid});
+                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid,
+                      'fromItemId': controller.itemDetail.value.id});
               });
             },
             width: Get.width * 0.35,

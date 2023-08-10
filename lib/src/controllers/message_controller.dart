@@ -143,7 +143,6 @@ class MessageController extends GetxService {
       message: message,
       type: messageType,
     ));
-    chatRoom.isRegistered = true;
     chatRoomList.remove(chatRoom);
     chatRoomList.insert(0, chatRoom);
     chatRoomList.refresh();
@@ -155,6 +154,7 @@ class MessageController extends GetxService {
       sellerProfile.userId,
       messageType,
     );
+    while (chatRoom.isRegistered) {}
   }
 
   getChatRoom(chatRoomUuid) {

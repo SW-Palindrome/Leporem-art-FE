@@ -44,6 +44,10 @@ class ChattingSocketSingleton {
       // TODO: 채팅 방 생성 시 채팅서버에서 데이터 처리
       messageController.fetch();
     });
+    _socket.on('chat_room_registered', (data) {
+      MessageController messageController = Get.find<MessageController>();
+      messageController.getChatRoom(data['chat_room_uuid']).isRegistered = true;
+    });
   }
 
   _authenticate() async {
