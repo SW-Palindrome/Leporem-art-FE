@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/order.dart';
@@ -21,10 +23,9 @@ class MessageController extends GetxService {
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  Future<MessageController> init() async {
     await fetch();
+    return this;
   }
 
   Future<void> fetch() async {
@@ -61,13 +62,29 @@ class MessageController extends GetxService {
     );
     await fetchItemInfo(messageInfo);
     chatRoom.tempMessageList.add(messageInfo);
-    ChattingSocketSingleton().sendMessage(
-      chatRoomUuid,
-      opponentUserId,
-      messageInfo.message,
-      messageInfo.messageUuid,
-      messageType,
-    );
+    if (chatRoom.isRegistered) {
+      ChattingSocketSingleton().sendMessage(
+        chatRoomUuid,
+        opponentUserId,
+        messageInfo.message,
+        messageInfo.messageUuid,
+        messageInfo.type,
+      );
+    }
+    chatRoomList.refresh();
+  }
+
+  sendTempMessage(String chatRoomUuid) {
+    ChatRoom currentChatRoom = getChatRoom(chatRoomUuid);
+    for (final messageInfo in currentChatRoom.tempMessageList) {
+      ChattingSocketSingleton().sendMessage(
+        chatRoomUuid,
+        currentChatRoom.opponentUserId,
+        messageInfo.message,
+        messageInfo.messageUuid,
+        messageInfo.type,
+      );
+    }
   }
 
   registerMessage(chatRoomUuid, messageUuid) {
@@ -135,17 +152,19 @@ class MessageController extends GetxService {
         Get.find<UserGlobalInfoController>();
     ChatRoom chatRoom = getChatRoom(chatRoomUuid);
     String messageUuid = Uuid().v4();
-    chatRoom.messageList.add(Message(
+    Message messageInfo = Message(
       messageUuid: messageUuid,
       userId: userGlobalInfoController.userId,
       writeDatetime: DateTime.now(),
       isRead: false,
       message: message,
       type: messageType,
-    ));
+    );
+    chatRoom.messageList.add(messageInfo);
     chatRoomList.remove(chatRoom);
     chatRoomList.insert(0, chatRoom);
     chatRoomList.refresh();
+    await fetchItemInfo(messageInfo);
     ChattingSocketSingleton().createChatRoom(
       chatRoomUuid,
       sellerProfile.sellerId,
@@ -154,7 +173,6 @@ class MessageController extends GetxService {
       sellerProfile.userId,
       messageType,
     );
-    while (chatRoom.isRegistered) {}
   }
 
   getChatRoom(chatRoomUuid) {
@@ -231,7 +249,7 @@ class MessageController extends GetxService {
 
   isDifferentUserIndex(int index) {
     if (index == 0 || index == reversedMessageList.length - 1) {
-      return true;
+      return false;
     }
     if (reversedMessageList[index].userId !=
         reversedMessageList[index + 1].userId) {

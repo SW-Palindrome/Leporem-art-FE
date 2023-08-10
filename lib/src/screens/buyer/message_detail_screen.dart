@@ -25,7 +25,6 @@ import 'order_list_screen.dart';
 
 class MessageDetailScreen extends GetView<MessageController> {
   MessageDetailScreen({super.key});
-  int _currentUserId = -1;
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -338,18 +337,20 @@ class MessageDetailScreen extends GetView<MessageController> {
                           suffix: InkWell(
                             onTap: () async {
                               String text = _textEditingController.text;
+                              bool isRegistered = controller.chatRoom.isRegistered;
                               if (text.isEmpty) {
                                 return;
                               }
                               _textEditingController.clear();
                               if (Get.arguments['fromItemId'] != null) {
-                                if (!controller.chatRoom.isRegistered) {
+                                if (!isRegistered) {
                                   await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
                                     controller.chatRoom.opponentNickname,
                                     Get.arguments['fromItemId'].toString(),
                                     MessageType.itemInquiry,
                                   );
+                                  isRegistered = true;
                                 } else {
                                   await controller.sendMessage(
                                     Get.arguments['chatRoomUuid'],
@@ -357,20 +358,22 @@ class MessageDetailScreen extends GetView<MessageController> {
                                     MessageType.itemInquiry,
                                   );
                                 }
-                                Get.arguments['fromItemId'] = null;
+                                Get.arguments.remove('fromItemId');
                               }
-                              if (!controller.chatRoom.isRegistered) {
+                              if (!isRegistered) {
                                 await controller.createChatRoom(
                                     Get.arguments['chatRoomUuid'],
                                     controller.chatRoom.opponentNickname,
                                     text,
                                     MessageType.text);
-                                _textEditingController.clear();
+                                isRegistered = true;
                               }
-                              await controller.sendMessage(
-                                  Get.arguments['chatRoomUuid'],
-                                  text,
-                                  MessageType.text);
+                              else {
+                                await controller.sendMessage(
+                                    Get.arguments['chatRoomUuid'],
+                                    text,
+                                    MessageType.text);
+                              }
                             },
                             child: Text(
                               '보내기',

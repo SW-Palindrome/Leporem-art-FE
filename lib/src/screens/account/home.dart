@@ -18,11 +18,11 @@ class HomeScreen extends StatelessWidget {
     return Container();
   }
 
-  _onAfterBuild() {
+  _onAfterBuild() async {
     if (isLoginProceed) {
       // FIXME: 이 부분은 추후 삭제되어야함
       isSignup();
-      Get.put(MessageController());
+      await Get.putAsync(() => MessageController().init());
       ChattingSocketSingleton();
       Get.offAll(BuyerApp());
     } else {

@@ -47,6 +47,8 @@ class ChattingSocketSingleton {
     _socket.on('chat_room_registered', (data) {
       MessageController messageController = Get.find<MessageController>();
       messageController.getChatRoom(data['chat_room_uuid']).isRegistered = true;
+      messageController.chatRoomList.refresh();
+      messageController.sendTempMessage(data['chat_room_uuid']);
     });
   }
 
