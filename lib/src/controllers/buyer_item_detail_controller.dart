@@ -87,7 +87,6 @@ class BuyerItemDetailController extends GetxController {
 
   Future<void> fetch() async {
     try {
-      print('컨트롤러에서: ${Get.arguments['item_id']}');
       isLoading.value = true;
       itemDetail.value = await _itemDetailRepository
           .fetchBuyerItemDetail(Get.arguments['item_id']);

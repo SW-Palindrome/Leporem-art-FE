@@ -16,8 +16,6 @@ import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
 import 'package:leporemart/src/widgets/my_app_bar.dart';
 import 'package:leporemart/src/widgets/my_bottom_navigationbar.dart';
 
-import 'controllers/user_global_info_controller.dart';
-
 class BuyerApp extends GetView<MyBottomNavigationbarController> {
   const BuyerApp({super.key});
 
@@ -29,7 +27,6 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     return Obx(() {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
-          Get.find<BuyerHomeController>().fetch();
           return _homeScaffold();
         // case 1:
         //   return _auctionScaffold();
