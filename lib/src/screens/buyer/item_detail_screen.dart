@@ -174,9 +174,10 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                 }
                 ChatRoom newChatRoom = await messageController
                     .createTempChatRoom(controller.itemDetail.value.nickname);
-                Get.to(() => MessageDetailScreen(),
-                    arguments: {'chatRoomUuid': newChatRoom.chatRoomUuid,
-                      'fromItemId': controller.itemDetail.value.id});
+                Get.to(() => MessageDetailScreen(), arguments: {
+                  'chatRoomUuid': newChatRoom.chatRoomUuid,
+                  'fromItemId': controller.itemDetail.value.id
+                });
               });
             },
             width: Get.width * 0.35,
@@ -468,8 +469,8 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
             ),
           ),
           SizedBox(height: 16),
-          if (controller.itemDetail.value.width != null &&
-              controller.itemDetail.value.height != null &&
+          if (controller.itemDetail.value.width != null ||
+              controller.itemDetail.value.height != null ||
               controller.itemDetail.value.depth != null)
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -496,47 +497,55 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      Text(
-                        '가로 ${controller.itemDetail.value.width}cm',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 11.0,
+                      if (controller.itemDetail.value.width != null)
+                        Text(
+                          '가로 ${controller.itemDetail.value.width}cm',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11.0,
+                          ),
                         ),
-                      ),
-                      SvgPicture.asset(
-                        'assets/icons/cancel.svg',
-                        width: 10,
-                        height: 10,
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.black, BlendMode.srcIn),
-                      ),
-                      Text(
-                        '세로 ${controller.itemDetail.value.depth}cm',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 11.0,
+                      if (controller.itemDetail.value.width != null &&
+                          (controller.itemDetail.value.depth != null ||
+                              controller.itemDetail.value.height != null))
+                        SvgPicture.asset(
+                          'assets/icons/cancel.svg',
+                          width: 10,
+                          height: 10,
+                          colorFilter: ColorFilter.mode(
+                              ColorPalette.black, BlendMode.srcIn),
                         ),
-                      ),
-                      SvgPicture.asset(
-                        'assets/icons/cancel.svg',
-                        width: 10,
-                        height: 10,
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.black, BlendMode.srcIn),
-                      ),
-                      Text(
-                        '높이 ${controller.itemDetail.value.height}cm',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontFamily: "PretendardVariable",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 11.0,
+                      if (controller.itemDetail.value.depth != null)
+                        Text(
+                          '세로 ${controller.itemDetail.value.depth}cm',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11.0,
+                          ),
                         ),
-                      ),
+                      if (controller.itemDetail.value.depth != null &&
+                          controller.itemDetail.value.height != null)
+                        SvgPicture.asset(
+                          'assets/icons/cancel.svg',
+                          width: 10,
+                          height: 10,
+                          colorFilter: ColorFilter.mode(
+                              ColorPalette.black, BlendMode.srcIn),
+                        ),
+                      if (controller.itemDetail.value.height != null)
+                        Text(
+                          '높이 ${controller.itemDetail.value.height}cm',
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontFamily: "PretendardVariable",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 11.0,
+                          ),
+                        ),
                     ],
                   ),
                 ],
