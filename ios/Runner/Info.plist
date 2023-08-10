@@ -18,6 +18,10 @@
 	<string>공예쁨</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
