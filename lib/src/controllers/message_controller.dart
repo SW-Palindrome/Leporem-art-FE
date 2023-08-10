@@ -103,6 +103,9 @@ class MessageController extends GetxService {
   receiveMessage(chatRoomUuid, messageUuid, message, messageType) {
     ChatRoom receiveChatRoom = chatRoomList
         .firstWhere((chatRoom) => chatRoom.chatRoomUuid == chatRoomUuid);
+    if (receiveChatRoom.opponentUserId == Get.find<UserGlobalInfoController>().userId) {
+      return;
+    }
     Message receiveMessage = Message(
       messageUuid: messageUuid,
       userId: receiveChatRoom.opponentUserId,

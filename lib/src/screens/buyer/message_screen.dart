@@ -20,12 +20,14 @@ class MessageScreen extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.chatRoomList.isEmpty && !controller.isLoading.value) {
+      if (chatRoomList.isEmpty && !controller.isLoading.value) {
         return _emptyItemListWidget();
       }
       return _chatRoomListWidget();
     });
   }
+
+  get chatRoomList => controller.chatRoomList;
 
   _emptyItemListWidget() {
     return Center(
@@ -53,7 +55,7 @@ class MessageScreen extends GetView<MessageController> {
   _chatRoomListWidget() {
     return Column(
       children: [
-        for (final chatRoom in controller.chatRoomList)
+        for (final chatRoom in chatRoomList)
           _chatRoomWidget(chatRoom)
       ],
     );
@@ -177,26 +179,12 @@ class BuyerMessageScreen extends MessageScreen {
   BuyerMessageScreen({super.key});
 
   @override
-  _chatRoomListWidget() {
-    return Column(
-      children: [
-        for (final chatRoom in controller.getBuyerChatRooms())
-          _chatRoomWidget(chatRoom)
-      ],
-    );
-  }
+  get chatRoomList => controller.getBuyerChatRooms();
 }
 
 class SellerMessageScreen extends MessageScreen {
   SellerMessageScreen({super.key});
 
   @override
-  _chatRoomListWidget() {
-    return Column(
-      children: [
-        for (final chatRoom in controller.getSellerChatRooms())
-          _chatRoomWidget(chatRoom)
-      ],
-    );
-  }
+  get chatRoomList => controller.getSellerChatRooms();
 }
