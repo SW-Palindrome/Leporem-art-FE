@@ -73,10 +73,20 @@ class MessageItemShareController extends GetxController {
   }
 
   void sendMessage() {
-    Get.find<MessageController>().sendMessage(
+    MessageController messageController = Get.find<MessageController>();
+    if (messageController.chatRoom.isRegistered) {
+      Get.find<MessageController>().sendMessage(
         Get.arguments['chatRoomUuid'],
         selectItemId.value.toString(),
         MessageType.itemShare,
-    );
+      );
+    } else {
+      Get.find<MessageController>().createChatRoom(
+        Get.arguments['chatRoomUuid'],
+        sellerNickname,
+        selectItemId.value.toString(),
+        MessageType.itemShare,
+      );
+    }
   }
 }
