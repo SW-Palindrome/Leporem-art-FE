@@ -11,6 +11,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -78,22 +79,24 @@ class ItemCreateDetailController extends GetxController {
     isImagesLoading.assignAll(List.generate(pickedFiles.length, (_) => true));
     // 압축한 이미지를 저장할 공간
     List<File> compressedImages = [];
-    // 이미지를 추가하기전 기존의 이미지리스트를 초기화
-    images.clear();
     int index = 0;
     // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
+    // 이미지 크기를 계산하기위해 변수생성
+    int totalImageSize = 0;
     for (final imageFile in pickedFiles) {
-      images.add(File(imageFile.path));
       isImagesLoading[index] = false;
       final compressedImage = await compressImage(imageFile);
       if (compressedImage != null) {
         final compressedFile = File('${imageFile.path}.compressed.jpg')
           ..writeAsBytesSync(compressedImage);
         compressedImages.add(compressedFile);
-        // print('original image length: ${File(imageFile.path).lengthSync()}');
-        // print('original image path: ${imageFile.path}');
-        // print('compressed image length: ${compressedFile.lengthSync()}');
-        // print('compressed image path: ${compressedFile.path}');
+        print('original image length: ${File(imageFile.path).lengthSync()}');
+        print('original image path: ${imageFile.path}');
+        print('compressed image length: ${compressedFile.lengthSync()}');
+        print('compressed image path: ${compressedFile.path}');
+
+        // 이미지 크기를 계산
+        totalImageSize += compressedFile.lengthSync();
 
         // // 압축한 이미지를 폰에 저장시키기
         // final result = await ImageGallerySaver.saveFile(
@@ -103,6 +106,17 @@ class ItemCreateDetailController extends GetxController {
         index++;
       }
     }
+    print('total image size: $totalImageSize');
+    if (totalImageSize > 5 * 1024 * 1024) {
+      logAnalytics(name: 'image_size_too_big');
+      Get.snackbar(
+        '경고',
+        '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+    images.assignAll(compressedImages);
   }
 
   void removeImage(int index) {
@@ -124,6 +138,7 @@ class ItemCreateDetailController extends GetxController {
         VideoPlayerController.file(File(pickedFile.path));
     await testLengthController.initialize();
     if (testLengthController.value.duration.inSeconds > 30) {
+      logAnalytics(name: 'video_size_too_big');
       Get.snackbar(
         '동영상 길이 제한',
         '30초 이하의 동영상을 선택해주세요.',
@@ -154,6 +169,15 @@ class ItemCreateDetailController extends GetxController {
       File compressedFile = File(compressedMediaInfo!.path!);
       // 원본 비디오와 압축한 비디오의 정보를 출력 이미지는 로딩이 되었으므로 isVideoLoaiding을 false로 변경
       videos.clear();
+
+      if (compressedFile.lengthSync() > 30 * 1024 * 1024) {
+        Get.snackbar(
+          '경고',
+          '동영상 크기가 너무 큽니다. 다시 선택해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
       videos.add(originalFile);
       isVideoLoading.value = false;
       print('original video length: ${originalFile.lengthSync()}');
