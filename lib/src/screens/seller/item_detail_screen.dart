@@ -84,12 +84,12 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
               ),
             ],
           ),
-          NextButton(
-            text: "끌어올리기",
-            value: true,
-            onTap: () {},
-            width: Get.width * 0.4,
-          ),
+          // NextButton(
+          //   text: "끌어올리기",
+          //   value: true,
+          //   onTap: () {},
+          //   width: Get.width * 0.4,
+          // ),
         ],
       ),
     );
