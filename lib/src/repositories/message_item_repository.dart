@@ -57,10 +57,9 @@ class MessageItemRepository {
       // 아이템 데이터를 변환하여 리스트로 생성 remainAmount가 0이면 추가하지 않음
       List<MessageItem> items = [];
       for (var i = 0; i < itemsData.length; i++) {
-        if (itemsData[i]['remainAmount'] == 0) {
-          continue;
+        if (itemsData[i]['current_amount'] != 0) {
+          items.add(MessageItem.fromJson(itemsData[i]));
         }
-        items.add(MessageItem.fromJson(itemsData[i]));
       }
       return items;
     } catch (e) {
