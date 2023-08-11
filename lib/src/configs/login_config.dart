@@ -70,21 +70,26 @@ Future<bool> isSignup() async {
     dio.options.validateStatus = (status) {
       return status! < 500;
     };
+    print('id토큰 ${await getOAuthToken().then((value) => value!.idToken)}');
     var response = await dio.post(
       "/users/login/kakao",
       data: {
-        "id_token": await getOAuthToken().then((value) => value!.idToken),
+        "id_token":
+            'eyJraWQiOiI5ZjI1MmRhZGQ1ZjIzM2Y5M2QyZmE1MjhkMTJmZWEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI4YWVhYzliYjE4ZjQyMDYwYTIzMzI4ODU1NzdiOGNiOSIsInN1YiI6IjI4OTc5MTQzODciLCJhdXRoX3RpbWUiOjE2OTE0MTY2ODAsImlzcyI6Imh0dHBzOi8va2F1dGgua2FrYW8uY29tIiwiZXhwIjoxNjkxNTIzOTQ5LCJpYXQiOjE2OTE0ODA3NDl9.R98XFskZYgfFm6TDR48WcQl3bndHLDct2BFCVFbirqCPBMiDXr8H2wf2zlWN3HWSfvuDnb0BaLVAO2Fr9GeKg3byH0jjVDzTQ7Qk71i6AeAQpVQiTxGysQ-PWuYMJM4etyxZbakgSZp4MSQUrj5TOjYJ3Q5IkctUvVpSe4AtvnG4GLrPzKlwEi_YsovCq9Xar8pM14cEVZPH9_p4kC-xQjyJ5pSumBVacL2_0h9KLIzMu07VDfChBqRQwJd6uiLGCmtINUZimCAxC8pMRPGSRxxdQcNGsdpx0NPRiXmhI6kAr9CTZot-heRbeRQHlZiRX0U4OpcL0epiL9zojrl6OA',
       },
     );
+    print('id토큰 ${await getOAuthToken().then((value) => value!.idToken)}');
     if (response.statusCode == 403) {
-      print('토큰 만료로 인해 재발급 후 요청');
-      await refreshOAuthToken();
-      response = await dio.post(
-        "/users/login/kakao",
-        data: {
-          "id_token": await getOAuthToken().then((value) => value!.idToken),
-        },
-      );
+      if (response.data['message'] == 'Expired token') {
+        print('토큰 만료로 인해 재발급 후 요청');
+        await refreshOAuthToken();
+        response = await dio.post(
+          "/users/login/kakao",
+          data: {
+            "id_token": await getOAuthToken().then((value) => value!.idToken),
+          },
+        );
+      }
     }
     if (response.statusCode == 200) {
       print('회원가입 여부 확인');
