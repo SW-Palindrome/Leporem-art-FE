@@ -105,7 +105,7 @@ class BuyerItemDetailController extends GetxController {
 
   Future<void> like() async {
     try {
-      print('좋아요');
+      itemDetail.value = itemDetail.value.like();
       // API 요청
       final response = await DioSingleton.dio.post('/items/like',
           data: {'item_id': Get.arguments['item_id']},
@@ -120,7 +120,6 @@ class BuyerItemDetailController extends GetxController {
         throw Exception(
             'Status Code: ${response.statusCode} / Body: ${response.data}');
       }
-      itemDetail.value = itemDetail.value.like();
     } catch (e) {
       // 에러 처리
       print('Error fetching like ${Get.arguments['item_id']}: $e');
@@ -129,7 +128,7 @@ class BuyerItemDetailController extends GetxController {
 
   Future<void> unlike() async {
     try {
-      print('좋아요 해제');
+      itemDetail.value = itemDetail.value.unlike();
       // API 요청
       final response = await DioSingleton.dio.delete('/items/like',
           data: {'item_id': Get.arguments['item_id']},
@@ -144,7 +143,6 @@ class BuyerItemDetailController extends GetxController {
         throw Exception(
             'Status Code: ${response.statusCode} / Body: ${response.data}');
       }
-      itemDetail.value = itemDetail.value.unlike();
     } catch (e) {
       // 에러 처리
       print('Error fetching like ${Get.arguments['item_id']}: $e');

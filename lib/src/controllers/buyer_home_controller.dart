@@ -198,7 +198,8 @@ class BuyerHomeController extends GetxController {
 
   Future<void> like(int itemId) async {
     try {
-      print('좋아요');
+      items.firstWhere((element) => element.id == itemId).like();
+      items.refresh();
       // API 요청
       final response = await DioSingleton.dio.post('/items/like',
           data: {'item_id': itemId},
@@ -213,8 +214,6 @@ class BuyerHomeController extends GetxController {
         throw Exception(
             'Status Code: ${response.statusCode} / Body: ${response.data}');
       }
-      items.firstWhere((element) => element.id == itemId).like();
-      items.refresh();
     } catch (e) {
       // 에러 처리
       print('Error fetching like $itemId in home $e');
@@ -223,7 +222,8 @@ class BuyerHomeController extends GetxController {
 
   Future<void> unlike(int itemId) async {
     try {
-      print('좋아요 해제');
+      items.firstWhere((element) => element.id == itemId).unlike();
+      items.refresh();
       // API 요청
       final response = await DioSingleton.dio.delete('/items/like',
           data: {'item_id': itemId},
@@ -239,10 +239,7 @@ class BuyerHomeController extends GetxController {
             'Status Code: ${response.statusCode} / Body: ${response.data}');
       }
       //items중 id값이 itemId인 아이템의 is_liked를 false로 바꿔줌
-      items.firstWhere((element) => element.id == itemId).unlike();
-      items.refresh();
     } catch (e) {
-      // 에러 처리
       print('Error fetching like $itemId in home $e');
     }
   }

@@ -62,9 +62,13 @@ class RecentItemScreen extends GetView<RecentItemController> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _deleteButton(),
+            Row(
+              children: [
+                Spacer(),
+                _deleteButton(),
+              ],
+            ),
             SizedBox(height: 14),
             _recentItemList(),
           ],
@@ -159,19 +163,23 @@ class RecentItemScreen extends GetView<RecentItemController> {
                         ),
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.translucent,
                         onTap: () async {
                           logAnalytics(name: 'recent_item', parameters: {
                             'action': 'delete ${controller.items[index].id}'
                           });
                           await controller.delete(controller.items[index].id);
                         },
-                        child: Text(
-                          '삭제',
-                          style: TextStyle(
-                            color: ColorPalette.grey_4,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 10,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '삭제',
+                            style: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontFamily: "PretendardVariable",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 10,
+                            ),
                           ),
                         ),
                       )
@@ -203,14 +211,6 @@ class RecentItemScreen extends GetView<RecentItemController> {
                   Row(
                     children: [
                       Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/message_outline.svg',
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      SizedBox(width: 8),
                       controller.items[index].isLiked
                           ? GestureDetector(
                               onTap: () async {
