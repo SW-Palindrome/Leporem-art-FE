@@ -159,19 +159,23 @@ class RecentItemScreen extends GetView<RecentItemController> {
                         ),
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.translucent,
                         onTap: () async {
                           logAnalytics(name: 'recent_item', parameters: {
                             'action': 'delete ${controller.items[index].id}'
                           });
                           await controller.delete(controller.items[index].id);
                         },
-                        child: Text(
-                          '삭제',
-                          style: TextStyle(
-                            color: ColorPalette.grey_4,
-                            fontFamily: "PretendardVariable",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 10,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '삭제',
+                            style: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontFamily: "PretendardVariable",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 10,
+                            ),
                           ),
                         ),
                       )
