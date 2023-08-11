@@ -65,15 +65,21 @@ class MessageItemOrderController extends GetxController {
   }
 
   Future<void> order() async {
-    try {
-      int orderId = await _messageItemRepository.orderItem(selectItemId.value);
+    int orderId = await _messageItemRepository.orderItem(selectItemId.value);
+    MessageController messageController = Get.find<MessageController>();
+    if (messageController.chatRoom.isRegistered) {
       await Get.find<MessageController>().sendMessage(
         Get.arguments['chatRoomUuid'],
         orderId.toString(),
         MessageType.order,
       );
-    } catch (e) {
-      print(e);
+    } else {
+      Get.find<MessageController>().createChatRoom(
+        Get.arguments['chatRoomUuid'],
+        Get.find<MessageController>().chatRoom.opponentNickname,
+        selectItemId.value.toString(),
+        MessageType.order,
+      );
     }
   }
 }
