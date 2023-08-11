@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/message_controller.dart';
 import 'package:leporemart/src/controllers/message_item_order_controller.dart';
 import 'package:leporemart/src/controllers/message_item_share_controller.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/buyer/item_detail_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_order_screen.dart';
 import 'package:leporemart/src/screens/buyer/message_item_share_screen.dart';
@@ -337,7 +338,8 @@ class MessageDetailScreen extends GetView<MessageController> {
                           suffix: InkWell(
                             onTap: () async {
                               String text = _textEditingController.text;
-                              bool isRegistered = controller.chatRoom.isRegistered;
+                              bool isRegistered =
+                                  controller.chatRoom.isRegistered;
                               if (text.isEmpty) {
                                 return;
                               }
@@ -367,8 +369,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                                     text,
                                     MessageType.text);
                                 isRegistered = true;
-                              }
-                              else {
+                              } else {
                                 await controller.sendMessage(
                                     Get.arguments['chatRoomUuid'],
                                     text,
@@ -456,7 +457,9 @@ class MessageDetailScreen extends GetView<MessageController> {
                         //   ColorPalette.orange,
                         //   () {},
                         // ),
-                        if (controller.chatRoom.isBuyerRoom)
+                        if (controller.chatRoom.isBuyerRoom &&
+                            controller.chatRoom.opponentNickname !=
+                                Get.find<UserGlobalInfoController>().nickname)
                           _messageBottomPlusIcon(
                             '주문 넣기',
                             'cart',

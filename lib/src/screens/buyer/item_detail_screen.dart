@@ -53,7 +53,7 @@ class BuyerItemDetailScreen extends GetView<BuyerItemDetailController> {
               onRightButtonPressed: () {
                 logAnalytics(name: 'item_detail_report');
                 launchUrl(Uri.parse(
-                    'mailto:swm.palindrome@gmail.com?subject=[게시물 신고] ${controller.itemDetail.value.id}번 게시물&body=신고 사유를 적어주세요.\n'));
+                    'mailto:swm.palindrome@gmail.com?subject=[게시물 신고] ${controller.itemDetail.value.id}번 게시물&body=기본 내용은 변경하지 마세요!!\n\n------------------------------\n\n게시물 제목:${controller.itemDetail.value.title}\n 작성자: ${controller.itemDetail.value.nickname}\n\n신고 사유를 적어주세요.\n\n'));
                 Get.back();
               },
             ),

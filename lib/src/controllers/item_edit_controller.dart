@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/item_create_detail_controller.dart';
+import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/controllers/seller_item_detail_controller.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/seller_app.dart';
@@ -383,12 +384,14 @@ class ItemEditController extends ItemCreateDetailController {
       );
 
       if (response.statusCode == 200) {
+        await Get.find<SellerItemDetailController>().fetch();
+        await Get.find<SellerHomeController>().pageReset();
+        Get.back();
         Get.snackbar(
           '작품 수정',
           '작품이 성공적으로 수정되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
-        Get.offAll(SellerApp());
       } else {
         Get.snackbar(
           '작품 수정 실패',
