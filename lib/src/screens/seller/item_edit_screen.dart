@@ -55,8 +55,6 @@ class ItemEditScreen extends GetView<ItemEditController> {
                           onTap: () async {
                             logAnalytics(name: "edit_item");
                             await controller.editItem();
-                            await Get.find<SellerItemDetailController>()
-                                .fetch();
                           },
                         )
                       : NextButton(

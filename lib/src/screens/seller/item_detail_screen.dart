@@ -29,7 +29,8 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
           logAnalytics(
               name: "enter_item_edit",
               parameters: {"item_id": controller.itemDetail.value.id});
-          Get.to(ItemEditScreen());
+          Get.to(ItemEditScreen(),
+              arguments: {'item_id': controller.itemDetail.value.id});
           Get.put(ItemEditController());
         },
       ),
