@@ -50,7 +50,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
             height: 200,
           ),
           SizedBox(height: 24),
-          Text('아직 등록한 물품이 없어요.',
+          Text('아직 주문 받은 작품이 없어요.',
               style: TextStyle(
                 fontSize: 16,
                 color: ColorPalette.grey_5,
