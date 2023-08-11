@@ -62,9 +62,13 @@ class RecentItemScreen extends GetView<RecentItemController> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _deleteButton(),
+            Row(
+              children: [
+                Spacer(),
+                _deleteButton(),
+              ],
+            ),
             SizedBox(height: 14),
             _recentItemList(),
           ],
