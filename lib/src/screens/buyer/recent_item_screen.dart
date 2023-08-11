@@ -203,14 +203,6 @@ class RecentItemScreen extends GetView<RecentItemController> {
                   Row(
                     children: [
                       Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/message_outline.svg',
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      SizedBox(width: 8),
                       controller.items[index].isLiked
                           ? GestureDetector(
                               onTap: () async {
