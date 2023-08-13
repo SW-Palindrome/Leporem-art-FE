@@ -155,13 +155,13 @@ class AgreementScreen extends GetView<AgreementController> {
           onTap: () {
             if (text == "공예쁨 이용약관 동의") {
               launchUrl(Uri.parse(
-                  "https://www.notion.so/swm-palindrome/e86ca8fb36be4f64a973b07fd57e32ab?pvs=4"));
+                  "https://swm-palindrome.notion.site/e86ca8fb36be4f64a973b07fd57e32ab"));
             } else if (text == "개인정보 수집 및 이용 동의") {
               launchUrl(Uri.parse(
-                  "https://www.notion.so/swm-palindrome/a2a4462017c04bbe89c909653e5688f5?pvs=4"));
+                  "https://swm-palindrome.notion.site/a2a4462017c04bbe89c909653e5688f5"));
             } else if (text == "마케팅 수신 동의") {
               launchUrl(Uri.parse(
-                  "https://www.notion.so/swm-palindrome/7a8cd78b98f14490867440595c59d310?pvs=4"));
+                  "https://swm-palindrome.notion.site/7a8cd78b98f14490867440595c59d310"));
             }
           },
           child: Padding(
