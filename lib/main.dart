@@ -52,15 +52,18 @@ void main() async {
     }
   });
   bool isLoginProceed = await isSignup();
-  await FirebaseConfig.init();
-  await AmplitudeConfig.init();
-  // SentryFlutter.init(
-  //   (options) {
-  //     options.dsn = dotenv.get('GLITCHTIP_DSN');
-  //     options.attachStacktrace = true;
-  //   },
-  //   appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-  // );
+
+  if (kReleaseMode) {
+    await FirebaseConfig.init();
+    await AmplitudeConfig.init();
+    SentryFlutter.init(
+      (options) {
+        options.dsn = dotenv.get('GLITCHTIP_DSN');
+        options.attachStacktrace = true;
+      },
+      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+    );
+  }
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
