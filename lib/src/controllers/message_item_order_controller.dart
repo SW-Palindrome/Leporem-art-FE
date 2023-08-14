@@ -77,7 +77,7 @@ class MessageItemOrderController extends GetxController {
       Get.find<MessageController>().createChatRoom(
         Get.arguments['chatRoomUuid'],
         Get.find<MessageController>().chatRoom.opponentNickname,
-        selectItemId.value.toString(),
+        orderId.toString(),
         MessageType.order,
       );
     }
