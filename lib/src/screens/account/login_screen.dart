@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -54,9 +56,10 @@ class LoginScreen extends StatelessWidget {
                   // _loginButton(
                   //     "naver", "네이버로 시작하기", 0xff06BE34, 0xffffffff, false),
                   // SizedBox(height: Get.height * 0.02),
-                  _loginButton(
-                      "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
-                  SizedBox(height: Get.height * 0.02),
+                  if (Platform.isIOS)
+                    _loginButton(
+                        "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
+                  if (Platform.isIOS) SizedBox(height: Get.height * 0.02),
                   _loginButton(
                       null, "회원가입 없이 시작하기", 0xffffffff, 0xff191f28, true),
                 ],
@@ -95,8 +98,7 @@ class LoginScreen extends StatelessWidget {
             );
             if (await isSignup(
                 LoginPlatform.apple, credential.authorizationCode)) {
-              print('왜안대?');
-              Get.to(HomeScreen(isLoginProceed: true));
+              Get.offAll(HomeScreen(isLoginProceed: true));
             } else {
               Get.find<NicknameController>().loginPlatform =
                   LoginPlatform.apple;

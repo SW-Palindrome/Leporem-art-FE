@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/buyer_profile_edit_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
   const BuyerProfileEditScreen({super.key});
@@ -62,16 +63,20 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 30),
-            _imageEdit(),
-            SizedBox(height: 30),
-            _nicknameEdit(),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 30),
+              _imageEdit(),
+              SizedBox(height: 30),
+              _nicknameEdit(),
+              Spacer(),
+              _withdrawalText(),
+            ],
+          ),
         ),
       ),
     );
@@ -210,6 +215,23 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
           ),
         ),
       ],
+    );
+  }
+
+  _withdrawalText() {
+    return GestureDetector(
+      onTap: () {
+        launchUrl(Uri.parse(
+            'mailto:swm.palindrome@gmail.com?subject=[회원탈퇴 신청] ${controller.buyerProfileEdit.nickname}&body=회원탈퇴를 신청합니다.\n\n회원 탈퇴 시 기존에 등록한 모든 정보가 삭제되며, 복구가 불가능합니다.\n\n회원 탈퇴를 진행하시겠습니까?\n\n'));
+      },
+      child: Text(
+        '회원 탈퇴',
+        style: TextStyle(
+          color: ColorPalette.red,
+          fontFamily: FontPalette.pretenderd,
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }
