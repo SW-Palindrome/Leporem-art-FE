@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'agreement_controller.dart';
 
@@ -55,7 +56,11 @@ class NicknameController extends GetxController {
         "is_agree_ads": Get.find<AgreementController>().agreedList[2],
       });
       if (response.statusCode == 201) {
-        print("회원가입 성공 ${response.data}");
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+            'access_token', response.data['data']['access_token']);
+        await prefs.setString(
+            'refresh_token', response.data['data']['refresh_token']);
         return true;
       }
       if (response.statusCode == 400) {
@@ -79,7 +84,11 @@ class NicknameController extends GetxController {
         "is_agree_ads": Get.find<AgreementController>().agreedList[2],
       });
       if (response.statusCode == 201) {
-        print("회원가입 성공 ${response.data}");
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+            'access_token', response.data['data']['access_token']);
+        await prefs.setString(
+            'refresh_token', response.data['data']['refresh_token']);
         return true;
       }
       if (response.statusCode == 400) {
