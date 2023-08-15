@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 
 import '../../buyer_app.dart';
@@ -20,13 +22,12 @@ class HomeScreen extends StatelessWidget {
 
   _onAfterBuild() async {
     if (isLoginProceed) {
-      // FIXME: 이 부분은 추후 삭제되어야함
-      isSignup();
       await Get.putAsync(() => MessageController().init());
       ChattingSocketSingleton();
       Get.offAll(BuyerApp());
     } else {
       Get.offAll(LoginScreen());
+      Get.put(NicknameController());
     }
   }
 }

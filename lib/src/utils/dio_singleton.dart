@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DioSingleton {
   static Dio? _dioInstance;
@@ -18,13 +19,16 @@ class DioSingleton {
             if (response.statusCode == 401) {
               Exception('401: Unauthorized');
             } else if (response.statusCode == 403) {
-              if (response.data['message'] == 'Expired token') {
-                await refreshOAuthToken();
-                // 재발급된 토큰을 헤더에 추가
-                final idToken =
-                    await getOAuthToken().then((value) => value!.idToken);
+              if (response.data['code'] == 'JWT_403_EXPIRED_ACCESSTOKEN') {
+                final prefs = await SharedPreferences.getInstance();
+                final response = await dio.post('/users/refresh',
+                    data: {'refresh_token': prefs.getString('refresh_token')});
+                prefs.setString(
+                    'access_token', response.data['data']['access_token']);
+                prefs.setString(
+                    'refresh_token', response.data['data']['refresh_token']);
                 response.requestOptions.headers['Authorization'] =
-                    'Palindrome $idToken';
+                    'Bearer ${prefs.getString('access_token')}';
 
                 // 원래의 요청을 다시 실행
                 try {
