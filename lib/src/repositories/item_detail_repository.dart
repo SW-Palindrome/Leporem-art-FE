@@ -2,18 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemDetailRepository {
   Future<BuyerItemDetail> fetchBuyerItemDetail(int itemID) async {
     try {
       // API 요청
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/items/detail/buyer',
         queryParameters: {'item_id': itemID},
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -33,13 +35,14 @@ class ItemDetailRepository {
   Future<SellerItemDetail> fetchSellerItemDetail(int itemID) async {
     try {
       // API 요청
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/items/detail/seller',
         queryParameters: {'item_id': itemID},
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

@@ -5,6 +5,7 @@ import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class SellerItemDetailController extends GetxController {
@@ -113,17 +114,20 @@ class SellerItemDetailController extends GetxController {
         throw Exception('Amount is full');
       }
       // API 요청
-      final response = await DioSingleton.dio.patch('/sellers/current-amount',
-          data: {
-            'item_id': Get.arguments['item_id'],
-            'action': 1,
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.patch(
+        '/sellers/current-amount',
+        data: {
+          'item_id': Get.arguments['item_id'],
+          'action': 1,
+        },
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
           },
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(
@@ -143,17 +147,20 @@ class SellerItemDetailController extends GetxController {
         throw Exception('Amount is empty');
       }
       //API 요청
-      final response = await DioSingleton.dio.patch('/sellers/current-amount',
-          data: {
-            'item_id': Get.arguments['item_id'],
-            'action': -1,
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.patch(
+        '/sellers/current-amount',
+        data: {
+          'item_id': Get.arguments['item_id'],
+          'action': -1,
+        },
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
           },
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+        ),
+      );
       //200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(

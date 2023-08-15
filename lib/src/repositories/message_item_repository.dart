@@ -2,11 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MessageItemRepository {
   Future<List<MessageItem>> fetchShareMessageItem(int page,
       {String? nickname}) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/items/filter',
         queryParameters: {
@@ -15,8 +18,7 @@ class MessageItemRepository {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -37,6 +39,8 @@ class MessageItemRepository {
   Future<List<MessageItem>> fetchOrderMessageItem(int page,
       {String? nickname}) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/items/filter',
         queryParameters: {
@@ -45,8 +49,7 @@ class MessageItemRepository {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -70,6 +73,8 @@ class MessageItemRepository {
 
   Future<int> orderItem(int itemId) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/orders/register',
         data: {
@@ -77,8 +82,7 @@ class MessageItemRepository {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

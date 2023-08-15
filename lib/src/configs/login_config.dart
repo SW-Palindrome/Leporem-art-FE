@@ -98,17 +98,19 @@ Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
     if (response.statusCode == 403) {
       if (response.data['message'] == 'Expired token') {
         print('토큰 만료로 인해 재발급 후 요청');
-        await refreshOAuthToken();
-        response = await dio.post(
-          "/users/login/kakao",
-          data: {
-            "id_token": await getOAuthToken().then((value) => value!.idToken),
-          },
-        );
+        // await refreshOAuthToken();
+        // response = await dio.post(
+        //   "/users/login/kakao",
+        //   data: {
+        //     "id_token": await getOAuthToken().then((value) => value!.idToken),
+        //   },
+        // );
       }
     }
     if (response.statusCode == 200) {
-      print('회원가입 여부 확인');
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('access_token', response.data['access_token']);
+      prefs.setString('refresh_token', response.data['refresh_token']);
       UserGlobalInfoController userGlobalInfoController =
           Get.find<UserGlobalInfoController>();
       userGlobalInfoController.userId = response.data['user_id'];

@@ -12,6 +12,7 @@ import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -244,13 +245,14 @@ class ItemCreateDetailController extends GetxController {
     }
 
     // 쇼츠 등록 PRESIGNED URL을 얻기 위한 API 호출
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
     final response = await DioSingleton.dio.get(
       '/sellers/shorts/upload-url',
       queryParameters: {'extension': videos.first.path.split('.').last},
       options: Options(
         headers: {
-          "Authorization":
-              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          "Authorization": "Bearer $accessToken",
         },
       ),
     );
@@ -337,14 +339,15 @@ class ItemCreateDetailController extends GetxController {
     formData.fields.addAll(categoryList);
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/sellers/items',
         data: formData,
         options: Options(
           contentType: 'multipart/form-data',
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
