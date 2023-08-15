@@ -1,5 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -53,8 +54,10 @@ class ChattingSocketSingleton {
   }
 
   _authenticate() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
     _socket.emit('authenticate', {
-      'id_token': await getOAuthToken().then((value) => value!.idToken),
+      'access_token': accessToken,
     });
     isAuthenticated = true;
   }
