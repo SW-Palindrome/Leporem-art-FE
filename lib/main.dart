@@ -79,7 +79,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        if (kReleaseMode)
+          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
     );
   }

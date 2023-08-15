@@ -12,14 +12,14 @@ import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/screens/account/home.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/message_controller.dart';
 import '../controllers/user_global_info_controller.dart';
 import '../utils/chatting_socket_singleton.dart';
 
 enum LoginPlatform {
-  facebook,
-  google,
   kakao,
   naver,
   apple,

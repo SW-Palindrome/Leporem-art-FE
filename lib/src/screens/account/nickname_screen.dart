@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/account_type_screen.dart';
@@ -110,7 +111,19 @@ class NicknameScreen extends GetView<NicknameController> {
                   onTap: () async {
                     bool isDuplicate = await controller
                         .isDuplicate(controller.nicknameController.text);
-                    bool isSignupSuccessed = await controller.signup();
+                    late bool isSignupSuccessed;
+                    switch (controller.loginPlatform) {
+                      case LoginPlatform.kakao:
+                        isSignupSuccessed = await controller.signupWithKakao();
+                        break;
+                      case LoginPlatform.naver:
+                        break;
+                      case LoginPlatform.apple:
+                        isSignupSuccessed = await controller.signupWithApple();
+                        break;
+                      case LoginPlatform.none:
+                        break;
+                    }
                     if (!isDuplicate) {
                       if (isSignupSuccessed) {
                         Get.bottomSheet(

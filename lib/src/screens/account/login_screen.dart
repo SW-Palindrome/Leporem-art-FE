@@ -11,7 +11,9 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/controllers/email_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
+import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -50,9 +52,9 @@ class LoginScreen extends StatelessWidget {
                   // _loginButton(
                   //     "naver", "네이버로 시작하기", 0xff06BE34, 0xffffffff, false),
                   // SizedBox(height: Get.height * 0.02),
-                  // _loginButton(
-                  //     "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
-                  // SizedBox(height: Get.height * 0.02),
+                  _loginButton(
+                      "apple", "Apple로 시작하기", 0xff333D4B, 0xffffffff, false),
+                  SizedBox(height: Get.height * 0.02),
                   _loginButton(
                       null, "회원가입 없이 시작하기", 0xffffffff, 0xff191f28, true),
                 ],
@@ -79,15 +81,23 @@ class LoginScreen extends StatelessWidget {
         Get.lazyPut(() => NicknameController());
         switch (icon) {
           case 'kakao':
+            Get.find<NicknameController>().loginPlatform = LoginPlatform.kakao;
             Get.find<UserGlobalInfoController>().userType = UserType.member;
             await kakaoLogin();
             break;
           case 'naver':
             break;
           case 'apple':
+            final credential = await SignInWithApple.getAppleIDCredential(
+              scopes: [],
+            );
+            Get.find<NicknameController>().loginPlatform = LoginPlatform.apple;
+            Get.find<NicknameController>().userIdentifier =
+                credential.userIdentifier!;
+            Get.to(AgreementScreen());
+            Get.put(AgreementController());
             break;
           case null:
-            Get.find<UserGlobalInfoController>().userType = UserType.guest;
             Get.offAll(BuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');
