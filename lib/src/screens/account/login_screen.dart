@@ -15,6 +15,8 @@ import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import 'home.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -91,11 +93,17 @@ class LoginScreen extends StatelessWidget {
             final credential = await SignInWithApple.getAppleIDCredential(
               scopes: [],
             );
-            Get.find<NicknameController>().loginPlatform = LoginPlatform.apple;
-            Get.find<NicknameController>().userIdentifier =
-                credential.userIdentifier!;
-            Get.to(AgreementScreen());
-            Get.put(AgreementController());
+            if (await isSignup(
+                LoginPlatform.apple, credential.authorizationCode)) {
+              Get.offAll(HomeScreen(isLoginProceed: true));
+            } else {
+              Get.find<NicknameController>().loginPlatform =
+                  LoginPlatform.apple;
+              Get.find<NicknameController>().userIdentifier =
+                  credential.userIdentifier!;
+              Get.to(AgreementScreen());
+              Get.put(AgreementController());
+            }
             break;
           case null:
             Get.offAll(BuyerApp());

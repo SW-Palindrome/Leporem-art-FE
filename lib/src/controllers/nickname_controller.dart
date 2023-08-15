@@ -15,7 +15,7 @@ class NicknameController extends GetxController {
   Rx<bool> isDisplayError = false.obs;
   Rx<bool> isFocused = false.obs;
 
-  LoginPlatform loginPlatform = LoginPlatform.kakao;
+  late LoginPlatform loginPlatform;
   late String userIdentifier;
 
   void checkNickname(String value) {
@@ -48,7 +48,7 @@ class NicknameController extends GetxController {
     try {
       String? idToken = await getOAuthToken().then((value) => value!.idToken);
       final response =
-          await DioSingleton.dio.post("/users/signup/kakao}", data: {
+          await DioSingleton.dio.post("/users/signup/kakao", data: {
         "id_token": idToken,
         "nickname": nicknameController.text,
         "is_agree_privacy": true,

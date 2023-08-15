@@ -105,10 +105,11 @@ Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
       case LoginPlatform.apple:
         response = await dio.get(
           "/users/login/apple",
-          data: {
+          queryParameters: {
             "code": code,
           },
         );
+        print('로그인 진행중. $response ');
         break;
       case LoginPlatform.none:
         break;
@@ -126,6 +127,7 @@ Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
       }
     }
     if (response.statusCode == 200) {
+      print('로그인이 진행되었습니다.');
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('access_token', response.data['access_token']);
       prefs.setString('refresh_token', response.data['refresh_token']);
