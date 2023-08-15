@@ -109,6 +109,7 @@ class LoginScreen extends StatelessWidget {
             }
             break;
           case null:
+            Get.find<UserGlobalInfoController>().userType = UserType.guest;
             Get.offAll(BuyerApp());
         }
         _logEvent('$icon 회원가입 및 로그인');
