@@ -6,6 +6,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/screens/account/home.dart';
+import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/user_global_info_controller.dart';
@@ -55,10 +56,27 @@ void getKakaoUserInfo() async {
 }
 
 Future<bool> getLoginProceed() async {
+  print('내정보 보기 ');
   final prefs = await SharedPreferences.getInstance();
-  bool isLoginProceed = prefs.getString('access_token') != null;
+  final accessToken = prefs.getString('access_token');
+  print(accessToken);
+  bool isLoginProceed = accessToken != null;
   if (isLoginProceed) {
-    //유저 글로벌 컨트롤러를 최신화 해준다
+    final response = await DioSingleton.dio.get(
+      '/users/info/my',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+    UserGlobalInfoController userGlobalInfoController =
+        Get.find<UserGlobalInfoController>();
+    userGlobalInfoController.userId = response.data['user_id'];
+    userGlobalInfoController.userType = UserType.member;
+    userGlobalInfoController.nickname = response.data['nickname'];
+    userGlobalInfoController.isSeller = response.data['is_seller'];
+
     return true;
   } else {
     return false;
