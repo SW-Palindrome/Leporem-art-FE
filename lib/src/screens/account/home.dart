@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
 
   _onAfterBuild() async {
     if (isLoginProceed) {
+      await getLoginProceed();
       await Get.putAsync(() => MessageController().init());
       ChattingSocketSingleton();
       Get.offAll(BuyerApp());
