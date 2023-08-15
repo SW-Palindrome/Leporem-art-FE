@@ -56,7 +56,6 @@ void getKakaoUserInfo() async {
 }
 
 Future<bool> getLoginProceed() async {
-  print('내정보 보기 ');
   final prefs = await SharedPreferences.getInstance();
   final accessToken = prefs.getString('access_token');
   print(accessToken);
@@ -70,6 +69,10 @@ Future<bool> getLoginProceed() async {
         },
       ),
     );
+    if (response.statusCode == 403 &&
+        response.data['code'] == 'JWT_403_INVALID_ACCESSTOKEN') {
+      return false;
+    }
     UserGlobalInfoController userGlobalInfoController =
         Get.find<UserGlobalInfoController>();
     userGlobalInfoController.userId = response.data['user_id'];

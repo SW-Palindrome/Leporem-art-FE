@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/screens/account/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioSingleton {
@@ -17,7 +19,7 @@ class DioSingleton {
         InterceptorsWrapper(
           onResponse: (response, handler) async {
             if (response.statusCode == 401) {
-              Exception('401: Unauthorized');
+              Exception('401: Unauthorized $response');
             } else if (response.statusCode == 403) {
               if (response.data['code'] == 'JWT_403_EXPIRED_ACCESSTOKEN') {
                 final prefs = await SharedPreferences.getInstance();
