@@ -6,6 +6,7 @@ import 'package:leporemart/src/controllers/buyer_item_creator_controller.dart';
 import 'package:leporemart/src/controllers/seller_home_controller.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeRepository {
   Future<List<BuyerHomeItem>> fetchBuyerHomeItems(
@@ -17,6 +18,8 @@ class HomeRepository {
     isPagination = false,
   }) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get('/items/filter',
           queryParameters: {
             'page': page,
@@ -27,8 +30,7 @@ class HomeRepository {
           },
           options: Options(
             headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+              "Authorization": "Bearer $accessToken",
             },
           ));
       //rseponse의 message가 EmptyPage라면 데이터가 없는 것이므로 빈 리스트를 반환, 또한 pagination용 요청이면 currentPage를 1 감소시킴
@@ -92,17 +94,20 @@ class HomeRepository {
     isPagination = false,
   }) async {
     try {
-      final response = await DioSingleton.dio.get('/items/filter',
-          queryParameters: {
-            'page': page,
-            'nickname': nickname,
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.get(
+        '/items/filter',
+        queryParameters: {
+          'page': page,
+          'nickname': nickname,
+        },
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
           },
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+        ),
+      );
       if (response.data['message'] == 'EmptyPage') {
         if (isPagination) Get.find<BuyerItemCreatorController>().currentPage--;
         return [];
@@ -128,6 +133,8 @@ class HomeRepository {
     isPagination = false,
   }) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/items/filter',
         queryParameters: {
@@ -138,8 +145,7 @@ class HomeRepository {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

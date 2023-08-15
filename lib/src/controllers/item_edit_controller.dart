@@ -10,6 +10,7 @@ import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ItemEditController extends ItemCreateDetailController {
@@ -274,13 +275,14 @@ class ItemEditController extends ItemCreateDetailController {
   }
 
   Future<void> editItem() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
     final response = await DioSingleton.dio.get(
       '/sellers/shorts/upload-url',
       queryParameters: {'extension': videos.first.path.split('.').last},
       options: Options(
         headers: {
-          "Authorization":
-              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          "Authorization": "Bearer $accessToken",
         },
       ),
     );
@@ -371,14 +373,15 @@ class ItemEditController extends ItemCreateDetailController {
     print(formData.files);
     print(formData.fields);
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.patch(
         '/sellers/items/${itemDetail.id}',
         data: formData,
         options: Options(
           contentType: 'multipart/form-data',
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

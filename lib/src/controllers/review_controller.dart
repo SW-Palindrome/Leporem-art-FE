@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/screens/buyer/review_compelete_screen.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewController extends GetxController {
   Rx<String> description = Rx<String>('');
@@ -13,6 +14,8 @@ class ReviewController extends GetxController {
 
   Future<void> createReview() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/orders/review',
         data: {
@@ -22,8 +25,7 @@ class ReviewController extends GetxController {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

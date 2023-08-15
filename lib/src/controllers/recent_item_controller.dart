@@ -4,6 +4,7 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/item.dart';
 import 'package:leporemart/src/repositories/recent_item_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecentItemController extends GetxController {
   final RecentItemRepository _recentItemRepository = RecentItemRepository();
@@ -34,14 +35,17 @@ class RecentItemController extends GetxController {
   Future<void> delete(int itemId) async {
     try {
       // API 요청
-      final response = await DioSingleton.dio.delete('/items/viewed',
-          data: {'item_id': itemId},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.delete(
+        '/items/viewed',
+        data: {'item_id': itemId},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+          },
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(
@@ -68,14 +72,17 @@ class RecentItemController extends GetxController {
       items.firstWhere((element) => element.id == itemId).like();
       items.refresh();
       // API 요청
-      final response = await DioSingleton.dio.post('/items/like',
-          data: {'item_id': itemId},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.post(
+        '/items/like',
+        data: {'item_id': itemId},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+          },
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(
@@ -92,14 +99,17 @@ class RecentItemController extends GetxController {
       items.firstWhere((element) => element.id == itemId).unlike();
       items.refresh();
       // API 요청
-      final response = await DioSingleton.dio.delete('/items/like',
-          data: {'item_id': itemId},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.delete(
+        '/items/like',
+        data: {'item_id': itemId},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+          },
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(

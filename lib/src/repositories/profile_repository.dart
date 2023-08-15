@@ -2,16 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/profile.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileRepository {
   Future<BuyerProfile> fetchBuyerProfile() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/buyers/info',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -28,12 +30,13 @@ class ProfileRepository {
 
   Future<SellerProfile> fetchSellerProfile() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/sellers/info',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EmailController extends GetxController {
   static EmailController get to => Get.find();
@@ -41,6 +42,8 @@ class EmailController extends GetxController {
 
   Future<void> checkCode() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         "/sellers/verify",
         data: {
@@ -48,8 +51,7 @@ class EmailController extends GetxController {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -74,6 +76,8 @@ class EmailController extends GetxController {
 
   void sendEmail() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         "/sellers/register",
         data: {
@@ -81,8 +85,7 @@ class EmailController extends GetxController {
         },
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );

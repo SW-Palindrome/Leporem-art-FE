@@ -5,6 +5,7 @@ import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/repositories/item_detail_repository.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class BuyerItemDetailController extends GetxController {
@@ -107,14 +108,17 @@ class BuyerItemDetailController extends GetxController {
     try {
       itemDetail.value = itemDetail.value.like();
       // API 요청
-      final response = await DioSingleton.dio.post('/items/like',
-          data: {'item_id': Get.arguments['item_id']},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.post(
+        '/items/like',
+        data: {'item_id': Get.arguments['item_id']},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+          },
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(
@@ -130,14 +134,17 @@ class BuyerItemDetailController extends GetxController {
     try {
       itemDetail.value = itemDetail.value.unlike();
       // API 요청
-      final response = await DioSingleton.dio.delete('/items/like',
-          data: {'item_id': Get.arguments['item_id']},
-          options: Options(
-            headers: {
-              "Authorization":
-                  "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-            },
-          ));
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
+      final response = await DioSingleton.dio.delete(
+        '/items/like',
+        data: {'item_id': Get.arguments['item_id']},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+          },
+        ),
+      );
       // 200이 아니라면 오류
       if (response.statusCode != 200) {
         throw Exception(

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../configs/login_config.dart';
 import '../models/message.dart';
@@ -7,12 +8,13 @@ import '../models/message.dart';
 class MessageRepository {
   Future<List<ChatRoom>> fetchBuyerChatRooms() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/buyer',
         options: Options(
           headers: {
-            "Authorization":
-            "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -24,8 +26,7 @@ class MessageRepository {
         chatRoomList.add(chatRoom);
       }
       return chatRoomList;
-    }
-    catch (e) {
+    } catch (e) {
       // 에러 처리
       throw ('Error fetching chat rooms in repository: $e');
     }
@@ -33,12 +34,13 @@ class MessageRepository {
 
   Future<List<ChatRoom>> fetchSellerChatRooms() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/seller',
         options: Options(
           headers: {
-            "Authorization":
-            "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -53,8 +55,7 @@ class MessageRepository {
         chatRoomList.add(chatRoom);
       }
       return chatRoomList;
-    }
-    catch (e) {
+    } catch (e) {
       // 에러 처리
       throw ('Error fetching chat rooms in repository: $e');
     }

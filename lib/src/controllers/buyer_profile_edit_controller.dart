@@ -10,6 +10,7 @@ import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BuyerProfileEditController extends GetxController {
   TextEditingController nicknameController = TextEditingController();
@@ -97,16 +98,19 @@ class BuyerProfileEditController extends GetxController {
     try {
       if (isNicknameChanged.value) {
         try {
-          final response = await DioSingleton.dio.patch("/users/nickname",
-              data: {
-                "nickname": nicknameController.text,
+          final prefs = await SharedPreferences.getInstance();
+          final accessToken = prefs.getString('access_token');
+          final response = await DioSingleton.dio.patch(
+            "/users/nickname",
+            data: {
+              "nickname": nicknameController.text,
+            },
+            options: Options(
+              headers: {
+                "Authorization": "Bearer $accessToken",
               },
-              options: Options(
-                headers: {
-                  "Authorization":
-                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-                },
-              ));
+            ),
+          );
 
           if (response.statusCode != 200) {
             throw Exception('Status code: ${response.statusCode}');
@@ -123,14 +127,17 @@ class BuyerProfileEditController extends GetxController {
               filename: profileImage.value.path.split('/').last,
             ),
           });
-          final response = await DioSingleton.dio.patch("/users/profile-image",
-              data: formData,
-              options: Options(
-                headers: {
-                  "Authorization":
-                      "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
-                },
-              ));
+          final prefs = await SharedPreferences.getInstance();
+          final accessToken = prefs.getString('access_token');
+          final response = await DioSingleton.dio.patch(
+            "/users/profile-image",
+            data: formData,
+            options: Options(
+              headers: {
+                "Authorization": "Bearer $accessToken",
+              },
+            ),
+          );
 
           if (response.statusCode != 200) {
             throw Exception('Status code: ${response.statusCode}');

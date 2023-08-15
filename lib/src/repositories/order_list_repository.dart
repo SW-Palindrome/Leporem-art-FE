@@ -2,16 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/models/order.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderListRepository {
   Future<List<BuyerOrder>> fetchBuyerOrders() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/buyers/orders/my',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -29,12 +31,13 @@ class OrderListRepository {
 
   Future<List<SellerOrder>> fetchSellerOrders() async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/sellers/orders/my',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -52,13 +55,13 @@ class OrderListRepository {
 
   Future<void> deliveryStartOrder(int orderId) async {
     try {
-      print('orderId: $orderId');
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/orders/$orderId/delivery-start',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -71,13 +74,13 @@ class OrderListRepository {
 
   Future<void> deliveryCompleteOrder(int orderId) async {
     try {
-      print('orderId: $orderId');
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/orders/$orderId/delivery-complete',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -90,13 +93,13 @@ class OrderListRepository {
 
   Future<void> cancelOrder(int orderId) async {
     try {
-      print('orderId: $orderId');
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.post(
         '/orders/$orderId/cancel',
         options: Options(
           headers: {
-            "Authorization":
-                "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+            "Authorization": "Bearer $accessToken",
           },
         ),
       );
@@ -108,15 +111,15 @@ class OrderListRepository {
   }
 }
 
-
 class OrderInfoRepository {
   Future<OrderInfo> fetch(int orderId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
     final response = await DioSingleton.dio.get(
       '/orders/$orderId',
       options: Options(
         headers: {
-          "Authorization":
-              "Palindrome ${await getOAuthToken().then((value) => value!.idToken)}"
+          "Authorization": "Bearer $accessToken",
         },
       ),
     );
