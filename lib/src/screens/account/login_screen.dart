@@ -95,7 +95,8 @@ class LoginScreen extends StatelessWidget {
             );
             if (await isSignup(
                 LoginPlatform.apple, credential.authorizationCode)) {
-              Get.offAll(HomeScreen(isLoginProceed: true));
+              print('왜안대?');
+              Get.to(HomeScreen(isLoginProceed: true));
             } else {
               Get.find<NicknameController>().loginPlatform =
                   LoginPlatform.apple;

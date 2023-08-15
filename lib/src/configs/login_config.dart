@@ -109,7 +109,6 @@ Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
             "code": code,
           },
         );
-        print('로그인 진행중. $response ');
         break;
       case LoginPlatform.none:
         break;
@@ -127,16 +126,37 @@ Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
       }
     }
     if (response.statusCode == 200) {
-      print('로그인이 진행되었습니다.');
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('access_token', response.data['access_token']);
-      prefs.setString('refresh_token', response.data['refresh_token']);
-      UserGlobalInfoController userGlobalInfoController =
-          Get.find<UserGlobalInfoController>();
-      userGlobalInfoController.userId = response.data['user_id'];
-      userGlobalInfoController.userType = UserType.member;
-      userGlobalInfoController.nickname = response.data['nickname'];
-      userGlobalInfoController.isSeller = response.data['is_seller'];
+      switch (loginPlatform) {
+        case LoginPlatform.kakao:
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('access_token', response.data['access_token']);
+          prefs.setString('refresh_token', response.data['refresh_token']);
+          UserGlobalInfoController userGlobalInfoController =
+              Get.find<UserGlobalInfoController>();
+          userGlobalInfoController.userId = response.data['user_id'];
+          userGlobalInfoController.userType = UserType.member;
+          userGlobalInfoController.nickname = response.data['nickname'];
+          userGlobalInfoController.isSeller = response.data['is_seller'];
+          break;
+        case LoginPlatform.naver:
+          break;
+        case LoginPlatform.apple:
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString(
+              'access_token', response.data['data']['access_token']);
+          prefs.setString(
+              'refresh_token', response.data['data']['refresh_token']);
+          UserGlobalInfoController userGlobalInfoController =
+              Get.find<UserGlobalInfoController>();
+          userGlobalInfoController.userId = response.data['data']['user_id'];
+          userGlobalInfoController.userType = UserType.member;
+          userGlobalInfoController.nickname = response.data['data']['nickname'];
+          userGlobalInfoController.isSeller =
+              response.data['data']['is_seller'];
+          break;
+        case LoginPlatform.none:
+          break;
+      }
       return true;
     }
     return false;
