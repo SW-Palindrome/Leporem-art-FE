@@ -43,15 +43,9 @@ void main() async {
   Get.lazyPut(() => MyBottomNavigationbarController());
   await initializeDateFormatting();
 
-  KakaoSdk.init(nativeAppKey: '8aeac9bb18f42060a2332885577b8cb9');
+  KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
-  getOAuthToken().then((value) async {
-    if (value != null) {
-      print(
-          'idToken: ${value.idToken}\naccess token: ${value.accessToken}\nrefresh token: ${value.refreshToken}');
-    }
-  });
-  bool isLoginProceed = await isSignup();
+  bool isLoginProceed = await getLoginProceed();
 
   if (kReleaseMode) {
     await FirebaseConfig.init();

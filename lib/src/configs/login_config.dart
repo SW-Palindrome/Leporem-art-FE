@@ -1,23 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/buyer_app.dart';
-import 'package:leporemart/src/controllers/account_type_controller.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
-import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
-import 'package:leporemart/src/controllers/email_controller.dart';
-import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/screens/account/home.dart';
-import 'package:leporemart/src/utils/dio_singleton.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../controllers/message_controller.dart';
 import '../controllers/user_global_info_controller.dart';
-import '../utils/chatting_socket_singleton.dart';
 
 enum LoginPlatform {
   kakao,
@@ -63,22 +54,47 @@ void getKakaoUserInfo() async {
   }
 }
 
-Future<bool> isSignup() async {
+Future<bool> getLoginProceed() async {
+  final prefs = await SharedPreferences.getInstance();
+  bool isLoginProceed = prefs.getString('access_token') != null;
+  if (isLoginProceed) {
+    //유저 글로벌 컨트롤러를 최신화 해준다
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future<bool> isSignup(LoginPlatform loginPlatform, String code) async {
   try {
     Dio dio = Dio();
     dio.options.baseUrl = dotenv.get("BASE_URL");
     dio.options.validateStatus = (status) {
       return status! < 500;
     };
-    print('id토큰 ${await getOAuthToken().then((value) => value!.idToken)}');
-    var response = await dio.post(
-      "/users/login/kakao",
-      data: {
-        "id_token":
-            'eyJraWQiOiI5ZjI1MmRhZGQ1ZjIzM2Y5M2QyZmE1MjhkMTJmZWEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI4YWVhYzliYjE4ZjQyMDYwYTIzMzI4ODU1NzdiOGNiOSIsInN1YiI6IjI4OTc5MTQzODciLCJhdXRoX3RpbWUiOjE2OTE0MTY2ODAsImlzcyI6Imh0dHBzOi8va2F1dGgua2FrYW8uY29tIiwiZXhwIjoxNjkxNTIzOTQ5LCJpYXQiOjE2OTE0ODA3NDl9.R98XFskZYgfFm6TDR48WcQl3bndHLDct2BFCVFbirqCPBMiDXr8H2wf2zlWN3HWSfvuDnb0BaLVAO2Fr9GeKg3byH0jjVDzTQ7Qk71i6AeAQpVQiTxGysQ-PWuYMJM4etyxZbakgSZp4MSQUrj5TOjYJ3Q5IkctUvVpSe4AtvnG4GLrPzKlwEi_YsovCq9Xar8pM14cEVZPH9_p4kC-xQjyJ5pSumBVacL2_0h9KLIzMu07VDfChBqRQwJd6uiLGCmtINUZimCAxC8pMRPGSRxxdQcNGsdpx0NPRiXmhI6kAr9CTZot-heRbeRQHlZiRX0U4OpcL0epiL9zojrl6OA',
-      },
-    );
-    print('id토큰 ${await getOAuthToken().then((value) => value!.idToken)}');
+    late Response response;
+    switch (loginPlatform) {
+      case LoginPlatform.kakao:
+        response = await dio.post(
+          "/users/login/kakao",
+          data: {
+            "id_token": code,
+          },
+        );
+        break;
+      case LoginPlatform.naver:
+        break;
+      case LoginPlatform.apple:
+        response = await dio.get(
+          "/users/login/apple",
+          data: {
+            "code": code,
+          },
+        );
+        break;
+      case LoginPlatform.none:
+        break;
+    }
     if (response.statusCode == 403) {
       if (response.data['message'] == 'Expired token') {
         print('토큰 만료로 인해 재발급 후 요청');
@@ -112,7 +128,8 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoTalk();
       print('카카오톡으로 로그인 성공');
-      if (await isSignup()) {
+      if (await isSignup(LoginPlatform.kakao,
+          await getOAuthToken().then((value) => value!.idToken!))) {
         Get.offAll(HomeScreen(isLoginProceed: true));
       } else {
         Get.to(AgreementScreen());
@@ -130,7 +147,8 @@ Future<void> kakaoLogin() async {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         print('카카오계정으로 로그인 성공');
-        if (await isSignup()) {
+        if (await isSignup(LoginPlatform.kakao,
+            await getOAuthToken().then((value) => value!.idToken!))) {
           Get.offAll(HomeScreen(isLoginProceed: true));
         } else {
           Get.to(AgreementScreen());
@@ -144,7 +162,8 @@ Future<void> kakaoLogin() async {
     try {
       await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공');
-      if (await isSignup()) {
+      if (await isSignup(LoginPlatform.kakao,
+          await getOAuthToken().then((value) => value!.idToken!))) {
         Get.offAll(HomeScreen(isLoginProceed: true));
       } else {
         Get.to(AgreementScreen());
