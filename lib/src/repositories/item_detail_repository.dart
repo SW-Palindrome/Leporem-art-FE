@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:leporemart/src/configs/login_config.dart';
+import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/item_detail.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,20 +12,32 @@ class ItemDetailRepository {
       // API 요청
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('access_token');
-      final response = await DioSingleton.dio.get(
-        '/items/detail/buyer',
-        queryParameters: {'item_id': itemID},
-        options: Options(
-          headers: {
-            "Authorization": "Bearer $accessToken",
-          },
-        ),
-      );
-      final data = response.data['detail'];
-      // API 응답을 Item 모델로 변환
-      final BuyerItemDetail itemDetail = BuyerItemDetail.fromJson(data);
+      if (Get.find<UserGlobalInfoController>().userType == UserType.member) {
+        final response = await DioSingleton.dio.get(
+          '/items/detail/buyer',
+          queryParameters: {'item_id': itemID},
+          options: Options(
+            headers: {
+              "Authorization": "Bearer $accessToken",
+            },
+          ),
+        );
+        final data = response.data['detail'];
+        // API 응답을 Item 모델로 변환
+        final BuyerItemDetail itemDetail = BuyerItemDetail.fromJson(data);
 
-      return itemDetail;
+        return itemDetail;
+      } else {
+        final response = await DioSingleton.dio.get(
+          '/items/detail/guest',
+          queryParameters: {'item_id': itemID},
+        );
+        final data = response.data['detail'];
+        // API 응답을 Item 모델로 변환
+        final BuyerItemDetail itemDetail = BuyerItemDetail.fromJson(data);
+
+        return itemDetail;
+      }
     } catch (e) {
       // 에러 처리
       print('Error fetching item detail in repository: $e');
