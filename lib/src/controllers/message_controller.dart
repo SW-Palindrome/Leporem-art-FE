@@ -251,8 +251,8 @@ class MessageController extends GetxService {
   }
 
   isDifferentUserIndex(int index) {
-    if (index == 0 || index == reversedMessageList.length - 1) {
-      return false;
+    if (index == reversedMessageList.length - 1) {
+      return true;
     }
     if (reversedMessageList[index].userId !=
         reversedMessageList[index + 1].userId) {
