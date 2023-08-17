@@ -23,12 +23,12 @@ class DioSingleton {
             } else if (response.statusCode == 403) {
               if (response.data['code'] == 'JWT_403_EXPIRED_ACCESSTOKEN') {
                 final prefs = await SharedPreferences.getInstance();
-                final response = await dio.post('/users/refresh',
+                final refreshResponse = await dio.post('/users/refresh',
                     data: {'refresh_token': prefs.getString('refresh_token')});
                 prefs.setString(
-                    'access_token', response.data['data']['access_token']);
+                    'access_token', refreshResponse.data['data']['access_token']);
                 prefs.setString(
-                    'refresh_token', response.data['data']['refresh_token']);
+                    'refresh_token', refreshResponse.data['data']['refresh_token']);
                 response.requestOptions.headers['Authorization'] =
                     'Bearer ${prefs.getString('access_token')}';
 
