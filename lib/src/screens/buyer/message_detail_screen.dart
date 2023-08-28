@@ -153,6 +153,7 @@ class MessageDetailScreen extends GetView<MessageController> {
       BoxDecoration boxDecoration, Function onTapAction) {
     ItemInfo? item = message.itemInfo;
     if (item == null) {
+      controller.fetchItemInfo(message);
       return CircularProgressIndicator();
     }
     return GestureDetector(
