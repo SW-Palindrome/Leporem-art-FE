@@ -2,8 +2,8 @@ name: Fastlane
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -24,10 +24,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.6'  # 필요한 Flutter 버전으로 업데이트하세요.
-
-      - name: Build Flutter App
-        run: flutter build ios --release
+          flutter-version: '3.10.6'
 
       - name: Run Fastlane
         run: fastlane testflight
