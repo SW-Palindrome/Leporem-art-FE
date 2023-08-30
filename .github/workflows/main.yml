@@ -27,7 +27,7 @@ jobs:
           flutter-version: '3.10.6'
 
       - name: Run Fastlane
-        run: fastlane testflight
+        run: fastlane testflight --disable-notarization --verbose
         env:
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_ISSUER_ID: ${{ secrets.API_ISSUER_ID }}
