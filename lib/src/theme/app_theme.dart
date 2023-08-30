@@ -34,6 +34,7 @@ class ColorPalette {
   static const Color grey_3 = Color(0xffe5e7ec);
   static const Color grey_2 = Color(0xfff4f5f6);
   static const Color grey_1 = Color(0xfffafafa);
+  static const Color grey_0 = Color(0xfffffffa);
   static const Color white = Color(0xffffffff);
   //gradient: LinearGradient(
 //                   begin: Alignment(1.00, -0.07),
