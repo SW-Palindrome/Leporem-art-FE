@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/agreement_controller.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/seller_app.dart';
+import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../../buyer_app.dart';
 import '../../configs/login_config.dart';
@@ -17,7 +18,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _onAfterBuild());
-    return Container();
+    return Container(
+      color: ColorPalette.grey_1,
+      child: Center(
+        child: CircularProgressIndicator(
+          color: ColorPalette.purple,
+        ),
+      ),
+    );
   }
 
   _onAfterBuild() async {
