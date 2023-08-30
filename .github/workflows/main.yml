@@ -22,7 +22,7 @@ jobs:
         run: gem install fastlane -N
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v4
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.6'  # 필요한 Flutter 버전으로 업데이트하세요.
 
