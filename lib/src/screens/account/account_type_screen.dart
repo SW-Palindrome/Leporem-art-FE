@@ -11,8 +11,8 @@ import 'package:leporemart/src/widgets/next_button.dart';
 
 import 'home.dart';
 
-class AccountType extends GetView<AccountTypeController> {
-  const AccountType({super.key});
+class AccountTypeScreen extends GetView<AccountTypeController> {
+  const AccountTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
