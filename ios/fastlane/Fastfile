@@ -3,35 +3,20 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :testflight do
-    # 1.build number 1 올리기
+    # 1. certificates, provisioning_profile 가져오기
+    app_store_connect_api_key(
+        key_id: ENV["API_KEY_ID"],
+        issuer_id: ENV["API_ISSUER_ID"],
+        key_content: ENV["API_PRIVATE_KEY"]
+    )
+    # 2. build_number 증가
     increment_build_number(
       build_number: latest_testflight_build_number + 1
     )
 
     # 3.build app
-    build_app
+    buildApp "Debug"
 
-    # 4.TestFlight에 업로드
-    pilot(api_key_path: "fastlane/SJB8R3Y3U6.json")
-  end
-  lane :set_version do |options|
-    case options[:version]
-    when "major", "minor", "patch"
-      increment_version_number(bump_type: options[:version])
-    else
-      increment_version_number(version_number: options[:version])
-    end
-
-    # 가장 흔한 빌드번호 규칙은, 특정 버전번호에 해당하는 n번째 빌드의 빌드번호는 n이어야 한다는 것이다.
-    # 하지만 자동화 과정에서는 이 규칙을 적용 할 수 없으므로, 현재시간을 조합하여 중복될 일 없는 빌드번호를 만든다.
-    increment_build_number(
-      build_number: Time.new.strftime("%Y.%m%d.%H%M") # 2021년 4월 17일 14시 53분 -> 2021.0417.1453
-      )
-    version_number = "#{lane_context[SharedValues::VERSION_NUMBER]}(#{lane_context[SharedValues::BUILD_NUMBER]})"
-    commit_version_bump(
-      message: "Update version - #{version_number}"
-      )
-    add_git_tag(tag: "v#{version_number}")
-    push_to_git_remote
+    pilot
   end
 end
