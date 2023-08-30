@@ -139,7 +139,7 @@ class NicknameScreen extends GetView<NicknameController> {
                                 'step': 'nickname',
                                 'action': 'next_button'
                               });
-                              Get.offAll(AccountType());
+                              Get.offAll(AccountTypeScreen());
                               Get.put(AccountTypeController());
                             },
                             onLeftButtonPressed: () {
@@ -147,7 +147,7 @@ class NicknameScreen extends GetView<NicknameController> {
                                 'step': 'nickname',
                                 'action': 'next_button'
                               });
-                              Get.offAll(AccountType());
+                              Get.offAll(AccountTypeScreen());
                               Get.put(AccountTypeController());
                             },
                           ),
