@@ -122,6 +122,7 @@ class ItemEditController extends ItemCreateDetailController {
   bool isValidCreate() {
     return images.isNotEmpty &&
         images.length <= 10 &&
+        videos.isNotEmpty &&
         title.value.isNotEmpty &&
         description.value.isNotEmpty &&
         price.value >= 1000 &&
