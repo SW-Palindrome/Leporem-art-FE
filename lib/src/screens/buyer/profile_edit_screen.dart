@@ -222,7 +222,7 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
     return GestureDetector(
       onTap: () {
         launchUrl(Uri.parse(
-            'mailto:swm.palindrome@gmail.com?subject=[회원탈퇴 신청] ${controller.buyerProfileEdit.nickname}&body=회원탈퇴를 신청합니다.\n\n회원 탈퇴 시 기존에 등록한 모든 정보가 삭제되며, 복구가 불가능합니다.\n\n회원 탈퇴를 진행하시겠습니까?\n\n'));
+            'mailto:swm.palindrome@gmail.com?subject=[회원탈퇴 신청] ${controller.buyerProfileEdit.nickname}&body=회원탈퇴를 신청합니다.\n\n회원 탈퇴 시 기존에 등록한 모든 정보가 삭제되며, 복구가 불가능합니다.\n\n회원 탈퇴 처리는 최대 5영업일이 소요될 수 있습니다.\n\n회원 탈퇴를 진행하시겠습니까?\n\n'));
       },
       child: Text(
         '회원 탈퇴',
