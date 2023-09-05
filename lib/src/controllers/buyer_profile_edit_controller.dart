@@ -4,13 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
-import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_profile_controller.dart';
 import 'package:leporemart/src/controllers/seller_profile_controller.dart';
 import 'package:leporemart/src/models/profile_edit.dart';
 import 'package:leporemart/src/utils/dio_singleton.dart';
 import 'package:leporemart/src/utils/log_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../screens/account/login_screen.dart';
 
 class BuyerProfileEditController extends GetxController {
   TextEditingController nicknameController = TextEditingController();
@@ -162,5 +163,24 @@ class BuyerProfileEditController extends GetxController {
   bool isEditable() {
     return isNicknameValid.value &&
         (isNicknameChanged.value || isProfileImageChanged.value);
+  }
+
+  inactive() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await DioSingleton.dio.post(
+      "/users/inactive",
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Status code: ${response.statusCode}, Response Data: ${response.data}');
+    }
+    prefs.setString('access_token', '');
+    Get.offAll(LoginScreen());
   }
 }

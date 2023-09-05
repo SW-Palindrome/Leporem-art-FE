@@ -74,7 +74,7 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
               SizedBox(height: 30),
               _nicknameEdit(),
               Spacer(),
-              _withdrawalText(),
+              _withdrawalText(context),
             ],
           ),
         ),
@@ -218,11 +218,28 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
     );
   }
 
-  _withdrawalText() {
+  _withdrawalText(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        launchUrl(Uri.parse(
-            'mailto:swm.palindrome@gmail.com?subject=[회원탈퇴 신청] ${controller.buyerProfileEdit.nickname}&body=회원탈퇴를 신청합니다.\n\n회원 탈퇴 시 기존에 등록한 모든 정보가 삭제되며, 복구가 불가능합니다.\n\n회원 탈퇴 처리는 최대 5영업일이 소요될 수 있습니다.\n\n회원 탈퇴를 진행하시겠습니까?\n\n'));
+      onTap: () async {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('회원 탈퇴를 하시겠습니까?'),
+              content: const Text('계정을 삭제하면 게시글, 좋아요, 채팅 등 모든 활동 정보가 삭제되고 다시 복구할 수 없습니다.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('취소'),
+                ),
+                TextButton(onPressed: () async {
+                  await controller.inactive();
+                }, child: const Text('확인', style: TextStyle(color: ColorPalette.red))),
+              ],
+            );
+        });
       },
       child: Text(
         '회원 탈퇴',
