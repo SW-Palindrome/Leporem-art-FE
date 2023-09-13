@@ -28,7 +28,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
     return Scaffold(
       backgroundColor: Color(0xffFAFAFA),
       body: SafeArea(

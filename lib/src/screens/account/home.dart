@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/src/controllers/agreement_controller.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/seller_app.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../../buyer_app.dart';
@@ -33,8 +32,10 @@ class HomeScreen extends StatelessWidget {
       await getLoginProceed();
       await Get.putAsync(() => MessageController().init());
       ChattingSocketSingleton();
+      FlutterNativeSplash.remove();
       Get.offAll(BuyerApp());
     } else {
+      FlutterNativeSplash.remove();
       Get.offAll(LoginScreen());
       Get.put(NicknameController());
     }

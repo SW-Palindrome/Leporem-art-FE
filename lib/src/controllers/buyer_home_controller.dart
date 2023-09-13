@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/buyer_search_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/item.dart';
@@ -128,7 +125,6 @@ class BuyerHomeController extends GetxController {
         );
         items.addAll(fetchedItems);
       }
-      FlutterNativeSplash.remove();
     } catch (e) {
       // 에러 처리
       print('Error fetching buyer home items in controller: $e');
