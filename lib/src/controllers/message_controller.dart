@@ -39,7 +39,6 @@ class MessageController extends GetxService {
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
-    await fetchItemInfoList();
     isLoading.value = false;
   }
 
@@ -240,14 +239,6 @@ class MessageController extends GetxService {
         break;
     }
     chatRoomList.refresh();
-  }
-
-  fetchItemInfoList() async {
-    for (final chatRoom in chatRoomList) {
-      for (final message in chatRoom.messageList) {
-        await fetchItemInfo(message);
-      }
-    }
   }
 
   isDifferentUserIndex(int index) {
