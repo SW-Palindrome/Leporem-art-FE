@@ -67,18 +67,21 @@ class MessageRepository {
     }
   }
 
-  Future<List<Message>> fetchChatRoomMessages(String chatRoomUuid) async {
+  Future<List<Message>> fetchChatRoomMessages(String chatRoomUuid, String? messageUuid) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await DioSingleton.dio.get(
       '/chats/chat-rooms/$chatRoomUuid/messages',
+      queryParameters: {
+        'message_uuid': messageUuid
+      },
       options: Options(
         headers: {
           "Authorization": "Bearer $accessToken",
         },
       ),
     );
-    final data = response.data;
+    final data = response.data['results'];
     List<Message> messageList = [];
     for (var i = 0; i < data.length; i++) {
       Message message = Message.fromJson(data[i]);

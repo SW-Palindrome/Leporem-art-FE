@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/order.dart';
@@ -18,6 +19,7 @@ class MessageController extends GetxService {
   final MessageRepository _messageRepository = MessageRepository();
   final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
   final OrderInfoRepository _orderInfoRepository = OrderInfoRepository();
+  final scrollController = ScrollController().obs;
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
@@ -28,6 +30,12 @@ class MessageController extends GetxService {
     return this;
   }
 
+  @override
+  void onInit() {
+    _chatRoomMessagesScroll();
+    super.onInit();
+  }
+
   Future<void> fetch() async {
     isLoading.value = true;
     List<ChatRoom> fetchedBuyerChatRoomList =
@@ -36,9 +44,14 @@ class MessageController extends GetxService {
     if (Get.find<UserGlobalInfoController>().isSeller) {
       fetchedSellerChatRoomList.addAll(await _messageRepository.fetchSellerChatRooms());
     }
+
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
+
+    for (final chatRoom in chatRoomList) {
+      fetchChatRoomMessages(chatRoom.chatRoomUuid);
+    }
     isLoading.value = false;
   }
 
@@ -176,6 +189,26 @@ class MessageController extends GetxService {
       messageType,
     );
   }
+
+  fetchChatRoomMessages(String chatRoomUuid) async {
+    print('fetchChatRoomMessages');
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    final messageUuid = chatRoom.messageList.last.messageUuid;
+    final fetchMessageList = _messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+    fetchMessageList.then((value) {
+      chatRoom.messageList.addAll(value);
+    });
+    chatRoomList.refresh();
+  }
+
+  _chatRoomMessagesScroll() async {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+        fetchChatRoomMessages(Get.arguments['chatRoomUuid']);
+      }
+    });
+  }
+
 
   getChatRoom(chatRoomUuid) {
     for (final chatRoom in chatRoomList.value) {
