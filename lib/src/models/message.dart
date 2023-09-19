@@ -95,16 +95,15 @@ class ChatRoom {
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
     List<Message> fetchMessageList = <Message>[];
-    for (final message in json['message_list']) {
-      fetchMessageList.add(Message(
-        messageUuid: message['uuid'],
-        userId: message['user_id'],
-        writeDatetime: DateTime.parse(message['write_datetime']),
-        isRead: message['is_read'],
-        message: message['message'],
-        type: MessageType.fromText(message['type']),
-      ));
-    }
+    final message = json['last_message'];
+    fetchMessageList.add(Message(
+      messageUuid: message['uuid'],
+      userId: message['user_id'],
+      writeDatetime: DateTime.parse(message['write_datetime']),
+      isRead: message['is_read'],
+      message: message['message'],
+      type: MessageType.fromText(message['type']),
+    ));
     return ChatRoom(
       chatRoomUuid: json['uuid'],
       opponentUserId: json['opponent_user_id'],

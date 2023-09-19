@@ -12,6 +12,9 @@ class MessageRepository {
       final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/buyer',
+        queryParameters: {
+          'only_last_message': true,
+        },
         options: Options(
           headers: {
             "Authorization": "Bearer $accessToken",
@@ -38,6 +41,9 @@ class MessageRepository {
       final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/seller',
+        queryParameters: {
+          'only_last_message': true,
+        },
         options: Options(
           headers: {
             "Authorization": "Bearer $accessToken",
