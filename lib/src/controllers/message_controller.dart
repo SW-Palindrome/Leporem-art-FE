@@ -24,6 +24,7 @@ class MessageController extends GetxService {
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
+  Rx<bool> isLoadingScroll = false.obs;
 
   Future<MessageController> init() async {
     await fetch();
@@ -191,14 +192,20 @@ class MessageController extends GetxService {
   }
 
   fetchChatRoomMessages(String chatRoomUuid) async {
-    print('fetchChatRoomMessages');
     ChatRoom chatRoom = getChatRoom(chatRoomUuid);
-    final messageUuid = chatRoom.messageList.last.messageUuid;
-    final fetchMessageList = _messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
-    fetchMessageList.then((value) {
-      chatRoom.messageList.addAll(value);
-    });
+    if (!chatRoom.hasMoreMessage) {
+      return;
+    }
+    isLoadingScroll.value = true;
+    final messageUuid = chatRoom.messageList.first.messageUuid;
+    List<Message> fetchMessageList = await _messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+    if (fetchMessageList.isEmpty) {
+      chatRoom.hasMoreMessage = false;
+    }
+    fetchMessageList.addAll(chatRoom.messageList);
+    chatRoom.messageList = fetchMessageList;
     chatRoomList.refresh();
+    isLoadingScroll.value = false;
   }
 
   _chatRoomMessagesScroll() async {

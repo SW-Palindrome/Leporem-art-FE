@@ -87,6 +87,6 @@ class MessageRepository {
       Message message = Message.fromJson(data[i]);
       messageList.add(message);
     }
-    return messageList;
+    return messageList.reversed.toList();
   }
 }

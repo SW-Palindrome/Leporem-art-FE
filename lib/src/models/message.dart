@@ -91,6 +91,7 @@ class ChatRoom {
   final String opponentProfileImageUrl;
   late final bool isBuyerRoom;
   bool isRegistered;
+  bool hasMoreMessage = true;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];

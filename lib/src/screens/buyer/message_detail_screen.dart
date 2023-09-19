@@ -68,6 +68,9 @@ class MessageDetailScreen extends GetView<MessageController> {
         shrinkWrap: true,
         itemCount: messageList.length,
         itemBuilder: (context, index) {
+          if (controller.isLoadingScroll.value) {
+            return Center(child: RefreshProgressIndicator());
+          }
           return _messageWidget(messageList[index], index);
         },
       ),
