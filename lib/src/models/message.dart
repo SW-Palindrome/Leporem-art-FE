@@ -71,6 +71,17 @@ class Message {
     required this.message,
     required this.type,
   });
+
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+      messageUuid: json['uuid'],
+      userId: json['user_id'],
+      writeDatetime: DateTime.parse(json['write_datetime']),
+      isRead: json['is_read'],
+      message: json['message'],
+      type: MessageType.fromText(json['type']),
+    );
+  }
 }
 
 class ChatRoom {
@@ -80,6 +91,7 @@ class ChatRoom {
   final String opponentProfileImageUrl;
   late final bool isBuyerRoom;
   bool isRegistered;
+  bool hasMoreMessage = true;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];
@@ -95,16 +107,8 @@ class ChatRoom {
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
     List<Message> fetchMessageList = <Message>[];
-    for (final message in json['message_list']) {
-      fetchMessageList.add(Message(
-        messageUuid: message['uuid'],
-        userId: message['user_id'],
-        writeDatetime: DateTime.parse(message['write_datetime']),
-        isRead: message['is_read'],
-        message: message['message'],
-        type: MessageType.fromText(message['type']),
-      ));
-    }
+    final message = json['last_message'];
+    fetchMessageList.add(Message.fromJson(message));
     return ChatRoom(
       chatRoomUuid: json['uuid'],
       opponentUserId: json['opponent_user_id'],

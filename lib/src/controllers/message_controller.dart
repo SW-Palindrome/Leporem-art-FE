@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/models/order.dart';
@@ -18,14 +19,22 @@ class MessageController extends GetxService {
   final MessageRepository _messageRepository = MessageRepository();
   final ItemDetailRepository _itemDetailRepository = ItemDetailRepository();
   final OrderInfoRepository _orderInfoRepository = OrderInfoRepository();
+  final scrollController = ScrollController().obs;
 
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
+  Rx<bool> isLoadingScroll = false.obs;
 
   Future<MessageController> init() async {
     await fetch();
     return this;
+  }
+
+  @override
+  void onInit() {
+    _chatRoomMessagesScroll();
+    super.onInit();
   }
 
   Future<void> fetch() async {
@@ -36,9 +45,14 @@ class MessageController extends GetxService {
     if (Get.find<UserGlobalInfoController>().isSeller) {
       fetchedSellerChatRoomList.addAll(await _messageRepository.fetchSellerChatRooms());
     }
+
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
+
+    for (final chatRoom in chatRoomList) {
+      fetchChatRoomMessages(chatRoom.chatRoomUuid);
+    }
     isLoading.value = false;
   }
 
@@ -176,6 +190,32 @@ class MessageController extends GetxService {
       messageType,
     );
   }
+
+  fetchChatRoomMessages(String chatRoomUuid) async {
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    if (!chatRoom.hasMoreMessage) {
+      return;
+    }
+    isLoadingScroll.value = true;
+    final messageUuid = chatRoom.messageList.first.messageUuid;
+    List<Message> fetchMessageList = await _messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+    if (fetchMessageList.isEmpty) {
+      chatRoom.hasMoreMessage = false;
+    }
+    fetchMessageList.addAll(chatRoom.messageList);
+    chatRoom.messageList = fetchMessageList;
+    chatRoomList.refresh();
+    isLoadingScroll.value = false;
+  }
+
+  _chatRoomMessagesScroll() async {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+        fetchChatRoomMessages(Get.arguments['chatRoomUuid']);
+      }
+    });
+  }
+
 
   getChatRoom(chatRoomUuid) {
     for (final chatRoom in chatRoomList.value) {

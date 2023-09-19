@@ -62,11 +62,15 @@ class MessageDetailScreen extends GetView<MessageController> {
     return Align(
       alignment: Alignment.topCenter,
       child: ListView.builder(
+        controller: controller.scrollController.value,
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
         reverse: true,
         shrinkWrap: true,
         itemCount: messageList.length,
         itemBuilder: (context, index) {
+          if (controller.isLoadingScroll.value) {
+            return Center(child: RefreshProgressIndicator());
+          }
           return _messageWidget(messageList[index], index);
         },
       ),

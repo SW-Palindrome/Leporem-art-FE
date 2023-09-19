@@ -12,6 +12,9 @@ class MessageRepository {
       final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/buyer',
+        queryParameters: {
+          'only_last_message': true,
+        },
         options: Options(
           headers: {
             "Authorization": "Bearer $accessToken",
@@ -38,6 +41,9 @@ class MessageRepository {
       final accessToken = prefs.getString('access_token');
       final response = await DioSingleton.dio.get(
         '/chats/seller',
+        queryParameters: {
+          'only_last_message': true,
+        },
         options: Options(
           headers: {
             "Authorization": "Bearer $accessToken",
@@ -59,5 +65,28 @@ class MessageRepository {
       // 에러 처리
       throw ('Error fetching chat rooms in repository: $e');
     }
+  }
+
+  Future<List<Message>> fetchChatRoomMessages(String chatRoomUuid, String? messageUuid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await DioSingleton.dio.get(
+      '/chats/chat-rooms/$chatRoomUuid/messages',
+      queryParameters: {
+        'message_uuid': messageUuid
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    final data = response.data['results'];
+    List<Message> messageList = [];
+    for (var i = 0; i < data.length; i++) {
+      Message message = Message.fromJson(data[i]);
+      messageList.add(message);
+    }
+    return messageList.reversed.toList();
   }
 }
