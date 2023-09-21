@@ -58,7 +58,7 @@ class Message {
   String messageUuid;
   final int userId;
   final DateTime writeDatetime;
-  final bool isRead;
+  bool isRead;
   final String message;
   final MessageType type;
   ItemInfo? itemInfo;

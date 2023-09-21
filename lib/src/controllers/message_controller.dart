@@ -293,6 +293,17 @@ class MessageController extends GetxService {
     return false;
   }
 
+  readAllMessages(String chatRoomUuid) async {
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    Message lastMessage = chatRoom.messageList.last;
+    await _messageRepository.readChatRoomMessages(chatRoom, lastMessage);
+    chatRoom.unreadMessageCount = 0;
+    for (final message in chatRoom.messageList) {
+      message.isRead = true;
+    }
+    chatRoomList.refresh();
+  }
+
   ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 
   List<Message> get reversedMessageList =>

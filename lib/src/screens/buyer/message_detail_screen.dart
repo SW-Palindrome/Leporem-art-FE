@@ -109,6 +109,9 @@ class MessageDetailScreen extends GetView<MessageController> {
   }
 
   _opponentMessageWidget(Message message, int index) {
+    if (message.isRead == false) {
+      controller.readAllMessages(controller.chatRoom.chatRoomUuid);
+    }
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
