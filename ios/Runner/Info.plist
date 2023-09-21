@@ -59,6 +59,11 @@
 	<string>프로필 변경 혹은 작품의 사진과 영상 업로드를 위해 허용 버튼을 눌러주세요.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
