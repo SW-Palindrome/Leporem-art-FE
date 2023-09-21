@@ -129,6 +129,7 @@ class MessageController extends GetxService {
     );
     fetchItemInfo(receiveMessage);
     receiveChatRoom.messageList.add(receiveMessage);
+    receiveChatRoom.unreadMessageCount += 1;
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
