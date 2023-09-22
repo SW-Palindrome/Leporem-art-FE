@@ -129,6 +129,7 @@ class MessageController extends GetxService {
     );
     fetchItemInfo(receiveMessage);
     receiveChatRoom.messageList.add(receiveMessage);
+    receiveChatRoom.unreadMessageCount += 1;
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
@@ -292,8 +293,37 @@ class MessageController extends GetxService {
     return false;
   }
 
+  readAllMessages(String chatRoomUuid) async {
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    Message lastMessage = chatRoom.messageList.last;
+    await _messageRepository.readChatRoomMessages(chatRoom, lastMessage);
+    chatRoom.unreadMessageCount = 0;
+    for (final message in chatRoom.messageList) {
+      message.isRead = true;
+    }
+    chatRoomList.refresh();
+  }
+
   ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 
   List<Message> get reversedMessageList =>
       chatRoom.messageList.reversed.toList();
+
+  bool get isBuyerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool get isSellerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (!chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

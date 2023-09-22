@@ -89,4 +89,24 @@ class MessageRepository {
     }
     return messageList.reversed.toList();
   }
+
+  readChatRoomMessages(ChatRoom chatRoom, Message message) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await DioSingleton.dio.patch(
+      '/chats/messages/read',
+      data: {
+        'chat_room_uuid': chatRoom.chatRoomUuid,
+        'message_uuid': message.messageUuid,
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode != 204) {
+      throw ('Error reading chat room messages in repository: $response');
+    }
+  }
 }

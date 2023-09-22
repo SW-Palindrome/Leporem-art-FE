@@ -58,7 +58,7 @@ class Message {
   String messageUuid;
   final int userId;
   final DateTime writeDatetime;
-  final bool isRead;
+  bool isRead;
   final String message;
   final MessageType type;
   ItemInfo? itemInfo;
@@ -92,6 +92,7 @@ class ChatRoom {
   late final bool isBuyerRoom;
   bool isRegistered;
   bool hasMoreMessage = true;
+  int unreadMessageCount = 0;
 
   List<Message> messageList = <Message>[];
   List<Message> tempMessageList = <Message>[];
@@ -103,6 +104,7 @@ class ChatRoom {
     required this.opponentProfileImageUrl,
     required this.messageList,
     this.isRegistered = true,
+    this.unreadMessageCount = 0,
   });
 
   factory ChatRoom.fromJson(Map<String, dynamic> json) {
@@ -115,6 +117,7 @@ class ChatRoom {
       opponentNickname: json['opponent_nickname'],
       opponentProfileImageUrl: json['opponent_profile_image'],
       messageList: fetchMessageList,
+      unreadMessageCount: json['unread_count'],
     );
   }
 
