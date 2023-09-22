@@ -308,4 +308,22 @@ class MessageController extends GetxService {
 
   List<Message> get reversedMessageList =>
       chatRoom.messageList.reversed.toList();
+
+  bool get isBuyerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool get isSellerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (!chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

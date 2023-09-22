@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
+import '../controllers/message_controller.dart';
+
 enum MyBottomNavigationBarType { buyer, seller }
 
 class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
@@ -62,19 +64,7 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                     //   ),
                     //   label: '경매',
                     // ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        'assets/icons/message_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/message_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
-                      ),
-                      label: '채팅',
-                    ),
+                    _chattingBottomNavigationBarItem(),
                     // BottomNavigationBarItem(
                     //   icon: SvgPicture.asset(
                     //     'assets/icons/flop.svg',
@@ -129,19 +119,7 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                     //   ),
                     //   label: '주문제작',
                     // ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        'assets/icons/message_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.grey_4, BlendMode.srcIn),
-                      ),
-                      activeIcon: SvgPicture.asset(
-                        'assets/icons/message_fill.svg',
-                        colorFilter: ColorFilter.mode(
-                            ColorPalette.purple, BlendMode.srcIn),
-                      ),
-                      label: '채팅',
-                    ),
+                    _chattingBottomNavigationBarItem(),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         'assets/icons/profile.svg',
@@ -160,5 +138,71 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
         ),
       ),
     );
+  }
+
+  _chattingBottomNavigationBarItem() {
+    return BottomNavigationBarItem(
+      icon: SizedBox(
+        width: 24,
+        height: 24,
+        child: Stack(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/message_fill.svg',
+                colorFilter: ColorFilter.mode(
+                    ColorPalette.grey_4, BlendMode.srcIn),
+              ),
+              if (isMessageUnread)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: ColorPalette.purple,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                )
+            ]
+        ),
+      ),
+      activeIcon: SizedBox(
+        width: 24,
+        height: 24,
+        child: Stack(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/message_fill.svg',
+                colorFilter: ColorFilter.mode(
+                    ColorPalette.purple, BlendMode.srcIn),
+              ),
+              if (isMessageUnread)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: ColorPalette.purple,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                )
+            ]
+        ),
+      ),
+      label: '채팅',
+    );
+  }
+
+  bool get isMessageUnread {
+    MessageController messageController = Get.find<MessageController>();
+    print('isMessageUnread: ${messageController.isSellerMessageUnread}');
+    if (type == MyBottomNavigationBarType.buyer) {
+      return messageController.isBuyerMessageUnread;
+    } else {
+      return messageController.isSellerMessageUnread;
+    }
   }
 }
