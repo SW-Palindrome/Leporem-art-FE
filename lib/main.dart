@@ -7,23 +7,16 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/buyer_app.dart';
-import 'package:leporemart/src/configs/firebase_config.dart';
-import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/controllers/account_type_controller.dart';
-import 'package:leporemart/src/controllers/agreement_controller.dart';
-import 'package:leporemart/src/controllers/email_controller.dart';
-import 'package:leporemart/src/controllers/message_controller.dart';
-import 'package:leporemart/src/controllers/nickname_controller.dart';
-import 'package:leporemart/src/controllers/user_global_info_controller.dart';
-import 'package:leporemart/src/screens/account/agreement_screen.dart';
-import 'package:leporemart/src/screens/account/home.dart';
-import 'package:leporemart/src/screens/account/login_screen.dart';
-import 'package:leporemart/src/theme/app_theme.dart';
-import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:leporemart/src/configs/amplitude_config.dart';
-import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+
+import 'app/configs/amplitude_config.dart';
+import 'app/configs/firebase_config.dart';
+import 'app/configs/login_config.dart';
+import 'app/controller/common/bottom_navigationbar/bottom_navigationbar_contoller.dart';
+import 'app/controller/common/user_global_info/user_global_info_controller.dart';
+import 'app/routes/app_pages.dart';
+import 'app/ui/app/common/home/home.dart';
+import 'app/ui/theme/app_theme.dart';
 
 void main() async {
   // Sentry + GlitchTip
@@ -31,7 +24,7 @@ void main() async {
   if (kReleaseMode) {
     await dotenv.load(fileName: 'assets/config/.env');
   } else if (kDebugMode) {
-    await dotenv.load(fileName: 'assets/config/.env.dev');
+    await dotenv.load(fileName: 'assets/config/.env');
   }
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -76,6 +69,7 @@ class MyApp extends StatelessWidget {
         if (kReleaseMode)
           FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
+      getPages: AppPages.pages,
     );
   }
 }
