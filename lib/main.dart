@@ -43,13 +43,12 @@ void main() async {
   KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
   bool isLoginProceed = await getLoginProceed();
-  await Firebase.initializeApp();
+  await FirebaseConfig.init();
 
   // setting 함수
   await setupFlutterNotifications();
 
   if (kReleaseMode) {
-    await FirebaseConfig.init();
     await AmplitudeConfig.init();
     SentryFlutter.init(
       (options) {
