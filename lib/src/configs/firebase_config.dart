@@ -32,7 +32,6 @@ Future<void> registerFcmDevice() async {
     ),
   );
   if (response.statusCode != 201) {
-    print(response.data);
     throw Exception('Failed to register fcm device');
   }
 }
