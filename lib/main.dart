@@ -9,20 +9,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/buyer_app.dart';
 import 'package:leporemart/src/configs/firebase_config.dart';
+import 'package:leporemart/src/configs/firebase_options.dart';
 import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/controllers/account_type_controller.dart';
-import 'package:leporemart/src/controllers/agreement_controller.dart';
-import 'package:leporemart/src/controllers/email_controller.dart';
-import 'package:leporemart/src/controllers/message_controller.dart';
-import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
-import 'package:leporemart/src/screens/account/agreement_screen.dart';
 import 'package:leporemart/src/screens/account/home.dart';
-import 'package:leporemart/src/screens/account/login_screen.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
-import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
@@ -48,7 +40,9 @@ void main() async {
   KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
   bool isLoginProceed = await getLoginProceed();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   String? _fcmToken = await FirebaseMessaging.instance.getToken();
   print('fcmToken: $_fcmToken');
   if (kReleaseMode) {

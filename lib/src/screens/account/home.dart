@@ -5,6 +5,7 @@ import 'package:leporemart/src/controllers/nickname_controller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../../buyer_app.dart';
+import '../../configs/firebase_config.dart';
 import '../../configs/login_config.dart';
 import '../../controllers/message_controller.dart';
 import '../../utils/chatting_socket_singleton.dart';
@@ -32,6 +33,7 @@ class HomeScreen extends StatelessWidget {
       await getLoginProceed();
       await Get.putAsync(() => MessageController().init());
       ChattingSocketSingleton();
+      registerFcmDevice();
       FlutterNativeSplash.remove();
       Get.offAll(BuyerApp());
     } else {
