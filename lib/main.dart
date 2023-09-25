@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -15,6 +16,8 @@ import 'package:leporemart/src/configs/login_config.dart';
 import 'package:leporemart/src/controllers/user_global_info_controller.dart';
 import 'package:leporemart/src/screens/account/home.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
+import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
+import 'package:leporemart/src/utils/notification.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:leporemart/src/configs/amplitude_config.dart';
 import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
@@ -40,11 +43,11 @@ void main() async {
   KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
   bool isLoginProceed = await getLoginProceed();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  String? _fcmToken = await FirebaseMessaging.instance.getToken();
-  print('fcmToken: $_fcmToken');
+  await Firebase.initializeApp();
+
+  // setting 함수
+  await setupFlutterNotifications();
+
   if (kReleaseMode) {
     await FirebaseConfig.init();
     await AmplitudeConfig.init();
@@ -59,9 +62,25 @@ void main() async {
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool isLoginProceed;
   MyApp({super.key, required this.isLoginProceed});
+  @override
+  State<MyApp> createState() => _MyAppState(isLoginProceed: isLoginProceed);
+}
+
+class _MyAppState extends State<MyApp> {
+  final bool isLoginProceed;
+  _MyAppState({required this.isLoginProceed});
+
+  @override
+  void initState() {
+    super.initState();
+    // foreground 수신처리
+    FirebaseMessaging.onMessage.listen(showFlutterNotification);
+    // background 수신처리
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  }
 
   @override
   Widget build(BuildContext context) {

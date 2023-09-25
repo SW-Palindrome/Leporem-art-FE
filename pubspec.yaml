@@ -43,6 +43,8 @@ dependencies:
   mockito: ^5.4.2
   firebase_analytics: ^10.4.3
   firebase_messaging: ^14.3.0
+  flutter_local_notifications: ^13.0.0
+  permission_handler: ^8.3.0
   flutter_svg: ^2.0.7
   extended_image: ^8.0.2
   kakao_flutter_sdk: ^1.4.3
