@@ -1,39 +1,35 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../configs/firebase_options.dart';
 
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-late AndroidNotificationChannel channel;
-bool isFlutterLocalNotificationsInitialized = false; // 셋팅여부 판단 flag
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
 
-/// 셋팅 메소드
-Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) {
-    return;
+  print("Handling a background message: ${message.messageId}");
+}
+
+Future<void> fcmSetting() async {
+  // firebase core 기능 사용을 위한 필수 initializing
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  if (Platform.isAndroid) {
+    await messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
   }
-  channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-  // iOS foreground notification 권한
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  // IOS background 권한 체킹 , 요청
-  await FirebaseMessaging.instance.requestPermission(
+
+  await messaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -42,56 +38,81 @@ Future<void> setupFlutterNotifications() async {
     provisional: false,
     sound: true,
   );
-  // 토큰 요청
-  getToken();
-  // 셋팅flag 설정
-  isFlutterLocalNotificationsInitialized = true;
-}
 
-Future<void> getToken() async {
-  // ios
-  String? token;
-  if (defaultTargetPlatform == TargetPlatform.iOS ||
-      defaultTargetPlatform == TargetPlatform.macOS) {
-    token = await FirebaseMessaging.instance.getAPNSToken();
-  }
-  // aos
-  else {
-    token = await FirebaseMessaging.instance.getToken();
-  }
-  print("fcmToken : $token");
-}
+  if (Platform.isAndroid) {
+    // foreground에서의 푸시 알림 표시를 위한 알림 중요도 설정 (안드로이드)
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+        'leporemart_notification', 'leporemart_notification',
+        description: '공예쁨 알림입니다.', importance: Importance.max);
 
-/// fcm 배경 처리 (종료되어있거나, 백그라운드에 경우)
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await setupFlutterNotifications(); // 셋팅 메소드
-  //showFlutterNotification(message);  // 로컬노티
-}
+    // foreground 에서의 푸시 알림 표시를 위한 local notifications 설정
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
-/// fcm 전경 처리 - 로컬 알림 보이기
-void showFlutterNotification(RemoteMessage message) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  if (notification != null && android != null && !kIsWeb) {
-    // 웹이 아니면서 안드로이드이고, 알림이 있는경우
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          // TODO add a proper drawable resource to android, for now using
-          //      one that already exists in example app.
-          icon: '@drawable/ic_stat_notiicon',
-        ),
-      ),
-    );
+    // foreground 푸시 알림 핸들링
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification?.title,
+            notification?.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channelDescription: channel.description,
+                icon: '@drawable/ic_stat_notiicon',
+              ),
+            ));
+
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+  } else if (Platform.isIOS) {
+    // foreground 푸시 알림 핸들링
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+      if (message != null) {
+        if (message.notification != null) {
+          print('onMessageOpenedApp: ${message.notification!.title}');
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print(message.data["click_action"]);
+        }
+      }
+    });
   }
+
+  // background 푸시 알림 핸들링
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
+    if (message != null) {
+      if (message.notification != null) {
+        print('onMessageOpenedApp: ${message.notification!.title}');
+        print(message.notification!.title);
+        print(message.notification!.body);
+        print(message.data["click_action"]);
+      }
+    }
+  });
+
+  // 앱이 종료된 상태에서 푸시 알림 핸들링
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    if (message != null) {
+      if (message.notification != null) {
+        print('getInitialMessage: ${message.notification!.title}');
+        print(message.notification!.title);
+        print(message.notification!.body);
+        print(message.data["click_action"]);
+      }
+    }
+  });
 }

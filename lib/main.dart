@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -31,11 +32,16 @@ void main() async {
     await dotenv.load(fileName: 'assets/config/.env.dev');
   }
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // 스플래시 화면 켜기
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // 화면 회전 잠구기
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   Get.put(UserGlobalInfoController());
   Get.lazyPut(() => MyBottomNavigationbarController());
   await initializeDateFormatting();
@@ -43,10 +49,14 @@ void main() async {
   KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
   bool isLoginProceed = await getLoginProceed();
-  await FirebaseConfig.init();
 
-  // setting 함수
-  await setupFlutterNotifications();
+  await fcmSetting();
+
+  // fcm토큰 출력
+  FirebaseMessaging.instance.getToken().then((String? token) {
+    assert(token != null);
+    print("Push Messaging token: $token");
+  });
 
   if (kReleaseMode) {
     await AmplitudeConfig.init();
@@ -61,26 +71,9 @@ void main() async {
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   final bool isLoginProceed;
   MyApp({super.key, required this.isLoginProceed});
-  @override
-  State<MyApp> createState() => _MyAppState(isLoginProceed: isLoginProceed);
-}
-
-class _MyAppState extends State<MyApp> {
-  final bool isLoginProceed;
-  _MyAppState({required this.isLoginProceed});
-
-  @override
-  void initState() {
-    super.initState();
-    // foreground 수신처리
-    FirebaseMessaging.onMessage.listen(showFlutterNotification);
-    // background 수신처리
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
