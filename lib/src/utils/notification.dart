@@ -21,13 +21,11 @@ Future<void> fcmSetting() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  if (Platform.isAndroid) {
-    await messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-  }
+  await messaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
   await messaging.requestPermission(
     alert: true,
@@ -83,7 +81,8 @@ Future<void> fcmSetting() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       if (message != null) {
         if (message.notification != null) {
-          print('onMessageOpenedApp: ${message.notification!.title}');
+          // foreground 메시지를 받으면 알림을 띄운다.
+          print('onMessage: ${message.notification!.title}');
           print(message.notification!.title);
           print(message.notification!.body);
           print(message.data["click_action"]);
