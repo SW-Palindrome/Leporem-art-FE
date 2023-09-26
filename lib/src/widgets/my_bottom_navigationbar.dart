@@ -5,6 +5,7 @@ import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
 import 'package:leporemart/src/theme/app_theme.dart';
 
 import '../controllers/message_controller.dart';
+import '../controllers/user_global_info_controller.dart';
 
 enum MyBottomNavigationBarType { buyer, seller }
 
@@ -141,6 +142,22 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
   }
 
   _chattingBottomNavigationBarItem() {
+    UserGlobalInfoController userGlobalInfoController = Get.find<UserGlobalInfoController>();
+    if (userGlobalInfoController.userType == UserType.guest) {
+      return BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/message_fill.svg',
+          colorFilter: ColorFilter.mode(
+              ColorPalette.grey_4, BlendMode.srcIn),
+        ),
+        activeIcon: SvgPicture.asset(
+          'assets/icons/message_fill.svg',
+          colorFilter: ColorFilter.mode(
+              ColorPalette.purple, BlendMode.srcIn),
+        ),
+        label: '채팅',
+      );
+    }
     return BottomNavigationBarItem(
       icon: SizedBox(
         width: 24,
