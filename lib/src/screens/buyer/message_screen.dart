@@ -53,11 +53,13 @@ class MessageScreen extends GetView<MessageController> {
   }
 
   _chatRoomListWidget() {
-    return Column(
-      children: [
-        for (final chatRoom in chatRoomList)
-          _chatRoomWidget(chatRoom)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          for (final chatRoom in chatRoomList)
+            _chatRoomWidget(chatRoom)
+        ],
+      ),
     );
   }
 
