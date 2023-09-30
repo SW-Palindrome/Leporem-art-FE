@@ -12,7 +12,7 @@ class FirebaseConfig {
         options: DefaultFirebaseOptions.currentPlatform);
   }
 
-  Future<void> registerFcmDevice() async {
+  static Future<void> registerFcmDevice() async {
     await DioClient().registerFcmDevice();
   }
 }

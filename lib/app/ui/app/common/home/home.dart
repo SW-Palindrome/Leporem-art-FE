@@ -41,8 +41,7 @@ class HomeScreen extends StatelessWidget {
               orderListRepository: OrderListRepository(apiClient: DioClient()),
               profileRepository: ProfileRepository(apiClient: DioClient()))
           .init());
-
-      registerFcmDevice();
+      FirebaseConfig.registerFcmDevice();
       ChattingSocketSingleton();
       FlutterNativeSplash.remove();
       Get.toNamed(Routes.BUYER_APP);
