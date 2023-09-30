@@ -16,4 +16,13 @@ class MessageRepository {
   Future<List<ChatRoom>> fetchSellerChatRooms() async {
     return apiClient.fetchSellerChatRooms();
   }
+
+  Future<List<Message>> fetchChatRoomMessages(
+      String chatRoomUuid, String? messageUuid) async {
+    return apiClient.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+  }
+
+  Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message) async {
+    return apiClient.readChatRoomMessages(chatRoom, message);
+  }
 }

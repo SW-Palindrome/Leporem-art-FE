@@ -48,10 +48,13 @@ class MessageScreen extends GetView<MessageController> {
   }
 
   _chatRoomListWidget() {
-    return Column(
-      children: [
-        for (final chatRoom in chatRoomList) _chatRoomWidget(chatRoom)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          for (final chatRoom in chatRoomList)
+            _chatRoomWidget(chatRoom)
+        ],
+      ),
     );
   }
 
@@ -86,6 +89,9 @@ class MessageScreen extends GetView<MessageController> {
           _profileImageWidget(chatRoom),
           SizedBox(width: 8),
           Expanded(child: _profileDetailInfoWidget(chatRoom)),
+          SizedBox(width: 8),
+          _unreadMessageWidget(chatRoom),
+          SizedBox(width: 12),
         ]),
       ),
       onTap: () {
@@ -131,7 +137,8 @@ class MessageScreen extends GetView<MessageController> {
                 style: TextStyle(
                     fontSize: 12,
                     fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.w700)),
+                    fontWeight: chatRoom.unreadMessageCount == 0 ? FontWeight.w500 : FontWeight.w600,
+                )),
             SizedBox(width: 6),
             Text(
                 (chatRoom.lastMessageDatetime == null)
@@ -151,8 +158,36 @@ class MessageScreen extends GetView<MessageController> {
             style: TextStyle(
                 fontSize: 12,
                 fontFamily: FontPalette.pretenderd,
+                fontWeight: chatRoom.unreadMessageCount == 0 ? FontWeight.w400 : FontWeight.w600,
                 color: ColorPalette.grey_6)),
       ],
+    );
+  }
+
+  _unreadMessageWidget(ChatRoom chatRoom) {
+    if (chatRoom.unreadMessageCount == 0) {
+      return SizedBox(width: 16);
+    }
+    return Center(
+      child: Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: ColorPalette.purple,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            chatRoom.unreadMessageCount.toString(),
+            style: TextStyle(
+              fontSize: 10,
+              fontFamily: FontPalette.pretenderd,
+              color: ColorPalette.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      )
     );
   }
 

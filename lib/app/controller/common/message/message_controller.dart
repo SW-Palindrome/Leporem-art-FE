@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/data/repositories/item_detail_repository.dart';
 import 'package:leporemart/app/data/repositories/order_list_repository.dart';
@@ -13,6 +16,7 @@ import '../../../utils/chatting_socket_singleton.dart';
 import '../user_global_info/user_global_info_controller.dart';
 
 class MessageController extends GetxService {
+  final scrollController = ScrollController().obs;
   final MessageRepository messageRepository;
   final ItemDetailRepository itemDetailRepository;
   final OrderListRepository orderListRepository;
@@ -30,10 +34,17 @@ class MessageController extends GetxService {
   RxList<ChatRoom> chatRoomList = <ChatRoom>[].obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
+  Rx<bool> isLoadingScroll = false.obs;
 
   Future<MessageController> init() async {
     await fetch();
     return this;
+  }
+
+  @override
+  void onInit() {
+    _chatRoomMessagesScroll();
+    super.onInit();
   }
 
   Future<void> fetch() async {
@@ -45,9 +56,14 @@ class MessageController extends GetxService {
       fetchedSellerChatRoomList
           .addAll(await messageRepository.fetchSellerChatRooms());
     }
+
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
+
+    for (final chatRoom in chatRoomList) {
+      fetchChatRoomMessages(chatRoom.chatRoomUuid);
+    }
     isLoading.value = false;
   }
 
@@ -125,6 +141,7 @@ class MessageController extends GetxService {
     );
     fetchItemInfo(receiveMessage);
     receiveChatRoom.messageList.add(receiveMessage);
+    receiveChatRoom.unreadMessageCount += 1;
     chatRoomList.remove(receiveChatRoom);
     chatRoomList.insert(0, receiveChatRoom);
     chatRoomList.refresh();
@@ -192,6 +209,32 @@ class MessageController extends GetxService {
       messageType,
     );
   }
+
+  fetchChatRoomMessages(String chatRoomUuid) async {
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    if (!chatRoom.hasMoreMessage) {
+      return;
+    }
+    isLoadingScroll.value = true;
+    final messageUuid = chatRoom.messageList.first.messageUuid;
+    List<Message> fetchMessageList = await messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+    if (fetchMessageList.isEmpty) {
+      chatRoom.hasMoreMessage = false;
+    }
+    fetchMessageList.addAll(chatRoom.messageList);
+    chatRoom.messageList = fetchMessageList;
+    chatRoomList.refresh();
+    isLoadingScroll.value = false;
+  }
+
+  _chatRoomMessagesScroll() async {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+        fetchChatRoomMessages(Get.arguments['chatRoomUuid']);
+      }
+    });
+  }
+
 
   getChatRoom(chatRoomUuid) {
     for (final chatRoom in chatRoomList.value) {
@@ -276,8 +319,37 @@ class MessageController extends GetxService {
     return false;
   }
 
+  readAllMessages(String chatRoomUuid) async {
+    ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    Message lastMessage = chatRoom.messageList.last;
+    await messageRepository.readChatRoomMessages(chatRoom, lastMessage);
+    chatRoom.unreadMessageCount = 0;
+    for (final message in chatRoom.messageList) {
+      message.isRead = true;
+    }
+    chatRoomList.refresh();
+  }
+
   ChatRoom get chatRoom => getChatRoom(Get.arguments['chatRoomUuid']);
 
   List<Message> get reversedMessageList =>
       chatRoom.messageList.reversed.toList();
+
+  bool get isBuyerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool get isSellerMessageUnread {
+    for (final chatRoom in chatRoomList) {
+      if (!chatRoom.isBuyerRoom && chatRoom.unreadMessageCount > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

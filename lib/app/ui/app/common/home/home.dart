@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:leporemart/app/routes/app_pages.dart';
 
+import '../../../../configs/firebase_config.dart';
 import '../../../../configs/login_config.dart';
 import '../../../../controller/common/message/message_controller.dart';
 import '../../../../data/provider/dio.dart';
@@ -40,6 +41,8 @@ class HomeScreen extends StatelessWidget {
               orderListRepository: OrderListRepository(apiClient: DioClient()),
               profileRepository: ProfileRepository(apiClient: DioClient()))
           .init());
+
+      registerFcmDevice();
       ChattingSocketSingleton();
       FlutterNativeSplash.remove();
       Get.toNamed(Routes.BUYER_APP);

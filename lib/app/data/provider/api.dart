@@ -16,6 +16,9 @@ abstract class ApiClient {
   Future<bool> signupWithKakao(String nickname);
   Future<bool> signupWithApple(String userIdentifier, String nickname);
 
+  //fcm
+  Future<void> registerFcmDevice();
+
   // 작품 좋아요
   Future<void> like(int itemId);
   Future<void> unlike(int itemId);
@@ -97,6 +100,9 @@ abstract class ApiClient {
   Future<List<ChatRoom>> fetchSellerChatRooms();
   Future<List<BuyerOrder>> fetchBuyerOrders();
   Future<List<SellerOrder>> fetchSellerOrders();
+  Future<List<Message>> fetchChatRoomMessages(
+      String chatRoomUuid, String? messageUuid);
+  Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message);
 
   // 배송상태 변경
   Future<void> deliveryStartOrder(int orderId);

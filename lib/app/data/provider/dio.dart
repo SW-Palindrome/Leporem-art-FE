@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:logger/logger.dart';
@@ -217,6 +218,27 @@ class DioClient implements ApiClient {
     } catch (e) {
       Get.snackbar("서버 오류", "요청중 오류가 발생했습니다. 다시시도해주세요.");
       return false;
+    }
+  }
+
+  @override
+  Future<void> registerFcmDevice() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    final response = await _dioInstance.post(
+      '/notifications/register',
+      data: {
+        'fcm_token': fcmToken,
+      },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+    if (response.statusCode != 201) {
+      throw Exception('Failed to register fcm device');
     }
   }
 
@@ -970,6 +992,9 @@ class DioClient implements ApiClient {
             "Authorization": "Bearer $accessToken",
           },
         ),
+        queryParameters: {
+          'only_last_message': true,
+        },
       );
       final data = response.data;
       List<ChatRoom> chatRoomList = [];
@@ -998,6 +1023,9 @@ class DioClient implements ApiClient {
             "Authorization": "Bearer $accessToken",
           },
         ),
+        queryParameters: {
+          'only_last_message': true,
+        },
       );
       if (response.statusCode == 403) {
         return [];
@@ -1014,6 +1042,50 @@ class DioClient implements ApiClient {
       // 에러 처리
       logger.e('Error fetching chat rooms in repository: $e');
       return [];
+    }
+  }
+
+  @override
+  Future<List<Message>> fetchChatRoomMessages(
+      String chatRoomUuid, String? messageUuid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/chats/chat-rooms/$chatRoomUuid/messages',
+      queryParameters: {'message_uuid': messageUuid},
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    final data = response.data['results'];
+    List<Message> messageList = [];
+    for (var i = 0; i < data.length; i++) {
+      Message message = Message.fromJson(data[i]);
+      messageList.add(message);
+    }
+    return messageList.reversed.toList();
+  }
+
+  @override
+  Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.patch(
+      '/chats/messages/read',
+      data: {
+        'chat_room_uuid': chatRoom.chatRoomUuid,
+        'message_uuid': message.messageUuid,
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode != 204) {
+      logger.e('Error reading chat room messages in repository: $response');
     }
   }
 
