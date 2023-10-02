@@ -36,6 +36,7 @@ import '../ui/app/buyer/search/search_screen.dart';
 import '../ui/app/common/message_detail/message_detail_screen.dart';
 import '../ui/app/common/message_item_order/message_item_order_screen.dart';
 import '../ui/app/common/message_item_share/message_item_share_screen.dart';
+import '../ui/app/seller/exhibition_create_start/exhibition_create_start.dart';
 import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
 import '../ui/app/seller/item_edit/item_edit_screen.dart';
@@ -168,6 +169,10 @@ class AppPages {
       name: Routes.SELLER_PROFILE_EDIT,
       page: () => SellerProfileEditScreen(),
       binding: SellerProfileEditBinding(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_START,
+      page: () => ExhibitionCreateStartScreen(),
     ),
   ];
 }

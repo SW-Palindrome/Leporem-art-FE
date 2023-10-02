@@ -32,4 +32,6 @@ abstract class Routes {
   static const SELLER_PROFILE = '/seller/profile';
   static const SELLER_PROFILE_EDIT = '/seller/profile/edit';
   static const SELLER_ITEM_MANAGEMENT = '/seller/profile/item-management';
+  static const SELLER_EXHIBITION_CREATE_START =
+      '/seller/profile/exhibition/create';
 }
