@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:leporemart/app/routes/app_pages.dart';
 
 import '../../../theme/app_theme.dart';
 
@@ -78,67 +80,70 @@ class ExhibitionScreen extends StatelessWidget {
 
   _exhibitionWidget(
       String title, String imageUrl, String artist, String period) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: AspectRatio(
-            aspectRatio: 1.0,
-            child: CachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 200,
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_START),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 200,
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 20,
-          left: 24,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: ColorPalette.white,
-                  fontFamily: FontPalette.pretenderd,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+          Positioned(
+            bottom: 20,
+            left: 24,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: ColorPalette.white,
+                    fontFamily: FontPalette.pretenderd,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Text(
-                    artist,
-                    style: TextStyle(
-                      color: ColorPalette.white,
-                      fontFamily: FontPalette.pretenderd,
-                      fontSize: 14,
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Text(
+                      artist,
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 12),
-                  Container(
-                    width: 1,
-                    height: 12,
-                    color: ColorPalette.white.withOpacity(0.4),
-                  ),
-                  SizedBox(width: 12),
-                  Text(
-                    period,
-                    style: TextStyle(
-                      color: ColorPalette.white,
-                      fontFamily: FontPalette.pretenderd,
-                      fontSize: 14,
+                    SizedBox(width: 12),
+                    Container(
+                      width: 1,
+                      height: 12,
+                      color: ColorPalette.white.withOpacity(0.4),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    SizedBox(width: 12),
+                    Text(
+                      period,
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontFamily: FontPalette.pretenderd,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
