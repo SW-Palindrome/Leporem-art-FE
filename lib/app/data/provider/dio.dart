@@ -1217,6 +1217,19 @@ class DioClient implements ApiClient {
   }
 
   @override
+  Future<DeliveryInfo> fetchDeliveryInfo(int orderId) async {
+    final response = await Dio().get(
+      'http://info.sweettracker.co.kr/api/v1/trackingInfo',
+      queryParameters: {
+        't_key': 'uAyk561vd8r79J6rtdqj7Q',
+        't_code': '05',
+        't_invoice': '454121749896',
+      }
+    );
+    return DeliveryInfo.fromJson(response.data);
+  }
+
+  @override
   Future<BuyerProfile?> fetchBuyerProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();
