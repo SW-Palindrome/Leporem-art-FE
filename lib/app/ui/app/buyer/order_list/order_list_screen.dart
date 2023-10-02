@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../controller/buyer/order_list/order_list_controller.dart';
 import '../../../../data/models/order.dart';
@@ -263,7 +264,7 @@ class OrderListScreen extends GetView<OrderListController> {
         case "주문완료":
           return _cancelButton(order.id);
         case "배송중":
-          return _deliveryButton();
+          return _deliveryButton(order);
         case "배송완료":
           return _reviewButton(order);
         case "주문취소":
@@ -328,21 +329,43 @@ class OrderListScreen extends GetView<OrderListController> {
     );
   }
 
-  _deliveryButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorPalette.grey_3,
-      ),
-      child: Text(
-        '배송 조회',
-        style: TextStyle(
-          color: ColorPalette.black,
-          fontWeight: FontWeight.bold,
-          fontFamily: "PretendardVariable",
-          fontStyle: FontStyle.normal,
-          fontSize: 11.0,
+  _deliveryButton(Order order) {
+    return GestureDetector(
+      onTap: () {
+        controller.fetchDeliveryInfo(order.id);
+        Get.dialog(Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (final deliveryDetail in controller.deliveryInfo.value.deliveryDetails)
+                      _deliveryInfoWidget(deliveryDetail),
+                  ],
+                )
+              ),
+            ),
+          ),
+          )
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: ColorPalette.grey_3,
+        ),
+        child: Text(
+          '배송 조회',
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontWeight: FontWeight.bold,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 11.0,
+          ),
         ),
       ),
     );
@@ -396,6 +419,22 @@ class OrderListScreen extends GetView<OrderListController> {
         fontFamily: "PretendardVariable",
         fontStyle: FontStyle.normal,
         fontSize: 11.0,
+      ),
+    );
+  }
+
+  _deliveryInfoWidget(DeliveryDetail deliveryDetail) {
+    return Container(
+      height: 72,
+      color: ColorPalette.white,
+      child: Row(
+        children: [
+          SizedBox(width: 120, child: Text(DateFormat('yyyy-MM-dd HH:mm').format(deliveryDetail.datetime))),
+          SizedBox(width: 8),
+          Expanded(child: Text(deliveryDetail.place)),
+          SizedBox(width: 8),
+          SizedBox(width: 80, child: Text(deliveryDetail.kind)),
+        ],
       ),
     );
   }
