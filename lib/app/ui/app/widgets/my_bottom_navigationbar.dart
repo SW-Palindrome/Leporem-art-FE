@@ -107,19 +107,19 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                       ),
                       label: '작품목록',
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: SvgPicture.asset(
-                    //     'assets/icons/paper_fill.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.grey_4, BlendMode.srcIn),
-                    //   ),
-                    //   activeIcon: SvgPicture.asset(
-                    //     'assets/icons/paper_fill.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.purple, BlendMode.srcIn),
-                    //   ),
-                    //   label: '주문제작',
-                    // ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset(
+                        'assets/icons/collection.svg',
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.grey_4, BlendMode.srcIn),
+                      ),
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/collection.svg',
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.purple, BlendMode.srcIn),
+                      ),
+                      label: '기획전',
+                    ),
                     _chattingBottomNavigationBarItem(),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
@@ -161,46 +161,52 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
       icon: SizedBox(
         width: 24,
         height: 24,
-        child: Stack(children: [
-          SvgPicture.asset(
-            'assets/icons/message_fill.svg',
-            colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
-          ),
-          if (isMessageUnread)
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: ColorPalette.purple,
-                  shape: BoxShape.circle,
+        child: Stack(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/message_fill.svg',
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
+            ),
+            if (isMessageUnread)
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: ColorPalette.purple,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
-            )
-        ]),
+          ],
+        ),
       ),
       activeIcon: SizedBox(
         width: 24,
         height: 24,
-        child: Stack(children: [
-          SvgPicture.asset(
-            'assets/icons/message_fill.svg',
-            colorFilter: ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
-          ),
-          if (isMessageUnread)
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: ColorPalette.purple,
-                  shape: BoxShape.circle,
+        child: Stack(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/message_fill.svg',
+              colorFilter:
+                  ColorFilter.mode(ColorPalette.purple, BlendMode.srcIn),
+            ),
+            if (isMessageUnread)
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: ColorPalette.purple,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
-            )
-        ]),
+          ],
+        ),
       ),
       label: '채팅',
     );
