@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -95,28 +96,36 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
             ),
           ),
           child: Obx(() {
-            return DropdownButton(
-              value: controller.dropDownValue.value,
-              items: controller.deliveryCompanyList.map<
-                  DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value, style: TextStyle(
-                    color: ColorPalette.black,
-                    fontSize: 18,
-                    height: 1,
-                  ),),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                controller.dropDownValue.value = value!;
-              },
-              borderRadius: BorderRadius.circular(10),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              isExpanded: true,
-              underline: SizedBox(),
-              menuMaxHeight: 300,
-
+            return DropdownButtonHideUnderline(
+              child: DropdownButton2<String>(
+                value: controller.dropDownValue.value,
+                items: controller.deliveryCompanyList.map<
+                    DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value, style: TextStyle(
+                      color: ColorPalette.black,
+                      fontSize: 18,
+                      height: 1,
+                    )),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  controller.dropDownValue.value = value!;
+                },
+                buttonStyleData: const ButtonStyleData(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                ),
+                dropdownStyleData: const DropdownStyleData(
+                  isOverButton: false,
+                  maxHeight: 300,
+                  offset: Offset(0, -5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  )
+                ),
+                isExpanded: true,
+              ),
             );
           }),
         ),
