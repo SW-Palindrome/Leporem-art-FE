@@ -36,7 +36,10 @@ import '../ui/app/buyer/search/search_screen.dart';
 import '../ui/app/common/message_detail/message_detail_screen.dart';
 import '../ui/app/common/message_item_order/message_item_order_screen.dart';
 import '../ui/app/common/message_item_share/message_item_share_screen.dart';
-import '../ui/app/seller/exhibition_create_start/exhibition_create_start.dart';
+import '../ui/app/seller/exhibition_create_exhibition/exhibition_create_exhibition_screen.dart';
+import '../ui/app/seller/exhibition_create_exhibition_complete/exhibition_create_exhibition_complete_screen.dart';
+import '../ui/app/seller/exhibition_create_seller/exhibition_create_seller_screen.dart';
+import '../ui/app/seller/exhibition_create_start/exhibition_create_start_screen.dart';
 import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
 import '../ui/app/seller/item_edit/item_edit_screen.dart';
@@ -173,6 +176,18 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
       page: () => ExhibitionCreateStartScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
+      page: () => ExhibitionCreateExhibitionScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
+      page: () => ExhibitionCreateExhibitionCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
+      page: () => ExhibitionCreateSellerScreen(),
     ),
   ];
 }

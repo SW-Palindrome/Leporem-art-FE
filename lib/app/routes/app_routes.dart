@@ -33,5 +33,13 @@ abstract class Routes {
   static const SELLER_PROFILE_EDIT = '/seller/profile/edit';
   static const SELLER_ITEM_MANAGEMENT = '/seller/profile/item-management';
   static const SELLER_EXHIBITION_CREATE_START =
-      '/seller/profile/exhibition/create';
+      '/seller/exhibition/create/start';
+  static const SELLER_EXHIBITION_CREATE_EXHIBITION =
+      '/seller/exhibition/create/exhibition';
+  static const SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE =
+      '/seller/exhibition/create/exhibition/complete';
+  static const SELLER_EXHIBITION_CREATE_SELLER =
+      '/seller/exhibition/create/seller';
+  static const SELLER_EXHIBITION_CREATE_ITEM_INFO =
+      '/seller/exhibition/create/item';
 }
