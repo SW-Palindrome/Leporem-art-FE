@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../controller/buyer/delivery_info_webview/delivery_info_webview_controller.dart';
 import '../../../../controller/buyer/order_list/order_list_controller.dart';
 import '../../../../data/models/order.dart';
 import '../../../../routes/app_pages.dart';
@@ -12,6 +13,7 @@ import '../../../../utils/log_analytics.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/bottom_sheet.dart';
 import '../../widgets/my_app_bar.dart';
+import '../delivery_info_webview/delivery_info_webview_screen.dart';
 
 class OrderListScreen extends GetView<OrderListController> {
   const OrderListScreen({super.key});
@@ -332,24 +334,10 @@ class OrderListScreen extends GetView<OrderListController> {
   _deliveryButton(Order order) {
     return GestureDetector(
       onTap: () {
-        controller.fetchDeliveryInfo(order.id);
-        Get.dialog(Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    for (final deliveryDetail in controller.deliveryInfo.value.deliveryDetails)
-                      _deliveryInfoWidget(deliveryDetail),
-                  ],
-                )
-              ),
-            ),
-          ),
-          )
-        );
+        // TODO: 배송 조회 페이지 API로 URL 취득
+        // controller.fetchDeliveryInfo(order.id);
+        Get.put(DeliveryInfoWebViewController(url: 'http://info.sweettracker.co.kr/tracking/5?t_code=05&t_invoice=4541217496&t_key=uAyk561vd8r79J6rtdqj7Q'));
+        Get.to(DeliveryInfoWebViewScreen());
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
