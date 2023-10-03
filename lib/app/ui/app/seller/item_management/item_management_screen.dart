@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../controller/seller/item_management/item_management_controller.dart';
 import '../../../../controller/seller/profile/seller_profile_controller.dart';
 import '../../../../data/models/order.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../../utils/log_analytics.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/bottom_sheet.dart';
@@ -414,6 +415,28 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    Get.toNamed(Routes.SELLER_ITEM_DELIVERY_EDIT, arguments: order.id);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 17),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: ColorPalette.white),
+                    child: Center(
+                      child: Text(
+                        '배송 정보 입력',
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 8),
