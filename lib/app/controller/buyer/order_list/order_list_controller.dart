@@ -41,13 +41,4 @@ class OrderListController extends GetxController {
       logger.e('Error fetching buyer order cancel in controller: $e');
     }
   }
-
-  Future<void> fetchDeliveryInfo(int orderId) async {
-    try {
-      deliveryInfo.value = await repository.fetchDeliveryInfo(orderId);
-    } catch (e) {
-      Logger logger = Logger(printer: PrettyPrinter());
-      logger.e('Error fetching buyer order delivery info in controller: $e');
-    }
-  }
 }

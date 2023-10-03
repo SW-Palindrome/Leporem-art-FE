@@ -1217,16 +1217,9 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<DeliveryInfo> fetchDeliveryInfo(int orderId) async {
-    final response = await Dio().get(
-      'http://info.sweettracker.co.kr/api/v1/trackingInfo',
-      queryParameters: {
-        't_key': 'uAyk561vd8r79J6rtdqj7Q',
-        't_code': '05',
-        't_invoice': '454121749896',
-      }
-    );
-    return DeliveryInfo.fromJson(response.data);
+  Future<String> fetchDeliveryInfoUrl(int orderId) async {
+    // TODO: implement fetchDeliveryInfo
+    return 'http://info.sweettracker.co.kr/tracking/5?t_code=05&t_invoice=4541217496&t_key=uAyk561vd8r79J6rtdqj7Q';
   }
 
   @override

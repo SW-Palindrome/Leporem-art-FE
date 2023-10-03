@@ -33,8 +33,4 @@ class OrderListRepository {
   Future<OrderInfo> fetchOrder(int orderId) async {
     return apiClient.fetchOrder(orderId);
   }
-
-  Future<DeliveryInfo> fetchDeliveryInfo(int orderId) async {
-    return apiClient.fetchDeliveryInfo(orderId);
-  }
 }

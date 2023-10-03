@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:leporemart/app/ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
 
 import '../bindings/account/account_type_binding.dart';
 import '../bindings/account/agreement_binding.dart';
@@ -8,6 +9,7 @@ import '../bindings/account/nickname_binding.dart';
 import '../bindings/buyer/buyer_app_binding.dart';
 import '../bindings/buyer/buyer_item_detail_binding.dart';
 import '../bindings/buyer/buyer_profile_edit_binding.dart';
+import '../bindings/buyer/delivery_info_webview_binding.dart';
 import '../bindings/buyer/item_creator_binding.dart';
 import '../bindings/buyer/order_list_binding.dart';
 import '../bindings/buyer/recent_item_binding.dart';
@@ -136,6 +138,11 @@ class AppPages {
       name: Routes.BUYER_REVIEW_STAR,
       page: () => ReviewStarScreen(),
       binding: ReviewBinding(),
+    ),
+    GetPage(
+      name: Routes.BUYER_DELIVERY_INFO_WEBVIEW,
+      page: () => DeliveryInfoWebViewScreen(),
+      binding: DeliveryInfoWebViewBinding(),
     ),
     GetPage(
       name: Routes.SELLER_APP,

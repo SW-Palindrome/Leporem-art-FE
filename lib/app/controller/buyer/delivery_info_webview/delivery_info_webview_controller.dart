@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class DeliveryInfoWebViewController extends GetxController {
-  late WebViewController webViewController;
-  final String url;
+import '../../../data/repositories/delivery_info_repository.dart';
 
-  DeliveryInfoWebViewController({required this.url});
+class DeliveryInfoWebViewController extends GetxController {
+  final DeliveryInfoRepository repository;
+  late WebViewController webViewController;
+  late String url;
+
+  DeliveryInfoWebViewController({required this.repository}) : assert(repository != null);
 
   @override
   void onInit() async {
     super.onInit();
+    url = 'http://info.sweettracker.co.kr/tracking/5?t_code=05&t_invoice=4541217496&t_key=uAyk561vd8r79J6rtdqj7Q';
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse(url))
@@ -19,4 +23,6 @@ class DeliveryInfoWebViewController extends GetxController {
         },
       ));
   }
+
+  int get orderId => int.parse(Get.arguments['order_id']);
 }
