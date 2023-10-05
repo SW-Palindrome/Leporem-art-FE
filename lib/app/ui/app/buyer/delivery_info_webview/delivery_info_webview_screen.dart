@@ -19,7 +19,14 @@ class DeliveryInfoWebViewScreen extends GetView<DeliveryInfoWebViewController> {
         },
       ),
       body: SafeArea(
-        child: WebViewWidget(controller: controller.webViewController),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return WebViewWidget(controller: controller.webViewController);
+        }),
       ),
     );
   }

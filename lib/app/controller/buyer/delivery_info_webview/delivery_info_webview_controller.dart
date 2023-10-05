@@ -7,22 +7,30 @@ class DeliveryInfoWebViewController extends GetxController {
   final DeliveryInfoRepository repository;
   late WebViewController webViewController;
   late String url;
+  Rx<bool> isLoading = true.obs;
 
   DeliveryInfoWebViewController({required this.repository}) : assert(repository != null);
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    url = 'http://info.sweettracker.co.kr/tracking/5?t_code=05&t_invoice=4541217496&t_key=uAyk561vd8r79J6rtdqj7Q';
+    updateWebViewController();
+  }
+
+  int get orderId => Get.arguments['order_id'];
+
+  Future<void> updateWebViewController() async {
+    url = await repository.fetchDeliveryInfoUrl(orderId);
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse(url))
       ..setNavigationDelegate(NavigationDelegate(
         onWebResourceError: (error) {
           Get.snackbar('오류', '택배사 배송조회 페이지를 불러오는데 실패했습니다.');
-        },
-      ));
+        }
+      )
+    );
+    isLoading.value = false;
+    update();
   }
-
-  int get orderId => int.parse(Get.arguments['order_id']);
 }
