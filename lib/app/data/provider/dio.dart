@@ -17,6 +17,7 @@ import '../../controller/seller/home/seller_home_controller.dart';
 import '../../controller/seller/profile/seller_profile_controller.dart';
 import '../../ui/app/account/login/login_screen.dart';
 import '../../ui/app/buyer/review_complete/review_complete_screen.dart';
+import '../models/delivery_info.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
 import '../models/message.dart';
@@ -1214,6 +1215,77 @@ class DioClient implements ApiClient {
       ),
     );
     return OrderInfo.fromJson(response.data);
+  }
+
+  @override
+  Future<String?> fetchDeliveryInfoUrl(int orderId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/deliveries/orders/${orderId.toString()}/tracking',
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode == 404) {
+      return null;
+    }
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching delivery info url in repository: $response');
+    }
+
+    return response.data['delivery_tracking_url'];
+  }
+
+  @override
+  Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.post(
+      '/deliveries/register',
+      data: {
+        'order_id': orderId,
+        'delivery_company': deliveryCompany,
+        'invoice_number': invoiceNumber,
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode != 201) {
+      logger.e('Error updating delivery info in repository: $response');
+    }
+  }
+
+  @override
+  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/deliveries/orders/${orderId.toString()}/info',
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode == 404) {
+      return null;
+    }
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching delivery info in repository: $response');
+    }
+
+    return DeliveryInfo.fromJson(response.data);
   }
 
   @override

@@ -2,15 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:leporemart/app/data/provider/dio.dart';
 
+import '../../../../controller/buyer/delivery_info_webview/delivery_info_webview_controller.dart';
 import '../../../../controller/buyer/order_list/order_list_controller.dart';
 import '../../../../data/models/order.dart';
+import '../../../../data/repositories/delivery_info_repository.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../utils/currency_formatter.dart';
 import '../../../../utils/log_analytics.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/bottom_sheet.dart';
 import '../../widgets/my_app_bar.dart';
+import '../delivery_info_webview/delivery_info_webview_screen.dart';
 
 class OrderListScreen extends GetView<OrderListController> {
   const OrderListScreen({super.key});
@@ -263,7 +268,7 @@ class OrderListScreen extends GetView<OrderListController> {
         case "주문완료":
           return _cancelButton(order.id);
         case "배송중":
-          return _deliveryButton();
+          return _deliveryButton(order);
         case "배송완료":
           return _reviewButton(order);
         case "주문취소":
@@ -328,21 +333,26 @@ class OrderListScreen extends GetView<OrderListController> {
     );
   }
 
-  _deliveryButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: ColorPalette.grey_3,
-      ),
-      child: Text(
-        '배송 조회',
-        style: TextStyle(
-          color: ColorPalette.black,
-          fontWeight: FontWeight.bold,
-          fontFamily: "PretendardVariable",
-          fontStyle: FontStyle.normal,
-          fontSize: 11.0,
+  _deliveryButton(Order order) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.BUYER_DELIVERY_INFO_WEBVIEW, arguments: {'order_id': order.id});
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: ColorPalette.grey_3,
+        ),
+        child: Text(
+          '배송 조회',
+          style: TextStyle(
+            color: ColorPalette.black,
+            fontWeight: FontWeight.bold,
+            fontFamily: "PretendardVariable",
+            fontStyle: FontStyle.normal,
+            fontSize: 11.0,
+          ),
         ),
       ),
     );

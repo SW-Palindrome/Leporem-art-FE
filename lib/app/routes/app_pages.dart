@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:leporemart/app/ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
 
 import '../bindings/account/account_type_binding.dart';
 import '../bindings/account/agreement_binding.dart';
@@ -8,6 +9,7 @@ import '../bindings/account/nickname_binding.dart';
 import '../bindings/buyer/buyer_app_binding.dart';
 import '../bindings/buyer/buyer_item_detail_binding.dart';
 import '../bindings/buyer/buyer_profile_edit_binding.dart';
+import '../bindings/buyer/delivery_info_webview_binding.dart';
 import '../bindings/buyer/item_creator_binding.dart';
 import '../bindings/buyer/order_list_binding.dart';
 import '../bindings/buyer/recent_item_binding.dart';
@@ -15,6 +17,7 @@ import '../bindings/buyer/review_binding.dart';
 import '../bindings/common/message_item_order_binding.dart';
 import '../bindings/common/message_item_share_binding.dart';
 import '../bindings/seller/item_create_detail_binding.dart';
+import '../bindings/seller/item_delivery_edit_binding.dart';
 import '../bindings/seller/item_edit_binding.dart';
 import '../bindings/seller/item_management_binding.dart';
 import '../bindings/seller/seller_app_binding.dart';
@@ -37,6 +40,7 @@ import '../ui/app/common/message_detail/message_detail_screen.dart';
 import '../ui/app/common/message_item_order/message_item_order_screen.dart';
 import '../ui/app/common/message_item_share/message_item_share_screen.dart';
 import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
+import '../ui/app/seller/item_delivery_edit/item_delivery_edit_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
 import '../ui/app/seller/item_edit/item_edit_screen.dart';
 import '../ui/app/seller/item_management/item_management_screen.dart';
@@ -136,6 +140,11 @@ class AppPages {
       binding: ReviewBinding(),
     ),
     GetPage(
+      name: Routes.BUYER_DELIVERY_INFO_WEBVIEW,
+      page: () => DeliveryInfoWebViewScreen(),
+      binding: DeliveryInfoWebViewBinding(),
+    ),
+    GetPage(
       name: Routes.SELLER_APP,
       page: () => SellerApp(),
       binding: SellerAppBinding(),
@@ -168,6 +177,11 @@ class AppPages {
       name: Routes.SELLER_PROFILE_EDIT,
       page: () => SellerProfileEditScreen(),
       binding: SellerProfileEditBinding(),
+    ),
+    GetPage(
+      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
+      page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
     ),
   ];
 }
