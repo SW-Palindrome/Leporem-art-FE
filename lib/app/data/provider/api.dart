@@ -110,7 +110,7 @@ abstract class ApiClient {
   Future<void> deliveryCompleteOrder(int orderId);
   Future<void> cancelOrder(int orderId);
   Future<OrderInfo> fetchOrder(int orderId);
-  Future<String> fetchDeliveryInfoUrl(int orderId);
+  Future<String?> fetchDeliveryInfoUrl(int orderId);
   Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber);
   Future<DeliveryInfo?> fetchDeliveryInfo(int orderId);
 }

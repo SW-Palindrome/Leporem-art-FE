@@ -1218,9 +1218,27 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<String> fetchDeliveryInfoUrl(int orderId) async {
-    // TODO: implement fetchDeliveryInfo
-    return 'http://info.sweettracker.co.kr/tracking/5?t_code=05&t_invoice=4541217496&t_key=uAyk561vd8r79J6rtdqj7Q';
+  Future<String?> fetchDeliveryInfoUrl(int orderId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/deliveries/orders/${orderId.toString()}/tracking',
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode == 404) {
+      return null;
+    }
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching delivery info url in repository: $response');
+    }
+
+    return response.data['delivery_tracking_url'];
   }
 
   @override

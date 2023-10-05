@@ -20,7 +20,13 @@ class DeliveryInfoWebViewController extends GetxController {
   int get orderId => Get.arguments['order_id'];
 
   Future<void> updateWebViewController() async {
-    url = await repository.fetchDeliveryInfoUrl(orderId);
+    final fetchUrl = await repository.fetchDeliveryInfoUrl(orderId);
+    if (fetchUrl == null) {
+      Get.back();
+      Get.snackbar('배송 조회', '배송 조회 정보가 등록되어 있지 않습니다.');
+      return;
+    }
+    url = fetchUrl;
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse(url))
