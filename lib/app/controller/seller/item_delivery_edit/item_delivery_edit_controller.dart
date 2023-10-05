@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../../../data/repositories/seller_item_delivery_edit_repository.dart';
+
 class SellerItemDeliveryEditController extends GetxController {
-  TextEditingController deliveryCompany = TextEditingController();
+  final SellerItemDeliveryEditRepository repository;
   TextEditingController invoiceNumber = TextEditingController();
-  Rx<String> dropDownValue = Rx<String>('');
+  Rx<String> deliveryCompany = Rx<String>('');
+
+  SellerItemDeliveryEditController({required this.repository}) : assert(repository != null);
 
   final List<String> deliveryCompanyList = [
         'CJ대한통운',
@@ -33,9 +38,13 @@ class SellerItemDeliveryEditController extends GetxController {
 
   @override
   void onInit() {
-      dropDownValue.value = deliveryCompanyList.first;
+      deliveryCompany.value = deliveryCompanyList.first;
       super.onInit();
   }
 
-  Future<void> updateDeliveryInfo() async {}
+  Future<void> updateDeliveryInfo() async {
+    repository.updateDeliveryInfo(orderId, deliveryCompany.string, invoiceNumber.text);
+  }
+
+  int get orderId => Get.arguments['order_id'];
 }

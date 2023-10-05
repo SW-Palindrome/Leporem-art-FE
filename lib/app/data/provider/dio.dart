@@ -1223,6 +1223,29 @@ class DioClient implements ApiClient {
   }
 
   @override
+  Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.post(
+      '/deliveries/register',
+      data: {
+        'order_id': orderId,
+        'delivery_company': deliveryCompany,
+        'invoice_number': invoiceNumber,
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode != 201) {
+      logger.e('Error updating delivery info in repository: $response');
+    }
+  }
+
+  @override
   Future<BuyerProfile?> fetchBuyerProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();

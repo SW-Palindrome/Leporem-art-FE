@@ -35,7 +35,11 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
         ),
         actions: [
           GestureDetector(
-              onTap: () async => await controller.updateDeliveryInfo(),
+              onTap: () async {
+                await controller.updateDeliveryInfo();
+                Get.back();
+                Get.snackbar('배송 정보 입력', '배송 정보가 입력되었습니다.');
+              },
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.only(right: 20),
@@ -98,7 +102,7 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
           child: Obx(() {
             return DropdownButtonHideUnderline(
               child: DropdownButton2<String>(
-                value: controller.dropDownValue.value,
+                value: controller.deliveryCompany.value,
                 items: controller.deliveryCompanyList.map<
                     DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
@@ -111,7 +115,7 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
                   );
                 }).toList(),
                 onChanged: (String? value) {
-                  controller.dropDownValue.value = value!;
+                  controller.deliveryCompany.value = value!;
                 },
                 buttonStyleData: const ButtonStyleData(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

@@ -421,7 +421,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                 GestureDetector(
                   onTap: () {
                     Get.back();
-                    Get.toNamed(Routes.SELLER_ITEM_DELIVERY_EDIT, arguments: order.id);
+                    Get.toNamed(Routes.SELLER_ITEM_DELIVERY_EDIT, arguments: {'order_id': order.id});
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 17),
