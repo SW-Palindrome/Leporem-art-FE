@@ -17,6 +17,7 @@ import '../../controller/seller/home/seller_home_controller.dart';
 import '../../controller/seller/profile/seller_profile_controller.dart';
 import '../../ui/app/account/login/login_screen.dart';
 import '../../ui/app/buyer/review_complete/review_complete_screen.dart';
+import '../models/delivery_info.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
 import '../models/message.dart';
@@ -1243,6 +1244,30 @@ class DioClient implements ApiClient {
     if (response.statusCode != 201) {
       logger.e('Error updating delivery info in repository: $response');
     }
+  }
+
+  @override
+  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/deliveries/orders/${orderId.toString()}/info',
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+
+    if (response.statusCode == 404) {
+      return null;
+    }
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching delivery info in repository: $response');
+    }
+
+    return DeliveryInfo.fromJson(response.data);
   }
 
   @override

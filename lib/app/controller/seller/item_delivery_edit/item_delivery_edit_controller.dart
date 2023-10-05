@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:leporemart/app/data/models/delivery_info.dart';
 
 import '../../../data/repositories/seller_item_delivery_edit_repository.dart';
 
@@ -39,11 +40,21 @@ class SellerItemDeliveryEditController extends GetxController {
   @override
   void onInit() {
       deliveryCompany.value = deliveryCompanyList.first;
+      fetchDeliveryInfo();
       super.onInit();
   }
 
   Future<void> updateDeliveryInfo() async {
     repository.updateDeliveryInfo(orderId, deliveryCompany.string, invoiceNumber.text);
+  }
+
+  Future<void> fetchDeliveryInfo() async {
+    DeliveryInfo? deliveryInfo = await repository.fetchDeliveryInfo(orderId);
+    if (deliveryInfo == null) return;
+
+    deliveryCompany.value = deliveryInfo.deliveryCompany;
+    invoiceNumber.text = deliveryInfo.invoiceNumber;
+    update();
   }
 
   int get orderId => Get.arguments['order_id'];

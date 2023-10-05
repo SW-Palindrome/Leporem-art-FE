@@ -10,10 +10,6 @@ class OrderListController extends GetxController {
 
   RxList<Order> orders = <Order>[].obs;
   Rx<bool> isLoading = false.obs;
-  Rx<DeliveryInfo> deliveryInfo = DeliveryInfo(
-    isComplete: false,
-    deliveryDetails: [],
-  ).obs;
 
   @override
   void onInit() async {

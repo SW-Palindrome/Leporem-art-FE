@@ -409,20 +409,4 @@ class OrderListScreen extends GetView<OrderListController> {
       ),
     );
   }
-
-  _deliveryInfoWidget(DeliveryDetail deliveryDetail) {
-    return Container(
-      height: 72,
-      color: ColorPalette.white,
-      child: Row(
-        children: [
-          SizedBox(width: 120, child: Text(DateFormat('yyyy-MM-dd HH:mm').format(deliveryDetail.datetime))),
-          SizedBox(width: 8),
-          Expanded(child: Text(deliveryDetail.place)),
-          SizedBox(width: 8),
-          SizedBox(width: 80, child: Text(deliveryDetail.kind)),
-        ],
-      ),
-    );
-  }
 }

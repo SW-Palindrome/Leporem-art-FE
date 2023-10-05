@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../models/delivery_info.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
 import '../models/message.dart';
@@ -111,4 +112,5 @@ abstract class ApiClient {
   Future<OrderInfo> fetchOrder(int orderId);
   Future<String> fetchDeliveryInfoUrl(int orderId);
   Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber);
+  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId);
 }
