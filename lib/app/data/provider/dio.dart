@@ -17,6 +17,7 @@ import '../../controller/seller/home/seller_home_controller.dart';
 import '../../controller/seller/profile/seller_profile_controller.dart';
 import '../../ui/app/account/login/login_screen.dart';
 import '../../ui/app/buyer/review_complete/review_complete_screen.dart';
+import '../models/exhibition.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
 import '../models/message.dart';
@@ -1312,5 +1313,20 @@ class DioClient implements ApiClient {
       ),
     );
     return response;
+  }
+
+  @override
+  Future<List<Exhibition>> fetchSellerExhibitions() async {
+    return [];
+  }
+
+  @override
+  Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId) async {
+    return null;
+  }
+
+  @override
+  Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
+    return [];
   }
 }
