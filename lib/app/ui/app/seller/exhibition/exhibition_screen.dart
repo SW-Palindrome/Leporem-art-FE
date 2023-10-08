@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
+import 'package:leporemart/app/ui/app/seller/exhibition/widgets/empty_exhibition_widgets.dart';
 import '../../../theme/app_theme.dart';
 import 'widgets/exhibition_list_widget.dart';
 
-class ExhibitionScreen extends StatelessWidget {
+class ExhibitionScreen extends GetView<ExhibitionController> {
   const ExhibitionScreen({super.key});
 
   @override
@@ -23,17 +26,26 @@ class ExhibitionScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 24),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return exhibitionListWidget();
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 24);
-              },
-              itemCount: 10,
-            ),
+            if (controller.exhibitions.isEmpty)
+              emptyExhibitionWidget()
+            else
+              ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return exhibitionListWidget(
+                    controller.exhibitions[index].title,
+                    controller.exhibitions[index].coverImage,
+                    controller.exhibitions[index].seller,
+                    controller.exhibitions[index].startDate,
+                    controller.exhibitions[index].endDate,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 24);
+                },
+                itemCount: controller.exhibitions.length,
+              ),
           ],
         ),
       ),
