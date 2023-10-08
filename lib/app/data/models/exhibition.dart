@@ -53,7 +53,7 @@ class ExhibitionItem {
   final String fontFamily;
   final String backgroundColor;
   final List<String> imageUrls;
-  final String audioUrl;
+  final String? audioUrl;
   final String title;
   final String description;
   final bool isSoled;
@@ -62,7 +62,6 @@ class ExhibitionItem {
   // 판매 추가 정보
   final int? price;
   final String? category;
-  final int? priec;
   final String? shorts;
   final int? currentAmount;
   final String? width;
@@ -75,14 +74,13 @@ class ExhibitionItem {
     required this.fontFamily,
     required this.backgroundColor,
     required this.imageUrls,
-    required this.audioUrl,
+    this.audioUrl,
     required this.title,
     required this.description,
     required this.isSoled,
     required this.position,
     this.price,
     this.category,
-    this.priec,
     this.shorts,
     this.currentAmount,
     this.width,
@@ -104,7 +102,6 @@ class ExhibitionItem {
       position: json['position'],
       price: json['price'],
       category: json['category'],
-      priec: json['priec'],
       shorts: json['shorts'],
       currentAmount: json['current_amount'],
       width: json['width'],
