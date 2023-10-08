@@ -39,6 +39,7 @@ class ExhibitionScreen extends GetView<ExhibitionController> {
                     controller.exhibitions[index].seller,
                     controller.exhibitions[index].startDate,
                     controller.exhibitions[index].endDate,
+                    controller.exhibitions[index].id,
                   );
                 },
                 separatorBuilder: (context, index) {

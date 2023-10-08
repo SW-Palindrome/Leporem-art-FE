@@ -1,4 +1,5 @@
 class Exhibition {
+  final int id;
   final String title;
   final String coverImage;
   final String seller;
@@ -6,6 +7,7 @@ class Exhibition {
   final String endDate;
 
   Exhibition({
+    required this.id,
     required this.title,
     required this.coverImage,
     required this.seller,
@@ -15,6 +17,7 @@ class Exhibition {
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
     return Exhibition(
+      id: json['id'],
       title: json['title'],
       coverImage: json['cover_image'],
       seller: json['seller'],

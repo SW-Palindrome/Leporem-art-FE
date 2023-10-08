@@ -511,12 +511,14 @@ class MockClient implements ApiClient {
     List<Exhibition> exhibitions = [];
     for (int i = 1; i < 11; i++) {
       exhibitions.add(Exhibition(
-          coverImage:
-              'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-          title: '우유병 기획전',
-          endDate: '2023-10-31',
-          startDate: '2023-10-24',
-          seller: '유병우 작가'));
+        id: i,
+        coverImage:
+            'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+        title: '우유병 기획전',
+        endDate: '2023-10-31',
+        startDate: '2023-10-24',
+        seller: '유병우 작가',
+      ));
     }
     return exhibitions;
   }
