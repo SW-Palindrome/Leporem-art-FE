@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
@@ -41,23 +42,26 @@ class ExhibitionCreateExhibitionCompleteScreen
                 ),
               ),
               SizedBox(height: 40),
-              exhibitionWidget(
-                exhibitionId: 1,
-                title: controller.exhibitions
-                    .firstWhere((element) =>
-                        element.id == Get.arguments['exhibition_id'])
-                    .title,
-                imageUrl: controller.exhibitions
-                    .firstWhere((element) =>
-                        element.id == Get.arguments['exhibition_id'])
-                    .coverImage,
-                seller: controller.exhibitions
-                    .firstWhere((element) =>
-                        element.id == Get.arguments['exhibition_id'])
-                    .seller,
-                period:
-                    '${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).startDate} ~ ${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).endDate}',
-                isTouchable: false,
+              WidgetsToImage(
+                child: exhibitionWidget(
+                  exhibitionId: 1,
+                  title: controller.exhibitions
+                      .firstWhere((element) =>
+                          element.id == Get.arguments['exhibition_id'])
+                      .title,
+                  imageUrl: controller.exhibitions
+                      .firstWhere((element) =>
+                          element.id == Get.arguments['exhibition_id'])
+                      .coverImage,
+                  seller: controller.exhibitions
+                      .firstWhere((element) =>
+                          element.id == Get.arguments['exhibition_id'])
+                      .seller,
+                  period:
+                      '${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).startDate} ~ ${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).endDate}',
+                  isTouchable: false,
+                ),
+                controller: controller.widgetsToImageController,
               ),
               Spacer(),
               NextButton(
