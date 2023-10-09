@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
@@ -39,7 +40,15 @@ class ExhibitionCreateSellerTemplateScreen
                 NextButton(
                   text: '저장하기',
                   value: true,
-                  onTap: () {},
+                  onTap: () {
+                    //TODO: 작가 소개 저장
+                    Get.toNamed(
+                      Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
+                      arguments: {
+                        'exhibition_id': Get.arguments['exhibition_id']
+                      },
+                    );
+                  },
                 ),
               ],
             ),
