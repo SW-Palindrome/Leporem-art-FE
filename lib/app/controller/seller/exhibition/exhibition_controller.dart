@@ -108,6 +108,11 @@ class ExhibitionController extends GetxController {
     exhibitionImage.value = [];
   }
 
+  void sellerInfoReset() {
+    sellerIntroductionController.clear();
+    sellerImage.value = [];
+  }
+
   bool isValidExhibitionSave() {
     return exhibitionImage.isNotEmpty &&
         title.value != '' &&
