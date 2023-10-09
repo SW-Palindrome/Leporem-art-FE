@@ -14,9 +14,12 @@ sellerIntroductionResultWidget() {
     padding: EdgeInsets.all(24),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(16),
-      color: ColorPalette.white,
+      color: Color(controller
+          .colorList[controller.selectedSellerIntroductionColor.value]),
       border: Border.all(
-        color: ColorPalette.grey_2,
+        color: controller.selectedSellerIntroductionColor.value == 0
+            ? ColorPalette.grey_2
+            : Colors.transparent,
       ),
     ),
     child: Column(
@@ -33,18 +36,66 @@ sellerIntroductionResultWidget() {
           ),
         ),
         SizedBox(height: 4),
-        Text(
-          controller.exhibitions
-              .firstWhere(
-                  (element) => element.id == Get.arguments['exhibition_id'])
-              .seller,
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+        if (controller.displayedSellerIntroductionFont.value == 0)
+          Text(
+            controller.exhibitions
+                .firstWhere(
+                    (element) => element.id == Get.arguments['exhibition_id'])
+                .seller,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.pretendard,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
           ),
-        ),
+        if (controller.displayedSellerIntroductionFont.value == 1)
+          Text(
+            controller.exhibitions
+                .firstWhere(
+                    (element) => element.id == Get.arguments['exhibition_id'])
+                .seller,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.gmarket,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+        if (controller.displayedSellerIntroductionFont.value == 2)
+          Text(
+            controller.exhibitions
+                .firstWhere(
+                    (element) => element.id == Get.arguments['exhibition_id'])
+                .seller,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.kbo,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+        if (controller.displayedSellerIntroductionFont.value == 3)
+          Text(
+            controller.exhibitions
+                .firstWhere(
+                    (element) => element.id == Get.arguments['exhibition_id'])
+                .seller,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.chosun,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
         SizedBox(height: 16),
         ClipRRect(
           borderRadius: BorderRadius.circular(Get.width),
@@ -60,14 +111,50 @@ sellerIntroductionResultWidget() {
           ),
         ),
         SizedBox(height: 16),
-        Text(
-          controller.sellerIntroduction.value,
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontFamily: FontPalette.pretendard,
-            fontSize: 14,
+        if (controller.displayedSellerIntroductionFont.value == 0)
+          Text(
+            controller.sellerIntroduction.value,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.pretendard,
+              fontSize: 14,
+            ),
           ),
-        ),
+        if (controller.displayedSellerIntroductionFont.value == 1)
+          Text(
+            controller.sellerIntroduction.value,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.gmarket,
+              fontSize: 14,
+            ),
+          ),
+        if (controller.displayedSellerIntroductionFont.value == 2)
+          Text(
+            controller.sellerIntroduction.value,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.kbo,
+              fontSize: 14,
+            ),
+          ),
+        if (controller.displayedSellerIntroductionFont.value == 3)
+          Text(
+            controller.sellerIntroduction.value,
+            style: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.chosun,
+              fontSize: 14,
+            ),
+          ),
       ],
     ),
   );

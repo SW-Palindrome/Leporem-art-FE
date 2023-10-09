@@ -31,6 +31,29 @@ class ExhibitionController extends GetxController {
   Rx<String> sellerIntroduction = Rx<String>('');
   Rx<bool> isSellerTemplateUsed = Rx<bool>(false);
 
+  // 작가 소개 꾸미기
+  List<int> colorList = [
+    0xffFFFFFF,
+    0xffF5E1E1,
+    0xffF8E8E0,
+    0xffE8F2DB,
+    0xffDBF1F5,
+    0xffE9E8F4,
+    0xffB7A5A5,
+    0xffA5B7AF,
+    0xff9097B1,
+    0xff000000
+  ];
+  List<String> fontList = [
+    'Pretendard',
+    'GmarketSans',
+    'KBoDiaGothic',
+    'ChosunCentennial'
+  ];
+  Rx<int> selectedSellerIntroductionColor = Rx<int>(0);
+  Rx<int> selectedSellerIntroductionFont = Rx<int>(0);
+  Rx<int> displayedSellerIntroductionFont = Rx<int>(0);
+
   @override
   void onInit() async {
     titleController.addListener(() {
@@ -121,6 +144,9 @@ class ExhibitionController extends GetxController {
   void sellerInfoReset() {
     sellerIntroductionController.clear();
     sellerImage.value = [];
+    selectedSellerIntroductionColor.value = 0;
+    selectedSellerIntroductionFont.value = 0;
+    displayedSellerIntroductionFont.value = 0;
   }
 
   bool isValidExhibitionSave() {
@@ -134,6 +160,35 @@ class ExhibitionController extends GetxController {
         ? sellerImage.isNotEmpty && sellerIntroduction.value != ''
         : sellerImage.isNotEmpty;
   }
+
+  bool isFontResetValid() {
+    return selectedSellerIntroductionFont.value != 0;
+  }
+
+  bool isApplyValid() {
+    return selectedSellerIntroductionFont.value !=
+        displayedSellerIntroductionFont.value;
+  }
+
+  void applyFont() {
+    displayedSellerIntroductionFont.value =
+        selectedSellerIntroductionFont.value;
+  }
 }
 
 enum ImageType { exhibition, seller, item }
+
+enum SellerIntroductionColor {
+  white,
+  red,
+  orange,
+  green,
+  blue,
+  purple,
+  brown,
+  olive,
+  indigo,
+  black
+}
+
+enum SellerIntroductionFont { pretenderd, gmarketSans, kBoDiaGothic, chosun }
