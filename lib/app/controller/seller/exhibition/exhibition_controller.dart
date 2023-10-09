@@ -15,7 +15,49 @@ class ExhibitionController extends GetxController {
   final ExhibitionRepository repository;
   ExhibitionController({required this.repository}) : assert(repository != null);
 
-  RxList<Exhibition> exhibitions = <Exhibition>[].obs;
+  RxList<Exhibition> exhibitions = RxList<Exhibition>([]);
+  Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
+  RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([
+    ExhibitionItem(
+        title: '폭발하는 화산',
+        description:
+            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
+        imageUrls: [
+          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
+        ],
+        position: 0,
+        isUsingTemplate: false,
+        isSoled: false,
+        backgroundColor: '0xffFFFFFF',
+        fontFamily: 'Pretendard',
+        id: 1),
+    ExhibitionItem(
+        title: '폭발하는 화산',
+        description:
+            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
+        imageUrls: [
+          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
+        ],
+        position: 0,
+        isUsingTemplate: false,
+        isSoled: false,
+        backgroundColor: '0xffFFFFFF',
+        fontFamily: 'Pretendard',
+        id: 2),
+    ExhibitionItem(
+        title: '폭발하는 화산',
+        description:
+            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
+        imageUrls: [
+          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
+        ],
+        position: 0,
+        isUsingTemplate: false,
+        isSoled: false,
+        backgroundColor: '0xffFFFFFF',
+        fontFamily: 'Pretendard',
+        id: 3),
+  ]);
 
   // 기획전 소개
   RxList<File> exhibitionImage = RxList<File>([]);
@@ -75,6 +117,16 @@ class ExhibitionController extends GetxController {
 
   Future<void> fetchSellerExhibitions() async {
     exhibitions.value = await repository.fetchSellerExhibitions();
+  }
+
+  Future<void> fetchExhibitionArtistById(int exhibitionId) async {
+    exhibitionArtist.value =
+        await repository.fetchExhibitionArtistById(exhibitionId);
+  }
+
+  Future<void> fetchExhibitionItemById(int exhibitionId) async {
+    exhibitionItems.value =
+        await repository.fetchExhibitionItemById(exhibitionId);
   }
 
   Future<void> selectImages(ImageType imageType) async {
