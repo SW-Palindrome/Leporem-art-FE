@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
@@ -7,7 +8,8 @@ import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import '../exhibition/widgets/exhibition_widget.dart';
 
-class ExhibitionCreateExhibitionCompleteScreen extends StatelessWidget {
+class ExhibitionCreateExhibitionCompleteScreen
+    extends GetView<ExhibitionController> {
   const ExhibitionCreateExhibitionCompleteScreen({super.key});
 
   @override
@@ -16,6 +18,10 @@ class ExhibitionCreateExhibitionCompleteScreen extends StatelessWidget {
       backgroundColor: ColorPalette.white,
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () {
+          Get.until((route) =>
+              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_START);
+        },
         isWhite: true,
       ),
       body: SafeArea(
@@ -37,11 +43,20 @@ class ExhibitionCreateExhibitionCompleteScreen extends StatelessWidget {
               SizedBox(height: 40),
               exhibitionWidget(
                 exhibitionId: 1,
-                title: '한가위 아름다운 단풍 기획전',
-                imageUrl:
-                    'http://www.knnews.co.kr/edb/nimages/2022/04/2022040416024296883.jpg',
-                seller: '우유병 도예 작가',
-                period: '2023.10.24 ~ 10.31',
+                title: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .title,
+                imageUrl: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .coverImage,
+                seller: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .seller,
+                period:
+                    '${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).startDate} ~ ${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).endDate}',
                 isTouchable: false,
               ),
               Spacer(),

@@ -17,15 +17,23 @@ class ExhibitionController extends GetxController {
   RxList<Exhibition> exhibitions = <Exhibition>[].obs;
 
   // 썸네일 이미지
-  RxList<File> image = RxList<File>([]);
+  RxList<File> exhibitionImage = RxList<File>([]);
   Rx<bool> isImageLoading = Rx<bool>(false);
 
   // 기획전 제목, 작가명
   TextEditingController titleController = TextEditingController();
   TextEditingController sellerNameController = TextEditingController();
+  Rx<String> title = Rx<String>('');
+  Rx<String> sellerName = Rx<String>('');
 
   @override
   void onInit() async {
+    titleController.addListener(() {
+      title.value = titleController.text;
+    });
+    sellerNameController.addListener(() {
+      sellerName.value = sellerNameController.text;
+    });
     await fetchSellerExhibitions();
     super.onInit();
   }
@@ -49,7 +57,7 @@ class ExhibitionController extends GetxController {
     if (compressedImage != null) {
       final compressedFile = File('${pickedFile.path}.compressed.jpg')
         ..writeAsBytesSync(compressedImage);
-      image.assignAll([compressedFile]);
+      exhibitionImage.assignAll([compressedFile]);
       isImageLoading.value = false;
       totalImageSize = compressedFile.lengthSync();
     }
@@ -74,6 +82,18 @@ class ExhibitionController extends GetxController {
   }
 
   void removeImage() {
-    image.clear();
+    exhibitionImage.value = [];
+  }
+
+  void exhibitionInfoReset() {
+    titleController.clear();
+    sellerNameController.clear();
+    exhibitionImage.value = [];
+  }
+
+  bool isValidExhibitionSave() {
+    return exhibitionImage.isNotEmpty &&
+        title.value != '' &&
+        sellerName.value != '';
   }
 }
