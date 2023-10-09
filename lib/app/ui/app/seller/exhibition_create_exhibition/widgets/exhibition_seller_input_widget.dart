@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
 
 Widget exhibitionSellerInputWidget() {
+  final controller = Get.find<ExhibitionController>();
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -30,7 +33,7 @@ Widget exhibitionSellerInputWidget() {
         ),
         child: TextField(
           maxLength: 46,
-          controller: TextEditingController(),
+          controller: controller.sellerNameController,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: '이름',

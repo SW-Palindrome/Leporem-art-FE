@@ -38,7 +38,7 @@ Widget exhibitionThumbnailInputWidget() {
 }
 
 Widget _buildImageWidget(ExhibitionController controller) {
-  if (controller.image.isEmpty) {
+  if (controller.exhibitionImage.isEmpty) {
     // 이미지가 없을 때
     return DottedBorder(
       borderType: BorderType.RRect,
@@ -85,7 +85,7 @@ Widget _buildImageWidget(ExhibitionController controller) {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               image: DecorationImage(
-                image: FileImage(controller.image[0]),
+                image: FileImage(controller.exhibitionImage[0]),
                 fit: BoxFit.cover,
               ),
             ),

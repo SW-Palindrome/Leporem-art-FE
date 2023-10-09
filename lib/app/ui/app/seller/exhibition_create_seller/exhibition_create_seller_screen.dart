@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/seller_thumbnail_input_widget.dart';
 import 'widgets/template_select_widget.dart';
 
-class ExhibitionCreateSellerScreen extends StatelessWidget {
+class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
   const ExhibitionCreateSellerScreen({super.key});
 
   @override
@@ -22,7 +24,8 @@ class ExhibitionCreateSellerScreen extends StatelessWidget {
             'assets/icons/arrow_left.svg',
             width: 24,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Get.until((route) =>
+              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_START),
         ),
         actions: [
           GestureDetector(
