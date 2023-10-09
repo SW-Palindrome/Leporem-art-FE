@@ -41,7 +41,14 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
                       : '저장하기',
                   value: controller.isValidSellerSave(),
                   onTap: controller.isSellerTemplateUsed.value == true
-                      ? () {}
+                      ? () {
+                          Get.toNamed(
+                            Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+                            arguments: {
+                              'exhibition_id': Get.arguments['exhibition_id']
+                            },
+                          );
+                        }
                       : () {},
                 ),
               ],
