@@ -52,7 +52,7 @@ class ExhibitionCreateSellerCompleteScreen
                 text: '이어서 작품 등록하기',
                 value: true,
                 onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_SELLER,
+                  Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
                   arguments: {'exhibition_id': Get.arguments['exhibition_id']},
                 ),
               ),
