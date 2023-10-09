@@ -9,7 +9,7 @@ startInquiryWidget() {
       '기획전을 등록할까요?',
       style: TextStyle(
         color: ColorPalette.black,
-        fontFamily: FontPalette.pretenderd,
+        fontFamily: FontPalette.pretendard,
         fontWeight: FontWeight.bold,
         fontSize: 20,
       ),

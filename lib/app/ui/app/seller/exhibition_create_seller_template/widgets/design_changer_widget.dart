@@ -15,7 +15,7 @@ designChangerWidget() {
             '배경',
             style: TextStyle(
               color: ColorPalette.grey_7,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
@@ -73,7 +73,7 @@ designChangerWidget() {
             '폰트',
             style: TextStyle(
               color: ColorPalette.grey_7,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),

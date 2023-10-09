@@ -16,7 +16,7 @@ Widget sellerThumbnailInputWidget() {
         '작가님의 소개 이미지를 올려주세요.',
         style: TextStyle(
           color: ColorPalette.black,
-          fontFamily: FontPalette.pretenderd,
+          fontFamily: FontPalette.pretendard,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),

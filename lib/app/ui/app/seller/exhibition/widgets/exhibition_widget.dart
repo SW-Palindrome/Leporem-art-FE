@@ -44,7 +44,7 @@ exhibitionWidget({
                 title,
                 style: TextStyle(
                   color: ColorPalette.white,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -56,7 +56,7 @@ exhibitionWidget({
                     seller,
                     style: TextStyle(
                       color: ColorPalette.white,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 14,
                     ),
                   ),
@@ -71,7 +71,7 @@ exhibitionWidget({
                     period,
                     style: TextStyle(
                       color: ColorPalette.white,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 14,
                     ),
                   ),

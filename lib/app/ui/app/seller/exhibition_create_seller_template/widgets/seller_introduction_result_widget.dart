@@ -27,7 +27,7 @@ sellerIntroductionResultWidget() {
           'ABOUT',
           style: TextStyle(
             color: ColorPalette.purple,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
@@ -64,7 +64,7 @@ sellerIntroductionResultWidget() {
           controller.sellerIntroduction.value,
           style: TextStyle(
             color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontSize: 14,
           ),
         ),

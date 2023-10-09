@@ -69,7 +69,7 @@ Widget templateSelectWidget() {
                 '작가 소개 템플릿을 사용할게요!',
                 style: TextStyle(
                   color: ColorPalette.grey_6,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
@@ -83,7 +83,7 @@ Widget templateSelectWidget() {
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: ColorPalette.grey_5,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     fontSize: 12,
                   ),
                 ),

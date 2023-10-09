@@ -16,7 +16,7 @@ Widget exhibitionSellerInputWidget() {
             style: TextStyle(
               color: ColorPalette.black,
               fontWeight: FontWeight.w600,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 16.0,
             ),
           ),
@@ -40,7 +40,7 @@ Widget exhibitionSellerInputWidget() {
             hintStyle: TextStyle(
               color: ColorPalette.grey_4,
               fontWeight: FontWeight.w600,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 16.0,
             ),
             counterText: '',

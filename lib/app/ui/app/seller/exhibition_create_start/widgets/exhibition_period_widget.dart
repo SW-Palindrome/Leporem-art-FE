@@ -18,7 +18,7 @@ exhibitionPeriodWidget(String startDate, String endDate) {
           '기획전 기간',
           style: TextStyle(
             color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
@@ -28,7 +28,7 @@ exhibitionPeriodWidget(String startDate, String endDate) {
           '2023년 10월 24일 오후 12:00 ~ 10월 31일 오후 12:00',
           style: TextStyle(
             color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontSize: 13,
           ),
         )

@@ -42,7 +42,7 @@ class ExhibitionCreateSellerExampleScreen
                     'ABOUT',
                     style: TextStyle(
                       color: ColorPalette.purple,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -52,7 +52,7 @@ class ExhibitionCreateSellerExampleScreen
                     '공예쁨',
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     ),
@@ -73,7 +73,7 @@ class ExhibitionCreateSellerExampleScreen
                     '- 한국도자 신진 작가 수상 (2023.03)\n- 서울 도자 페어 참석 (2022.12)\n- 한국대학교 공예학과 (2018.03 ~)',
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 14,
                     ),
                   ),

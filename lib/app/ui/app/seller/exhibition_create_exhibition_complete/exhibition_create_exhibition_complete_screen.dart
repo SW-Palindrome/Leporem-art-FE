@@ -35,7 +35,7 @@ class ExhibitionCreateExhibitionCompleteScreen
                 '기획전 소개를 모두 작성했어요!\n이제 작가 소개를 작성해주세요.',
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),

@@ -12,7 +12,7 @@ exhibitionProcessWidget() {
           '기획전 등은 아래 순서로 진행돼요!',
           style: TextStyle(
             color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -32,7 +32,7 @@ exhibitionProcessWidget() {
                   '1',
                   style: TextStyle(
                     color: ColorPalette.white,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -44,7 +44,7 @@ exhibitionProcessWidget() {
               '기획전 소개 작성하기',
               style: TextStyle(
                 color: ColorPalette.black,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
                 fontSize: 14,
               ),
             ),
@@ -65,7 +65,7 @@ exhibitionProcessWidget() {
                   '2',
                   style: TextStyle(
                     color: ColorPalette.white,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -77,7 +77,7 @@ exhibitionProcessWidget() {
               '작가 소개 작성하기',
               style: TextStyle(
                 color: ColorPalette.black,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
                 fontSize: 14,
               ),
             ),
@@ -98,7 +98,7 @@ exhibitionProcessWidget() {
                   '3',
                   style: TextStyle(
                     color: ColorPalette.white,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -110,7 +110,7 @@ exhibitionProcessWidget() {
               '작품 등록하기',
               style: TextStyle(
                 color: ColorPalette.black,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
                 fontSize: 14,
               ),
             ),

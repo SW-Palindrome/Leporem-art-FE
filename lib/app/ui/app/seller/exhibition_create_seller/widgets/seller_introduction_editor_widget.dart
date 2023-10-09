@@ -28,7 +28,7 @@ sellerIntroductionEditorWidget() {
                 'ABOUT',
                 style: TextStyle(
                   color: ColorPalette.purple,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
@@ -41,7 +41,7 @@ sellerIntroductionEditorWidget() {
                     .seller,
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
@@ -75,7 +75,7 @@ sellerIntroductionEditorWidget() {
                                     '소개 이미지를\n업로드해주세요',
                                     style: TextStyle(
                                       color: ColorPalette.grey_4,
-                                      fontFamily: FontPalette.pretenderd,
+                                      fontFamily: FontPalette.pretendard,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -139,7 +139,7 @@ sellerIntroductionEditorWidget() {
                   hintText: '작가 소개를 입력해주세요.',
                   hintStyle: TextStyle(
                     color: ColorPalette.grey_4,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     fontSize: 14,
                   ),
                   counterText: '',
@@ -147,7 +147,7 @@ sellerIntroductionEditorWidget() {
                 ),
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontSize: 14,
                 ),
               ),
@@ -169,7 +169,7 @@ sellerIntroductionEditorWidget() {
                 'ABOUT',
                 style: TextStyle(
                   color: Colors.transparent,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
@@ -182,7 +182,7 @@ sellerIntroductionEditorWidget() {
                     .seller,
                 style: TextStyle(
                   color: Colors.transparent,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
@@ -214,7 +214,7 @@ sellerIntroductionEditorWidget() {
                                 '소개 이미지를\n업로드해주세요',
                                 style: TextStyle(
                                   color: ColorPalette.grey_4,
-                                  fontFamily: FontPalette.pretenderd,
+                                  fontFamily: FontPalette.pretendard,
                                   fontSize: 14,
                                 ),
                               ),

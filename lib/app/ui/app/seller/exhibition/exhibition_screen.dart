@@ -21,7 +21,7 @@ class ExhibitionScreen extends GetView<ExhibitionController> {
                 '기획전',
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),

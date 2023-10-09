@@ -54,7 +54,7 @@ sellerIntroductionInputWidget() {
           ),
           style: TextStyle(
             color: ColorPalette.black,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
             fontStyle: FontStyle.normal,
             fontSize: 14.0,
           ),

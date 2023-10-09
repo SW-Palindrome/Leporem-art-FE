@@ -48,7 +48,7 @@ class ColorPalette {
 }
 
 class FontPalette {
-  static const String pretenderd = "Pretendard";
+  static const String pretendard = "Pretendard";
   static const String gmarket = "GmarketSans";
   static const String chosun = "ChosunCentennial";
   static const String kbo = "KBODiaGothic";

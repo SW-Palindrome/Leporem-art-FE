@@ -249,7 +249,7 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
         '회원 탈퇴',
         style: TextStyle(
           color: ColorPalette.red,
-          fontFamily: FontPalette.pretenderd,
+          fontFamily: FontPalette.pretendard,
           fontSize: 12,
         ),
       ),

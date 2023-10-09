@@ -134,7 +134,7 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
                         style: TextStyle(
                           color: ColorPalette.purple,
                           fontWeight: FontWeight.w600,
-                          fontFamily: FontPalette.pretenderd,
+                          fontFamily: FontPalette.pretendard,
                           fontSize: 10,
                         ),
                       ),
@@ -186,7 +186,7 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
             '주문을 원하는 작품을 선택해주세요.',
             style: TextStyle(
               color: ColorPalette.grey_5,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 12,
             ),
           ),
