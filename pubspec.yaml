@@ -100,6 +100,7 @@ flutter:
     #- assets/videos/
     - assets/config/.env
     - assets/config/.env.dev
+    -
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -124,5 +125,32 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard_medium.otf
+        - asset: assets/fonts/Pretendard_bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard_light.otf
+          weight: 300
+    - family: ChosunCentennial
+      fonts:
+        - asset: assets/fonts/ChosunCentennial.otf
+    - family: GmarketSans
+      fonts:
+        - asset: assets/fonts/GmarketSans_medium.otf
+        - asset: assets/fonts/GmarketSans_bold.otf
+          weight: 700
+        - asset: assets/fonts/GmarketSans_light.otf
+          weight: 300
+    - family: KBoDiaGothic
+      fonts:
+        - asset: assets/fonts/KBO_Dia_Gothic_medium.otf
+        - asset: assets/fonts/KBO_Dia_Gothic_bold.otf
+          weight: 700
+        - asset: assets/fonts/KBO_Dia_Gothic_light.otf
+          weight: 300
+
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
