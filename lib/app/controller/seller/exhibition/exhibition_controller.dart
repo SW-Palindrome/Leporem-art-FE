@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../data/models/exhibition.dart';
 import '../../../data/repositories/exhibition_repository.dart';
@@ -53,6 +54,9 @@ class ExhibitionController extends GetxController {
   Rx<int> selectedSellerIntroductionColor = Rx<int>(0);
   Rx<int> selectedSellerIntroductionFont = Rx<int>(0);
   Rx<int> displayedSellerIntroductionFont = Rx<int>(0);
+
+  WidgetsToImageController widgetsToImageController =
+      WidgetsToImageController();
 
   @override
   void onInit() async {
