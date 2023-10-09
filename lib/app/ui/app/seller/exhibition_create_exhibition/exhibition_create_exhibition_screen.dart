@@ -57,25 +57,6 @@ class ExhibitionCreateExhibitionScreen extends GetView<ExhibitionController> {
             );
           },
         ),
-        actions: [
-          GestureDetector(
-            onTap: () => print('미리보기'),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Text(
-                  '미리보기',
-                  style: TextStyle(
-                    color: ColorPalette.grey_4,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
         child: Padding(
