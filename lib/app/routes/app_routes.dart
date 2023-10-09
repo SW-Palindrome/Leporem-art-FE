@@ -42,6 +42,8 @@ abstract class Routes {
       '/seller/exhibition/create/seller';
   static const SELLER_EXHIBITION_CREATE_SELLER_COMPLETE =
       '/seller/exhibition/create/seller/complete';
+  static const SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE =
+      '/seller/exhibition/create/seller/example';
   static const SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE =
       '/seller/exhibition/create/seller/template';
   static const SELLER_EXHIBITION_CREATE_ITEM_INFO =
