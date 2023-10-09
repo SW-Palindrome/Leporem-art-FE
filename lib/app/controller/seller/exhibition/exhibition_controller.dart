@@ -16,15 +16,20 @@ class ExhibitionController extends GetxController {
 
   RxList<Exhibition> exhibitions = <Exhibition>[].obs;
 
-  // 썸네일 이미지
+  // 기획전 소개
   RxList<File> exhibitionImage = RxList<File>([]);
-  Rx<bool> isImageLoading = Rx<bool>(false);
-
-  // 기획전 제목, 작가명
+  Rx<bool> isExhibitionImageLoading = Rx<bool>(false);
   TextEditingController titleController = TextEditingController();
   TextEditingController sellerNameController = TextEditingController();
   Rx<String> title = Rx<String>('');
   Rx<String> sellerName = Rx<String>('');
+
+  // 작가 소개
+  RxList<File> sellerImage = RxList<File>([]);
+  Rx<bool> isSellerImageLoading = Rx<bool>(false);
+  TextEditingController sellerIntroductionController = TextEditingController();
+  Rx<String> sellerIntroduction = Rx<String>('');
+  Rx<bool> isSellerTemplateUsed = Rx<bool>(false);
 
   @override
   void onInit() async {
@@ -33,6 +38,9 @@ class ExhibitionController extends GetxController {
     });
     sellerNameController.addListener(() {
       sellerName.value = sellerNameController.text;
+    });
+    sellerIntroductionController.addListener(() {
+      sellerIntroduction.value = sellerIntroductionController.text;
     });
     await fetchSellerExhibitions();
     super.onInit();
@@ -48,7 +56,7 @@ class ExhibitionController extends GetxController {
     // 이미지 개수만큼 isImagesLoading을 true로 변경
     //pickedFile을 image에 저장
     if (pickedFile == null) return;
-    isImageLoading.value = true;
+    isExhibitionImageLoading.value = true;
     // 압축한 이미지를 저장할 공간
     // 이미지를 압축하고 압축한 이미지를 compressedImage에 추가
     // 이미지 크기를 계산하기위해 변수생성
@@ -104,6 +112,10 @@ class ExhibitionController extends GetxController {
     return exhibitionImage.isNotEmpty &&
         title.value != '' &&
         sellerName.value != '';
+  }
+
+  bool isValidSellerSave() {
+    return sellerImage.isNotEmpty && sellerIntroduction.value != '';
   }
 }
 
