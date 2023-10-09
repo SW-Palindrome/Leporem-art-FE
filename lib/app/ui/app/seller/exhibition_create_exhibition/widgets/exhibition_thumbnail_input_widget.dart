@@ -27,7 +27,7 @@ Widget exhibitionThumbnailInputWidget() {
         SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            logAnalytics(name: "exhibition_item_select_image");
+            logAnalytics(name: "exhibition_thumbnail_select_image");
             controller.selectImages(ImageType.exhibition);
           },
           child: _buildImageWidget(controller),
@@ -95,7 +95,7 @@ Widget _buildImageWidget(ExhibitionController controller) {
             right: 10,
             child: GestureDetector(
               onTap: () {
-                logAnalytics(name: "item_create_remove_image");
+                logAnalytics(name: "exhibition_thumbnail_remove_image");
                 controller.removeImage(ImageType.exhibition);
               },
               child: CircleAvatar(
