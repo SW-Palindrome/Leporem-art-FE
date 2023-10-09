@@ -233,6 +233,19 @@ sellerIntroductionEditorWidget() {
                         ),
                 ),
               ),
+              SizedBox(height: 16),
+              Text(
+                controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .seller,
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontFamily: FontPalette.pretendard,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ],
           ),
         );
