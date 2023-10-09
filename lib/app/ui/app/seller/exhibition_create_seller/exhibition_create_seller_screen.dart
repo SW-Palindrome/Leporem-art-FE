@@ -16,17 +16,12 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorPalette.white,
-      appBar: AppBar(
-        backgroundColor: ColorPalette.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/arrow_left.svg',
-            width: 24,
-          ),
-          onPressed: () => Get.until((route) =>
-              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_START),
-        ),
+      appBar: MyAppBar(
+        title: '기획전 소개 작성',
+        isWhite: true,
+        appBarType: AppBarType.backAppBar,
+        onTapLeadingIcon: () => Get.until((route) =>
+            Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_START),
       ),
       body: SafeArea(
         child: Padding(
