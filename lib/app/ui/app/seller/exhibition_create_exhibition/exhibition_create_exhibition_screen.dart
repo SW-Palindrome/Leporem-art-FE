@@ -3,13 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/widgets/next_button.dart';
 
+import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import 'widgets/exhibition_seller_input_widget.dart';
-import 'widgets/exhibition_thumbnail_intpu_widget.dart';
+import 'widgets/exhibition_thumbnail_input_widget.dart';
 import 'widgets/exhibition_title_input_widget.dart';
 
-class ExhibitionCreateExhibitionScreen extends StatelessWidget {
+class ExhibitionCreateExhibitionScreen extends GetView<ExhibitionController> {
   const ExhibitionCreateExhibitionScreen({super.key});
 
   @override
@@ -50,6 +51,7 @@ class ExhibitionCreateExhibitionScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
               exhibitionThumbnailInputWidget(),

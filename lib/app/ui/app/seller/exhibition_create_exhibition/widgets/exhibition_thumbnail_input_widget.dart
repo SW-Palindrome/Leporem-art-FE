@@ -9,6 +9,7 @@ import '../../../../theme/app_theme.dart';
 
 Widget exhibitionThumbnailInputWidget() {
   final controller = Get.find<ExhibitionController>();
+
   return Obx(
     () => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,110 +25,95 @@ Widget exhibitionThumbnailInputWidget() {
           ),
         ),
         SizedBox(height: 16),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                logAnalytics(name: "exhibition_item_select_image");
-                controller.selectImages();
-              },
-              child: DottedBorder(
-                borderType: BorderType.RRect,
-                color: ColorPalette.grey_4,
-                radius: Radius.circular(5),
-                child: SizedBox(
-                  height: Get.width * 0.2,
-                  width: Get.width * 0.2,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/camera.svg',
-                      colorFilter: ColorFilter.mode(
-                        ColorPalette.grey_4,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            controller.isImageLoading.value
-                ? SizedBox(
-                    height: Get.width * 0.2,
-                    width: Get.width * 0.2,
-                    child: Center(
-                      child: SizedBox(
-                        height: Get.width * 0.1,
-                        width: Get.width * 0.1,
-                        child: CircularProgressIndicator(
-                          color: ColorPalette.grey_3,
-                        ),
-                      ),
-                    ),
-                  )
-                : Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(8),
-                        height: Get.width * 0.2,
-                        width: Get.width * 0.2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                            image: FileImage(controller.image.value),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            logAnalytics(name: "exhibition_item_remove_image");
-                            controller.removeImage();
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: ColorPalette.black,
-                            radius: 10,
-                            child: SvgPicture.asset(
-                              'assets/icons/cancel.svg',
-                              colorFilter: ColorFilter.mode(
-                                ColorPalette.white,
-                                BlendMode.srcIn,
-                              ),
-                              width: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-          ],
-        ),
         GestureDetector(
           onTap: () {
-            logAnalytics(name: "exhibition_select_thumbnail");
+            logAnalytics(name: "exhibition_item_select_image");
+            controller.selectImages();
           },
-          child: DottedBorder(
-            color: ColorPalette.grey_4,
-            child: SizedBox(
-              width: Get.width * 0.2,
-              height: Get.width * 0.2,
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/camera.svg',
-                  height: 24,
-                  width: 24,
-                  colorFilter: ColorFilter.mode(
-                    ColorPalette.grey_4,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          child: _buildImageWidget(controller),
         ),
       ],
     ),
   );
+}
+
+Widget _buildImageWidget(ExhibitionController controller) {
+  if (controller.image.isEmpty) {
+    // 이미지가 없을 때
+    return DottedBorder(
+      borderType: BorderType.RRect,
+      color: ColorPalette.grey_4,
+      radius: Radius.circular(4),
+      child: SizedBox(
+        height: Get.width * 0.2,
+        width: Get.width * 0.2,
+        child: Center(
+          child: SvgPicture.asset(
+            'assets/icons/camera.svg',
+            colorFilter: ColorFilter.mode(
+              ColorPalette.grey_4,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      ),
+    );
+  } else {
+    if (controller.isImageLoading.value) {
+      // 이미지 로딩 중일 때
+      return SizedBox(
+        height: Get.width * 0.2,
+        width: Get.width * 0.2,
+        child: Center(
+          child: SizedBox(
+            height: Get.width * 0.1,
+            width: Get.width * 0.1,
+            child: CircularProgressIndicator(
+              color: ColorPalette.grey_3,
+            ),
+          ),
+        ),
+      );
+    } else {
+      // 이미지가 있을 때
+      return Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.all(8),
+            height: Get.width * 0.2,
+            width: Get.width * 0.2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              image: DecorationImage(
+                image: FileImage(controller.image[0]),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: () {
+                logAnalytics(name: "item_create_remove_image");
+                controller.removeImage();
+              },
+              child: CircleAvatar(
+                backgroundColor: ColorPalette.black,
+                radius: 10,
+                child: SvgPicture.asset(
+                  'assets/icons/cancel.svg',
+                  colorFilter: ColorFilter.mode(
+                    ColorPalette.white,
+                    BlendMode.srcIn,
+                  ),
+                  width: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+  }
 }
