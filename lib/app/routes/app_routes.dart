@@ -46,6 +46,11 @@ abstract class Routes {
       '/seller/exhibition/create/seller/example';
   static const SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE =
       '/seller/exhibition/create/seller/template';
-  static const SELLER_EXHIBITION_CREATE_ITEM_INFO =
-      '/seller/exhibition/create/item';
+  static const SELLER_EXHIBITION_CREATE_ITEM = '/seller/exhibition/create/item';
+  static const SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE =
+      '/seller/exhibition/create/item/example';
+  static const SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE =
+      '/seller/exhibition/create/item/example';
+  static const SELLER_EXHIBITION_CREATE_ITEM_COMPLETE =
+      '/seller/exhibition/create/item/complete';
 }
