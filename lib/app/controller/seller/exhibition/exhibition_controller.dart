@@ -98,7 +98,17 @@ class ExhibitionController extends GetxController {
     return result;
   }
 
-  void removeImage() {
+  void removeImage(ImageType imageType) {
+    switch (imageType) {
+      case ImageType.exhibition:
+        exhibitionImage.value = [];
+        break;
+      case ImageType.seller:
+        sellerImage.value = [];
+        break;
+      default:
+        break;
+    }
     exhibitionImage.value = [];
   }
 

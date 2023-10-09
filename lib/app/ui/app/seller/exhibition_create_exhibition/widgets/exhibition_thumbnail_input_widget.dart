@@ -96,7 +96,7 @@ Widget _buildImageWidget(ExhibitionController controller) {
             child: GestureDetector(
               onTap: () {
                 logAnalytics(name: "item_create_remove_image");
-                controller.removeImage();
+                controller.removeImage(ImageType.exhibition);
               },
               child: CircleAvatar(
                 backgroundColor: ColorPalette.black,
