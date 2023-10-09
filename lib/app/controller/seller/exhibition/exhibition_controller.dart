@@ -130,7 +130,9 @@ class ExhibitionController extends GetxController {
   }
 
   bool isValidSellerSave() {
-    return sellerImage.isNotEmpty && sellerIntroduction.value != '';
+    return isSellerTemplateUsed.value == true
+        ? sellerImage.isNotEmpty && sellerIntroduction.value != ''
+        : sellerImage.isNotEmpty;
   }
 }
 

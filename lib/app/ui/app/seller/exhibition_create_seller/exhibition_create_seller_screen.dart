@@ -6,6 +6,7 @@ import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/next_button.dart';
+import 'widgets/seller_introduction_input_widget.dart';
 import 'widgets/seller_thumbnail_input_widget.dart';
 import 'widgets/template_select_widget.dart';
 
@@ -50,21 +51,26 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20),
-              templateSelectWidget(),
-              SizedBox(height: 40),
-              sellerThumbnailInputWidget(),
-              Spacer(),
-              NextButton(
-                text: '저장하기',
-                value: false,
-                onTap: () {},
-              ),
-              SizedBox(height: 20),
-            ],
+          child: Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                templateSelectWidget(),
+                SizedBox(height: 40),
+                sellerThumbnailInputWidget(),
+                SizedBox(height: 40),
+                controller.isSellerTemplateUsed.value == true
+                    ? sellerIntroductionInputWidget()
+                    : SizedBox(),
+                Spacer(),
+                NextButton(
+                  text: '저장하기',
+                  value: controller.isValidSellerSave(),
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
         ),
       ),
