@@ -10,11 +10,15 @@ exhibitionWidget({
   required String imageUrl,
   required String seller,
   required String period,
+  required int exhibitionId,
   bool isTouchable = true,
 }) {
   return GestureDetector(
     onTap: isTouchable
-        ? () => Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_START)
+        ? () {
+            Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_START,
+                arguments: {'exhibition_id': exhibitionId});
+          }
         : null,
     child: Stack(
       children: [

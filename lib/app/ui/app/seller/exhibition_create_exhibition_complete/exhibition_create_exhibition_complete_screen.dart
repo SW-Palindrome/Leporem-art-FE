@@ -36,6 +36,7 @@ class ExhibitionCreateExhibitionCompleteScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
               exhibitionWidget(
+                exhibitionId: 1,
                 title: '한가위 아름다운 단풍 기획전',
                 imageUrl:
                     'http://www.knnews.co.kr/edb/nimages/2022/04/2022040416024296883.jpg',

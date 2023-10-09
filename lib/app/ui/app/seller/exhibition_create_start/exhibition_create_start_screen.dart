@@ -35,7 +35,16 @@ class ExhibitionCreateStartScreen extends GetView<ExhibitionController> {
             SizedBox(height: 20),
             startInquiryWidget(),
             SizedBox(height: 40),
-            exhibitionPeriodWidget(controller.g),
+            exhibitionPeriodWidget(
+              controller.exhibitions
+                  .firstWhere(
+                      (element) => element.id == Get.arguments['exhibition_id'])
+                  .startDate,
+              controller.exhibitions
+                  .firstWhere(
+                      (element) => element.id == Get.arguments['exhibition_id'])
+                  .endDate,
+            ),
             SizedBox(height: 40),
             exhibitionProcessWidget(),
             Spacer(),
