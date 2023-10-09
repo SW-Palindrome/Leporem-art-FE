@@ -51,45 +51,82 @@ sellerIntroductionEditorWidget() {
                 onTap: () {
                   controller.selectImages(ImageType.seller);
                 },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(Get.width),
-                  child: controller.sellerImage.isEmpty
-                      ? Container(
-                          width: Get.width * 0.53,
-                          height: Get.width * 0.53,
-                          color: ColorPalette.grey_2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/camera.svg',
-                                colorFilter: ColorFilter.mode(
-                                    ColorPalette.grey_3, BlendMode.srcIn),
-                                width: 32,
-                                height: 32,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(Get.width),
+                      child: controller.sellerImage.isEmpty
+                          ? Container(
+                              width: Get.width * 0.53,
+                              height: Get.width * 0.53,
+                              color: ColorPalette.grey_2,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/camera.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        ColorPalette.grey_3, BlendMode.srcIn),
+                                    width: 32,
+                                    height: 32,
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    '소개 이미지를\n업로드해주세요',
+                                    style: TextStyle(
+                                      color: ColorPalette.grey_4,
+                                      fontFamily: FontPalette.pretenderd,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 4),
-                              Text(
-                                '소개 이미지를\n업로드해주세요',
-                                style: TextStyle(
-                                  color: ColorPalette.grey_4,
-                                  fontFamily: FontPalette.pretenderd,
-                                  fontSize: 14,
+                            )
+                          : Container(
+                              width: Get.width * 0.53,
+                              height: Get.width * 0.53,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: FileImage(controller.sellerImage[0]),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ],
-                          ),
-                        )
-                      : Container(
-                          width: Get.width * 0.53,
-                          height: Get.width * 0.53,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: FileImage(controller.sellerImage[0]),
-                              fit: BoxFit.cover,
+                            ),
+                    ),
+                    if (controller.sellerImage.isNotEmpty)
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: GestureDetector(
+                          onTap: () {
+                            controller.selectImages(ImageType.seller);
+                          },
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: ColorPalette.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: ColorPalette.grey_2,
+                                width: 1,
+                              ),
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                'assets/icons/edit.svg',
+                                width: 20,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                  ColorPalette.grey_5,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
                             ),
                           ),
                         ),
+                      ),
+                  ],
                 ),
               ),
               SizedBox(height: 16),

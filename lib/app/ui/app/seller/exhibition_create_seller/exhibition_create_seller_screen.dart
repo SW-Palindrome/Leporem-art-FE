@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/seller/exhibition_create_seller/widgets/seller_introduction_editor_widget.dart';
 
