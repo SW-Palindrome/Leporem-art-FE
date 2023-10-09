@@ -42,7 +42,7 @@ class ExhibitionController extends GetxController {
     exhibitions.value = await repository.fetchSellerExhibitions();
   }
 
-  Future<void> selectImages() async {
+  Future<void> selectImages(ImageType imageType) async {
     final XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     // 이미지 개수만큼 isImagesLoading을 true로 변경
@@ -57,8 +57,17 @@ class ExhibitionController extends GetxController {
     if (compressedImage != null) {
       final compressedFile = File('${pickedFile.path}.compressed.jpg')
         ..writeAsBytesSync(compressedImage);
-      exhibitionImage.assignAll([compressedFile]);
-      isImageLoading.value = false;
+      switch (imageType) {
+        case ImageType.exhibition:
+          exhibitionImage.assignAll([compressedFile]);
+          break;
+        case ImageType.seller:
+          sellerImage.assignAll([compressedFile]);
+          break;
+        default:
+          break;
+      }
+      isExhibitionImageLoading.value = false;
       totalImageSize = compressedFile.lengthSync();
     }
     if (totalImageSize > 5 * 1024 * 1024) {
@@ -97,3 +106,5 @@ class ExhibitionController extends GetxController {
         sellerName.value != '';
   }
 }
+
+enum ImageType { exhibition, seller, item }

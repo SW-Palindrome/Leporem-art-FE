@@ -28,7 +28,7 @@ Widget exhibitionThumbnailInputWidget() {
         GestureDetector(
           onTap: () {
             logAnalytics(name: "exhibition_item_select_image");
-            controller.selectImages();
+            controller.selectImages(ImageType.seller);
           },
           child: _buildImageWidget(controller),
         ),
@@ -59,7 +59,7 @@ Widget _buildImageWidget(ExhibitionController controller) {
       ),
     );
   } else {
-    if (controller.isImageLoading.value) {
+    if (controller.isExhibitionImageLoading.value) {
       // 이미지 로딩 중일 때
       return SizedBox(
         height: Get.width * 0.2,
