@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 import '../../../widgets/bottom_sheet.dart';
 
@@ -68,13 +69,17 @@ Widget templateSelectWidget() {
               ),
             ),
             SizedBox(height: 6),
-            Text(
-              '템플릿 예시 보기',
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: ColorPalette.grey_5,
-                fontFamily: FontPalette.pretenderd,
-                fontSize: 12,
+            GestureDetector(
+              onTap: () =>
+                  Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE),
+              child: Text(
+                '템플릿 예시 보기',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: ColorPalette.grey_5,
+                  fontFamily: FontPalette.pretenderd,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],

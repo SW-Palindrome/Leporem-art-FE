@@ -40,6 +40,10 @@ abstract class Routes {
       '/seller/exhibition/create/exhibition/complete';
   static const SELLER_EXHIBITION_CREATE_SELLER =
       '/seller/exhibition/create/seller';
+  static const SELLER_EXHIBITION_CREATE_SELLER_COMPLETE =
+      '/seller/exhibition/create/seller/complete';
+  static const SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE =
+      '/seller/exhibition/create/seller/template';
   static const SELLER_EXHIBITION_CREATE_ITEM_INFO =
       '/seller/exhibition/create/item';
 }

@@ -39,6 +39,7 @@ import '../ui/app/common/message_item_share/message_item_share_screen.dart';
 import '../ui/app/seller/exhibition_create_exhibition/exhibition_create_exhibition_screen.dart';
 import '../ui/app/seller/exhibition_create_exhibition_complete/exhibition_create_exhibition_complete_screen.dart';
 import '../ui/app/seller/exhibition_create_seller/exhibition_create_seller_screen.dart';
+import '../ui/app/seller/exhibition_create_seller_template/exhibition_create_seller_template_screen.dart';
 import '../ui/app/seller/exhibition_create_start/exhibition_create_start_screen.dart';
 import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
@@ -188,6 +189,10 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
       page: () => ExhibitionCreateSellerScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+      page: () => ExhibitionCreateSellerTemplateScreen(),
     ),
   ];
 }
