@@ -6,6 +6,7 @@ import 'package:leporemart/app/ui/app/seller/exhibition_create_seller/widgets/se
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
+import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/template_select_widget.dart';
 
@@ -17,7 +18,7 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
     return Scaffold(
       backgroundColor: ColorPalette.white,
       appBar: MyAppBar(
-        title: '기획전 소개 작성',
+        title: '작가 소개 작성',
         isWhite: true,
         appBarType: AppBarType.backAppBar,
         onTapLeadingIcon: () => Get.until((route) =>
@@ -40,7 +41,9 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
                       ? '다음'
                       : '저장하기',
                   value: controller.isValidSellerSave(),
-                  onTap: controller.isSellerTemplateUsed.value == true ? (){}() {},
+                  onTap: controller.isSellerTemplateUsed.value == true
+                      ? () {}
+                      : () {},
                 ),
               ],
             ),
