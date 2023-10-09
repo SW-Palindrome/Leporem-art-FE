@@ -28,7 +28,7 @@ Widget exhibitionThumbnailInputWidget() {
         GestureDetector(
           onTap: () {
             logAnalytics(name: "exhibition_item_select_image");
-            controller.selectImages(ImageType.seller);
+            controller.selectImages(ImageType.exhibition);
           },
           child: _buildImageWidget(controller),
         ),
