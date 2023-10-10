@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionItemListWidget() {
@@ -23,27 +24,32 @@ exhibitionItemListWidget() {
           Column(
             children: [
               SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/plus.svg',
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalette.grey_4,
-                      BlendMode.srcIn,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/plus.svg',
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        ColorPalette.grey_4,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    '작품 추가하기',
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontSize: 16,
+                    SizedBox(width: 4),
+                    Text(
+                      '작품 추가하기',
+                      style: TextStyle(
+                        color: ColorPalette.grey_4,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
