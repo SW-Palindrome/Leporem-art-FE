@@ -37,7 +37,10 @@ class ExhibitionCreateItemCompleteScreen extends GetView<ExhibitionController> {
               NextButton(
                 text: '저장하기',
                 value: controller.exhibitionItems.isNotEmpty,
-                onTap: () {},
+                onTap: () {
+                  // TODO: 작품 등록 저장하기
+                  Get.until((route) => Get.currentRoute == Routes.SELLER_APP);
+                },
               ),
             ],
           ),
