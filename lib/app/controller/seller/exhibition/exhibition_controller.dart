@@ -64,7 +64,7 @@ class ExhibitionController extends GetxController {
   Rx<bool> isExhibitionImageLoading = Rx<bool>(false);
   TextEditingController titleController = TextEditingController();
   TextEditingController sellerNameController = TextEditingController();
-  Rx<String> title = Rx<String>('');
+  Rx<String> exhibitionTitle = Rx<String>('');
   Rx<String> sellerName = Rx<String>('');
 
   // 작가 소개
@@ -100,10 +100,30 @@ class ExhibitionController extends GetxController {
   WidgetsToImageController widgetsToImageController =
       WidgetsToImageController();
 
+  // 작품 등록
+  Rx<bool> isItemTemplateUsed = Rx<bool>(false);
+  RxList<File> itemImage = RxList<File>([]);
+  Rx<bool> isItemImageLoading = Rx<bool>(false);
+  RxList<File> itemAudio = RxList<File>([]);
+  Rx<bool> isItemAudioLoading = Rx<bool>(false);
+  Rx<bool> isItemSailEnabled = Rx<bool>(false);
+  RxList<File> videos = RxList<File>([]);
+  Rx<bool> isVideoLoading = Rx<bool>(false);
+  Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
+  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
+  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
+  Rx<String> itemTitle = Rx<String>('');
+  Rx<String> itemDescription = Rx<String>('');
+  Rx<String> width = Rx<String>('');
+  Rx<String> depth = Rx<String>('');
+  Rx<String> height = Rx<String>('');
+  Rx<int> price = Rx<int>(0);
+  Rx<int> amount = Rx<int>(0);
+
   @override
   void onInit() async {
     titleController.addListener(() {
-      title.value = titleController.text;
+      exhibitionTitle.value = titleController.text;
     });
     sellerNameController.addListener(() {
       sellerName.value = sellerNameController.text;
@@ -207,7 +227,7 @@ class ExhibitionController extends GetxController {
 
   bool isValidExhibitionSave() {
     return exhibitionImage.isNotEmpty &&
-        title.value != '' &&
+        exhibitionTitle.value != '' &&
         sellerName.value != '';
   }
 

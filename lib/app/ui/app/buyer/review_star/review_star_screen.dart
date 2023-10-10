@@ -18,7 +18,7 @@ class ReviewStarScreen extends GetView<ReviewController> {
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
-        title: Get.arguments['order'].title,
+        title: Get.arguments['order'].exhibitionTitle,
         onTapLeadingIcon: () {
           Get.back();
         },
