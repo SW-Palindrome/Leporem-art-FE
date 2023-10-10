@@ -50,7 +50,7 @@ abstract class Routes {
   static const SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE =
       '/seller/exhibition/create/item/example';
   static const SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE =
-      '/seller/exhibition/create/item/example';
+      '/seller/exhibition/create/item/template';
   static const SELLER_EXHIBITION_CREATE_ITEM_COMPLETE =
       '/seller/exhibition/create/item/complete';
 }
