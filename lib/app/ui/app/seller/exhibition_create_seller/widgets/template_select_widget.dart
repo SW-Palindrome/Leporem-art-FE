@@ -31,7 +31,7 @@ Widget templateSelectWidget() {
               Get.bottomSheet(
                 MyBottomSheet(
                   height: Get.height * 0.3,
-                  title: '템플릿을 사용할까요?',
+                  title: '템플릿 사용을 변경 할까요?',
                   description: '입력했던 정보가 사라집니다.',
                   buttonType: BottomSheetType.twoButton,
                   leftButtonText: '취소',
