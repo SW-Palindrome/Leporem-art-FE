@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
@@ -116,10 +117,13 @@ class ExhibitionController extends GetxController {
   RxList<File> itemImages = RxList<File>([]);
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
+  Rx<bool> isItemSailEnabled = Rx<bool>(false);
+  RxList<File> itemVideo = RxList<File>([]);
+  Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
   Rx<bool> isItemSailEnabled = Rx<bool>(false);
   RxList<File> itemVideo = RxList<File>([]);
-  Rx<bool> isVideoLoading = Rx<bool>(false);
+  Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
   List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
@@ -322,6 +326,34 @@ class ExhibitionController extends GetxController {
     exhibitionImage.value = [];
   }
 
+  Future<void> selectAudio() async {
+    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['mp3', 'aac', 'wav'],
+    );
+
+    if (pickedFile == null) {
+      return;
+    }
+    //pickedFile 크기가 4MB 이상이면 경고창 띄우기
+    if (pickedFile.files.single.size > 4 * 1024 * 1024) {
+      logAnalytics(name: 'audio_size_too_big');
+      Get.snackbar(
+        '경고',
+        '오디오 크기가 너무 큽니다. 다시 선택해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+    // 오디오 파일을 audioFile에 저장
+    itemAudio.assignAll([File(pickedFile.files.single.path!)]);
+  }
+
+  void removeAudio() {
+    itemAudio.value = [];
+  }
+
   Future<void> selectVideo() async {
     // ImagePicker로 비디오를 선택 받음
     var pickedFile = await ImagePicker().pickVideo(
@@ -343,8 +375,8 @@ class ExhibitionController extends GetxController {
       );
       return;
     }
-    // 썸네일 생성을 위해 isVideoLoading을 true로 변경
-    isVideoLoading.value = true;
+    // 썸네일 생성을 위해 isItemVideoLoading을 true로 변경
+    isItemVideoLoading.value = true;
     // 썸네일 생성
     final thumbnailData =
         await VideoThumbnail.thumbnailData(video: pickedFile.path);
@@ -376,7 +408,7 @@ class ExhibitionController extends GetxController {
         return;
       }
       itemVideo.add(originalFile);
-      isVideoLoading.value = false;
+      isItemVideoLoading.value = false;
     } catch (e) {
       Logger logger = Logger(printer: PrettyPrinter());
       logger.e(e);

@@ -16,7 +16,7 @@ itemFlopInputWidget() {
         child: Row(
           children: [
             Text(
-              '숏츠를 올려주세요',
+              '숏츠를 올려주세요.',
               style: TextStyle(
                 color: ColorPalette.black,
                 fontWeight: FontWeight.w600,
@@ -30,7 +30,7 @@ itemFlopInputWidget() {
               style: TextStyle(
                 color: ColorPalette.grey_4,
                 fontWeight: FontWeight.w600,
-                fontFamily: "PretendardVariable",
+                fontFamily: FontPalette.pretendard,
                 fontStyle: FontStyle.normal,
                 fontSize: 14.0,
               ),
@@ -72,7 +72,7 @@ itemFlopInputWidget() {
                       style: TextStyle(
                         color: ColorPalette.grey_6,
                         fontWeight: FontWeight.w600,
-                        fontFamily: "PretendardVariable",
+                        fontFamily: FontPalette.pretendard,
                         fontStyle: FontStyle.normal,
                         fontSize: 10.0,
                       ),
@@ -82,7 +82,7 @@ itemFlopInputWidget() {
               ),
             ),
           ),
-          controller.isVideoLoading.value == true
+          controller.isItemVideoLoading.value == true
               ? SizedBox(
                   height: Get.width * 0.2,
                   width: Get.width * 0.2,
