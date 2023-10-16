@@ -1,33 +1,30 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:leporemart/src/configs/firebase_config.dart';
-import 'package:leporemart/src/configs/firebase_options.dart';
-import 'package:leporemart/src/configs/login_config.dart';
-import 'package:leporemart/src/controllers/user_global_info_controller.dart';
-import 'package:leporemart/src/screens/account/home.dart';
-import 'package:leporemart/src/theme/app_theme.dart';
-import 'package:leporemart/src/utils/chatting_socket_singleton.dart';
-import 'package:leporemart/src/utils/notification.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:leporemart/src/configs/amplitude_config.dart';
-import 'package:leporemart/src/controllers/bottom_navigationbar_contoller.dart';
+
+import 'app/configs/amplitude_config.dart';
+import 'app/configs/firebase_config.dart';
+import 'app/configs/login_config.dart';
+import 'app/controller/common/bottom_navigationbar/bottom_navigationbar_contoller.dart';
+import 'app/controller/common/user_global_info/user_global_info_controller.dart';
+import 'app/routes/app_pages.dart';
+import 'app/ui/app/common/home/home.dart';
+import 'app/ui/theme/app_theme.dart';
+import 'app/utils/notification.dart';
 
 void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
   if (kReleaseMode) {
-    await dotenv.load(fileName: 'assets/config/.env');
+    await dotenv.load(fileName: 'assets/config/.env.dev');
   } else if (kDebugMode) {
     await dotenv.load(fileName: 'assets/config/.env.dev');
   }
@@ -58,16 +55,16 @@ void main() async {
     print("Push Messaging token: $token");
   });
 
-  if (kReleaseMode) {
-    await AmplitudeConfig.init();
-    SentryFlutter.init(
-      (options) {
-        options.dsn = dotenv.get('GLITCHTIP_DSN');
-        options.attachStacktrace = true;
-      },
-      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-    );
-  }
+  // if (kReleaseMode) {
+  //   await AmplitudeConfig.init();
+  //   SentryFlutter.init(
+  //     (options) {
+  //       options.dsn = dotenv.get('GLITCHTIP_DSN');
+  //       options.attachStacktrace = true;
+  //     },
+  //     appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+  //   );
+  // }
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
@@ -82,9 +79,10 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        if (kReleaseMode)
-          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        // if (kReleaseMode)
+        //   FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
+      getPages: AppPages.pages,
     );
   }
 }
