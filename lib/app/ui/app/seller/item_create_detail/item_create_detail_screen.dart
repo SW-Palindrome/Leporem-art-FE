@@ -1079,7 +1079,7 @@ class ItemCreateDetailScreen extends GetView<ItemCreateDetailController> {
             style: TextStyle(
               color: ColorPalette.black,
               fontWeight: FontWeight.w600,
-              fontFamily: "PretendardVariable",
+              fontFamily: FontPalette.pretendard,
               fontStyle: FontStyle.normal,
               fontSize: 16.0,
             ),

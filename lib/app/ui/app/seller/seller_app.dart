@@ -8,10 +8,10 @@ import '../../../controller/seller/home/seller_home_controller.dart';
 import '../../../controller/seller/profile/seller_profile_controller.dart';
 import '../../../controller/seller/search/seller_search_controller.dart';
 import '../../theme/app_theme.dart';
-import '../buyer/auction/auction_screen.dart';
 import '../common/message/message_screen.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/my_bottom_navigationbar.dart';
+import 'exhibition/exhibition_screen.dart';
 import 'home/home_screen.dart';
 
 class SellerApp extends GetView<MyBottomNavigationbarController> {
@@ -23,8 +23,8 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
       switch (controller.selectedSellerIndex.value) {
         case 0:
           return _homeScaffold();
-        // case 1:
-        //   return _customOrderScaffold();
+        case 1:
+          return _exhibitionScaffold();
         case 1:
           return _messageScaffold();
         case 2:
@@ -59,10 +59,10 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  _customOrderScaffold() {
+  _exhibitionScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
-      body: AuctionScreen(),
+      body: ExhibitionScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );

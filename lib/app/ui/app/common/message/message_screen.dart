@@ -40,7 +40,7 @@ class MessageScreen extends GetView<MessageController> {
               style: TextStyle(
                 fontSize: 16,
                 color: ColorPalette.grey_5,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
               )),
         ],
       ),
@@ -51,8 +51,7 @@ class MessageScreen extends GetView<MessageController> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          for (final chatRoom in chatRoomList)
-            _chatRoomWidget(chatRoom)
+          for (final chatRoom in chatRoomList) _chatRoomWidget(chatRoom)
         ],
       ),
     );
@@ -121,7 +120,7 @@ class MessageScreen extends GetView<MessageController> {
       child: Text('알림끄기',
           style: TextStyle(
             fontSize: 11,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
           )),
     );
   }
@@ -135,9 +134,11 @@ class MessageScreen extends GetView<MessageController> {
           children: [
             Text(chatRoom.opponentNickname,
                 style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: FontPalette.pretenderd,
-                    fontWeight: chatRoom.unreadMessageCount == 0 ? FontWeight.w500 : FontWeight.w600,
+                  fontSize: 12,
+                  fontFamily: FontPalette.pretendard,
+                  fontWeight: chatRoom.unreadMessageCount == 0
+                      ? FontWeight.w500
+                      : FontWeight.w600,
                 )),
             SizedBox(width: 6),
             Text(
@@ -147,7 +148,7 @@ class MessageScreen extends GetView<MessageController> {
                         .format(chatRoom.lastMessageDatetime ?? DateTime.now()),
                 style: TextStyle(
                     fontSize: 11,
-                    fontFamily: FontPalette.pretenderd,
+                    fontFamily: FontPalette.pretendard,
                     color: ColorPalette.grey_4)),
           ],
         ),
@@ -157,8 +158,10 @@ class MessageScreen extends GetView<MessageController> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontSize: 12,
-                fontFamily: FontPalette.pretenderd,
-                fontWeight: chatRoom.unreadMessageCount == 0 ? FontWeight.w400 : FontWeight.w600,
+                fontFamily: FontPalette.pretendard,
+                fontWeight: chatRoom.unreadMessageCount == 0
+                    ? FontWeight.w400
+                    : FontWeight.w600,
                 color: ColorPalette.grey_6)),
       ],
     );
@@ -169,26 +172,25 @@ class MessageScreen extends GetView<MessageController> {
       return SizedBox(width: 16);
     }
     return Center(
-      child: Container(
-        width: 16,
-        height: 16,
-        decoration: BoxDecoration(
-          color: ColorPalette.purple,
-          shape: BoxShape.circle,
-        ),
-        child: Center(
-          child: Text(
-            chatRoom.unreadMessageCount.toString(),
-            style: TextStyle(
-              fontSize: 10,
-              fontFamily: FontPalette.pretenderd,
-              color: ColorPalette.white,
-              fontWeight: FontWeight.bold,
-            ),
+        child: Container(
+      width: 16,
+      height: 16,
+      decoration: BoxDecoration(
+        color: ColorPalette.purple,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          chatRoom.unreadMessageCount.toString(),
+          style: TextStyle(
+            fontSize: 10,
+            fontFamily: FontPalette.pretendard,
+            color: ColorPalette.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      )
-    );
+      ),
+    ));
   }
 
   _leaveChatRoomWidget() {
@@ -198,7 +200,7 @@ class MessageScreen extends GetView<MessageController> {
       child: Text('나가기',
           style: TextStyle(
             fontSize: 11,
-            fontFamily: FontPalette.pretenderd,
+            fontFamily: FontPalette.pretendard,
           )),
     );
   }

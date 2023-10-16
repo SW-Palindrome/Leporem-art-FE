@@ -59,6 +59,7 @@ dependencies:
   flutter_image_compress: ^2.0.4
   video_compress: ^3.0.0
   image_gallery_saver: ^2.0.3
+  file_picker: ^5.5.0
   flutter_slidable: ^3.0.0
   path_provider: ^2.0.2
   socket_io_client: 2.0.0
@@ -67,8 +68,10 @@ dependencies:
   url_launcher: ^6.1.12
   sign_in_with_apple: ^4.3.0
   webview_flutter: ^4.2.2
+  widgets_to_image: ^0.0.2
   logger: ^2.0.2
   dropdown_button2: ^2.3.9
+
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +104,7 @@ flutter:
     #- assets/videos/
     - assets/config/.env
     - assets/config/.env.dev
+    -
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -125,5 +129,32 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard_medium.otf
+        - asset: assets/fonts/Pretendard_bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard_light.otf
+          weight: 300
+    - family: ChosunCentennial
+      fonts:
+        - asset: assets/fonts/ChosunCentennial.otf
+    - family: GmarketSans
+      fonts:
+        - asset: assets/fonts/GmarketSans_medium.otf
+        - asset: assets/fonts/GmarketSans_bold.otf
+          weight: 700
+        - asset: assets/fonts/GmarketSans_light.otf
+          weight: 300
+    - family: KBoDiaGothic
+      fonts:
+        - asset: assets/fonts/KBO_Dia_Gothic_medium.otf
+        - asset: assets/fonts/KBO_Dia_Gothic_bold.otf
+          weight: 700
+        - asset: assets/fonts/KBO_Dia_Gothic_light.otf
+          weight: 300
+
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

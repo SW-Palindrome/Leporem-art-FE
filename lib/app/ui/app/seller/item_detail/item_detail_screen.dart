@@ -512,7 +512,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                     controller.itemDetail.value.reviews[index].writer,
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -522,7 +522,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                         .itemDetail.value.reviews[index].writeDateTime),
                     style: TextStyle(
                       color: ColorPalette.grey_4,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 10,
                     ),
                   ),
@@ -559,7 +559,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                     controller.itemDetail.value.reviews[index].rating,
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 12,
                     ),
                   )
@@ -570,7 +570,7 @@ class SellerItemDetailScreen extends GetView<SellerItemDetailController> {
                 controller.itemDetail.value.reviews[index].comment,
                 style: TextStyle(
                   color: ColorPalette.black,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                   fontSize: 13,
                 ),
               ),

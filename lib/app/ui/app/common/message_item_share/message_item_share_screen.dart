@@ -170,7 +170,7 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
             '공유를 원하는 작품을 선택해주세요.',
             style: TextStyle(
               color: ColorPalette.grey_5,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 12,
             ),
           ),

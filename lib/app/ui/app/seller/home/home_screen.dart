@@ -44,7 +44,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
               style: TextStyle(
                 fontSize: 16,
                 color: ColorPalette.grey_5,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
               )),
         ],
       ),
@@ -66,7 +66,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
             style: TextStyle(
               fontSize: 16,
               color: ColorPalette.grey_5,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
             ),
             textAlign: TextAlign.center,
           ),
@@ -104,7 +104,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     style: TextStyle(
                       color: ColorPalette.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 16,
                     ),
                   ),
@@ -134,7 +134,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                       '총 ${controller.totalCount.value}개',
                       style: TextStyle(
                         color: ColorPalette.grey_5,
-                        fontFamily: FontPalette.pretenderd,
+                        fontFamily: FontPalette.pretendard,
                         fontSize: 12,
                       ),
                     ),
@@ -215,7 +215,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
                     style: TextStyle(
                       color: ColorPalette.white,
                       fontWeight: FontWeight.bold,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontSize: 14,
                     ),
                   ),

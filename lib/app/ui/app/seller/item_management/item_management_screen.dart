@@ -52,7 +52,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
               style: TextStyle(
                 fontSize: 16,
                 color: ColorPalette.grey_5,
-                fontFamily: FontPalette.pretenderd,
+                fontFamily: FontPalette.pretendard,
               )),
         ],
       ),

@@ -29,6 +29,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onTapLeadingIcon,
     this.onTapFirstActionIcon,
     this.onTapSecondActionIcon,
+    this.actions = const [],
   });
 
   final AppBarType appBarType;
@@ -37,6 +38,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onTapLeadingIcon;
   final Function()? onTapFirstActionIcon;
   final Function()? onTapSecondActionIcon;
+  final List<Widget> actions;
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -137,6 +139,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: ColorPalette.black,
         ),
       ),
+      actions: actions,
       leading: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/arrow_left.svg',

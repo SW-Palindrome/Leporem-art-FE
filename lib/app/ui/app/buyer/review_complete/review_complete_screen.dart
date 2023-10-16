@@ -44,7 +44,7 @@ class ReviewCompleteScreen extends StatelessWidget {
                   fontSize: 20,
                   color: ColorPalette.black,
                   fontWeight: FontWeight.bold,
-                  fontFamily: FontPalette.pretenderd,
+                  fontFamily: FontPalette.pretendard,
                 ),
               ),
               SizedBox(height: 100),

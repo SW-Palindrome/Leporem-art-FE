@@ -52,13 +52,13 @@ class MyBottomNavigationbarController extends GetxService {
       case 0:
         pageStr = "List";
         break;
-      // case 1:
-      //   pageStr = "Custom Order";
-      //   break;
       case 1:
-        pageStr = "Chat";
+        pageStr = "Exhibition";
         break;
       case 2:
+        pageStr = "Chat";
+        break;
+      case 3:
         pageStr = "MyPage";
         break;
     }

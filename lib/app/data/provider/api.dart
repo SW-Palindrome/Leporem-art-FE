@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../models/exhibition.dart';
 import '../models/delivery_info.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
@@ -112,5 +113,10 @@ abstract class ApiClient {
   Future<OrderInfo> fetchOrder(int orderId);
   Future<String?> fetchDeliveryInfoUrl(int orderId);
   Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber);
-  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId);
+  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId)
+    
+  // 전시전
+  Future<List<Exhibition>> fetchSellerExhibitions();
+  Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
+  Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
 }

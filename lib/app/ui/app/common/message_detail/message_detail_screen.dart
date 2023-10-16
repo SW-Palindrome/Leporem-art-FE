@@ -179,7 +179,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                     description,
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -189,7 +189,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                     item.sellerNickname,
                     style: TextStyle(
                       color: ColorPalette.grey_5,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 10,
                     ),
@@ -203,7 +203,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                       maxLines: 1,
                       style: TextStyle(
                         color: ColorPalette.black,
-                        fontFamily: FontPalette.pretenderd,
+                        fontFamily: FontPalette.pretendard,
                         fontSize: 12,
                       ),
                     ),
@@ -213,7 +213,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                     '${CurrencyFormatter().numberToCurrency(item.price)}원',
                     style: TextStyle(
                       color: ColorPalette.black,
-                      fontFamily: FontPalette.pretenderd,
+                      fontFamily: FontPalette.pretendard,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -280,7 +280,7 @@ class MessageDetailScreen extends GetView<MessageController> {
           child: Text(
             message.message,
             style: TextStyle(
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 13,
             ),
           ),
@@ -373,7 +373,7 @@ class MessageDetailScreen extends GetView<MessageController> {
                             child: Text(
                               '보내기',
                               style: TextStyle(
-                                fontFamily: FontPalette.pretenderd,
+                                fontFamily: FontPalette.pretendard,
                                 fontSize: 14,
                                 color: ColorPalette.blue,
                                 fontWeight: FontWeight.w600,
@@ -385,13 +385,13 @@ class MessageDetailScreen extends GetView<MessageController> {
                           hintText: '메시지를 입력하세요.',
                           border: InputBorder.none,
                           hintStyle: TextStyle(
-                            fontFamily: FontPalette.pretenderd,
+                            fontFamily: FontPalette.pretendard,
                             fontSize: 16,
                             color: ColorPalette.grey_4,
                           ),
                         ),
                         style: TextStyle(
-                          fontFamily: FontPalette.pretenderd,
+                          fontFamily: FontPalette.pretendard,
                           fontSize: 16,
                           color: ColorPalette.black,
                         ),
@@ -509,7 +509,7 @@ class MessageDetailScreen extends GetView<MessageController> {
             text,
             style: TextStyle(
               color: ColorPalette.black,
-              fontFamily: FontPalette.pretenderd,
+              fontFamily: FontPalette.pretendard,
               fontSize: 12,
             ),
           )

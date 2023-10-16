@@ -33,5 +33,26 @@ abstract class Routes {
   static const SELLER_PROFILE = '/seller/profile';
   static const SELLER_PROFILE_EDIT = '/seller/profile/edit';
   static const SELLER_ITEM_MANAGEMENT = '/seller/profile/item-management';
+  static const SELLER_EXHIBITION_CREATE_START =
+      '/seller/exhibition/create/start';
+  static const SELLER_EXHIBITION_CREATE_EXHIBITION =
+      '/seller/exhibition/create/exhibition';
+  static const SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE =
+      '/seller/exhibition/create/exhibition/complete';
+  static const SELLER_EXHIBITION_CREATE_SELLER =
+      '/seller/exhibition/create/seller';
+  static const SELLER_EXHIBITION_CREATE_SELLER_COMPLETE =
+      '/seller/exhibition/create/seller/complete';
+  static const SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE =
+      '/seller/exhibition/create/seller/example';
+  static const SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE =
+      '/seller/exhibition/create/seller/template';
+  static const SELLER_EXHIBITION_CREATE_ITEM = '/seller/exhibition/create/item';
+  static const SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE =
+      '/seller/exhibition/create/item/example';
+  static const SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE =
+      '/seller/exhibition/create/item/template';
+  static const SELLER_EXHIBITION_CREATE_ITEM_COMPLETE =
+      '/seller/exhibition/create/item/complete';
   static const SELLER_ITEM_DELIVERY_EDIT = '/seller/item/delivery/edit';
 }

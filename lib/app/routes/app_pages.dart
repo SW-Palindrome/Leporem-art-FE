@@ -39,6 +39,17 @@ import '../ui/app/buyer/search/search_screen.dart';
 import '../ui/app/common/message_detail/message_detail_screen.dart';
 import '../ui/app/common/message_item_order/message_item_order_screen.dart';
 import '../ui/app/common/message_item_share/message_item_share_screen.dart';
+import '../ui/app/seller/exhibition_create_exhibition/exhibition_create_exhibition_screen.dart';
+import '../ui/app/seller/exhibition_create_exhibition_complete/exhibition_create_exhibition_complete_screen.dart';
+import '../ui/app/seller/exhibition_create_item/exhibition_create_item_screen.dart';
+import '../ui/app/seller/exhibition_create_item_complete/exhibition_create_item_complete_screen.dart';
+import '../ui/app/seller/exhibition_create_item_example/exhibition_create_item_example_screen.dart';
+import '../ui/app/seller/exhibition_create_item_template/exhibition_create_item_template_screen.dart';
+import '../ui/app/seller/exhibition_create_seller/exhibition_create_seller_screen.dart';
+import '../ui/app/seller/exhibition_create_seller_complete/exhibition_create_seller_complete_screen.dart';
+import '../ui/app/seller/exhibition_create_seller_example/exhibition_create_seller_example_screen.dart';
+import '../ui/app/seller/exhibition_create_seller_template/exhibition_create_seller_template_screen.dart';
+import '../ui/app/seller/exhibition_create_start/exhibition_create_start_screen.dart';
 import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
 import '../ui/app/seller/item_delivery_edit/item_delivery_edit_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
@@ -179,6 +190,48 @@ class AppPages {
       binding: SellerProfileEditBinding(),
     ),
     GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_START,
+      page: () => ExhibitionCreateStartScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
+      page: () => ExhibitionCreateExhibitionScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
+      page: () => ExhibitionCreateExhibitionCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
+      page: () => ExhibitionCreateSellerScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
+      page: () => ExhibitionCreateSellerExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+      page: () => ExhibitionCreateSellerTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
+      page: () => ExhibitionCreateSellerCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
+      page: () => ExhibitionCreateItemScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+      page: () => ExhibitionCreateItemExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
+      page: () => ExhibitionCreateItemTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+      page: () => ExhibitionCreateItemCompleteScreen(),
       name: Routes.SELLER_ITEM_DELIVERY_EDIT,
       page: () => SellerItemDeliveryEditScreen(),
       binding: SellerItemDeliverEditBinding(),
