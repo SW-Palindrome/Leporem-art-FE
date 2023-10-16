@@ -51,11 +51,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>카메라 접근을 위해 허용 버튼을 눌러주세요</string>
 	<key>NSMicrophoneUsageDescription</key>

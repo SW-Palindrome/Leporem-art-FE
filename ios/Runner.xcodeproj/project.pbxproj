@@ -475,8 +475,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = D234TS7KXD;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.3;
-				FLUTTER_BUILD_NUMBER = 9;
+				FLUTTER_BUILD_NAME = 1.0.2;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "공예쁨";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
@@ -668,8 +667,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = D234TS7KXD;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.3;
-				FLUTTER_BUILD_NUMBER = 9;
+				FLUTTER_BUILD_NAME = 1.0.2;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "공예쁨";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
@@ -705,8 +703,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = D234TS7KXD;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.3;
-				FLUTTER_BUILD_NUMBER = 9;
+				FLUTTER_BUILD_NAME = 1.0.2;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "공예쁨";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
