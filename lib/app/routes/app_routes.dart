@@ -23,6 +23,7 @@ abstract class Routes {
   static const BUYER_REVIEW_STAR = '/buyer/profile/order/review-star';
   static const BUYER_REVIEW_DETAIL = '/buyer/profile/order/review-detail';
   static const BUYER_REVIEW_COMPLETE = '/buyer/profile/order/review-complete';
+  static const BUYER_DELIVERY_INFO_WEBVIEW = '/buyer/profile/order/delivery-info/webview';
   static const SELLER_APP = '/seller';
   static const SELLER_SEARCH = '/seller/search';
   static const SELLER_ITEM_DETAIL = '/seller/item';
@@ -53,4 +54,5 @@ abstract class Routes {
       '/seller/exhibition/create/item/template';
   static const SELLER_EXHIBITION_CREATE_ITEM_COMPLETE =
       '/seller/exhibition/create/item/complete';
+  static const SELLER_ITEM_DELIVERY_EDIT = '/seller/item/delivery/edit';
 }

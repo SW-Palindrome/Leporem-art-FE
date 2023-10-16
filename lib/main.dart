@@ -24,7 +24,7 @@ void main() async {
   // Sentry + GlitchTip
   // kDebugMode는 개발모드일때 true, 배포모드일때 false
   if (kReleaseMode) {
-    await dotenv.load(fileName: 'assets/config/.env');
+    await dotenv.load(fileName: 'assets/config/.env.dev');
   } else if (kDebugMode) {
     await dotenv.load(fileName: 'assets/config/.env.dev');
   }
@@ -55,16 +55,16 @@ void main() async {
     print("Push Messaging token: $token");
   });
 
-  if (kReleaseMode) {
-    await AmplitudeConfig.init();
-    SentryFlutter.init(
-      (options) {
-        options.dsn = dotenv.get('GLITCHTIP_DSN');
-        options.attachStacktrace = true;
-      },
-      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-    );
-  }
+  // if (kReleaseMode) {
+  //   await AmplitudeConfig.init();
+  //   SentryFlutter.init(
+  //     (options) {
+  //       options.dsn = dotenv.get('GLITCHTIP_DSN');
+  //       options.attachStacktrace = true;
+  //     },
+  //     appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+  //   );
+  // }
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
@@ -79,8 +79,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        if (kReleaseMode)
-          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        // if (kReleaseMode)
+        //   FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
       getPages: AppPages.pages,
     );
