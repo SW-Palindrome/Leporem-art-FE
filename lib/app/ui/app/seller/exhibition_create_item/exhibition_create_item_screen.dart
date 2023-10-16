@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/app/ui/app/seller/exhibition_create_item/widgets/template_select_widget.dart';
-import 'package:leporemart/app/ui/app/widgets/my_app_bar.dart';
 
+import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../theme/app_theme.dart';
+import '../../widgets/my_app_bar.dart';
+import '../exhibition_create_seller/widgets/template_select_widget.dart';
+import 'widgets/item_amount_input_widget.dart';
+import 'widgets/item_category_input_widget.dart';
+import 'widgets/item_description_input_widget.dart';
+import 'widgets/item_flop_input_widget.dart';
+import 'widgets/item_image_input_widget.dart';
+import 'widgets/item_price_input_widget.dart';
+import 'widgets/item_sale_select_widget.dart';
+import 'widgets/item_size_input_widget.dart';
+import 'widgets/item_title_input_widget.dart';
 
-class ExhibitionCreateItemScreen extends StatelessWidget {
+class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
   const ExhibitionCreateItemScreen({super.key});
 
   @override
@@ -42,36 +52,50 @@ class ExhibitionCreateItemScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              templateSelectWidget(),
-              SizedBox(height: 40),
-              //itemImageInputWidget(),
-              SizedBox(height: 40),
-              //itemAudioInputWidget(),
-              SizedBox(height: 40),
-              //itemSaleSelctWidget(),
-              SizedBox(height: 40),
-              //itemFlopInputWidget(),
-              SizedBox(height: 40),
-              //itemCategoryInputWidget(),
-              SizedBox(height: 40),
-              //itemTitleInputWidget(),
-              SizedBox(height: 40),
-              //itemDescriptionInputWidget(),
-              SizedBox(height: 40),
-              //itemSizeInputWidget(),
-              SizedBox(height: 40),
-              //itemPriceInputWidget(),
-              SizedBox(height: 40),
-              //itemAmountInputWidget(),
-            ],
+        child: SingleChildScrollView(
+          child: Obx(
+            () => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  templateSelectWidget(),
+                  SizedBox(height: 40),
+                  itemImageInputWidget(),
+                  SizedBox(height: 40),
+                  //itemAudioInputWidget(),
+                  SizedBox(height: 40),
+                  itemSaleSelectWidget(),
+                  if (controller.isItemSailEnabled.value == true)
+                    _itemSaleWidgets()
+                ],
+              ),
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+_itemSaleWidgets() {
+  return Column(
+    children: [
+      SizedBox(height: 40),
+      itemFlopInputWidget(),
+      SizedBox(height: 40),
+      itemCategoryInputWidget(),
+      SizedBox(height: 40),
+      itemTitleInputWidget(),
+      SizedBox(height: 40),
+      itemDescriptionInputWidget(),
+      SizedBox(height: 40),
+      itemSizeInputWidget(),
+      SizedBox(height: 40),
+      itemPriceInputWidget(),
+      SizedBox(height: 40),
+      itemAmountInputWidget(),
+    ],
+  );
 }

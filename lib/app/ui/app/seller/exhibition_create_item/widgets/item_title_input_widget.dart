@@ -4,25 +4,31 @@ import 'package:get/get.dart';
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
 
-Widget exhibitionTitleInputWidget() {
+itemTitleInputWidget() {
   final controller = Get.find<ExhibitionController>();
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Row(
-        children: [
-          Text(
-            '기획전 이름을 알려주세요.',
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: FontPalette.pretendard,
-              fontSize: 16.0,
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Row(
+          children: [
+            Text(
+              '작품의 이름을 알려주세요.',
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontWeight: FontWeight.w600,
+                fontFamily: "PretendardVariable",
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -32,8 +38,8 @@ Widget exhibitionTitleInputWidget() {
           ),
         ),
         child: TextField(
+          controller: controller.itemTitleController,
           maxLength: 46,
-          controller: controller.exhibitionTitleController,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: '이름',
@@ -41,6 +47,7 @@ Widget exhibitionTitleInputWidget() {
               color: ColorPalette.grey_4,
               fontWeight: FontWeight.w600,
               fontFamily: FontPalette.pretendard,
+              fontStyle: FontStyle.normal,
               fontSize: 16.0,
             ),
             counterText: '',

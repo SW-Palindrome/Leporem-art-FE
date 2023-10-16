@@ -29,6 +29,7 @@ Widget exhibitionThumbnailInputWidget() {
           onTap: () {
             logAnalytics(name: "exhibition_thumbnail_select_image");
             controller.selectImages(ImageType.exhibition);
+            print('기획전 커버이미지선택');
           },
           child: _buildImageWidget(controller),
         ),
