@@ -190,6 +190,48 @@ class AppPages {
       binding: SellerProfileEditBinding(),
     ),
     GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_START,
+      page: () => ExhibitionCreateStartScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
+      page: () => ExhibitionCreateExhibitionScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
+      page: () => ExhibitionCreateExhibitionCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
+      page: () => ExhibitionCreateSellerScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
+      page: () => ExhibitionCreateSellerExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+      page: () => ExhibitionCreateSellerTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
+      page: () => ExhibitionCreateSellerCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
+      page: () => ExhibitionCreateItemScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+      page: () => ExhibitionCreateItemExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
+      page: () => ExhibitionCreateItemTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+      page: () => ExhibitionCreateItemCompleteScreen(),
       name: Routes.SELLER_ITEM_DELIVERY_EDIT,
       page: () => SellerItemDeliveryEditScreen(),
       binding: SellerItemDeliverEditBinding(),

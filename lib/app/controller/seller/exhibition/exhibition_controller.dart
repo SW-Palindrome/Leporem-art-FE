@@ -120,6 +120,10 @@ class ExhibitionController extends GetxController {
   Rx<bool> isItemSailEnabled = Rx<bool>(false);
   RxList<File> itemVideo = RxList<File>([]);
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
+  Rx<bool> isItemAudioLoading = Rx<bool>(false);
+  Rx<bool> isItemSailEnabled = Rx<bool>(false);
+  RxList<File> itemVideo = RxList<File>([]);
+  Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
   List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
@@ -371,7 +375,7 @@ class ExhibitionController extends GetxController {
       );
       return;
     }
-    // 썸네일 생성을 위해 isVideoLoading을 true로 변경
+    // 썸네일 생성을 위해 isItemVideoLoading을 true로 변경
     isItemVideoLoading.value = true;
     // 썸네일 생성
     final thumbnailData =
