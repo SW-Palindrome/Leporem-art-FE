@@ -6,6 +6,7 @@ import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../exhibition_create_seller/widgets/template_select_widget.dart';
 import 'widgets/item_amount_input_widget.dart';
+import 'widgets/item_audio_input_widget.dart';
 import 'widgets/item_category_input_widget.dart';
 import 'widgets/item_description_input_widget.dart';
 import 'widgets/item_flop_input_widget.dart';
@@ -64,7 +65,7 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                   SizedBox(height: 40),
                   itemImageInputWidget(),
                   SizedBox(height: 40),
-                  //itemAudioInputWidget(),
+                  itemAudioInputWidget(),
                   SizedBox(height: 40),
                   itemSaleSelectWidget(),
                   if (controller.isItemSailEnabled.value == true)
