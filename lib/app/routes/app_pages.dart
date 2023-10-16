@@ -190,6 +190,11 @@ class AppPages {
       binding: SellerProfileEditBinding(),
     ),
     GetPage(
+      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
+      page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
+    ),
+    GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
       page: () => ExhibitionCreateStartScreen(),
     ),
@@ -232,9 +237,6 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
       page: () => ExhibitionCreateItemCompleteScreen(),
-      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
-      page: () => SellerItemDeliveryEditScreen(),
-      binding: SellerItemDeliverEditBinding(),
     ),
   ];
 }

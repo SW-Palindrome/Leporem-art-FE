@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../models/delivery_info.dart';
 import '../models/exhibition.dart';
 import '../models/item.dart';
 import '../models/item_detail.dart';
@@ -505,6 +506,16 @@ class MockClient implements ApiClient {
       sellerNickname: '공예쁨',
     );
   }
+
+  @override
+  Future<String?> fetchDeliveryInfoUrl(int orderId) async {}
+
+  @override
+  Future<void> updateDeliveryInfo(
+      int orderId, String deliveryCompany, String invoiceNumber) async {}
+
+  @override
+  Future<DeliveryInfo?> fetchDeliveryInfo(int orderId) async {}
 
   @override
   Future<List<Exhibition>> fetchSellerExhibitions() async {
