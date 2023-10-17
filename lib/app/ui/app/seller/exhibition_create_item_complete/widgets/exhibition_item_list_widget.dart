@@ -80,13 +80,36 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                controller.exhibitionItems[index].title,
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  if (controller.exhibitionItems[index].isSoled == true)
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.purple,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '판매용',
+                        style: TextStyle(
+                          color: ColorPalette.white,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: FontPalette.pretendard,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  if (controller.exhibitionItems[index].isSoled == true)
+                    SizedBox(width: 4),
+                  Text(
+                    controller.exhibitionItems[index].title,
+                    style: TextStyle(
+                      color: ColorPalette.black,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 4),
               Text(

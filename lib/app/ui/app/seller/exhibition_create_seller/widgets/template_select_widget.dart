@@ -14,11 +14,11 @@ Widget templateSelectWidget() {
     () => Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: controller.isSellerTemplateUsed.value == true
+        color: controller.isItemTemplateUsed.value == true
             ? ColorPalette.purple.withOpacity(0.1)
             : ColorPalette.grey_1,
         border: Border.all(
-          color: controller.isSellerTemplateUsed.value == true
+          color: controller.isItemTemplateUsed.value == true
               ? ColorPalette.purple
               : ColorPalette.grey_3,
         ),
@@ -41,8 +41,8 @@ Widget templateSelectWidget() {
                   rightButtonText: '변경',
                   onRightButtonPressed: () {
                     controller.sellerInfoReset();
-                    controller.isSellerTemplateUsed.value =
-                        !controller.isSellerTemplateUsed.value;
+                    controller.isItemTemplateUsed.value =
+                        !controller.isItemTemplateUsed.value;
                     Get.back();
                   },
                   onCloseButtonPressed: () {
@@ -57,7 +57,7 @@ Widget templateSelectWidget() {
                 ),
               );
             },
-            child: controller.isSellerTemplateUsed.value == true
+            child: controller.isItemTemplateUsed.value == true
                 ? SvgPicture.asset('assets/icons/checkbox_select.svg')
                 : SvgPicture.asset('assets/icons/checkbox_unselect.svg'),
           ),
