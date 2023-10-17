@@ -226,19 +226,6 @@ class AppPages {
       page: () => ExhibitionCreateItemScreen(),
     ),
     GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
-      page: () => ExhibitionCreateItemExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
-      page: () => ExhibitionCreateItemTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-      page: () => ExhibitionCreateItemCompleteScreen(),
-      binding: SellerItemDeliverEditBinding(),
-    ),
-    GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
       page: () => ExhibitionCreateStartScreen(),
     ),
