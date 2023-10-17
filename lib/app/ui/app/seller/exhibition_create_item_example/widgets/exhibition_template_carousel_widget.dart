@@ -11,9 +11,28 @@ exhibitionTemplateCarouselWidget() {
       CarouselSlider(
         items: [
           //TODO: 준식이형이 템플릿 예시 다 만든대요 2~8번까지 부탁해요 ㅋㅋ
-          _template1Widget(),
-          _template1Widget(),
-          _template1Widget(),
+          _template1Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            0xffFFEADE,
+            FontPalette.pretendard,
+          ),
+          _template2Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            0x0000000,
+            FontPalette.chosun,
+          ),
         ],
         options: CarouselOptions(
           height: Get.width,
@@ -57,11 +76,11 @@ exhibitionTemplateCarouselWidget() {
   );
 }
 
-_template1Widget() {
+_template1Widget(String title, String description, List<String> imageUrlList, int color, String fontFamily) {
   return Container(
     width: Get.width,
     height: Get.width,
-    color: Color(0xffFFEADE),
+    color: Color(color),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -70,23 +89,9 @@ _template1Widget() {
           children: [
             CarouselSlider(
               items: [
+                for (final imageUrl in imageUrlList)
                 CachedNetworkImage(
-                  imageUrl:
-                      'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-                  width: Get.width,
-                  height: Get.width * 0.8,
-                  fit: BoxFit.cover,
-                ),
-                CachedNetworkImage(
-                  imageUrl:
-                      'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-                  width: Get.width,
-                  height: Get.width * 0.8,
-                  fit: BoxFit.cover,
-                ),
-                CachedNetworkImage(
-                  imageUrl:
-                      'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+                  imageUrl: imageUrl,
                   width: Get.width,
                   height: Get.width * 0.8,
                   fit: BoxFit.cover,
@@ -103,10 +108,10 @@ _template1Widget() {
               top: 13,
               left: 18,
               child: Text(
-                '솔방울을 머금은 술잔',
+                title,
                 style: TextStyle(
                   color: ColorPalette.white,
-                  fontFamily: FontPalette.pretendard,
+                  fontFamily: fontFamily,
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
                 ),
@@ -154,10 +159,134 @@ _template1Widget() {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Text(
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            description,
             style: TextStyle(
               color: ColorPalette.black,
-              fontFamily: FontPalette.pretendard,
+              fontFamily: fontFamily,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+_template2Widget(String title, String description, List<String> imageUrlList, int color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width,
+    color: Color(color),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CarouselSlider(
+          items: [
+            for (final imageUrl in imageUrlList)
+              Padding(
+                padding: const EdgeInsets.only(left: 8, top: 8),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  width: Get.width,
+                  height: Get.width * 0.8,
+                  fit: BoxFit.cover,
+                ),
+              ),
+          ],
+          options: CarouselOptions(
+            aspectRatio: 1 / 0.75,
+            viewportFraction: 0.75,
+            enableInfiniteScroll: false,
+            padEnds: false,
+          ),
+        ),
+        SizedBox(height: 12),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.bold,
+                fontSize: 26,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            description,
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontFamily: fontFamily,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+_template3Widget(String title, String description, List<String> imageUrlList, int color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width,
+    color: Color(color),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CarouselSlider(
+          items: [
+            for (final imageUrl in imageUrlList)
+              Padding(
+                padding: const EdgeInsets.only(left: 8, top: 8),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  width: Get.width,
+                  height: Get.width * 0.8,
+                  fit: BoxFit.cover,
+                ),
+              ),
+          ],
+          options: CarouselOptions(
+            aspectRatio: 1 / 0.75,
+            viewportFraction: 0.75,
+            enableInfiniteScroll: false,
+            padEnds: false,
+          ),
+        ),
+        SizedBox(height: 12),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.bold,
+                fontSize: 26,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            description,
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontFamily: fontFamily,
               fontSize: 14,
             ),
           ),
