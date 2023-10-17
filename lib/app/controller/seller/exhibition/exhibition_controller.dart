@@ -121,9 +121,6 @@ class ExhibitionController extends GetxController {
   RxList<File> itemVideo = RxList<File>([]);
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
-  Rx<bool> isItemSailEnabled = Rx<bool>(false);
-  RxList<File> itemVideo = RxList<File>([]);
-  Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
   List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
   RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;

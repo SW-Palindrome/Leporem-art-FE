@@ -232,9 +232,6 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
       page: () => ExhibitionCreateItemCompleteScreen(),
-      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
-      page: () => SellerItemDeliveryEditScreen(),
-      binding: SellerItemDeliverEditBinding(),
     ),
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
@@ -279,6 +276,11 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
       page: () => ExhibitionCreateItemCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
+      page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
     ),
   ];
 }
