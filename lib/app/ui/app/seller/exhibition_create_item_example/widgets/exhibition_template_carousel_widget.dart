@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme/app_theme.dart';
@@ -259,6 +261,96 @@ _template2Widget(String title, String description, List<String> imageUrlList,
 }
 
 _template3Widget(String title, String description, List<String> imageUrlList,
+    int color, String fontFamily) {
+  CarouselController carouselController = CarouselController();
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: Color(color),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.bold,
+                fontSize: 26,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            description,
+            style: TextStyle(
+              color: ColorPalette.black,
+              fontFamily: fontFamily,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Stack(
+            children: [
+              CarouselSlider(
+                carouselController: carouselController,
+                items: [
+                  for (final imageUrl in imageUrlList)
+                    CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      width: Get.width,
+                      height: Get.width * 0.78,
+                      fit: BoxFit.cover,
+                    ),
+                ],
+                options: CarouselOptions(
+                  aspectRatio: 1 / 0.78,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false,
+                  padEnds: false,
+                ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/arrow_exhibition_left.svg',
+                      width: 24,
+                    ),
+                    onPressed: () { carouselController.previousPage(); },
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/arrow_exhibition_right.svg',
+                      width: 24,
+                    ),
+                    onPressed: () { carouselController.nextPage(); },
+                  ),
+                ),
+              ),
+            ]
+        ),
+      ],
+    ),
+  );
+}
+
+_template4Widget(String title, String description, List<String> imageUrlList,
     int color, String fontFamily) {
   return Container(
     width: Get.width,
