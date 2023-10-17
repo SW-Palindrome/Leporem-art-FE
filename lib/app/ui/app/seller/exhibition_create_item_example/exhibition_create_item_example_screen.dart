@@ -41,6 +41,7 @@ class ExhibitionCreateItemExampleScreen extends GetView<ExhibitionController> {
                   //TODO: 템플릿 선택 후 다음 페이지로 이동
                   Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM);
                   controller.isItemTemplateUsed.value = true;
+                  controller.isItemTemplateUsed.refresh();
                 },
               ),
             ),
@@ -50,6 +51,7 @@ class ExhibitionCreateItemExampleScreen extends GetView<ExhibitionController> {
                 onTap: () {
                   Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM);
                   controller.isItemTemplateUsed.value = false;
+                  controller.isItemTemplateUsed.refresh();
                 },
                 child: Text(
                   '템플릿을 사용하지 않을게요.',
