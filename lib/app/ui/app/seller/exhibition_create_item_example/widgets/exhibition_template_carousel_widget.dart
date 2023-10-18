@@ -21,7 +21,7 @@ exhibitionTemplateCarouselWidget() {
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
             ],
-            0xffFFEADE,
+            Color(0xffFFEADE),
             FontPalette.pretendard,
           ),
           _template2Widget(
@@ -32,7 +32,7 @@ exhibitionTemplateCarouselWidget() {
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
             ],
-            0xffFFEADE,
+            Color(0xffFFEADE),
             FontPalette.chosun,
           ),
           _template3Widget(
@@ -43,10 +43,9 @@ exhibitionTemplateCarouselWidget() {
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
             ],
-            0x0000000,
+            Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-
           _template4Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
@@ -54,7 +53,7 @@ exhibitionTemplateCarouselWidget() {
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
             ],
             Color(0xffFFEADE),
             FontPalette.chosun,
@@ -67,6 +66,25 @@ exhibitionTemplateCarouselWidget() {
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
+          _template7Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
+          _template8Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
             ],
             Color(0xffFFEADE),
             FontPalette.chosun,
@@ -115,11 +133,11 @@ exhibitionTemplateCarouselWidget() {
 }
 
 _template1Widget(String title, String description, List<String> imageUrlList,
-    int color, String fontFamily) {
+    Color color, String fontFamily) {
   return Container(
     width: Get.width,
     height: Get.width * 1.1,
-    color: Color(color),
+    color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -199,7 +217,7 @@ _template1Widget(String title, String description, List<String> imageUrlList,
           child: Text(
             description,
             style: TextStyle(
-              color: ColorPalette.black,
+              color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
               fontFamily: fontFamily,
               fontSize: 14,
             ),
@@ -211,11 +229,11 @@ _template1Widget(String title, String description, List<String> imageUrlList,
 }
 
 _template2Widget(String title, String description, List<String> imageUrlList,
-    int color, String fontFamily) {
+    Color color, String fontFamily) {
   return Container(
     width: Get.width,
     height: Get.width * 1.1,
-    color: Color(color),
+    color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -248,7 +266,7 @@ _template2Widget(String title, String description, List<String> imageUrlList,
             child: Text(
               title,
               style: TextStyle(
-                color: ColorPalette.black,
+                color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
                 fontFamily: fontFamily,
                 fontWeight: FontWeight.bold,
                 fontSize: 26,
@@ -262,7 +280,7 @@ _template2Widget(String title, String description, List<String> imageUrlList,
           child: Text(
             description,
             style: TextStyle(
-              color: ColorPalette.black,
+              color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
               fontFamily: fontFamily,
               fontSize: 14,
             ),
@@ -274,16 +292,17 @@ _template2Widget(String title, String description, List<String> imageUrlList,
 }
 
 _template3Widget(String title, String description, List<String> imageUrlList,
-    int color, String fontFamily) {
+    Color color, String fontFamily) {
   CarouselController carouselController = CarouselController();
   return Container(
     width: Get.width,
     height: Get.width * 1.1,
-    color: Color(color),
+    color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(height: 16),
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -291,7 +310,7 @@ _template3Widget(String title, String description, List<String> imageUrlList,
             child: Text(
               title,
               style: TextStyle(
-                color: ColorPalette.black,
+                color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
                 fontFamily: fontFamily,
                 fontWeight: FontWeight.bold,
                 fontSize: 26,
@@ -300,14 +319,16 @@ _template3Widget(String title, String description, List<String> imageUrlList,
           ),
         ),
         SizedBox(height: 12),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            description,
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontFamily: fontFamily,
-              fontSize: 14,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              description,
+              style: TextStyle(
+                color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                fontFamily: fontFamily,
+                fontSize: 14,
+              ),
             ),
           ),
         ),
@@ -478,7 +499,9 @@ _template4Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
+
 _template5Widget(String title, String description, List<String> imageUrlList,
+
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
@@ -585,8 +608,144 @@ _template5Widget(String title, String description, List<String> imageUrlList,
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     ),
+  );
+}
+
+_template7Widget(String title, String description, List<String> imageUrlList,
+    Color color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.6,
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: imageUrlList[0],
+                width: Get.width * 0.75,
+                height: Get.width * 0.6,
+                fit: BoxFit.cover,
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    description,
+                    style: TextStyle(
+                      color:
+                      color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  width: Get.width * 0.45,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    )
+  );
+}
+
+_template8Widget(String title, String description, List<String> imageUrlList,
+    Color color, String fontFamily) {
+  return Container(
+      width: Get.width,
+      height: Get.width * 1.1,
+      color: color,
+      child: Column(
+        children: [
+          SizedBox(
+            height: Get.width * 0.83,
+            child: Row(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  width: Get.width * 0.77,
+                  height: Get.width * 0.83,
+                  fit: BoxFit.cover,
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                        fontFamily: fontFamily,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: SizedBox()),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  child: SizedBox(
+                    width: Get.width * 0.5,
+                    child: Text(
+                      description,
+                      style: TextStyle(
+                        color:
+                        color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                        fontFamily: fontFamily,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      )
   );
 }
