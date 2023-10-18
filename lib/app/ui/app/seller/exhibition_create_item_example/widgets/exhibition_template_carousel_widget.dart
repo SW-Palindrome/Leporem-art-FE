@@ -58,12 +58,22 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template7Widget(
+          _template5Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
+          _template7Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
               'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
             ],
@@ -323,52 +333,54 @@ _template3Widget(String title, String description, List<String> imageUrlList,
           ),
         ),
         SizedBox(height: 12),
-        Stack(
-            children: [
-              CarouselSlider(
-                carouselController: carouselController,
-                items: [
-                  for (final imageUrl in imageUrlList)
-                    CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      width: Get.width,
-                      height: Get.width * 0.78,
-                      fit: BoxFit.cover,
-                    ),
-                ],
-                options: CarouselOptions(
-                  aspectRatio: 1 / 0.78,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                  padEnds: false,
+        Stack(children: [
+          CarouselSlider(
+            carouselController: carouselController,
+            items: [
+              for (final imageUrl in imageUrlList)
+                CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  width: Get.width,
+                  height: Get.width * 0.78,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/icons/arrow_exhibition_left.svg',
-                      width: 24,
-                    ),
-                    onPressed: () { carouselController.previousPage(); },
-                  ),
+            ],
+            options: CarouselOptions(
+              aspectRatio: 1 / 0.78,
+              viewportFraction: 1,
+              enableInfiniteScroll: false,
+              padEnds: false,
+            ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  'assets/icons/arrow_exhibition_left.svg',
+                  width: 24,
                 ),
+                onPressed: () {
+                  carouselController.previousPage();
+                },
               ),
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/icons/arrow_exhibition_right.svg',
-                      width: 24,
-                    ),
-                    onPressed: () { carouselController.nextPage(); },
-                  ),
+            ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  'assets/icons/arrow_exhibition_right.svg',
+                  width: 24,
                 ),
+                onPressed: () {
+                  carouselController.nextPage();
+                },
               ),
-            ]
-        ),
+            ),
+          ),
+        ]),
       ],
     ),
   );
@@ -379,73 +391,222 @@ _template4Widget(String title, String description, List<String> imageUrlList,
   return Container(
     width: Get.width,
     height: Get.width * 1.1,
+    padding: EdgeInsets.all(16),
     color: color,
-    child: Padding(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              color:
-                  color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: fontFamily,
-              fontSize: 26,
-            ),
+    child: Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: color == ColorPalette.black
+                ? ColorPalette.white
+                : ColorPalette.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: FontPalette.pretendard,
+            fontSize: 26,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        SizedBox(height: 6),
+        Expanded(
+          child: Row(
             children: [
-              Column(
-                children: [
-                  SizedBox(height: Get.width * 0.112),
-                  CachedNetworkImage(
-                    imageUrl: imageUrlList[0],
-                    width: Get.width * 0.4466,
-                    height: Get.width * 0.32,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(height: 8),
-                  CachedNetworkImage(
-                    imageUrl: imageUrlList[1],
-                    width: Get.width * 0.4466,
-                    height: Get.width * 0.32,
-                    fit: BoxFit.cover,
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(height: Get.width * 0.1),
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrlList[0],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrlList[1],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(width: 8),
-              Column(
-                children: [
-                  SizedBox(height: Get.width * 0.016),
-                  CachedNetworkImage(
-                    imageUrl: imageUrlList[2],
-                    width: Get.width * 0.4466,
-                    height: Get.width * 0.32,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(height: 8),
-                  CachedNetworkImage(
-                    imageUrl: imageUrlList[3],
-                    width: Get.width * 0.4466,
-                    height: Get.width * 0.32,
-                    fit: BoxFit.cover,
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrlList[2],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrlList[3],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.width * 0.1),
+                  ],
+                ),
               ),
             ],
           ),
-          SizedBox(height: 8),
-          Text(
-            description,
-            style: TextStyle(
-              color:
-                  color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
-              fontFamily: fontFamily,
-              fontSize: 14,
-            ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          description,
+          style: TextStyle(
+            color: color == ColorPalette.black
+                ? ColorPalette.white
+                : ColorPalette.black,
+            fontWeight: FontWeight.w400,
+            fontFamily: FontPalette.pretendard,
+            fontSize: 14,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+
+_template5Widget(String title, String description, List<String> imageUrlList,
+
+    Color color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    padding: EdgeInsets.all(16),
+    color: color,
+    child: Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: color == ColorPalette.black
+                ? ColorPalette.white
+                : ColorPalette.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: FontPalette.pretendard,
+            fontSize: 26,
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          description,
+          style: TextStyle(
+            color: color == ColorPalette.black
+                ? ColorPalette.white
+                : ColorPalette.black,
+            fontWeight: FontWeight.w400,
+            fontFamily: FontPalette.pretendard,
+            fontSize: 14,
+          ),
+        ),
+        SizedBox(height: 6),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ), // Placeholder 사용
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrlList[1],
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrlList[2],
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrlList[3],
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
