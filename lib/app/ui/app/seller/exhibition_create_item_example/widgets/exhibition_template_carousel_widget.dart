@@ -58,6 +58,18 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
+          _template7Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
         ],
         options: CarouselOptions(
           height: Get.width * 1.1,
@@ -271,6 +283,7 @@ _template3Widget(String title, String description, List<String> imageUrlList,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(height: 16),
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -287,14 +300,16 @@ _template3Widget(String title, String description, List<String> imageUrlList,
           ),
         ),
         SizedBox(height: 12),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            description,
-            style: TextStyle(
-              color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
-              fontFamily: fontFamily,
-              fontSize: 14,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              description,
+              style: TextStyle(
+                color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                fontFamily: fontFamily,
+                fontSize: 14,
+              ),
             ),
           ),
         ),
@@ -426,5 +441,76 @@ _template4Widget(String title, String description, List<String> imageUrlList,
         ],
       ),
     ),
+  );
+}
+
+_template7Widget(String title, String description, List<String> imageUrlList,
+    Color color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.6,
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: imageUrlList[0],
+                width: Get.width * 0.75,
+                height: Get.width * 0.6,
+                fit: BoxFit.cover,
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    description,
+                    style: TextStyle(
+                      color:
+                      color == ColorPalette.black ? ColorPalette.white : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  width: Get.width * 0.45,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    )
   );
 }
