@@ -70,6 +70,16 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
+          _template6Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
           _template7Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
@@ -615,6 +625,86 @@ _template5Widget(String title, String description, List<String> imageUrlList,
                 ),
               ),
             ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+_template6Widget(String title, String description, List<String> imageUrlList,
+    Color color, String fontFamily) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    padding: EdgeInsets.fromLTRB(8, 8, 12, 8),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 8),
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrlList[0],
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 12),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 8, 4, 0),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: fontFamily,
+                    fontSize: 26,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: fontFamily,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
