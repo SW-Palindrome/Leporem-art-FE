@@ -12,7 +12,6 @@ exhibitionTemplateCarouselWidget() {
     children: [
       CarouselSlider(
         items: [
-          //TODO: 준식이형이 템플릿 예시 다 만든대요 2~8번까지 부탁해요 ㅋㅋ
           _template1Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
@@ -144,94 +143,105 @@ exhibitionTemplateCarouselWidget() {
 
 _template1Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
+  CarouselController carouselController = CarouselController();
   return Container(
     width: Get.width,
     height: Get.width * 1.1,
     color: color,
+    padding: EdgeInsets.fromLTRB(12, 24, 12, 0),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: color == ColorPalette.black
+                ? ColorPalette.white
+                : ColorPalette.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: fontFamily,
+            fontSize: 26,
+          ),
+        ),
+        SizedBox(height: 12),
+        SizedBox(width: 12),
         Stack(
           children: [
             CarouselSlider(
+              carouselController: carouselController,
               items: [
                 for (final imageUrl in imageUrlList)
                   CachedNetworkImage(
                     imageUrl: imageUrl,
-                    width: Get.width,
-                    height: Get.width * 0.87,
+                    width: Get.width * 0.65,
+                    height: Get.width * 0.65,
                     fit: BoxFit.cover,
                   ),
               ],
               options: CarouselOptions(
                 viewportFraction: 1,
-                height: Get.width * 0.87,
+                height: Get.width * 0.65,
                 enableInfiniteScroll: false,
+                padEnds: false,
               ),
             ),
-            Positioned(
-              top: 13,
-              left: 18,
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: ColorPalette.white,
-                  fontFamily: fontFamily,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 26,
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    carouselController.previousPage();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: ColorPalette.grey_2,
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/arrow_left.svg',
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
                 ),
               ),
             ),
-            Positioned(
-              bottom: 12,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    carouselController.nextPage();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                      color: ColorPalette.grey_2,
                       shape: BoxShape.circle,
-                      color: ColorPalette.white,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/arrow_right.svg',
+                      width: 24,
+                      height: 24,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorPalette.white.withOpacity(0.4),
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorPalette.white.withOpacity(0.4),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 12),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
+        SizedBox(height: 16),
+        SizedBox(
+          width: Get.width * 0.65,
           child: Text(
             description,
             style: TextStyle(
               color: color == ColorPalette.black
                   ? ColorPalette.white
                   : ColorPalette.black,
+              fontWeight: FontWeight.w400,
               fontFamily: fontFamily,
-              fontSize: 14,
+              fontSize: 16,
             ),
           ),
         ),
@@ -422,7 +432,7 @@ _template4Widget(String title, String description, List<String> imageUrlList,
                 ? ColorPalette.white
                 : ColorPalette.black,
             fontWeight: FontWeight.w600,
-            fontFamily: FontPalette.pretendard,
+            fontFamily: fontFamily,
             fontSize: 26,
           ),
         ),
@@ -510,7 +520,7 @@ _template4Widget(String title, String description, List<String> imageUrlList,
                 ? ColorPalette.white
                 : ColorPalette.black,
             fontWeight: FontWeight.w400,
-            fontFamily: FontPalette.pretendard,
+            fontFamily: fontFamily,
             fontSize: 14,
           ),
         )
@@ -535,7 +545,7 @@ _template5Widget(String title, String description, List<String> imageUrlList,
                 ? ColorPalette.white
                 : ColorPalette.black,
             fontWeight: FontWeight.w600,
-            fontFamily: FontPalette.pretendard,
+            fontFamily: fontFamily,
             fontSize: 26,
           ),
         ),
@@ -547,7 +557,7 @@ _template5Widget(String title, String description, List<String> imageUrlList,
                 ? ColorPalette.white
                 : ColorPalette.black,
             fontWeight: FontWeight.w400,
-            fontFamily: FontPalette.pretendard,
+            fontFamily: fontFamily,
             fontSize: 14,
           ),
         ),
