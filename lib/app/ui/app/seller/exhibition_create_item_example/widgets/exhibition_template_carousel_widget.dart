@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionTemplateCarouselWidget() {
+  final controller = Get.find<ExhibitionController>();
   return Column(
     children: [
       CarouselSlider(
@@ -103,39 +105,36 @@ exhibitionTemplateCarouselWidget() {
           height: Get.width * 1.1,
           viewportFraction: 1,
           enableInfiniteScroll: false,
+          onPageChanged: (index, reason) {
+            controller.selectedTemplateIndex.value = index;
+          },
         ),
       ),
       SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: ColorPalette.purple,
-            ),
-          ),
-          SizedBox(width: 4),
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: ColorPalette.grey_3,
-            ),
-          ),
-          SizedBox(width: 4),
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: ColorPalette.grey_3,
-            ),
-          ),
-        ],
+      SizedBox(
+        height: 8,
+        child: ListView.separated(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Obx(
+              () => Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: index == controller.selectedTemplateIndex.value
+                      ? ColorPalette.purple
+                      : ColorPalette.grey_3,
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(width: 4);
+          },
+          itemCount: 8,
+        ),
       ),
     ],
   );

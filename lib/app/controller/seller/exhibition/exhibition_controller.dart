@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -113,7 +114,9 @@ class ExhibitionController extends GetxController {
       WidgetsToImageController();
 
   // 작품 등록
+
   Rx<bool> isItemTemplateUsed = Rx<bool>(false);
+  Rx<int> selectedTemplateIndex = Rx<int>(0);
   RxList<File> itemImages = RxList<File>([]);
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
