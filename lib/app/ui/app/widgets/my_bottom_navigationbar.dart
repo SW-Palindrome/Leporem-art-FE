@@ -214,7 +214,6 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
 
   bool get isMessageUnread {
     MessageController messageController = Get.find<MessageController>();
-    print('isMessageUnread: ${messageController.isSellerMessageUnread}');
     if (type == MyBottomNavigationBarType.buyer) {
       return messageController.isBuyerMessageUnread;
     } else {

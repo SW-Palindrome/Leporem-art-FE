@@ -313,5 +313,10 @@ class AppPages {
       name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
       page: () => ExhibitionCreateItemCompleteScreen(),
     ),
+    GetPage(
+      name: Routes.SELLER_ITEM_DELIVERY_EDIT,
+      page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
+    ),
   ];
 }
