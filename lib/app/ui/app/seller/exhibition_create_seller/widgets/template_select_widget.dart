@@ -62,33 +62,14 @@ Widget templateSelectWidget() {
                 : SvgPicture.asset('assets/icons/checkbox_unselect.svg'),
           ),
           SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '작가 소개 템플릿을 사용할게요!',
-                style: TextStyle(
-                  color: ColorPalette.grey_6,
-                  fontFamily: FontPalette.pretendard,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-              SizedBox(height: 6),
-              GestureDetector(
-                onTap: () =>
-                    Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE),
-                child: Text(
-                  '템플릿 예시 보기',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: ColorPalette.grey_5,
-                    fontFamily: FontPalette.pretendard,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ],
+          Text(
+            '작품 소개 템플릿을 사용할게요!',
+            style: TextStyle(
+              color: ColorPalette.grey_6,
+              fontFamily: FontPalette.pretendard,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
           ),
         ],
       ),
