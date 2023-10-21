@@ -14,7 +14,7 @@ exhibitionTemplateCarouselWidget() {
     children: [
       CarouselSlider(
         items: [
-          _template1Widget(
+          template1Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -25,7 +25,7 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.pretendard,
           ),
-          _template2Widget(
+          template2Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -36,7 +36,7 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template3Widget(
+          template3Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -47,19 +47,7 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template4Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
-            [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
-            ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
-          ),
-          _template5Widget(
+          template4Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -71,7 +59,19 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template6Widget(
+          template5Widget(
+            '솔방울을 머금은 술잔',
+            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            [
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+            ],
+            Color(0xffFFEADE),
+            FontPalette.chosun,
+          ),
+          template6Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -81,7 +81,7 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template7Widget(
+          template7Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -91,7 +91,7 @@ exhibitionTemplateCarouselWidget() {
             Color(0xffFFEADE),
             FontPalette.chosun,
           ),
-          _template8Widget(
+          template8Widget(
             '솔방울을 머금은 술잔',
             '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
             [
@@ -140,7 +140,7 @@ exhibitionTemplateCarouselWidget() {
   );
 }
 
-_template1Widget(String title, String description, List<String> imageUrlList,
+template1Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   CarouselController carouselController = CarouselController();
   return Container(
@@ -249,7 +249,7 @@ _template1Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template2Widget(String title, String description, List<String> imageUrlList,
+template2Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
@@ -316,7 +316,7 @@ _template2Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template3Widget(String title, String description, List<String> imageUrlList,
+template3Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   CarouselController carouselController = CarouselController();
   return Container(
@@ -415,7 +415,7 @@ _template3Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template4Widget(String title, String description, List<String> imageUrlList,
+template4Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
@@ -528,7 +528,7 @@ _template4Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template5Widget(String title, String description, List<String> imageUrlList,
+template5Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
@@ -641,7 +641,7 @@ _template5Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template6Widget(String title, String description, List<String> imageUrlList,
+template6Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
@@ -721,7 +721,7 @@ _template6Widget(String title, String description, List<String> imageUrlList,
   );
 }
 
-_template7Widget(String title, String description, List<String> imageUrlList,
+template7Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
       width: Get.width,
@@ -794,7 +794,7 @@ _template7Widget(String title, String description, List<String> imageUrlList,
       ));
 }
 
-_template8Widget(String title, String description, List<String> imageUrlList,
+template8Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
       width: Get.width,

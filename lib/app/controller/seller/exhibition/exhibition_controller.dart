@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -70,6 +69,8 @@ class ExhibitionController extends GetxController {
   Rx<bool> isExhibitionImageLoading = Rx<bool>(false);
   TextEditingController exhibitionTitleController = TextEditingController();
   TextEditingController sellerNameController = TextEditingController();
+  TextEditingController templateTitleController = TextEditingController();
+  TextEditingController templateDescriptionController = TextEditingController();
   TextEditingController itemTitleController = TextEditingController();
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
@@ -114,13 +115,14 @@ class ExhibitionController extends GetxController {
       WidgetsToImageController();
 
   // 작품 등록
-
   Rx<bool> isItemTemplateUsed = Rx<bool>(false);
   Rx<int> selectedTemplateIndex = Rx<int>(0);
+  Rx<String> templateTitle = Rx<String>('');
+  Rx<String> templateDescription = Rx<String>('');
   RxList<File> itemImages = RxList<File>([]);
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
-  Rx<bool> isItemSailEnabled = Rx<bool>(false);
+  Rx<bool> isItemSailEnabled = Rx<bool>(true);
   RxList<File> itemVideo = RxList<File>([]);
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
@@ -146,6 +148,12 @@ class ExhibitionController extends GetxController {
     sellerIntroductionController.addListener(() {
       sellerIntroduction.value = sellerIntroductionController.text;
     });
+    templateTitleController.addListener(() {
+      templateTitle.value = templateTitleController.text;
+    });
+    templateDescriptionController.addListener(() {
+      templateDescription.value = templateDescriptionController.text;
+    });
     itemTitleController.addListener(() {
       itemTitle.value = itemTitleController.text;
     });
@@ -153,7 +161,8 @@ class ExhibitionController extends GetxController {
       itemDescription.value = itemDescriptionController.text;
     });
     itemPriceController.addListener(() {
-      price.value = int.parse(itemPriceController.text);
+      if (itemPriceController.text == '') return;
+      price.value = int.parse(itemPriceController.text.replaceAll(',', ''));
     });
     itemWidthController.addListener(() {
       width.value = itemWidthController.text;
@@ -214,7 +223,6 @@ class ExhibitionController extends GetxController {
     // 압축한 이미지를 저장할 공간
     // 이미지를 압축하고 압축한 이미지를 compressedImage에 추가
     // 이미지 크기를 계산하기위해 변수생성
-    List<File> compressedImages = [];
     int totalImageSize = 0;
     switch (imageType) {
       case ImageType.exhibition:
@@ -280,18 +288,18 @@ class ExhibitionController extends GetxController {
             index++;
           }
         }
-        if (isImageLargeThan5MB(totalImageSize)) return;
+        if (isFileLargerThanMB(totalImageSize, 4)) return;
         itemImages.assignAll(compressedImages);
         break;
     }
   }
 
-  bool isImageLargeThan5MB(int totalImageSize) {
-    if (totalImageSize > 5 * 1024 * 1024) {
-      logAnalytics(name: 'image_size_too_big');
+  bool isFileLargerThanMB(int totalSize, int size) {
+    if (totalSize > size * 1024 * 1024) {
+      logAnalytics(name: 'size_too_big');
       Get.snackbar(
         '경고',
-        '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
+        '파일 크기가 너무 큽니다. 다시 선택해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
       return true;
@@ -337,15 +345,7 @@ class ExhibitionController extends GetxController {
       return;
     }
     //pickedFile 크기가 4MB 이상이면 경고창 띄우기
-    if (pickedFile.files.single.size > 4 * 1024 * 1024) {
-      logAnalytics(name: 'audio_size_too_big');
-      Get.snackbar(
-        '경고',
-        '오디오 크기가 너무 큽니다. 다시 선택해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
+    if (isFileLargerThanMB(pickedFile.files.single.size, 4)) return;
     // 오디오 파일을 audioFile에 저장
     itemAudio.assignAll([File(pickedFile.files.single.path!)]);
   }
@@ -399,14 +399,7 @@ class ExhibitionController extends GetxController {
       // 원본 비디오와 압축한 비디오의 정보를 출력 이미지는 로딩이 되었으므로 isVideoLoaiding을 false로 변경
       itemVideo.clear();
 
-      if (compressedFile.lengthSync() > 30 * 1024 * 1024) {
-        Get.snackbar(
-          '경고',
-          '동영상 크기가 너무 큽니다. 다시 선택해주세요.',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        return;
-      }
+      if (isFileLargerThanMB(compressedFile.lengthSync(), 30)) return;
       itemVideo.add(originalFile);
       isItemVideoLoading.value = false;
     } catch (e) {
@@ -478,6 +471,26 @@ class ExhibitionController extends GetxController {
   void applyFont() {
     displayedSellerIntroductionFont.value =
         selectedSellerIntroductionFont.value;
+  }
+
+  bool isValidItemNext() {]
+    if (isItemTemplateUsed.value == true) {
+      if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
+        return false;
+      }
+    } else {
+      if (itemImages.isEmpty || itemImages.length > 10) {
+        return false;
+      }
+    }
+    return (isItemSailEnabled.value &&
+            itemVideo.isNotEmpty &&
+            itemTitle.value.isNotEmpty &&
+            itemDescription.value.isNotEmpty &&
+            price.value >= 1000 &&
+            price.value <= 1000000 &&
+            amount.value > 0) ||
+        !isItemSailEnabled.value;
   }
 }
 

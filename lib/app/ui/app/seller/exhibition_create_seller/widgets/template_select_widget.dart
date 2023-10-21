@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
-import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 import '../../../widgets/bottom_sheet.dart';
 
@@ -40,7 +39,7 @@ Widget templateSelectWidget() {
                   },
                   rightButtonText: '변경',
                   onRightButtonPressed: () {
-                    controller.sellerInfoReset();
+                    controller.itemImages.clear();
                     controller.isItemTemplateUsed.value =
                         !controller.isItemTemplateUsed.value;
                     Get.back();

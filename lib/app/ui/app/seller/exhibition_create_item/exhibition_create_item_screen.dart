@@ -57,31 +57,40 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Obx(
-            () => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  templateSelectWidget(),
-                  if (controller.isItemTemplateUsed.value == true)
-                    _templateUseWidget(),
-                  if (controller.isItemTemplateUsed.value == false)
-                    _templateNotUseWidget(),
-                  SizedBox(height: 40),
-                  itemAudioInputWidget(),
-                  SizedBox(height: 40),
-                  itemSaleSelectWidget(),
-                  if (controller.isItemSailEnabled.value == true)
-                    _itemSaleWidgets(),
-                  SizedBox(height: 40),
-                  NextButton(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: templateSelectWidget(),
+                ),
+                if (controller.isItemTemplateUsed.value == true)
+                  _templateUseWidget(),
+                if (controller.isItemTemplateUsed.value == false)
+                  _templateNotUseWidget(),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: itemAudioInputWidget(),
+                ),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: itemSaleSelectWidget(),
+                ),
+                if (controller.isItemSailEnabled.value == true)
+                  _itemSaleWidgets(),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: NextButton(
                     onTap: () {},
                     text: '다음',
-                    value: true,
-                  )
-                ],
-              ),
+                    value: controller.isValidItemNext(),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -103,28 +112,34 @@ _templateNotUseWidget() {
   return Column(
     children: [
       SizedBox(height: 40),
-      itemImageInputWidget(),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: itemImageInputWidget(),
+      ),
     ],
   );
 }
 
 _itemSaleWidgets() {
-  return Column(
-    children: [
-      SizedBox(height: 40),
-      itemFlopInputWidget(),
-      SizedBox(height: 40),
-      itemCategoryInputWidget(),
-      SizedBox(height: 40),
-      itemTitleInputWidget(),
-      SizedBox(height: 40),
-      itemDescriptionInputWidget(),
-      SizedBox(height: 40),
-      itemSizeInputWidget(),
-      SizedBox(height: 40),
-      itemPriceInputWidget(),
-      SizedBox(height: 40),
-      itemAmountInputWidget(),
-    ],
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 24),
+    child: Column(
+      children: [
+        SizedBox(height: 40),
+        itemFlopInputWidget(),
+        SizedBox(height: 40),
+        itemCategoryInputWidget(),
+        SizedBox(height: 40),
+        itemTitleInputWidget(),
+        SizedBox(height: 40),
+        itemDescriptionInputWidget(),
+        SizedBox(height: 40),
+        itemSizeInputWidget(),
+        SizedBox(height: 40),
+        itemPriceInputWidget(),
+        SizedBox(height: 40),
+        itemAmountInputWidget(),
+      ],
+    ),
   );
 }
