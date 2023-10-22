@@ -8,39 +8,53 @@ import '../../../../theme/app_theme.dart';
 
 final controller = Get.find<ExhibitionController>();
 itemEditWidget() {
-  return template1EditWidget();
+  return template1EditWidget(ColorPalette.white, FontPalette.pretendard, false);
 }
 
-template1EditWidget() {
+template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
   CarouselController carouselController = CarouselController();
   return Container(
     width: Get.width,
-    color: ColorPalette.white,
-    padding: EdgeInsets.fromLTRB(12, 24, 12, 0),
+    color: color,
+    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
     child: Column(
       children: [
-        TextField(
-          controller: controller.templateTitleController,
-          maxLength: 15,
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            hintText: '작품 이름을 입력해주세요',
-            hintStyle: TextStyle(
-              color: ColorPalette.grey_4,
-              fontWeight: FontWeight.w400,
-              fontFamily: FontPalette.pretendard,
-              fontSize: 26,
-            ),
-            counterText: '',
-            border: InputBorder.none,
-          ),
-          style: TextStyle(
-            color: ColorPalette.black,
-            fontWeight: FontWeight.w400,
-            fontFamily: FontPalette.pretendard,
-            fontSize: 26,
-          ),
-        ),
+        isColorFontChange == true
+            ? Center(
+                child: Text(
+                  controller.templateTitle.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontFamily,
+                    fontSize: 26,
+                  ),
+                ),
+              )
+            : TextField(
+                controller: controller.templateTitleController,
+                maxLength: 15,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: '작품 이름을 입력해주세요',
+                  hintStyle: TextStyle(
+                    color: ColorPalette.grey_4,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 26,
+                  ),
+                  counterText: '',
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontPalette.pretendard,
+                  fontSize: 26,
+                ),
+              ),
         SizedBox(height: 12),
         Stack(
           children: [
@@ -83,7 +97,9 @@ template1EditWidget() {
                   for (int i = 0; i < controller.itemImages.length; i++)
                     GestureDetector(
                       onTap: () {
-                        controller.selectImages(ImageType.item);
+                        if (isColorFontChange == false) {
+                          controller.selectImages(ImageType.item);
+                        }
                       },
                       child: Container(
                         width: Get.width * 0.65,
@@ -143,28 +159,42 @@ template1EditWidget() {
         SizedBox(height: 16),
         SizedBox(
           width: Get.width * 0.65,
-          child: TextField(
-            controller: controller.templateDescriptionController,
-            maxLines: 5,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              hintText: '여기에 작품에 대한 설명을 적어주세요',
-              hintStyle: TextStyle(
-                color: ColorPalette.grey_4,
-                fontWeight: FontWeight.w400,
-                fontFamily: FontPalette.pretendard,
-                fontSize: 14,
-              ),
-              counterText: '',
-              border: InputBorder.none,
-            ),
-            style: TextStyle(
-              color: ColorPalette.black,
-              fontWeight: FontWeight.w400,
-              fontFamily: FontPalette.pretendard,
-              fontSize: 14,
-            ),
-          ),
+          child: isColorFontChange == true
+              ? Center(
+                  child: Text(
+                    controller.templateDescription.value,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
+                    ),
+                  ),
+                )
+              : TextField(
+                  controller: controller.templateDescriptionController,
+                  maxLines: 5,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: '여기에 작품에 대한 설명을 적어주세요',
+                    hintStyle: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontPalette.pretendard,
+                      fontSize: 14,
+                    ),
+                    counterText: '',
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 14,
+                  ),
+                ),
         ),
       ],
     ),

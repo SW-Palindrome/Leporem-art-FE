@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/app/ui/app/seller/exhibition_create_item/widgets/item_edit_widget.dart';
 
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
-import '../exhibition_create_seller/widgets/template_select_widget.dart';
 import 'widgets/item_amount_input_widget.dart';
 import 'widgets/item_audio_input_widget.dart';
 import 'widgets/item_category_input_widget.dart';
 import 'widgets/item_description_input_widget.dart';
+import 'widgets/item_edit_widget.dart';
 import 'widgets/item_flop_input_widget.dart';
 import 'widgets/item_image_input_widget.dart';
 import 'widgets/item_price_input_widget.dart';
 import 'widgets/item_sale_select_widget.dart';
 import 'widgets/item_size_input_widget.dart';
 import 'widgets/item_title_input_widget.dart';
+import 'widgets/template_select_widget.dart';
 
 class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
   const ExhibitionCreateItemScreen({super.key});
@@ -85,7 +86,16 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24),
                   child: NextButton(
-                    onTap: () {},
+                    onTap: () {
+                      if (controller.isItemTemplateUsed.value == true) {
+                        Get.toNamed(
+                            Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE);
+                      } else {
+                        Get.until((route) =>
+                            Get.currentRoute ==
+                            Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
+                      }
+                    },
                     text: '다음',
                     value: controller.isValidItemNext(),
                   ),

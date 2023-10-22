@@ -88,7 +88,7 @@ class ExhibitionController extends GetxController {
   Rx<String> sellerIntroduction = Rx<String>('');
   Rx<bool> isSellerTemplateUsed = Rx<bool>(false);
 
-  // 작가 소개 꾸미기
+  // 작가, 작품 소개 꾸미기
   List<int> colorList = [
     0xffFFFFFF,
     0xffF5E1E1,
@@ -99,7 +99,7 @@ class ExhibitionController extends GetxController {
     0xffB7A5A5,
     0xffA5B7AF,
     0xff9097B1,
-    0xff000000
+    0xff191f28,
   ];
   List<String> fontList = [
     'Pretendard',
@@ -110,6 +110,10 @@ class ExhibitionController extends GetxController {
   Rx<int> selectedSellerIntroductionColor = Rx<int>(0);
   Rx<int> selectedSellerIntroductionFont = Rx<int>(0);
   Rx<int> displayedSellerIntroductionFont = Rx<int>(0);
+
+  Rx<int> selectedItemBackgroundColor = Rx<int>(0);
+  Rx<int> selectedItemFont = Rx<int>(0);
+  Rx<int> displayedItemFont = Rx<int>(0);
 
   WidgetsToImageController widgetsToImageController =
       WidgetsToImageController();
@@ -135,7 +139,7 @@ class ExhibitionController extends GetxController {
   Rx<String> depth = Rx<String>('');
   Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
-  Rx<int> amount = Rx<int>(0);
+  Rx<int> amount = Rx<int>(1);
 
   @override
   void onInit() async {
@@ -459,21 +463,33 @@ class ExhibitionController extends GetxController {
         : sellerImage.isNotEmpty;
   }
 
-  bool isFontResetValid() {
+  bool isValidSellerFontReset() {
     return selectedSellerIntroductionFont.value != 0;
   }
 
-  bool isApplyValid() {
+  bool isValidItemFontReset() {
+    return selectedItemFont.value != 0;
+  }
+
+  bool isValidSellerApply() {
     return selectedSellerIntroductionFont.value !=
         displayedSellerIntroductionFont.value;
   }
 
-  void applyFont() {
+  bool isValidItemApply() {
+    return selectedItemFont.value != displayedItemFont.value;
+  }
+
+  void applySellerFont() {
     displayedSellerIntroductionFont.value =
         selectedSellerIntroductionFont.value;
   }
 
-  bool isValidItemNext() {]
+  void applyItemFont() {
+    displayedItemFont.value = selectedItemFont.value;
+  }
+
+  bool isValidItemNext() {
     if (isItemTemplateUsed.value == true) {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
@@ -491,6 +507,33 @@ class ExhibitionController extends GetxController {
             price.value <= 1000000 &&
             amount.value > 0) ||
         !isItemSailEnabled.value;
+  }
+
+  void initItemInfo() {
+    itemTitleController.clear();
+    itemDescriptionController.clear();
+    templateTitleController.clear();
+    templateDescriptionController.clear();
+    itemPriceController.clear();
+    itemHeightController.clear();
+    itemWidthController.clear();
+    itemDepthController.clear();
+    thumbnail.value = null;
+    resetSelectedCategoryType();
+    itemImages.clear();
+    itemVideo.clear();
+    itemAudio.clear();
+    itemTitle.value = '';
+    itemDescription.value = '';
+    price.value = 0;
+    amount.value = 1;
+    isItemSailEnabled.value = true;
+    isItemTemplateUsed.value = false;
+    templateTitle.value = '';
+    templateDescription.value = '';
+    selectedItemBackgroundColor.value = 0;
+    selectedItemFont.value = 0;
+    displayedItemFont.value = 0;
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 import '../../../widgets/bottom_sheet.dart';
 
@@ -13,11 +14,11 @@ Widget templateSelectWidget() {
     () => Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: controller.isItemTemplateUsed.value == true
+        color: controller.isSellerTemplateUsed.value == true
             ? ColorPalette.purple.withOpacity(0.1)
             : ColorPalette.grey_1,
         border: Border.all(
-          color: controller.isItemTemplateUsed.value == true
+          color: controller.isSellerTemplateUsed.value == true
               ? ColorPalette.purple
               : ColorPalette.grey_3,
         ),
@@ -39,9 +40,9 @@ Widget templateSelectWidget() {
                   },
                   rightButtonText: '변경',
                   onRightButtonPressed: () {
-                    controller.itemImages.clear();
-                    controller.isItemTemplateUsed.value =
-                        !controller.isItemTemplateUsed.value;
+                    controller.sellerImage.clear();
+                    controller.isSellerTemplateUsed.value =
+                        !controller.isSellerTemplateUsed.value;
                     Get.back();
                   },
                   onCloseButtonPressed: () {
@@ -56,19 +57,39 @@ Widget templateSelectWidget() {
                 ),
               );
             },
-            child: controller.isItemTemplateUsed.value == true
+            child: controller.isSellerTemplateUsed.value == true
                 ? SvgPicture.asset('assets/icons/checkbox_select.svg')
                 : SvgPicture.asset('assets/icons/checkbox_unselect.svg'),
           ),
           SizedBox(width: 12),
-          Text(
-            '작품 소개 템플릿을 사용할게요!',
-            style: TextStyle(
-              color: ColorPalette.grey_6,
-              fontFamily: FontPalette.pretendard,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '작가 소개 템플릿을 사용할게요!',
+                style: TextStyle(
+                  color: ColorPalette.grey_6,
+                  fontFamily: FontPalette.pretendard,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(height: 6),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE);
+                },
+                child: Text(
+                  '템플릿 예시 보기',
+                  style: TextStyle(
+                    color: ColorPalette.grey_5,
+                    fontSize: 12,
+                    fontFamily: FontPalette.pretendard,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
