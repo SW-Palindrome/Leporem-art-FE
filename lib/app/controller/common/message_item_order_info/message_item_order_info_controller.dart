@@ -19,7 +19,7 @@ class MessageItemOrderInfoController extends GetxController {
   bool get isFilled {
     return name.text.isNotEmpty &&
         address.text.isNotEmpty &&
-        phoneNumber.text.isNotEmpty && phoneNumber.text.length == 11;
+        phoneNumber.text.isNotEmpty && phoneNumber.text.length >= 9;
   }
 
   Future<void> order() async {
