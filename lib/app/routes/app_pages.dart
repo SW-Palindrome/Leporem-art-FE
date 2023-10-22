@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:leporemart/app/ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
+import 'package:leporemart/app/ui/app/common/message_item_order_info/message_item_order_info_screen.dart';
 
 import '../bindings/account/account_type_binding.dart';
 import '../bindings/account/agreement_binding.dart';
@@ -15,6 +16,7 @@ import '../bindings/buyer/order_list_binding.dart';
 import '../bindings/buyer/recent_item_binding.dart';
 import '../bindings/buyer/review_binding.dart';
 import '../bindings/common/message_item_order_binding.dart';
+import '../bindings/common/message_item_order_info_binding.dart';
 import '../bindings/common/message_item_share_binding.dart';
 import '../bindings/seller/item_create_detail_binding.dart';
 import '../bindings/seller/item_delivery_edit_binding.dart';
@@ -134,6 +136,11 @@ class AppPages {
       name: Routes.BUYER_ORDER,
       page: () => OrderListScreen(),
       binding: OrderListBinding(),
+    ),
+    GetPage(
+      name: Routes.BUYER_ORDER_INFO,
+      page: () => MessageItemOrderInfoScreen(),
+      binding: MessageItemOrderInfoBinding(),
     ),
     GetPage(
       name: Routes.BUYER_PROFILE_EDIT,

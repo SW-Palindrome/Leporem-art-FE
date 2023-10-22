@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../controller/common/message/message_controller.dart';
 import '../../../../controller/common/message_item_order/message_item_order_controller.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../../utils/currency_formatter.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
@@ -196,8 +197,10 @@ class MessageItemOrderScreen extends GetView<MessageItemOrderController> {
               text: '주문하기',
               value: controller.isSelect.value,
               onTap: () {
-                controller.order();
-                Get.back();
+                Get.toNamed(Routes.BUYER_ORDER_INFO, arguments: {
+                  'chatRoomUuid': Get.arguments['chatRoomUuid'],
+                  'itemId': controller.selectItemId.value,
+                });
               },
             ),
           ),
