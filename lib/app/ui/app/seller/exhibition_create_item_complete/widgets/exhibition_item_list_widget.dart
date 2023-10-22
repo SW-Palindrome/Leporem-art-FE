@@ -20,7 +20,7 @@ exhibitionItemListWidget() {
                 SizedBox(height: 16),
             ],
           ),
-        if (controller.exhibitionItems.length != 10)
+        if (controller.exhibitionItems.length <= 10)
           Column(
             children: [
               SizedBox(height: 24),

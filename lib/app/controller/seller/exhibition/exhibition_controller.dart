@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -143,6 +145,37 @@ class ExhibitionController extends GetxController {
 
   Future<void> fetchSellerExhibitions() async {
     exhibitions.value = await repository.fetchSellerExhibitions();
+  }
+
+  Future<void> loadExhibitionIntroduction() async {
+    Exhibition exhibition = exhibitions
+        .firstWhere((element) => element.id == Get.arguments['exhibition_id']);
+
+    exhibitionTitleController.text = exhibition.title;
+    sellerNameController.text = exhibition.seller;
+    String imageUrl = exhibition.coverImage;
+    Dio dio = Dio();
+    try {
+      // 썸네일 이미지를 불러옴
+      var response = await dio.get(imageUrl,
+          options: Options(responseType: ResponseType.bytes));
+
+      // 이미지 데이터를 바이트 배열로 가져옴
+      List<int> imageBytes = response.data;
+
+      // 파일 생성
+      Directory cacheDir = await getTemporaryDirectory();
+      File imageFile = File('${cacheDir.path}/temp0.jpg');
+
+      // 파일 쓰기
+      await imageFile.writeAsBytes(imageBytes);
+      exhibitionImage.value.add(imageFile);
+      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+      exhibitionImage.refresh();
+    } catch (e) {
+      Logger logger = Logger(printer: PrettyPrinter());
+      logger.e(e);
+    }
   }
 
   Future<void> fetchExhibitionArtistById(int exhibitionId) async {

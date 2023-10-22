@@ -115,9 +115,12 @@ abstract class ApiClient {
   Future<void> updateDeliveryInfo(
       int orderId, String deliveryCompany, String invoiceNumber);
   Future<DeliveryInfo?> fetchDeliveryInfo(int orderId);
-  
+
   // 전시전
   Future<List<Exhibition>> fetchSellerExhibitions();
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
+  Future<void> saveExhibitionIntroductionById(int exhibitionId);
+  Future<void> saveExhibitionArtistById(int exhibitionId);
+  Future<void> saveExhibitionItemById(int exhibitionId);
 }

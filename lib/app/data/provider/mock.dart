@@ -573,4 +573,19 @@ class MockClient implements ApiClient {
     }
     return exhibitionItems;
   }
+
+  @override
+  Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
+    return null;
+  }
+
+  @override
+  Future<void> saveExhibitionArtistById(int exhibitionId) async {
+    return;
+  }
+
+  @override
+  Future<void> saveExhibitionItemById(int exhibitionId) async {
+    return;
+  }
 }

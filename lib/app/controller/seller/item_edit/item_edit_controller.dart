@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:leporemart/app/data/repositories/item_create_repository.dart';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -273,7 +274,8 @@ class ItemEditController extends ItemCreateDetailController {
       }
       isVideoLoading.value = false;
     } catch (e) {
-      print(e);
+      Logger logger = Logger();
+      logger.e(e);
     }
   }
 
