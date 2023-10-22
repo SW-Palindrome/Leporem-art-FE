@@ -22,47 +22,7 @@ class ExhibitionController extends GetxController {
 
   RxList<Exhibition> exhibitions = RxList<Exhibition>([]);
   Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
-  RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([
-    ExhibitionItem(
-        title: '폭발하는 화산',
-        description:
-            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
-        imageUrls: [
-          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
-        ],
-        position: 0,
-        isUsingTemplate: false,
-        isSoled: false,
-        backgroundColor: '0xffFFFFFF',
-        fontFamily: 'Pretendard',
-        id: 1),
-    ExhibitionItem(
-        title: '폭발하는 화산',
-        description:
-            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
-        imageUrls: [
-          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
-        ],
-        position: 0,
-        isUsingTemplate: false,
-        isSoled: false,
-        backgroundColor: '0xffFFFFFF',
-        fontFamily: 'Pretendard',
-        id: 2),
-    ExhibitionItem(
-        title: '폭발하는 화산',
-        description:
-            '폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.폭발하는 화산은 화산이 폭발하는 것을보고.',
-        imageUrls: [
-          'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png'
-        ],
-        position: 0,
-        isUsingTemplate: false,
-        isSoled: false,
-        backgroundColor: '0xffFFFFFF',
-        fontFamily: 'Pretendard',
-        id: 3),
-  ]);
+  RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([]);
 
   // 기획전 소개
   RxList<File> exhibitionImage = RxList<File>([]);
@@ -534,6 +494,11 @@ class ExhibitionController extends GetxController {
     selectedItemBackgroundColor.value = 0;
     selectedItemFont.value = 0;
     displayedItemFont.value = 0;
+  }
+
+  bool isValidItemSave() {
+    return exhibitionItems.where((element) => element.isSoled == true).length >=
+        (exhibitionItems.length / 2).ceil();
   }
 }
 
