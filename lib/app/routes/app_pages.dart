@@ -192,6 +192,7 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_ITEM_DELIVERY_EDIT,
       page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
     ),
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
