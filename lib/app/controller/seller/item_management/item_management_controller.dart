@@ -59,4 +59,6 @@ class ItemManagementController extends GetxController {
       logger.e('Error fetching seller order cancel in controller: $e');
     }
   }
+
+  SellerOrder get currentOrder => orders.firstWhere((order) => order.id == Get.arguments['order_id']);
 }

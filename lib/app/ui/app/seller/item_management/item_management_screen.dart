@@ -418,25 +418,56 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                   ),
                 ),
                 SizedBox(height: 8),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    Get.toNamed(Routes.SELLER_ITEM_DELIVERY_EDIT, arguments: {'order_id': order.id});
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 17),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: ColorPalette.white),
-                    child: Center(
-                      child: Text(
-                        '송장 번호 입력',
-                        style: TextStyle(
-                          color: ColorPalette.black,
-                          fontSize: 16.0,
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ColorPalette.white),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.SELLER_ITEM_ORDER_INFO, arguments: {'order_id': order.id});
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: ColorPalette.white),
+                          child: Center(
+                            child: Text(
+                              '배송지 정보 조회',
+                              style: TextStyle(
+                                color: ColorPalette.black,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Divider(color: ColorPalette.grey_2, thickness: 1),
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.SELLER_ITEM_DELIVERY_EDIT, arguments: {'order_id': order.id});
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: ColorPalette.white),
+                          child: Center(
+                            child: Text(
+                              '송장 번호 입력',
+                              style: TextStyle(
+                                color: ColorPalette.black,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 8),
