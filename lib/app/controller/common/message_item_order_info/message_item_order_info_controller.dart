@@ -11,15 +11,19 @@ class MessageItemOrderInfoController extends GetxController {
   MessageItemOrderInfoController({required this.repository}) : assert(repository != null);
 
   TextEditingController name = TextEditingController();
-  TextEditingController address = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
+  TextEditingController addressDetail = TextEditingController();
+  Rx<String> address = Rx<String>('');
+  Rx<String> zipCode = Rx<String>('');
+  Rx<bool> isAddressLoaded = false.obs;
 
   String get chatRoomUuid => Get.arguments['chatRoomUuid'];
   int get itemId => Get.arguments['itemId'];
   bool get isFilled {
-    return name.text.isNotEmpty &&
-        address.text.isNotEmpty &&
-        phoneNumber.text.isNotEmpty && phoneNumber.text.length >= 9;
+    return name.text.isNotEmpty
+        && phoneNumber.text.isNotEmpty && phoneNumber.text.length >= 9
+        && isAddressLoaded.value
+        && addressDetail.text.isNotEmpty;
   }
 
   Future<void> order() async {

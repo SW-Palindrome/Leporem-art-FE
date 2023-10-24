@@ -8,7 +8,7 @@ import '../../data/repositories/message_item_repository.dart';
 class MessageItemOrderInfoBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(MessageItemOrderInfoController(
+    Get.lazyPut(() => MessageItemOrderInfoController(
         repository: MessageItemRepository(apiClient: DioClient())));
   }
 }

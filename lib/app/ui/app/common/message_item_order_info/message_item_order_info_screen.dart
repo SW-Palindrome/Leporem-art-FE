@@ -1,3 +1,4 @@
+import 'package:daum_postcode_search/data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import '../../../../controller/common/message_item_order_info/message_item_order_info_controller.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/next_button.dart';
+import '../message_item_order_address/message_item_order_address_screen.dart';
 
 class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController> {
   const MessageItemOrderInfoScreen({super.key});
@@ -44,7 +46,7 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
               SizedBox(height: 30),
               _orderNameEdit(),
               SizedBox(height: 30),
-              _orderAddressEdit(),
+              _orderAddressEdit(context),
               SizedBox(height: 30),
               _orderPhoneNumberEdit(),
             ],
@@ -98,8 +100,9 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
         ]);
   }
 
-  _orderAddressEdit() {
-    return Column(
+  _orderAddressEdit(BuildContext context) {
+    return Obx(() {
+      return Column(
         children: [
           Row(
             children: [
@@ -117,8 +120,45 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
             ],
           ),
           SizedBox(height: 10),
+          GestureDetector(
+            onTap: () async {
+              DataModel model = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MessageItemOrderAddressScreen(),
+                ),
+              );
+              controller.address.value = model.address;
+              controller.zipCode.value = model.zonecode;
+              controller.isAddressLoaded.value = true;
+              controller.update();
+            },
+            child: Container(
+              width: Get.width,
+              height: 58,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: ColorPalette.grey_4,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.all(12),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  controller.isAddressLoaded.value ? '[${controller.zipCode.value}] ${controller.address.value}' : '주소 검색',
+                  style: TextStyle(
+                    color: controller.isAddressLoaded.value ? ColorPalette.black : ColorPalette.grey_4,
+                    fontSize: 18,
+                    height: 1,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (controller.isAddressLoaded.value) SizedBox(height: 10),
+          if (controller.isAddressLoaded.value)
           TextFormField(
-            controller: controller.address,
+            controller: controller.addressDetail,
             style: TextStyle(
               color: ColorPalette.black,
               fontSize: 18,
@@ -136,9 +176,14 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
                   color: ColorPalette.purple,
                 ),
               ),
+              hintText: '상세 주소',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+              ),
             ),
           ),
         ]);
+    });
   }
 
   _orderPhoneNumberEdit() {
@@ -197,7 +242,7 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
         top: 20,
       ),
       child: AnimatedBuilder(
-        animation: Listenable.merge([controller.name, controller.address, controller.phoneNumber]),
+        animation: Listenable.merge([controller.name, controller.phoneNumber, controller.addressDetail]),
         builder: (BuildContext context, Widget? child) {
           return NextButton(
             text: '주문하기',

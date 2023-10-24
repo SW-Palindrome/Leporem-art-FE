@@ -71,6 +71,7 @@ dependencies:
   widgets_to_image: ^0.0.2
   logger: ^2.0.2
   dropdown_button2: ^2.3.9
+  daum_postcode_search: ^0.0.2
 
 
 dev_dependencies:
