@@ -430,7 +430,7 @@ class ItemManagementScreen extends GetView<ItemManagementController> {
                         color: ColorPalette.white),
                     child: Center(
                       child: Text(
-                        '배송 정보 입력',
+                        '송장 번호 입력',
                         style: TextStyle(
                           color: ColorPalette.black,
                           fontSize: 16.0,
