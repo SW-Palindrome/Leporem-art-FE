@@ -950,7 +950,7 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<int?> orderItem(int itemId) async {
+  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('access_token');
@@ -958,6 +958,11 @@ class DioClient implements ApiClient {
         '/orders/register',
         data: {
           'item_id': itemId,
+          'name': name,
+          'address': address,
+          'address_detail': addressDetail,
+          'zipcode': zipCode,
+          'phone_number': phoneNumber,
         },
         options: Options(
           headers: {
