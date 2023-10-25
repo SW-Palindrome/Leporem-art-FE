@@ -12,7 +12,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../data/models/exhibition.dart';
 import '../../../data/repositories/exhibition_repository.dart';
@@ -76,9 +75,6 @@ class ExhibitionController extends GetxController {
   Rx<int> selectedItemBackgroundColor = Rx<int>(0);
   Rx<int> selectedItemFont = Rx<int>(0);
   Rx<int> displayedItemFont = Rx<int>(0);
-
-  WidgetsToImageController widgetsToImageController =
-      WidgetsToImageController();
 
   // 작품 등록
   Rx<bool> isItemTemplateUsed = Rx<bool>(false);

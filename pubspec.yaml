@@ -68,7 +68,6 @@ dependencies:
   url_launcher: ^6.1.12
   sign_in_with_apple: ^4.3.0
   webview_flutter: ^4.2.2
-  widgets_to_image: ^0.0.2
   logger: ^2.0.2
   dropdown_button2: ^2.3.9
 
