@@ -549,7 +549,7 @@ class MockClient implements ApiClient {
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
     List<ExhibitionItem> exhibitionItems = [];
-    for (int i = 1; i < 11; i++) {
+    for (int i = 1; i < 10; i++) {
       exhibitionItems.add(ExhibitionItem(
         id: i,
         title: '우유병 기획전',
