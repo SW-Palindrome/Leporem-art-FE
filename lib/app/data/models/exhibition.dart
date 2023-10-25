@@ -32,12 +32,14 @@ class ExhibitionArtist {
   final String fontFamily;
   final String imageUrl;
   final String description;
+  final bool isUsingTemplate;
 
   ExhibitionArtist({
     required this.backgroundColor,
     required this.fontFamily,
     required this.imageUrl,
     required this.description,
+    required this.isUsingTemplate,
   });
 
   factory ExhibitionArtist.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class ExhibitionArtist {
       fontFamily: json['font_family'],
       imageUrl: json['image_url'],
       description: json['description'],
+      isUsingTemplate: json['is_using_template'],
     );
   }
 }

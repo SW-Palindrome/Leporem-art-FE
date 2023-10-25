@@ -67,10 +67,16 @@ class ExhibitionCreateExhibitionCompleteScreen
               NextButton(
                 text: '이어서 작가 소개 작성하기',
                 value: true,
-                onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_SELLER,
-                  arguments: {'exhibition_id': Get.arguments['exhibition_id']},
-                ),
+                onTap: () async {
+                  await controller.fetchExhibitionArtistById(
+                      Get.arguments['exhibition_id']);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_SELLER,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id']
+                    },
+                  );
+                },
               ),
             ],
           ),

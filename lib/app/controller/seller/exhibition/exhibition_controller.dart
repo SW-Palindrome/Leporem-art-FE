@@ -147,9 +147,9 @@ class ExhibitionController extends GetxController {
     exhibitions.value = await repository.fetchSellerExhibitions();
   }
 
-  Future<void> loadExhibitionIntroduction() async {
-    Exhibition exhibition = exhibitions
-        .firstWhere((element) => element.id == Get.arguments['exhibition_id']);
+  Future<void> fetchSellerExhibitionById(int exhibitionId) async {
+    Exhibition exhibition =
+        exhibitions.firstWhere((element) => element.id == exhibitionId);
 
     exhibitionTitleController.text = exhibition.title;
     sellerNameController.text = exhibition.seller;
@@ -179,11 +179,40 @@ class ExhibitionController extends GetxController {
   }
 
   Future<void> fetchExhibitionArtistById(int exhibitionId) async {
+    // await repository.fetchExhibitionArtistById(exhibitionId) 가 null이 아니면 exhibitionArtist.value에 저장
     exhibitionArtist.value =
         await repository.fetchExhibitionArtistById(exhibitionId);
+
+    sellerIntroductionController.text = exhibitionArtist.value!.description;
+    isSellerTemplateUsed.value = exhibitionArtist.value!.isUsingTemplate;
+
+    String imageUrl = exhibitionArtist.value!.imageUrl;
+    Dio dio = Dio();
+    try {
+      // 썸네일 이미지를 불러옴
+      var response = await dio.get(imageUrl,
+          options: Options(responseType: ResponseType.bytes));
+
+      // 이미지 데이터를 바이트 배열로 가져옴
+      List<int> imageBytes = response.data;
+
+      // 파일 생성
+      Directory cacheDir = await getTemporaryDirectory();
+      File imageFile = File('${cacheDir.path}/temp0.jpg');
+
+      // 파일 쓰기
+      await imageFile.writeAsBytes(imageBytes);
+      sellerImage.value.add(imageFile);
+      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+      sellerImage.refresh();
+    } catch (e) {
+      Logger logger = Logger(printer: PrettyPrinter());
+      logger.e(e);
+    }
   }
 
-  Future<void> fetchExhibitionItemById(int exhibitionId) async {
+  Future<void> fetchExhibitionItemsById(int exhibitionId) async {
+    print('fetchExhibitionItemsById');
     exhibitionItems.value =
         await repository.fetchExhibitionItemById(exhibitionId);
   }

@@ -43,7 +43,7 @@ class ExhibitionCreateSellerTemplateScreen
                   onTap: () {
                     //TODO: 작가 소개 저장
                     Get.toNamed(
-                      Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+                      Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
                       arguments: {
                         'exhibition_id': Get.arguments['exhibition_id']
                       },

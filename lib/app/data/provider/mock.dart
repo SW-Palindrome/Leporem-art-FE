@@ -542,6 +542,7 @@ class MockClient implements ApiClient {
       backgroundColor: '#000000',
       description: '안녕하세요',
       fontFamily: 'NotoSansKR',
+      isUsingTemplate: true,
     );
   }
 

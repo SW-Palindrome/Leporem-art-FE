@@ -51,10 +51,16 @@ class ExhibitionCreateSellerCompleteScreen
               NextButton(
                 text: '이어서 작품 등록하기',
                 value: true,
-                onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-                  arguments: {'exhibition_id': Get.arguments['exhibition_id']},
-                ),
+                onTap: () async {
+                  await controller
+                      .fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id']
+                    },
+                  );
+                },
               ),
             ],
           ),
