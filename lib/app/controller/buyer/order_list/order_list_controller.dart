@@ -11,6 +11,8 @@ class OrderListController extends GetxController {
   RxList<Order> orders = <Order>[].obs;
   Rx<bool> isLoading = false.obs;
 
+  Order get currentOrder => orders.firstWhere((order) => order.id == Get.arguments['order_id']);
+
   @override
   void onInit() async {
     super.onInit();

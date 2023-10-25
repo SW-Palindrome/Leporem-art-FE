@@ -89,10 +89,10 @@ class OrderListScreen extends GetView<OrderListController> {
     return GestureDetector(
       onTap: () {
         logAnalytics(name: 'order_list', parameters: {
-          'action': 'item_detail ${controller.orders[index].itemId}'
+          'action': 'order_detail ${controller.orders[index].id}'
         });
-        Get.toNamed(Routes.BUYER_ITEM_DETAIL,
-            arguments: {'item_id': controller.orders[index].itemId});
+        Get.toNamed(Routes.BUYER_ORDER_INFO_EDIT,
+            arguments: {'order_id': controller.orders[index].id});
       },
       child: Container(
         padding: EdgeInsets.all(12),
@@ -106,13 +106,22 @@ class OrderListScreen extends GetView<OrderListController> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: CachedNetworkImage(
-                    imageUrl: controller.orders[index].thumbnailImage,
-                    height: Get.width * 0.23,
-                    width: Get.width * 0.23,
-                    fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                    logAnalytics(name: 'order_list', parameters: {
+                      'action': 'item_detail ${controller.orders[index].itemId}'
+                    });
+                    Get.toNamed(Routes.BUYER_ITEM_DETAIL,
+                      arguments: {'item_id': controller.orders[index].itemId});
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: CachedNetworkImage(
+                      imageUrl: controller.orders[index].thumbnailImage,
+                      height: Get.width * 0.23,
+                      width: Get.width * 0.23,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 SizedBox(width: 12),
