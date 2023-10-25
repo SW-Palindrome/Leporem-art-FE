@@ -15,7 +15,7 @@ class MessageItemRepository {
     return apiClient.fetchOrderMessageItem(page, nickname: nickname);
   }
 
-  Future<int?> orderItem(int itemId) async {
-    return apiClient.orderItem(itemId);
+  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
+    return apiClient.orderItem(itemId, name, address, zipCode, addressDetail, phoneNumber);
   }
 }

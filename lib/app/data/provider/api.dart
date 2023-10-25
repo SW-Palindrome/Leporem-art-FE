@@ -97,7 +97,7 @@ abstract class ApiClient {
   // 메시지 플러스기 능
   Future<List<MessageItem>> fetchShareMessageItem(int page, {String? nickname});
   Future<List<MessageItem>> fetchOrderMessageItem(int page, {String? nickname});
-  Future<int?> orderItem(int itemId);
+  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber);
   Future<List<ChatRoom>> fetchBuyerChatRooms();
   Future<List<ChatRoom>> fetchSellerChatRooms();
   Future<List<BuyerOrder>> fetchBuyerOrders();

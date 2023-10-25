@@ -372,7 +372,7 @@ class MockClient implements ApiClient {
   }
 
   @override
-  Future<int?> orderItem(int itemId) async {
+  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
     return 1;
   }
 

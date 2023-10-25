@@ -950,14 +950,19 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<int?> orderItem(int itemId) async {
+  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('access_token');
       final response = await _dioInstance.post(
-        '/orders/register',
+        '/orders/v1/register',
         data: {
           'item_id': itemId,
+          'name': name,
+          'address': address,
+          'detail_address': addressDetail,
+          'zipcode': zipCode,
+          'phone_number': phoneNumber,
         },
         options: Options(
           headers: {
@@ -975,7 +980,7 @@ class DioClient implements ApiClient {
       if (response.statusCode == 201) {
         return response.data['order_id'];
       }
-      throw ('response: ${response.statusCode} / ${response.realUri}');
+      throw ('response: ${response.statusCode} / ${response.realUri} / ${response.data}');
     } catch (e) {
       // 에러 처리
       logger.e('Error fetching chat item share in repository: $e');
