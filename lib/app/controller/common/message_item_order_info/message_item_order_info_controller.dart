@@ -27,7 +27,14 @@ class MessageItemOrderInfoController extends GetxController {
   }
 
   Future<void> order() async {
-    int? orderId = await repository.orderItem(itemId);
+    int? orderId = await repository.orderItem(
+      itemId,
+      name.text,
+      address.value,
+      addressDetail.text,
+      zipCode.value,
+      phoneNumber.text,
+    );
     if (orderId == null) {
       Get.snackbar('주문 실패', '주문에 실패했습니다.');
       Get.back();

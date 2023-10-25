@@ -250,6 +250,7 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
             onTap: () {
               controller.order();
               Get.back();
+              Get.back();
               Get.snackbar('주문 완료', '주문이 성공적으로 처리되었습니다.');
             },
           );

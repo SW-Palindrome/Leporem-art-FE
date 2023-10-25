@@ -66,27 +66,4 @@ class MessageItemOrderController extends GetxController {
   bool isSelected(int itemId) {
     return selectItemId.value == itemId && isSelect.value;
   }
-
-  Future<void> order() async {
-    int? orderId = await repository.orderItem(selectItemId.value);
-    if (orderId == null) {
-      //TODO: 주문 실패
-      return;
-    }
-    MessageController messageController = Get.find<MessageController>();
-    if (messageController.chatRoom.isRegistered) {
-      await Get.find<MessageController>().sendMessage(
-        Get.arguments['chatRoomUuid'],
-        orderId.toString(),
-        MessageType.order,
-      );
-    } else {
-      Get.find<MessageController>().createChatRoom(
-        Get.arguments['chatRoomUuid'],
-        Get.find<MessageController>().chatRoom.opponentNickname,
-        orderId.toString(),
-        MessageType.order,
-      );
-    }
-  }
 }

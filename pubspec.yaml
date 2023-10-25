@@ -72,6 +72,7 @@ dependencies:
   logger: ^2.0.2
   dropdown_button2: ^2.3.9
   daum_postcode_search: ^0.0.2
+  flutter_inappwebview: ^5.8.0
 
 
 dev_dependencies:
