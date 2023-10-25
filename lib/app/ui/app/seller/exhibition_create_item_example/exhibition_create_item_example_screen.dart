@@ -39,7 +39,12 @@ class ExhibitionCreateItemExampleScreen extends GetView<ExhibitionController> {
                 text: '선택하기',
                 onTap: () {
                   //TODO: 템플릿 선택 후 다음 페이지로 이동
-                  Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_ITEM,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id'],
+                    },
+                  );
                   controller.isItemTemplateUsed.value = true;
                   controller.isItemTemplateUsed.refresh();
                 },

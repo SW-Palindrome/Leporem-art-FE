@@ -25,7 +25,10 @@ exhibitionItemListWidget() {
             SizedBox(height: 24),
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE);
+                Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id'],
+                    });
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

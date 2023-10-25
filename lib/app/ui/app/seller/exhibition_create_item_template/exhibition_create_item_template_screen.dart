@@ -41,8 +41,10 @@ class ExhibitionCreateItemTemplateScreen extends GetView<ExhibitionController> {
                 child: NextButton(
                   text: '다음',
                   value: true,
-                  onTap: () {
+                  onTap: () async {
                     controller.initItemInfo();
+                    await controller.fetchExhibitionItemsById(
+                        Get.arguments['exhibition_id']);
                     Get.until((route) =>
                         Get.currentRoute ==
                         Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);

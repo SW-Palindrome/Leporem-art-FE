@@ -86,14 +86,22 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24),
                   child: NextButton(
-                    onTap: () {
+                    onTap: () async {
                       if (controller.isItemTemplateUsed.value == true) {
                         Get.toNamed(
-                            Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE);
+                          Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
+                          arguments: {
+                            'exhibition_id': Get.arguments['exhibition_id']
+                          },
+                        );
                       } else {
-                        Get.until((route) =>
-                            Get.currentRoute ==
-                            Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
+                        await controller.fetchExhibitionItemsById(
+                            Get.arguments['exhibition_id']);
+                        Get.until(
+                          (route) =>
+                              Get.currentRoute ==
+                              Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+                        );
                       }
                     },
                     text: '다음',
@@ -139,10 +147,12 @@ _itemSaleWidgets() {
         itemFlopInputWidget(),
         SizedBox(height: 40),
         itemCategoryInputWidget(),
-        SizedBox(height: 40),
-        itemTitleInputWidget(),
-        SizedBox(height: 40),
-        itemDescriptionInputWidget(),
+        if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
+        if (controller.isItemTemplateUsed.value == false)
+          itemTitleInputWidget(),
+        if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
+        if (controller.isItemTemplateUsed.value == false)
+          itemDescriptionInputWidget(),
         SizedBox(height: 40),
         itemSizeInputWidget(),
         SizedBox(height: 40),
