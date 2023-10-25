@@ -57,6 +57,12 @@ class BuyerOrder extends Order {
 
 class SellerOrder extends Order {
   final String buyerNickname;
+  final String buyerName;
+  final String address;
+  final String addressDetail;
+  final String zipCode;
+  final String phoneNumber;
+
   SellerOrder({
     required id,
     required itemId,
@@ -66,6 +72,11 @@ class SellerOrder extends Order {
     required orderedDatetime,
     required orderStatus,
     required this.buyerNickname,
+    required this.buyerName,
+    required this.address,
+    required this.addressDetail,
+    required this.zipCode,
+    required this.phoneNumber,
     isReviewed = false,
   }) : super(
           id: id,
@@ -88,6 +99,11 @@ class SellerOrder extends Order {
       orderedDatetime: json['ordered_datetime'],
       orderStatus: json['order_status'],
       buyerNickname: json['buyer'],
+      buyerName: json['buyer_name'],
+      address: json['address'],
+      addressDetail: json['detail_address'],
+      zipCode: json['zipcode'],
+      phoneNumber: json['phone_number'],
     );
   }
 }

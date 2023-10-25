@@ -26,7 +26,7 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
               Get.back();
             }),
         title: Text(
-          '배송 정보 입력',
+          '송장 번호 입력',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -38,7 +38,7 @@ class SellerItemDeliveryEditScreen extends GetView<SellerItemDeliveryEditControl
               onTap: () async {
                 await controller.updateDeliveryInfo();
                 Get.back();
-                Get.snackbar('배송 정보 입력', '배송 정보가 입력되었습니다.');
+                Get.snackbar('송장 번호 입력', '송장 번호가 입력되었습니다.');
               },
               child: Center(
                 child: Padding(

@@ -56,4 +56,5 @@ abstract class Routes {
   static const SELLER_EXHIBITION_CREATE_ITEM_COMPLETE =
       '/seller/exhibition/create/item/complete';
   static const SELLER_ITEM_DELIVERY_EDIT = '/seller/item/delivery/edit';
+  static const SELLER_ITEM_ORDER_INFO = '/seller/item/order/info';
 }

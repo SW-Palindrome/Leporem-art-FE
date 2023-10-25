@@ -458,7 +458,13 @@ class MockClient implements ApiClient {
           itemId: i,
           orderedDatetime: DateTime.now(),
           orderStatus: '주문완료',
-          buyerNickname: '공예쁨 $i'));
+          buyerNickname: '공예쁨 $i',
+          buyerName: '홍길동 $i',
+          address: '서울시 강남구 도곡동 $i길',
+          addressDetail: '$i동 $i호',
+          zipCode: '12345',
+          phoneNumber: '01012345678',
+      ));
     }
     return sellerOrders;
   }

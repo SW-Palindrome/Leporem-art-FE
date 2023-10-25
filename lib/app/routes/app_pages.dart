@@ -57,6 +57,7 @@ import '../ui/app/seller/item_delivery_edit/item_delivery_edit_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
 import '../ui/app/seller/item_edit/item_edit_screen.dart';
 import '../ui/app/seller/item_management/item_management_screen.dart';
+import '../ui/app/seller/item_order_info/item_order_info_screen.dart';
 import '../ui/app/seller/profile_edit/profile_edit_screen.dart';
 import '../ui/app/seller/search/search_screen.dart';
 import '../ui/app/seller/seller_app.dart';
@@ -199,6 +200,12 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_ITEM_DELIVERY_EDIT,
       page: () => SellerItemDeliveryEditScreen(),
+      binding: SellerItemDeliverEditBinding(),
+    ),
+    GetPage(
+      name: Routes.SELLER_ITEM_ORDER_INFO,
+      page: () => SellerItemOrderInfoScreen(),
+      binding: ItemManagementBinding(),
     ),
     GetPage(
       name: Routes.SELLER_EXHIBITION_CREATE_START,
