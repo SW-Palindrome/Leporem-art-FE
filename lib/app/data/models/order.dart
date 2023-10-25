@@ -101,8 +101,8 @@ class SellerOrder extends Order {
       buyerNickname: json['buyer'],
       buyerName: json['buyer_name'],
       address: json['address'],
-      addressDetail: json['address_detail'],
-      zipCode: json['zip_code'],
+      addressDetail: json['detail_address'],
+      zipCode: json['zipcode'],
       phoneNumber: json['phone_number'],
     );
   }
