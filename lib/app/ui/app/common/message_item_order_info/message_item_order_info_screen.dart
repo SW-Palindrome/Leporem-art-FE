@@ -207,7 +207,7 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
           SizedBox(height: 10),
           TextFormField(
             controller: controller.phoneNumber,
-            maxLength: 11,
+            maxLength: 13,
             style: TextStyle(
               color: ColorPalette.black,
               fontSize: 18,
@@ -225,9 +225,13 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
                   color: ColorPalette.purple,
                 ),
               ),
+              hintText: '010-0000-0000',
+              hintStyle: TextStyle(
+                color: ColorPalette.grey_4,
+              ),
             ),
             inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
+              FilteringTextInputFormatter.allow(RegExp(r'^[0-9-]+$')),
             ],
           ),
         ]);
