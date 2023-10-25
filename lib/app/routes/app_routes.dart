@@ -20,6 +20,7 @@ abstract class Routes {
   static const BUYER_PROFILE_EDIT = '/buyer/profile/edit';
   static const BUYER_ORDER = '/buyer/profile/order';
   static const BUYER_ORDER_INFO = '/buyer/profile/order/info';
+  static const BUYER_ORDER_INFO_EDIT = '/buyer/profile/order/info/edit';
   static const BUYER_RECENT_ITEM = '/buyer/profile/recent';
   static const BUYER_REVIEW_STAR = '/buyer/profile/order/review-star';
   static const BUYER_REVIEW_DETAIL = '/buyer/profile/order/review-detail';
