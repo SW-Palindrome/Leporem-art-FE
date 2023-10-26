@@ -669,6 +669,27 @@ class ExhibitionController extends GetxController {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
       }
+      if (selectedTemplateIndex.value == 0 ||
+          selectedTemplateIndex.value == 1 ||
+          selectedTemplateIndex.value == 2) {
+        if (itemImages.isEmpty) {
+          return false;
+        }
+      } else if (selectedTemplateIndex.value == 3 ||
+          selectedTemplateIndex.value == 4) {
+        if (itemVideo.length < 4) {
+          return false;
+        }
+      } else if (selectedTemplateIndex.value == 5 ||
+          selectedTemplateIndex.value == 6) {
+        if (itemVideo.length < 2) {
+          return false;
+        } else if (selectedTemplateIndex.value == 7) {
+          if (itemVideo.isEmpty) {
+            return false;
+          }
+        }
+      }
     } else {
       if (itemImages.isEmpty || itemImages.length > 10) {
         return false;

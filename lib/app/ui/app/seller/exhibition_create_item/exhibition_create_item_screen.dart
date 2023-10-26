@@ -31,6 +31,7 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
         isWhite: true,
         title: '작품 등록',
         onTapLeadingIcon: () {
+          controller.resetItemInfo();
           Get.back();
         },
         actions: [
