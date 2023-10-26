@@ -67,7 +67,7 @@ class ExhibitionItem {
 
   // 판매 추가 정보
   final int? price;
-  final String? category;
+  final List<String> category;
   final String? shorts;
   final int? currentAmount;
   final String? width;
@@ -86,7 +86,7 @@ class ExhibitionItem {
     required this.isSoled,
     required this.position,
     this.price,
-    this.category,
+    required this.category,
     this.shorts,
     this.currentAmount,
     this.width,
@@ -100,14 +100,14 @@ class ExhibitionItem {
       isUsingTemplate: json['is_using_template'],
       fontFamily: json['font_family'],
       backgroundColor: json['background_color'],
-      imageUrls: json['image_urls'].cast<String>(),
+      imageUrls: List<String>.from(json['image_urls']),
       audioUrl: json['audio_url'],
       title: json['title'],
       description: json['description'],
       isSoled: json['is_soled'],
       position: json['position'],
       price: json['price'],
-      category: json['category'],
+      category: List<String>.from(json['category']),
       shorts: json['shorts'],
       currentAmount: json['current_amount'],
       width: json['width'],

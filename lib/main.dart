@@ -8,10 +8,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-
-import 'app/configs/amplitude_config.dart';
-import 'app/configs/firebase_config.dart';
 import 'app/configs/login_config.dart';
 import 'app/controller/common/bottom_navigationbar/bottom_navigationbar_contoller.dart';
 import 'app/controller/common/user_global_info/user_global_info_controller.dart';
@@ -46,7 +42,6 @@ void main() async {
   KakaoSdk.init(nativeAppKey: dotenv.get('KAKAO_APIKEY'));
 
   bool isLoginProceed = await getLoginProceed();
-
   await fcmSetting();
 
   // fcm토큰 출력

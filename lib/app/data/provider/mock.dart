@@ -276,10 +276,7 @@ class MockClient implements ApiClient {
       height: '10',
       width: '10',
       depth: '10',
-      category: [
-        'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-        'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-      ],
+      category: [],
       profileImage:
           'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       shorts:
@@ -557,9 +554,12 @@ class MockClient implements ApiClient {
         fontFamily: 'NotoSansKR',
         description: '안녕하세요',
         backgroundColor: '#000000',
+        category: [],
         imageUrls: [
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg'
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
         ],
         isSoled: true,
         isUsingTemplate: true,

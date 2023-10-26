@@ -126,13 +126,25 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
           ),
         ),
         SizedBox(width: 12),
-        SvgPicture.asset(
-          'assets/icons/edit.svg',
-          width: 20,
-          height: 20,
-          colorFilter: ColorFilter.mode(
-            ColorPalette.grey_4,
-            BlendMode.srcIn,
+        GestureDetector(
+          onTap: () async {
+            await controller
+                .fetchExhibitionItemById(controller.exhibitionItems[index].id);
+            Get.toNamed(
+              Routes.SELLER_EXHIBITION_CREATE_ITEM,
+              arguments: {
+                'exhibition_id': Get.arguments['exhibition_id'],
+              },
+            );
+          },
+          child: SvgPicture.asset(
+            'assets/icons/edit.svg',
+            width: 20,
+            height: 20,
+            colorFilter: ColorFilter.mode(
+              ColorPalette.grey_4,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
@@ -207,8 +207,136 @@ class ExhibitionController extends GetxController {
     }
   }
 
+  Future<void> fetchExhibitionItemById(int itemId) async {
+    ExhibitionItem exhibitionItem =
+        exhibitionItems.firstWhere((element) => element.id == itemId);
+
+    isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
+    isItemSailEnabled.value = exhibitionItem.isSoled;
+
+    List<String> imageList = exhibitionItem.imageUrls;
+    isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
+    Dio dio = Dio();
+    // imageList에 있는 이미지들을 불러옴
+    for (int i = 0; i < imageList.length; i++) {
+      final response = await dio.get(imageList[i],
+          options: Options(responseType: ResponseType.bytes));
+
+      // 이미지 데이터를 바이트 배열로 가져옴
+      List<int> imageBytes = response.data;
+
+      // 파일 생성
+      Directory cacheDir = await getTemporaryDirectory();
+      File imageFile = File('${cacheDir.path}/temp$i.jpg');
+
+      // 파일 쓰기
+      await imageFile.writeAsBytes(imageBytes);
+      itemImages.add(imageFile);
+      isItemImagesLoading[i] = false;
+    }
+    // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+    itemImages.refresh();
+
+    if (isItemTemplateUsed.value == true) {
+      templateTitleController.text = exhibitionItem.title;
+      templateDescriptionController.text = exhibitionItem.description;
+      switch (exhibitionItem.fontFamily) {
+        case 'pretenderd':
+          selectedItemBackgroundColor.value = 0;
+          break;
+        case 'gmarketSans':
+          selectedItemBackgroundColor.value = 1;
+          break;
+        case 'kBoDiaGothic':
+          selectedItemBackgroundColor.value = 2;
+          break;
+        case 'chosun':
+          selectedItemBackgroundColor.value = 3;
+          break;
+      }
+      switch (exhibitionItem.backgroundColor) {
+        case 'white':
+          selectedItemBackgroundColor.value = 0;
+          break;
+        case 'red':
+          selectedItemBackgroundColor.value = 1;
+          break;
+        case 'orange':
+          selectedItemBackgroundColor.value = 2;
+          break;
+        case 'green':
+          selectedItemBackgroundColor.value = 3;
+          break;
+        case 'blue':
+          selectedItemBackgroundColor.value = 4;
+          break;
+        case 'purple':
+          selectedItemBackgroundColor.value = 5;
+          break;
+        case 'brown':
+          selectedItemBackgroundColor.value = 6;
+          break;
+        case 'olive':
+          selectedItemBackgroundColor.value = 7;
+          break;
+        case 'indigo':
+          selectedItemBackgroundColor.value = 8;
+          break;
+        case 'black':
+          selectedItemBackgroundColor.value = 9;
+          break;
+      }
+    }
+
+    if (isItemSailEnabled.value == true) {
+      itemPriceController.text =
+          exhibitionItem.price.toString().replaceAllMapped(
+                RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                (Match m) => '${m[1]},',
+              );
+      itemWidthController.text = exhibitionItem.width.toString();
+      itemDepthController.text = exhibitionItem.depth.toString();
+      itemHeightController.text = exhibitionItem.height.toString();
+      List<String> categoryList = exhibitionItem.category;
+      for (int i = 0; i < categoryList.length; i++) {
+        for (int j = 0; j < categoryTypes.length; j++) {
+          if (categoryList[i] == categoryTypes[j]) {
+            selectedCategoryType[j] = true;
+            continue;
+          }
+        }
+      }
+      itemTitleController.text = exhibitionItem.title;
+      itemDescriptionController.text = exhibitionItem.description;
+      amount.value = exhibitionItem.currentAmount!;
+
+      isItemVideoLoading.value = true;
+      // 비디오 불러오기
+      final response = await dio.get(exhibitionItem.shorts!,
+          options: Options(responseType: ResponseType.bytes));
+
+      // 동영상 데이터를 바이트 배열로 가져옴
+      List<int> videoBytes = response.data;
+
+      // 파일 생성
+      final cacheDir = await getTemporaryDirectory();
+      File videoFile = File('${cacheDir.path}/temp_video.mp4');
+
+      // 파일 쓰기
+      await videoFile.writeAsBytes(videoBytes);
+      itemVideo.add(videoFile);
+
+      final thumbnailData =
+          await VideoThumbnail.thumbnailData(video: videoFile.path);
+      // thumbnail 변수에 썸네일 추가
+      if (thumbnailData != null) {
+        thumbnail.value = thumbnailData;
+      }
+      isItemVideoLoading.value = false;
+    }
+  }
+
   Future<void> fetchExhibitionItemsById(int exhibitionId) async {
-    print('fetchExhibitionItemsById');
     exhibitionItems.value =
         await repository.fetchExhibitionItemById(exhibitionId);
   }
