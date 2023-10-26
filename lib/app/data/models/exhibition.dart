@@ -17,10 +17,10 @@ class Exhibition {
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
     return Exhibition(
-      id: json['id'],
+      id: json['exhibition_id'],
       title: json['title'],
       coverImage: json['cover_image'],
-      seller: json['seller'],
+      seller: json['artist_name'],
       startDate: json['start_date'],
       endDate: json['end_date'],
     );

@@ -1395,7 +1395,23 @@ class DioClient implements ApiClient {
 
   @override
   Future<List<Exhibition>> fetchSellerExhibitions() async {
-    return [];
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/exhibitions/seller',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching seller exhibitions in repository: $response');
+    }
+
+    final data = response.data;
+    return data.map<Exhibition>((json) => Exhibition.fromJson(json)).toList();
   }
 
   @override
