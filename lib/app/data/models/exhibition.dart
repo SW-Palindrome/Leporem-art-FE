@@ -62,7 +62,7 @@ class ExhibitionItem {
   final String? audioUrl;
   final String title;
   final String description;
-  final bool isSoled;
+  final bool isSale;
   final int position;
 
   // 판매 추가 정보
@@ -83,7 +83,7 @@ class ExhibitionItem {
     this.audioUrl,
     required this.title,
     required this.description,
-    required this.isSoled,
+    required this.isSale,
     required this.position,
     this.price,
     required this.category,
@@ -104,7 +104,7 @@ class ExhibitionItem {
       audioUrl: json['audio_url'],
       title: json['title'],
       description: json['description'],
-      isSoled: json['is_soled'],
+      isSale: json['is_sale'],
       position: json['position'],
       price: json['price'],
       category: List<String>.from(json['category']),

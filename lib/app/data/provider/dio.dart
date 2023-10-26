@@ -1409,6 +1409,23 @@ class DioClient implements ApiClient {
   }
 
   @override
+  Future<void> removeExhibitionItem(int itemId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.delete(
+      '/exhibitions/items/$itemId',
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    if (response.statusCode != 204) {
+      logger.e('Error removing exhibition item in repository: $response, url: ${response.realUri}');
+    }
+  }
+
+  @override
   Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
     return null;
   }
