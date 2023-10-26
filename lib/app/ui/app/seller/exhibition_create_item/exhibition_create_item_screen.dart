@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/app/ui/app/seller/exhibition_create_item/widgets/item_edit_widget.dart';
 
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
-import '../exhibition_create_seller/widgets/template_select_widget.dart';
 import 'widgets/item_amount_input_widget.dart';
 import 'widgets/item_audio_input_widget.dart';
 import 'widgets/item_category_input_widget.dart';
 import 'widgets/item_description_input_widget.dart';
+import 'widgets/item_edit_widget.dart';
 import 'widgets/item_flop_input_widget.dart';
 import 'widgets/item_image_input_widget.dart';
 import 'widgets/item_price_input_widget.dart';
 import 'widgets/item_sale_select_widget.dart';
 import 'widgets/item_size_input_widget.dart';
 import 'widgets/item_title_input_widget.dart';
+import 'widgets/template_select_widget.dart';
 
 class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
   const ExhibitionCreateItemScreen({super.key});
@@ -57,31 +58,59 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Obx(
-            () => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  templateSelectWidget(),
-                  if (controller.isItemTemplateUsed.value == true)
-                    _templateUseWidget(),
-                  if (controller.isItemTemplateUsed.value == false)
-                    _templateNotUseWidget(),
-                  SizedBox(height: 40),
-                  itemAudioInputWidget(),
-                  SizedBox(height: 40),
-                  itemSaleSelectWidget(),
-                  if (controller.isItemSailEnabled.value == true)
-                    _itemSaleWidgets(),
-                  SizedBox(height: 40),
-                  NextButton(
-                    onTap: () {},
-                    text: '다음',
-                    value: true,
-                  )
-                ],
-              ),
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: templateSelectWidget(),
+                ),
+                if (controller.isItemTemplateUsed.value == true)
+                  _templateUseWidget(),
+                if (controller.isItemTemplateUsed.value == false)
+                  _templateNotUseWidget(),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: itemAudioInputWidget(),
+                ),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: itemSaleSelectWidget(),
+                ),
+                if (controller.isItemSailEnabled.value == true)
+                  _itemSaleWidgets(),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: NextButton(
+                    onTap: () async {
+                      if (controller.isItemTemplateUsed.value == true) {
+                        Get.toNamed(
+                          Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
+                          arguments: {
+                            'exhibition_id': Get.arguments['exhibition_id']
+                          },
+                        );
+                      } else {
+                        await controller.fetchExhibitionItemsById(
+                            Get.arguments['exhibition_id']);
+                        Get.until(
+                          (route) =>
+                              Get.currentRoute ==
+                              Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+                        );
+                      }
+                    },
+                    text: controller.isItemTemplateUsed.value == true
+                        ? '다음'
+                        : '저장하기',
+                    value: controller.isValidItemNext(),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -103,28 +132,36 @@ _templateNotUseWidget() {
   return Column(
     children: [
       SizedBox(height: 40),
-      itemImageInputWidget(),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: itemImageInputWidget(),
+      ),
     ],
   );
 }
 
 _itemSaleWidgets() {
-  return Column(
-    children: [
-      SizedBox(height: 40),
-      itemFlopInputWidget(),
-      SizedBox(height: 40),
-      itemCategoryInputWidget(),
-      SizedBox(height: 40),
-      itemTitleInputWidget(),
-      SizedBox(height: 40),
-      itemDescriptionInputWidget(),
-      SizedBox(height: 40),
-      itemSizeInputWidget(),
-      SizedBox(height: 40),
-      itemPriceInputWidget(),
-      SizedBox(height: 40),
-      itemAmountInputWidget(),
-    ],
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 24),
+    child: Column(
+      children: [
+        SizedBox(height: 40),
+        itemFlopInputWidget(),
+        SizedBox(height: 40),
+        itemCategoryInputWidget(),
+        if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
+        if (controller.isItemTemplateUsed.value == false)
+          itemTitleInputWidget(),
+        if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
+        if (controller.isItemTemplateUsed.value == false)
+          itemDescriptionInputWidget(),
+        SizedBox(height: 40),
+        itemSizeInputWidget(),
+        SizedBox(height: 40),
+        itemPriceInputWidget(),
+        SizedBox(height: 40),
+        itemAmountInputWidget(),
+      ],
+    ),
   );
 }

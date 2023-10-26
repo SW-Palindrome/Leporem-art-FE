@@ -39,7 +39,7 @@ templateSelectWidget() {
                   },
                   rightButtonText: '변경',
                   onRightButtonPressed: () {
-                    controller.sellerInfoReset();
+                    controller.resetItemInfo();
                     controller.isItemTemplateUsed.value =
                         !controller.isItemTemplateUsed.value;
                     Get.back();

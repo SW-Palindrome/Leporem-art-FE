@@ -53,12 +53,16 @@ class ExhibitionCreateStartScreen extends GetView<ExhibitionController> {
               child: NextButton(
                 text: '시작하기',
                 value: true,
-                onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
-                  arguments: {
-                    'exhibition_id': Get.arguments['exhibition_id'],
-                  },
-                ),
+                onTap: () async {
+                  await controller.fetchSellerExhibitionById(
+                      Get.arguments['exhibition_id']);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id'],
+                    },
+                  );
+                },
               ),
             ),
           ],

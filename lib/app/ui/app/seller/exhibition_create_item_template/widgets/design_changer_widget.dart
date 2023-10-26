@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../../utils/log_analytics.dart';
 import '../../../../theme/app_theme.dart';
-import '../../../widgets/bottom_sheet.dart';
 import '../../../widgets/next_button.dart';
 
 designChangerWidget() {
@@ -31,8 +30,7 @@ designChangerWidget() {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        controller.selectedSellerIntroductionColor.value =
-                            index;
+                        controller.selectedItemBackgroundColor.value = index;
                       },
                       child: Container(
                         width: 24,
@@ -40,11 +38,11 @@ designChangerWidget() {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: controller.selectedSellerIntroductionColor
-                                        .value ==
-                                    index
-                                ? ColorPalette.purple
-                                : ColorPalette.grey_2,
+                            color:
+                                controller.selectedItemBackgroundColor.value ==
+                                        index
+                                    ? ColorPalette.purple
+                                    : ColorPalette.grey_2,
                             width: 2,
                           ),
                           color: Color(controller.colorList[index]),
@@ -112,10 +110,9 @@ designChangerWidget() {
                             GestureDetector(
                               onTap: () {
                                 logAnalytics(
-                                    name: "seller_font_change",
+                                    name: "item_font_change",
                                     parameters: {"font": "pretendard"});
-                                controller
-                                    .selectedSellerIntroductionFont.value = 0;
+                                controller.selectedItemFont.value = 0;
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -126,19 +123,16 @@ designChangerWidget() {
                                       'Pretendard',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: controller
-                                                    .selectedSellerIntroductionFont
-                                                    .value ==
-                                                0
-                                            ? ColorPalette.purple
-                                            : ColorPalette.black,
+                                        color:
+                                            controller.selectedItemFont.value ==
+                                                    0
+                                                ? ColorPalette.purple
+                                                : ColorPalette.black,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Spacer(),
-                                    controller.selectedSellerIntroductionFont
-                                                .value ==
-                                            0
+                                    controller.selectedItemFont.value == 0
                                         ? SvgPicture.asset(
                                             'assets/icons/check.svg',
                                             height: 24,
@@ -156,10 +150,9 @@ designChangerWidget() {
                             GestureDetector(
                               onTap: () {
                                 logAnalytics(
-                                    name: "seller_font_change",
+                                    name: "itemfont_change",
                                     parameters: {"font": "gmarket"});
-                                controller
-                                    .selectedSellerIntroductionFont.value = 1;
+                                controller.selectedItemFont.value = 1;
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -170,19 +163,16 @@ designChangerWidget() {
                                       'Gmarket Sans',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: controller
-                                                    .selectedSellerIntroductionFont
-                                                    .value ==
-                                                1
-                                            ? ColorPalette.purple
-                                            : ColorPalette.black,
+                                        color:
+                                            controller.selectedItemFont.value ==
+                                                    1
+                                                ? ColorPalette.purple
+                                                : ColorPalette.black,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Spacer(),
-                                    controller.selectedSellerIntroductionFont
-                                                .value ==
-                                            1
+                                    controller.selectedItemFont.value == 1
                                         ? SvgPicture.asset(
                                             'assets/icons/check.svg',
                                             height: 24,
@@ -200,10 +190,9 @@ designChangerWidget() {
                             GestureDetector(
                               onTap: () {
                                 logAnalytics(
-                                    name: "seller_font_change",
+                                    name: "item_font_change",
                                     parameters: {"font": "kbo"});
-                                controller
-                                    .selectedSellerIntroductionFont.value = 2;
+                                controller.selectedItemFont.value = 2;
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -214,19 +203,16 @@ designChangerWidget() {
                                       'KBO 다이아 고딕체',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: controller
-                                                    .selectedSellerIntroductionFont
-                                                    .value ==
-                                                2
-                                            ? ColorPalette.purple
-                                            : ColorPalette.black,
+                                        color:
+                                            controller.selectedItemFont.value ==
+                                                    2
+                                                ? ColorPalette.purple
+                                                : ColorPalette.black,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Spacer(),
-                                    controller.selectedSellerIntroductionFont
-                                                .value ==
-                                            2
+                                    controller.selectedItemFont.value == 2
                                         ? SvgPicture.asset(
                                             'assets/icons/check.svg',
                                             height: 24,
@@ -244,10 +230,9 @@ designChangerWidget() {
                             GestureDetector(
                               onTap: () {
                                 logAnalytics(
-                                    name: "seller_font_change",
+                                    name: "item_font_change",
                                     parameters: {"font": "chosun"});
-                                controller
-                                    .selectedSellerIntroductionFont.value = 3;
+                                controller.selectedItemFont.value = 3;
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -258,19 +243,16 @@ designChangerWidget() {
                                       '조선 100년체',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: controller
-                                                    .selectedSellerIntroductionFont
-                                                    .value ==
-                                                3
-                                            ? ColorPalette.purple
-                                            : ColorPalette.black,
+                                        color:
+                                            controller.selectedItemFont.value ==
+                                                    3
+                                                ? ColorPalette.purple
+                                                : ColorPalette.black,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Spacer(),
-                                    controller.selectedSellerIntroductionFont
-                                                .value ==
-                                            3
+                                    controller.selectedItemFont.value == 3
                                         ? SvgPicture.asset(
                                             'assets/icons/check.svg',
                                             height: 24,
@@ -292,20 +274,17 @@ designChangerWidget() {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  controller
-                                      .selectedSellerIntroductionFont.value = 0;
-                                  controller.displayedSellerIntroductionFont
-                                      .value = 0;
+                                  controller.selectedItemFont.value = 0;
+                                  controller.displayedItemFont.value = 0;
                                   Get.back();
                                 },
                                 child: Container(
                                   height: Get.height * 0.06,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        color:
-                                            controller.isValidSellerFontReset()
-                                                ? ColorPalette.grey_7
-                                                : ColorPalette.grey_3),
+                                        color: controller.isValidItemFontReset()
+                                            ? ColorPalette.grey_7
+                                            : ColorPalette.grey_3),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(
@@ -319,8 +298,7 @@ designChangerWidget() {
                                           height: 20,
                                           width: 20,
                                           colorFilter: ColorFilter.mode(
-                                              controller
-                                                      .isValidSellerFontReset()
+                                              controller.isValidItemFontReset()
                                                   ? ColorPalette.grey_7
                                                   : ColorPalette.grey_4,
                                               BlendMode.srcIn),
@@ -331,7 +309,7 @@ designChangerWidget() {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: controller
-                                                    .isValidSellerFontReset()
+                                                    .isValidItemFontReset()
                                                 ? ColorPalette.grey_7
                                                 : ColorPalette.grey_4,
                                             fontSize: 16,
@@ -346,10 +324,10 @@ designChangerWidget() {
                             SizedBox(width: 10),
                             NextButton(
                               text: '적용하기',
-                              value: controller.isValidSellerApply(),
+                              value: controller.isValidItemApply(),
                               onTap: () {
-                                logAnalytics(name: "seller_font_apply");
-                                controller.applySellerFont();
+                                logAnalytics(name: "item_font_apply");
+                                controller.applyItemFont();
                                 Get.back();
                               },
                               width: Get.width * 0.5,
@@ -378,7 +356,7 @@ designChangerWidget() {
               child: Obx(
                 () => Row(
                   children: [
-                    if (controller.displayedSellerIntroductionFont.value == 0)
+                    if (controller.displayedItemFont.value == 0)
                       Text(
                         'Pretendard',
                         style: TextStyle(
@@ -387,7 +365,7 @@ designChangerWidget() {
                           fontSize: 14,
                         ),
                       ),
-                    if (controller.displayedSellerIntroductionFont.value == 1)
+                    if (controller.displayedItemFont.value == 1)
                       Text(
                         'Gmarket Sans',
                         style: TextStyle(
@@ -396,7 +374,7 @@ designChangerWidget() {
                           fontSize: 14,
                         ),
                       ),
-                    if (controller.displayedSellerIntroductionFont.value == 2)
+                    if (controller.displayedItemFont.value == 2)
                       Text(
                         'KBO 다이아 고딕체',
                         style: TextStyle(
@@ -405,7 +383,7 @@ designChangerWidget() {
                           fontSize: 14,
                         ),
                       ),
-                    if (controller.displayedSellerIntroductionFont.value == 3)
+                    if (controller.displayedItemFont.value == 3)
                       Text(
                         '조선 100년체',
                         style: TextStyle(

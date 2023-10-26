@@ -276,10 +276,7 @@ class MockClient implements ApiClient {
       height: '10',
       width: '10',
       depth: '10',
-      category: [
-        'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-        'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-      ],
+      category: [],
       profileImage:
           'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
       shorts:
@@ -554,13 +551,14 @@ class MockClient implements ApiClient {
       backgroundColor: '#000000',
       description: '안녕하세요',
       fontFamily: 'NotoSansKR',
+      isUsingTemplate: true,
     );
   }
 
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
     List<ExhibitionItem> exhibitionItems = [];
-    for (int i = 1; i < 11; i++) {
+    for (int i = 1; i < 10; i++) {
       exhibitionItems.add(ExhibitionItem(
         id: i,
         title: '우유병 기획전',
@@ -568,9 +566,12 @@ class MockClient implements ApiClient {
         fontFamily: 'NotoSansKR',
         description: '안녕하세요',
         backgroundColor: '#000000',
+        category: [],
         imageUrls: [
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg'
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
         ],
         isSoled: true,
         isUsingTemplate: true,
@@ -584,5 +585,20 @@ class MockClient implements ApiClient {
       ));
     }
     return exhibitionItems;
+  }
+
+  @override
+  Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
+    return null;
+  }
+
+  @override
+  Future<void> saveExhibitionArtistById(int exhibitionId) async {
+    return;
+  }
+
+  @override
+  Future<void> saveExhibitionItemById(int exhibitionId) async {
+    return;
   }
 }

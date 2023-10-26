@@ -1248,7 +1248,8 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<void> updateDeliveryInfo(int orderId, String deliveryCompany, String invoiceNumber) async {
+  Future<void> updateDeliveryInfo(
+      int orderId, String deliveryCompany, String invoiceNumber) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.post(
@@ -1405,5 +1406,20 @@ class DioClient implements ApiClient {
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
     return [];
+  }
+
+  @override
+  Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
+    return null;
+  }
+
+  @override
+  Future<void> saveExhibitionArtistById(int exhibitionId) async {
+    return;
+  }
+
+  @override
+  Future<void> saveExhibitionItemById(int exhibitionId) async {
+    return;
   }
 }

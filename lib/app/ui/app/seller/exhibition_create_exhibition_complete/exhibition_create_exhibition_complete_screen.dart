@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
@@ -42,35 +41,38 @@ class ExhibitionCreateExhibitionCompleteScreen
                 ),
               ),
               SizedBox(height: 40),
-              WidgetsToImage(
-                child: exhibitionWidget(
-                  exhibitionId: 1,
-                  title: controller.exhibitions
-                      .firstWhere((element) =>
-                          element.id == Get.arguments['exhibition_id'])
-                      .title,
-                  imageUrl: controller.exhibitions
-                      .firstWhere((element) =>
-                          element.id == Get.arguments['exhibition_id'])
-                      .coverImage,
-                  seller: controller.exhibitions
-                      .firstWhere((element) =>
-                          element.id == Get.arguments['exhibition_id'])
-                      .seller,
-                  period:
-                      '${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).startDate} ~ ${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).endDate}',
-                  isTouchable: false,
-                ),
-                controller: controller.widgetsToImageController,
+              exhibitionWidget(
+                exhibitionId: 1,
+                title: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .title,
+                imageUrl: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .coverImage,
+                seller: controller.exhibitions
+                    .firstWhere((element) =>
+                        element.id == Get.arguments['exhibition_id'])
+                    .seller,
+                period:
+                    '${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).startDate} ~ ${controller.exhibitions.firstWhere((element) => element.id == Get.arguments['exhibition_id']).endDate}',
+                isTouchable: false,
               ),
               Spacer(),
               NextButton(
                 text: '이어서 작가 소개 작성하기',
                 value: true,
-                onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_SELLER,
-                  arguments: {'exhibition_id': Get.arguments['exhibition_id']},
-                ),
+                onTap: () async {
+                  await controller.fetchExhibitionArtistById(
+                      Get.arguments['exhibition_id']);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_SELLER,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id']
+                    },
+                  );
+                },
               ),
             ],
           ),

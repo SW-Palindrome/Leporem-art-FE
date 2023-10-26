@@ -24,25 +24,38 @@ class ExhibitionCreateItemCompleteScreen extends GetView<ExhibitionController> {
         },
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20),
-              exhibitionItemCompleteTextWidget(),
-              SizedBox(height: 40),
-              exhibitionItemListWidget(),
-              Spacer(),
-              NextButton(
-                text: '저장하기',
-                value: controller.exhibitionItems.isNotEmpty,
-                onTap: () {
-                  // TODO: 작품 등록 저장하기
-                  Get.until((route) => Get.currentRoute == Routes.SELLER_APP);
-                },
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                exhibitionItemCompleteTextWidget(),
+                SizedBox(height: 40),
+                exhibitionItemListWidget(),
+                SizedBox(height: 40),
+                Center(
+                  child: Text(
+                    '판매중인 작품 ${((controller.exhibitionItems.length / 2).ceil())}개 이상이어야 합니다.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: ColorPalette.red,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24),
+                NextButton(
+                  text: '완료',
+                  value: controller.isValidItemSave(),
+                  onTap: () {
+                    // TODO: 작품 등록 저장하기
+                    Get.until((route) => Get.currentRoute == Routes.SELLER_APP);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

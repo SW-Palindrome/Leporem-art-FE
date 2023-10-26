@@ -9,52 +9,55 @@ import '../../../../theme/app_theme.dart';
 
 exhibitionItemListWidget() {
   final controller = Get.find<ExhibitionController>();
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        for (int index = 0; index < controller.exhibitionItems.length; index++)
-          Column(
-            children: [
-              _exhibitionItemWidget(controller, index),
-              if (index != controller.exhibitionItems.length)
-                SizedBox(height: 16),
-            ],
-          ),
-        if (controller.exhibitionItems.length != 10)
-          Column(
-            children: [
-              SizedBox(height: 24),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/plus.svg',
-                      width: 20,
-                      height: 20,
-                      colorFilter: ColorFilter.mode(
-                        ColorPalette.grey_4,
-                        BlendMode.srcIn,
-                      ),
+  return Column(
+    children: [
+      for (int index = 0; index < controller.exhibitionItems.length; index++)
+        Column(
+          children: [
+            _exhibitionItemWidget(controller, index),
+            if (index != controller.exhibitionItems.length)
+              SizedBox(height: 16),
+          ],
+        ),
+      if (controller.exhibitionItems.length <= 9)
+        Column(
+          children: [
+            SizedBox(height: 24),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                  Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+                  arguments: {
+                    'exhibition_id': Get.arguments['exhibition_id'],
+                  },
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/plus.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      ColorPalette.grey_4,
+                      BlendMode.srcIn,
                     ),
-                    SizedBox(width: 4),
-                    Text(
-                      '작품 추가하기',
-                      style: TextStyle(
-                        color: ColorPalette.grey_4,
-                        fontSize: 16,
-                      ),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    '작품 추가하기',
+                    style: TextStyle(
+                      color: ColorPalette.grey_4,
+                      fontSize: 16,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-      ],
-    ),
+            ),
+          ],
+        ),
+    ],
   );
 }
 
@@ -125,13 +128,25 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
           ),
         ),
         SizedBox(width: 12),
-        SvgPicture.asset(
-          'assets/icons/edit.svg',
-          width: 20,
-          height: 20,
-          colorFilter: ColorFilter.mode(
-            ColorPalette.grey_4,
-            BlendMode.srcIn,
+        GestureDetector(
+          onTap: () async {
+            await controller
+                .fetchExhibitionItemById(controller.exhibitionItems[index].id);
+            Get.toNamed(
+              Routes.SELLER_EXHIBITION_CREATE_ITEM,
+              arguments: {
+                'exhibition_id': Get.arguments['exhibition_id'],
+              },
+            );
+          },
+          child: SvgPicture.asset(
+            'assets/icons/edit.svg',
+            width: 20,
+            height: 20,
+            colorFilter: ColorFilter.mode(
+              ColorPalette.grey_4,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],

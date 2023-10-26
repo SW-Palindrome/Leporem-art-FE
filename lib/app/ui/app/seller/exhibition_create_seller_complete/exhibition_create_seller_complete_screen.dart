@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/seller/exhibition_create_seller_template/widgets/seller_introduction_result_widget.dart';
 import 'package:leporemart/app/ui/app/widgets/my_app_bar.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
 
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
@@ -42,19 +41,23 @@ class ExhibitionCreateSellerCompleteScreen
                 ),
               ),
               SizedBox(height: 40),
-              WidgetsToImage(
-                  child: controller.isSellerTemplateUsed.value == true
-                      ? sellerIntroductionResultWidget()
-                      : sellerIntroductionEditorWidget(),
-                  controller: controller.widgetsToImageController),
+              controller.isSellerTemplateUsed.value == true
+                  ? sellerIntroductionResultWidget()
+                  : sellerIntroductionEditorWidget(),
               Spacer(),
               NextButton(
                 text: '이어서 작품 등록하기',
                 value: true,
-                onTap: () => Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-                  arguments: {'exhibition_id': Get.arguments['exhibition_id']},
-                ),
+                onTap: () async {
+                  await controller
+                      .fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id']
+                    },
+                  );
+                },
               ),
             ],
           ),
