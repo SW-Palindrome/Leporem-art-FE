@@ -104,7 +104,9 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                         );
                       }
                     },
-                    text: '다음',
+                    text: controller.isItemTemplateUsed.value == true
+                        ? '다음'
+                        : '저장하기',
                     value: controller.isValidItemNext(),
                   ),
                 )

@@ -165,7 +165,7 @@ class ExhibitionController extends GetxController {
 
       // 파일 쓰기
       await imageFile.writeAsBytes(imageBytes);
-      exhibitionImage.value.add(imageFile);
+      exhibitionImage.assignAll([imageFile]);
       // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
       exhibitionImage.refresh();
     } catch (e) {
@@ -198,7 +198,7 @@ class ExhibitionController extends GetxController {
 
       // 파일 쓰기
       await imageFile.writeAsBytes(imageBytes);
-      sellerImage.value.add(imageFile);
+      sellerImage.assignAll([imageFile]);
       // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
       sellerImage.refresh();
     } catch (e) {
@@ -592,12 +592,38 @@ class ExhibitionController extends GetxController {
     exhibitionImage.value = [];
   }
 
-  void sellerInfoReset() {
+  void resetSellerInfo() {
     sellerIntroductionController.clear();
     sellerImage.value = [];
     selectedSellerIntroductionColor.value = 0;
     selectedSellerIntroductionFont.value = 0;
     displayedSellerIntroductionFont.value = 0;
+  }
+
+  void resetItemInfo() {
+    itemTitleController.clear();
+    itemDescriptionController.clear();
+    templateTitleController.clear();
+    templateDescriptionController.clear();
+    itemPriceController.clear();
+    itemHeightController.clear();
+    itemWidthController.clear();
+    itemDepthController.clear();
+    thumbnail.value = null;
+    resetSelectedCategoryType();
+    itemImages.clear();
+    itemVideo.clear();
+    itemAudio.clear();
+    itemTitle.value = '';
+    itemDescription.value = '';
+    price.value = 0;
+    amount.value = 1;
+    isItemSailEnabled.value = true;
+    templateTitle.value = '';
+    templateDescription.value = '';
+    selectedItemBackgroundColor.value = 0;
+    selectedItemFont.value = 0;
+    displayedItemFont.value = 0;
   }
 
   bool isValidExhibitionSave() {
@@ -639,8 +665,6 @@ class ExhibitionController extends GetxController {
   }
 
   bool isValidItemNext() {
-    Logger logger = Logger();
-    logger.d('itemImages.length: ${itemImages.length}');
     if (isItemTemplateUsed.value == true) {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
@@ -661,30 +685,8 @@ class ExhibitionController extends GetxController {
   }
 
   void initItemInfo() {
-    itemTitleController.clear();
-    itemDescriptionController.clear();
-    templateTitleController.clear();
-    templateDescriptionController.clear();
-    itemPriceController.clear();
-    itemHeightController.clear();
-    itemWidthController.clear();
-    itemDepthController.clear();
-    thumbnail.value = null;
-    resetSelectedCategoryType();
-    itemImages.clear();
-    itemVideo.clear();
-    itemAudio.clear();
-    itemTitle.value = '';
-    itemDescription.value = '';
-    price.value = 0;
-    amount.value = 1;
-    isItemSailEnabled.value = true;
+    resetItemInfo();
     isItemTemplateUsed.value = false;
-    templateTitle.value = '';
-    templateDescription.value = '';
-    selectedItemBackgroundColor.value = 0;
-    selectedItemFont.value = 0;
-    displayedItemFont.value = 0;
   }
 
   bool isValidItemSave() {

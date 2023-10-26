@@ -39,7 +39,7 @@ class ExhibitionCreateItemTemplateScreen extends GetView<ExhibitionController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: NextButton(
-                  text: '다음',
+                  text: '저장하기',
                   value: true,
                   onTap: () async {
                     controller.initItemInfo();

@@ -47,7 +47,7 @@ class ExhibitionCreateItemCompleteScreen extends GetView<ExhibitionController> {
                 ),
                 SizedBox(height: 24),
                 NextButton(
-                  text: '저장하기',
+                  text: '완료',
                   value: controller.isValidItemSave(),
                   onTap: () {
                     // TODO: 작품 등록 저장하기
