@@ -19,44 +19,6 @@ exhibitionItemEditWidget() {
               SizedBox(height: 16),
           ],
         ),
-      if (controller.exhibitionItems.length <= 9)
-        Column(
-          children: [
-            SizedBox(height: 24),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
-                  arguments: {
-                    'exhibition_id': Get.arguments['exhibition_id'],
-                  },
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/plus.svg',
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalette.grey_4,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    '작품 추가하기',
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
     ],
   );
 }

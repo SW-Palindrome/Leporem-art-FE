@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
+import '../../../widgets/next_button.dart';
 
 exhibitionItemListWidget() {
   final controller = Get.find<ExhibitionController>();
@@ -57,6 +58,26 @@ exhibitionItemListWidget() {
             ),
           ],
         ),
+      SizedBox(height: 40),
+      Center(
+        child: Text(
+          '판매중인 작품 ${((controller.exhibitionItems.length / 2).ceil())}개 이상이어야 합니다.',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: ColorPalette.red,
+          ),
+        ),
+      ),
+      SizedBox(height: 24),
+      NextButton(
+        text: '완료',
+        value: controller.isValidItemSave(),
+        onTap: () {
+          // TODO: 작품 등록 저장하기
+          Get.until((route) => Get.currentRoute == Routes.SELLER_APP);
+        },
+      ),
     ],
   );
 }
