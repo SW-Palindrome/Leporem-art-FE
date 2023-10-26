@@ -424,15 +424,18 @@ template4Widget(String title, String description, List<String> imageUrlList,
     color: color,
     child: Column(
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: color == ColorPalette.black
-                ? ColorPalette.white
-                : ColorPalette.black,
-            fontWeight: FontWeight.w600,
-            fontFamily: fontFamily,
-            fontSize: 26,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: color == ColorPalette.black
+                  ? ColorPalette.white
+                  : ColorPalette.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: fontFamily,
+              fontSize: 26,
+            ),
           ),
         ),
         SizedBox(height: 6),
@@ -537,15 +540,18 @@ template5Widget(String title, String description, List<String> imageUrlList,
     color: color,
     child: Column(
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: color == ColorPalette.black
-                ? ColorPalette.white
-                : ColorPalette.black,
-            fontWeight: FontWeight.w600,
-            fontFamily: fontFamily,
-            fontSize: 26,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: color == ColorPalette.black
+                  ? ColorPalette.white
+                  : ColorPalette.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: fontFamily,
+              fontSize: 26,
+            ),
           ),
         ),
         SizedBox(height: 8),
