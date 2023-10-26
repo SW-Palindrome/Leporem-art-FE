@@ -24,6 +24,15 @@ itemEditWidget() {
     case 4:
       return template5EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
+    case 5:
+      return template6EditWidget(
+          ColorPalette.white, FontPalette.pretendard, false);
+    case 6:
+      return template7EditWidget(
+          ColorPalette.white, FontPalette.pretendard, false);
+    case 7:
+      return template8EditWidget(
+          ColorPalette.white, FontPalette.pretendard, false);
   }
 }
 
@@ -33,6 +42,7 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
     color: color,
     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         isColorFontChange == true
             ? Center(
@@ -174,17 +184,15 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         SizedBox(
           width: Get.width * 0.65,
           child: isColorFontChange == true
-              ? Center(
-                  child: Text(
-                    controller.templateDescription.value,
-                    style: TextStyle(
-                      color: color == ColorPalette.black
-                          ? ColorPalette.white
-                          : ColorPalette.black,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: fontFamily,
-                      fontSize: 14,
-                    ),
+              ? Text(
+                  controller.templateDescription.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: fontFamily,
+                    fontSize: 14,
                   ),
                 )
               : TextField(
@@ -220,7 +228,7 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
     width: Get.width,
     color: color,
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         CarouselSlider(
@@ -291,69 +299,60 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           ),
         ),
         SizedBox(height: 12),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: isColorFontChange == true
-                ? Center(
-                    child: Text(
-                      controller.templateTitle.value,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: fontFamily,
-                        fontSize: 26,
-                      ),
-                    ),
-                  )
-                : TextField(
-                    controller: controller.templateTitleController,
-                    maxLength: 15,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: '작품 이름을 입력해주세요',
-                      hintStyle: TextStyle(
-                        color: ColorPalette.grey_4,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: FontPalette.pretendard,
-                        fontSize: 26,
-                      ),
-                      counterText: '',
-                      border: InputBorder.none,
-                    ),
-                    style: TextStyle(
-                      color: ColorPalette.black,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: isColorFontChange == true
+              ? Text(
+                  controller.templateTitle.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontFamily,
+                    fontSize: 26,
+                  ),
+                )
+              : TextField(
+                  controller: controller.templateTitleController,
+                  maxLength: 15,
+                  decoration: InputDecoration(
+                    hintText: '작품 이름을 입력해주세요',
+                    hintStyle: TextStyle(
+                      color: ColorPalette.grey_4,
                       fontWeight: FontWeight.w400,
                       fontFamily: FontPalette.pretendard,
                       fontSize: 26,
                     ),
+                    counterText: '',
+                    border: InputBorder.none,
                   ),
-          ),
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 26,
+                  ),
+                ),
         ),
         SizedBox(height: 12),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: isColorFontChange == true
-              ? Center(
-                  child: Text(
-                    controller.templateDescription.value,
-                    style: TextStyle(
-                      color: color == ColorPalette.black
-                          ? ColorPalette.white
-                          : ColorPalette.black,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: fontFamily,
-                      fontSize: 14,
-                    ),
+              ? Text(
+                  controller.templateDescription.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: fontFamily,
+                    fontSize: 14,
                   ),
                 )
               : TextField(
                   controller: controller.templateDescriptionController,
                   maxLines: 5,
-                  textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: '여기에 작품에 대한 설명을 적어주세요',
                     hintStyle: TextStyle(
@@ -383,57 +382,53 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
     width: Get.width,
     color: color,
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: 16),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: isColorFontChange == true
-                ? Center(
-                    child: Text(
-                      controller.templateTitle.value,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: fontFamily,
-                        fontSize: 26,
-                      ),
-                    ),
-                  )
-                : TextField(
-                    controller: controller.templateTitleController,
-                    maxLength: 15,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: '작품 이름을 입력해주세요',
-                      hintStyle: TextStyle(
-                        color: ColorPalette.grey_4,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: FontPalette.pretendard,
-                        fontSize: 26,
-                      ),
-                      counterText: '',
-                      border: InputBorder.none,
-                    ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: isColorFontChange == true
+              ? Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    controller.templateTitle.value,
                     style: TextStyle(
-                      color: ColorPalette.black,
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: fontFamily,
+                      fontSize: 26,
+                    ),
+                  ),
+                )
+              : TextField(
+                  controller: controller.templateTitleController,
+                  maxLength: 15,
+                  decoration: InputDecoration(
+                    hintText: '작품 이름을 입력해주세요',
+                    hintStyle: TextStyle(
+                      color: ColorPalette.grey_4,
                       fontWeight: FontWeight.w400,
                       fontFamily: FontPalette.pretendard,
                       fontSize: 26,
                     ),
+                    counterText: '',
+                    border: InputBorder.none,
                   ),
-          ),
+                  style: TextStyle(
+                    color: ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 26,
+                  ),
+                ),
         ),
         SizedBox(height: 12),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: isColorFontChange == true
-              ? Center(
+              ? Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     controller.templateDescription.value,
                     style: TextStyle(
@@ -448,7 +443,6 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 )
               : TextField(
                   controller: controller.templateDescriptionController,
-                  textAlign: TextAlign.center,
                   minLines: 1,
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -568,13 +562,13 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
 template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
       children: [
         isColorFontChange == true
-            ? Center(
+            ? Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
                   controller.templateTitle.value,
                   style: TextStyle(
@@ -590,7 +584,6 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
             : TextField(
                 controller: controller.templateTitleController,
                 maxLength: 15,
-                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: '작품 이름을 입력해주세요',
                   hintStyle: TextStyle(
@@ -610,7 +603,8 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               ),
         SizedBox(height: 6),
-        Expanded(
+        SizedBox(
+          height: Get.width * 0.56,
           child: Row(
             children: [
               Expanded(
@@ -618,100 +612,13 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   children: [
                     SizedBox(height: Get.width * 0.1),
                     Expanded(
-                      child: controller.itemImages.isEmpty
-                          ? GestureDetector(
-                              onTap: () {
-                                controller.selectImages(ImageType.item);
-                              },
-                              child: Container(
-                                color: ColorPalette.grey_2,
-                                width: Get.width,
-                                child: Column(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/camera.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          ColorPalette.grey_3, BlendMode.srcIn),
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '작품 이미지를\n업로드해주세요',
-                                      style: TextStyle(
-                                        color: ColorPalette.grey_4,
-                                        fontFamily: FontPalette.pretendard,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                if (isColorFontChange == false) {
-                                  controller.selectImages(ImageType.item);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(controller.itemImages[0]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      child: selectImageWidget(
+                          controller.itemImages.isEmpty, isColorFontChange, 0),
                     ),
                     SizedBox(height: 8),
                     Expanded(
-                      child: controller.itemImages.isEmpty
-                          ? GestureDetector(
-                              onTap: () {
-                                controller.selectImages(ImageType.item);
-                              },
-                              child: Container(
-                                color: ColorPalette.grey_2,
-                                width: Get.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/camera.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          ColorPalette.grey_3, BlendMode.srcIn),
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '작품 이미지를\n업로드해주세요',
-                                      style: TextStyle(
-                                        color: ColorPalette.grey_4,
-                                        fontFamily: FontPalette.pretendard,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                if (isColorFontChange == false) {
-                                  controller.selectImages(ImageType.item);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(controller.itemImages[1]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      child: selectImageWidget(
+                          controller.itemImages.isEmpty, isColorFontChange, 1),
                     ),
                   ],
                 ),
@@ -721,101 +628,13 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 child: Column(
                   children: [
                     Expanded(
-                      child: controller.itemImages.isEmpty
-                          ? GestureDetector(
-                              onTap: () {
-                                controller.selectImages(ImageType.item);
-                              },
-                              child: Container(
-                                color: ColorPalette.grey_2,
-                                width: Get.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/camera.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          ColorPalette.grey_3, BlendMode.srcIn),
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '작품 이미지를\n업로드해주세요',
-                                      style: TextStyle(
-                                        color: ColorPalette.grey_4,
-                                        fontFamily: FontPalette.pretendard,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                if (isColorFontChange == false) {
-                                  controller.selectImages(ImageType.item);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(controller.itemImages[2]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      child: selectImageWidget(
+                          controller.itemImages.isEmpty, isColorFontChange, 2),
                     ),
                     SizedBox(height: 8),
                     Expanded(
-                      child: controller.itemImages.isEmpty
-                          ? GestureDetector(
-                              onTap: () {
-                                controller.selectImages(ImageType.item);
-                              },
-                              child: Container(
-                                color: ColorPalette.grey_2,
-                                width: Get.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/camera.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          ColorPalette.grey_3, BlendMode.srcIn),
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '작품 이미지를\n업로드해주세요',
-                                      style: TextStyle(
-                                        color: ColorPalette.grey_4,
-                                        fontFamily: FontPalette.pretendard,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                if (isColorFontChange == false) {
-                                  controller.selectImages(ImageType.item);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(controller.itemImages[3]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      child: selectImageWidget(
+                          controller.itemImages.isEmpty, isColorFontChange, 3),
                     ),
                     SizedBox(height: Get.width * 0.1),
                   ],
@@ -826,7 +645,8 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         ),
         SizedBox(height: 8),
         isColorFontChange == true
-            ? Center(
+            ? Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
                   controller.templateDescription.value,
                   style: TextStyle(
@@ -842,7 +662,6 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
             : TextField(
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
-                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: '여기에 작품에 대한 설명을 적어주세요',
                   hintStyle: TextStyle(
@@ -869,29 +688,25 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
 template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
       children: [
         isColorFontChange == true
-            ? Center(
-                child: Text(
-                  controller.templateTitle.value,
-                  style: TextStyle(
-                    color: color == ColorPalette.black
-                        ? ColorPalette.white
-                        : ColorPalette.black,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: fontFamily,
-                    fontSize: 26,
-                  ),
+            ? Text(
+                controller.templateTitle.value,
+                style: TextStyle(
+                  color: color == ColorPalette.black
+                      ? ColorPalette.white
+                      : ColorPalette.black,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: fontFamily,
+                  fontSize: 26,
                 ),
               )
             : TextField(
                 controller: controller.templateTitleController,
                 maxLength: 15,
-                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: '작품 이름을 입력해주세요',
                   hintStyle: TextStyle(
@@ -912,23 +727,21 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
               ),
         SizedBox(height: 8),
         isColorFontChange == true
-            ? Center(
-                child: Text(
-                  controller.templateDescription.value,
-                  style: TextStyle(
-                    color: color == ColorPalette.black
-                        ? ColorPalette.white
-                        : ColorPalette.black,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: fontFamily,
-                    fontSize: 14,
-                  ),
+            ? Text(
+                controller.templateDescription.value,
+                style: TextStyle(
+                  color: color == ColorPalette.black
+                      ? ColorPalette.white
+                      : ColorPalette.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                  fontSize: 14,
                 ),
               )
             : TextField(
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
-                textAlign: TextAlign.center,
+                minLines: 1,
                 decoration: InputDecoration(
                   hintText: '여기에 작품에 대한 설명을 적어주세요',
                   hintStyle: TextStyle(
@@ -948,216 +761,38 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               ),
         SizedBox(height: 6),
-        Expanded(
+        SizedBox(
+          height: Get.width * 0.7093,
           child: Row(
             children: [
               Expanded(
-                child: controller.itemImages.isEmpty
-                    ? GestureDetector(
-                        onTap: () {
-                          controller.selectImages(ImageType.item);
-                        },
-                        child: Container(
-                          color: ColorPalette.grey_2,
-                          width: Get.width,
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/camera.svg',
-                                colorFilter: ColorFilter.mode(
-                                    ColorPalette.grey_3, BlendMode.srcIn),
-                                width: 32,
-                                height: 32,
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                '작품 이미지를\n업로드해주세요',
-                                style: TextStyle(
-                                  color: ColorPalette.grey_4,
-                                  fontFamily: FontPalette.pretendard,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          if (isColorFontChange == false) {
-                            controller.selectImages(ImageType.item);
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: FileImage(controller.itemImages[0]),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
+                child: selectImageWidget(
+                    controller.itemImages.isEmpty, isColorFontChange, 0),
               ),
               SizedBox(width: 8),
               Expanded(
                 child: Column(
                   children: [
                     Expanded(
-                      child: controller.itemImages.isEmpty
-                          ? GestureDetector(
-                              onTap: () {
-                                controller.selectImages(ImageType.item);
-                              },
-                              child: Container(
-                                color: ColorPalette.grey_2,
-                                width: Get.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/camera.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          ColorPalette.grey_3, BlendMode.srcIn),
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '작품 이미지를\n업로드해주세요',
-                                      style: TextStyle(
-                                        color: ColorPalette.grey_4,
-                                        fontFamily: FontPalette.pretendard,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                if (isColorFontChange == false) {
-                                  controller.selectImages(ImageType.item);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(controller.itemImages[1]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      child: selectImageWidget(
+                          controller.itemImages.isEmpty, isColorFontChange, 1),
                     ),
                     SizedBox(height: 8),
                     Expanded(
                       child: Row(
                         children: [
                           Expanded(
-                            child: controller.itemImages.isEmpty
-                                ? GestureDetector(
-                                    onTap: () {
-                                      controller.selectImages(ImageType.item);
-                                    },
-                                    child: Container(
-                                      color: ColorPalette.grey_2,
-                                      width: Get.width,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/icons/camera.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                ColorPalette.grey_3,
-                                                BlendMode.srcIn),
-                                            width: 32,
-                                            height: 32,
-                                          ),
-                                          SizedBox(height: 4),
-                                          Text(
-                                            '작품 이미지를\n업로드해주세요',
-                                            style: TextStyle(
-                                              color: ColorPalette.grey_4,
-                                              fontFamily:
-                                                  FontPalette.pretendard,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      if (isColorFontChange == false) {
-                                        controller.selectImages(ImageType.item);
-                                      }
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: FileImage(
-                                              controller.itemImages[2]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                            child: selectImageWidget(
+                                controller.itemImages.isEmpty,
+                                isColorFontChange,
+                                2),
                           ),
                           SizedBox(width: 8),
                           Expanded(
-                            child: controller.itemImages.isEmpty
-                                ? GestureDetector(
-                                    onTap: () {
-                                      controller.selectImages(ImageType.item);
-                                    },
-                                    child: Container(
-                                      color: ColorPalette.grey_2,
-                                      width: Get.width,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/icons/camera.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                ColorPalette.grey_3,
-                                                BlendMode.srcIn),
-                                            width: 32,
-                                            height: 32,
-                                          ),
-                                          SizedBox(height: 4),
-                                          Text(
-                                            '작품 이미지를\n업로드해주세요',
-                                            style: TextStyle(
-                                              color: ColorPalette.grey_4,
-                                              fontFamily:
-                                                  FontPalette.pretendard,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      if (isColorFontChange == false) {
-                                        controller.selectImages(ImageType.item);
-                                      }
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: FileImage(
-                                              controller.itemImages[3]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                            child: selectImageWidget(
+                                controller.itemImages.isEmpty,
+                                isColorFontChange,
+                                3),
                           ),
                         ],
                       ),
@@ -1171,4 +806,404 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
       ],
     ),
   );
+}
+
+template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    padding: EdgeInsets.fromLTRB(8, 8, 12, 8),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                child: selectImageWidget(
+                    controller.itemImages.isEmpty, isColorFontChange, 0),
+              ),
+              SizedBox(height: 8),
+              Expanded(
+                child: selectImageWidget(
+                    controller.itemImages.isEmpty, isColorFontChange, 1),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 12),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 8, 4, 0),
+            child: Column(
+              children: [
+                isColorFontChange == true
+                    ? Center(
+                        child: Text(
+                          controller.templateTitle.value,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: fontFamily,
+                            fontSize: 26,
+                          ),
+                        ),
+                      )
+                    : TextField(
+                        controller: controller.templateTitleController,
+                        maxLength: 15,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: '작품 이름을 입력해주세요',
+                          hintStyle: TextStyle(
+                            color: ColorPalette.grey_4,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 26,
+                          ),
+                          counterText: '',
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontPalette.pretendard,
+                          fontSize: 26,
+                        ),
+                      ),
+                SizedBox(height: 8),
+                isColorFontChange == true
+                    ? Center(
+                        child: Text(
+                          controller.templateDescription.value,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: fontFamily,
+                            fontSize: 14,
+                          ),
+                        ),
+                      )
+                    : TextField(
+                        controller: controller.templateDescriptionController,
+                        maxLines: 18,
+                        decoration: InputDecoration(
+                          hintText: '여기에 작품에 대한 설명을 적어주세요',
+                          hintStyle: TextStyle(
+                            color: ColorPalette.grey_4,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 14,
+                          ),
+                          counterText: '',
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: ColorPalette.black,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontPalette.pretendard,
+                          fontSize: 14,
+                        ),
+                      ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.6,
+          child: Row(
+            children: [
+              SizedBox(
+                width: Get.width * 0.75,
+                child: Expanded(
+                  child: selectImageWidget(
+                      controller.itemImages.isEmpty, isColorFontChange, 0),
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 16, 16),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: isColorFontChange == true
+                      ? Center(
+                          child: Text(
+                            controller.templateTitle.value,
+                            style: TextStyle(
+                              color: color == ColorPalette.black
+                                  ? ColorPalette.white
+                                  : ColorPalette.black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: fontFamily,
+                              fontSize: 26,
+                            ),
+                          ),
+                        )
+                      : TextField(
+                          controller: controller.templateTitleController,
+                          maxLength: 15,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: '작품 이름을 입력해주세요',
+                            hintStyle: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: FontPalette.pretendard,
+                              fontSize: 26,
+                            ),
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 26,
+                          ),
+                        ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: isColorFontChange == true
+                      ? Center(
+                          child: Text(
+                            controller.templateDescription.value,
+                            style: TextStyle(
+                              color: color == ColorPalette.black
+                                  ? ColorPalette.white
+                                  : ColorPalette.black,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: fontFamily,
+                              fontSize: 14,
+                            ),
+                          ),
+                        )
+                      : TextField(
+                          controller: controller.templateDescriptionController,
+                          maxLines: 7,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: '여기에 작품에 대한 설명을 적어주세요',
+                            hintStyle: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: FontPalette.pretendard,
+                              fontSize: 14,
+                            ),
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 14,
+                          ),
+                        ),
+                ),
+              ),
+              Expanded(
+                child: selectImageWidget(
+                    controller.itemImages.isEmpty, isColorFontChange, 1),
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.83,
+          child: Row(
+            children: [
+              SizedBox(
+                width: Get.width * 0.77,
+                height: Get.width * 0.83,
+                child: selectImageWidget(
+                    controller.itemImages.isEmpty, isColorFontChange, 0),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: isColorFontChange == true
+                      ? Center(
+                          child: Text(
+                            controller.templateTitle.value,
+                            style: TextStyle(
+                              color: color == ColorPalette.black
+                                  ? ColorPalette.white
+                                  : ColorPalette.black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: fontFamily,
+                              fontSize: 26,
+                            ),
+                          ),
+                        )
+                      : TextField(
+                          controller: controller.templateTitleController,
+                          maxLength: 15,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: '작품 이름을 입력해주세요',
+                            hintStyle: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: FontPalette.pretendard,
+                              fontSize: 26,
+                            ),
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 26,
+                          ),
+                        ),
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: SizedBox()),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: SizedBox(
+                  width: Get.width * 0.5,
+                  child: isColorFontChange == true
+                      ? Center(
+                          child: Text(
+                            controller.templateDescription.value,
+                            style: TextStyle(
+                              color: color == ColorPalette.black
+                                  ? ColorPalette.white
+                                  : ColorPalette.black,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: fontFamily,
+                              fontSize: 14,
+                            ),
+                          ),
+                        )
+                      : TextField(
+                          controller: controller.templateDescriptionController,
+                          maxLines: 5,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: '여기에 작품에 대한 설명을 적어주세요',
+                            hintStyle: TextStyle(
+                              color: ColorPalette.grey_4,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: FontPalette.pretendard,
+                              fontSize: 14,
+                            ),
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            color: ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: FontPalette.pretendard,
+                            fontSize: 14,
+                          ),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+selectImageWidget(bool isEmpty, bool isColorFontChange, int index) {
+  return isEmpty
+      ? GestureDetector(
+          onTap: () {
+            controller.selectImages(ImageType.item);
+          },
+          child: Container(
+            color: ColorPalette.grey_2,
+            width: Get.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/camera.svg',
+                  colorFilter:
+                      ColorFilter.mode(ColorPalette.grey_3, BlendMode.srcIn),
+                  width: 32,
+                  height: 32,
+                ),
+                SizedBox(height: 4),
+                Text(
+                  '작품 이미지를\n업로드해주세요',
+                  style: TextStyle(
+                    color: ColorPalette.grey_4,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      : GestureDetector(
+          onTap: () {
+            if (isColorFontChange == false) {
+              controller.selectImages(ImageType.item);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(controller.itemImages[index]),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
 }

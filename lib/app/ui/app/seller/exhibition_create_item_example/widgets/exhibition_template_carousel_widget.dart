@@ -730,140 +730,142 @@ template6Widget(String title, String description, List<String> imageUrlList,
 template7Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
-      width: Get.width,
-      height: Get.width * 1.1,
-      color: color,
-      child: Column(
-        children: [
-          SizedBox(
-            height: Get.width * 0.6,
-            child: Row(
-              children: [
-                CachedNetworkImage(
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.6,
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: imageUrlList[0],
+                width: Get.width * 0.75,
+                height: Get.width * 0.6,
+                fit: BoxFit.cover,
+              ),
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 16, 16, 16),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Text(
+                    description,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CachedNetworkImage(
                   imageUrl: imageUrlList[0],
-                  width: Get.width * 0.75,
-                  height: Get.width * 0.6,
+                  width: Get.width * 0.45,
                   fit: BoxFit.cover,
                 ),
-                Spacer(),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontFamily: fontFamily,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(height: 8),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Text(
-                      description,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontFamily: fontFamily,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrlList[0],
-                    width: Get.width * 0.45,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ));
+        )
+      ],
+    ),
+  );
 }
 
 template8Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
-      width: Get.width,
-      height: Get.width * 1.1,
-      color: color,
-      child: Column(
-        children: [
-          SizedBox(
-            height: Get.width * 0.83,
-            child: Row(
-              children: [
-                CachedNetworkImage(
-                  imageUrl: imageUrlList[0],
-                  width: Get.width * 0.77,
-                  height: Get.width * 0.83,
-                  fit: BoxFit.cover,
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontFamily: fontFamily,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                      ),
+    width: Get.width,
+    height: Get.width * 1.1,
+    color: color,
+    child: Column(
+      children: [
+        SizedBox(
+          height: Get.width * 0.83,
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: imageUrlList[0],
+                width: Get.width * 0.77,
+                height: Get.width * 0.83,
+                fit: BoxFit.cover,
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: SizedBox()),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                  child: SizedBox(
-                    width: Get.width * 0.5,
-                    child: Text(
-                      description,
-                      style: TextStyle(
-                        color: color == ColorPalette.black
-                            ? ColorPalette.white
-                            : ColorPalette.black,
-                        fontFamily: fontFamily,
-                        fontSize: 14,
-                      ),
+        ),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: SizedBox()),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: SizedBox(
+                  width: Get.width * 0.5,
+                  child: Text(
+                    description,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
                     ),
                   ),
                 ),
-              ],
-            ),
-          )
-        ],
-      ));
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
 }
