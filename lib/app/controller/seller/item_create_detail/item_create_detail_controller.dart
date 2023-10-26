@@ -77,6 +77,8 @@ class ItemCreateDetailController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
       return;
+    } else if (pickedFiles.isEmpty) {
+      return;
     }
     // 이미지 개수만큼 isImagesLoading을 true로 변경
     isImagesLoading.assignAll(List.generate(pickedFiles.length, (_) => true));

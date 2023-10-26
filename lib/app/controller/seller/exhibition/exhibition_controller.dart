@@ -216,6 +216,7 @@ class ExhibitionController extends GetxController {
 
     List<String> imageList = exhibitionItem.imageUrls;
     isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
+    itemImages.clear();
     Dio dio = Dio();
     // imageList에 있는 이미지들을 불러옴
     for (int i = 0; i < imageList.length; i++) {
@@ -324,7 +325,7 @@ class ExhibitionController extends GetxController {
 
       // 파일 쓰기
       await videoFile.writeAsBytes(videoBytes);
-      itemVideo.add(videoFile);
+      itemVideo.assignAll([videoFile]);
 
       final thumbnailData =
           await VideoThumbnail.thumbnailData(video: videoFile.path);
@@ -364,6 +365,8 @@ class ExhibitionController extends GetxController {
             '이미지는 최대 10장까지 선택 가능합니다.',
             snackPosition: SnackPosition.BOTTOM,
           );
+          return;
+        } else if (pickedFiles.isEmpty) {
           return;
         }
         isItemImagesLoading
@@ -636,6 +639,8 @@ class ExhibitionController extends GetxController {
   }
 
   bool isValidItemNext() {
+    Logger logger = Logger();
+    logger.d('itemImages.length: ${itemImages.length}');
     if (isItemTemplateUsed.value == true) {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
