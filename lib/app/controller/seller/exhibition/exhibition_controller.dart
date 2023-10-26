@@ -99,6 +99,11 @@ class ExhibitionController extends GetxController {
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(1);
 
+
+  // 작품 리스트
+  Rx<bool> isEditingItemList = Rx<bool>(false);
+
+
   int get exhibitionId => Get.arguments['exhibition_id'];
 
   @override

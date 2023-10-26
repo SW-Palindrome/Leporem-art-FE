@@ -7,7 +7,7 @@ import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
-exhibitionItemListWidget() {
+exhibitionItemEditWidget() {
   final controller = Get.find<ExhibitionController>();
   return Column(
     children: [
