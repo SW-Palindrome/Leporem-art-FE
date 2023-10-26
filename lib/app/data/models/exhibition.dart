@@ -3,16 +3,19 @@ class Exhibition {
   final String title;
   final String coverImage;
   final String seller;
-  final String startDate;
-  final String endDate;
+  final DateTime startDateTime;
+  final DateTime endDateTime;
+
+  String get startDate => '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
+  String get endDate => '${endDateTime.year}.${endDateTime.month}.${endDateTime.day}';
 
   Exhibition({
     required this.id,
     required this.title,
     required this.coverImage,
     required this.seller,
-    required this.startDate,
-    required this.endDate,
+    required this.startDateTime,
+    required this.endDateTime,
   });
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
@@ -21,8 +24,8 @@ class Exhibition {
       title: json['title'],
       coverImage: json['cover_image'],
       seller: json['artist_name'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
+      startDateTime: DateTime.parse(json['start_date']),
+      endDateTime: DateTime.parse(json['end_date']),
     );
   }
 }
