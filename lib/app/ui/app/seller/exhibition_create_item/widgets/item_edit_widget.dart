@@ -18,6 +18,9 @@ itemEditWidget() {
     case 2:
       return template3EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
+    case 3:
+      return template4EditWidget(
+          ColorPalette.white, FontPalette.pretendard, false);
   }
 }
 
@@ -554,6 +557,315 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
             ),
           ],
         ),
+      ],
+    ),
+  );
+}
+
+template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
+  return Container(
+    width: Get.width,
+    height: Get.width * 1.1,
+    padding: EdgeInsets.all(16),
+    color: color,
+    child: Column(
+      children: [
+        isColorFontChange == true
+            ? Center(
+                child: Text(
+                  controller.templateTitle.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontFamily,
+                    fontSize: 26,
+                  ),
+                ),
+              )
+            : TextField(
+                controller: controller.templateTitleController,
+                maxLength: 15,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: '작품 이름을 입력해주세요',
+                  hintStyle: TextStyle(
+                    color: ColorPalette.grey_4,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 26,
+                  ),
+                  counterText: '',
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontPalette.pretendard,
+                  fontSize: 26,
+                ),
+              ),
+        SizedBox(height: 6),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(height: Get.width * 0.1),
+                    Expanded(
+                      child: controller.itemImages.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.selectImages(ImageType.item);
+                              },
+                              child: Container(
+                                color: ColorPalette.grey_2,
+                                width: Get.width,
+                                child: Column(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/camera.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          ColorPalette.grey_3, BlendMode.srcIn),
+                                      width: 32,
+                                      height: 32,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      '작품 이미지를\n업로드해주세요',
+                                      style: TextStyle(
+                                        color: ColorPalette.grey_4,
+                                        fontFamily: FontPalette.pretendard,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                if (isColorFontChange == false) {
+                                  controller.selectImages(ImageType.item);
+                                }
+                              },
+                              child: Container(
+                                width: Get.width * 0.65,
+                                height: Get.width * 0.65,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(controller.itemImages[0]),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                    SizedBox(height: 8),
+                    Expanded(
+                      child: controller.itemImages.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.selectImages(ImageType.item);
+                              },
+                              child: Container(
+                                color: ColorPalette.grey_2,
+                                width: Get.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/camera.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          ColorPalette.grey_3, BlendMode.srcIn),
+                                      width: 32,
+                                      height: 32,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      '작품 이미지를\n업로드해주세요',
+                                      style: TextStyle(
+                                        color: ColorPalette.grey_4,
+                                        fontFamily: FontPalette.pretendard,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                if (isColorFontChange == false) {
+                                  controller.selectImages(ImageType.item);
+                                }
+                              },
+                              child: Container(
+                                width: Get.width * 0.65,
+                                height: Get.width * 0.65,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(controller.itemImages[1]),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: controller.itemImages.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.selectImages(ImageType.item);
+                              },
+                              child: Container(
+                                color: ColorPalette.grey_2,
+                                width: Get.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/camera.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          ColorPalette.grey_3, BlendMode.srcIn),
+                                      width: 32,
+                                      height: 32,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      '작품 이미지를\n업로드해주세요',
+                                      style: TextStyle(
+                                        color: ColorPalette.grey_4,
+                                        fontFamily: FontPalette.pretendard,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                if (isColorFontChange == false) {
+                                  controller.selectImages(ImageType.item);
+                                }
+                              },
+                              child: Container(
+                                width: Get.width * 0.65,
+                                height: Get.width * 0.65,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(controller.itemImages[2]),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                    SizedBox(height: 8),
+                    Expanded(
+                      child: controller.itemImages.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.selectImages(ImageType.item);
+                              },
+                              child: Container(
+                                color: ColorPalette.grey_2,
+                                width: Get.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/camera.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          ColorPalette.grey_3, BlendMode.srcIn),
+                                      width: 32,
+                                      height: 32,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      '작품 이미지를\n업로드해주세요',
+                                      style: TextStyle(
+                                        color: ColorPalette.grey_4,
+                                        fontFamily: FontPalette.pretendard,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                if (isColorFontChange == false) {
+                                  controller.selectImages(ImageType.item);
+                                }
+                              },
+                              child: Container(
+                                width: Get.width * 0.65,
+                                height: Get.width * 0.65,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(controller.itemImages[3]),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                    SizedBox(height: Get.width * 0.1),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        isColorFontChange == true
+            ? Center(
+                child: Text(
+                  controller.templateDescription.value,
+                  style: TextStyle(
+                    color: color == ColorPalette.black
+                        ? ColorPalette.white
+                        : ColorPalette.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: fontFamily,
+                    fontSize: 14,
+                  ),
+                ),
+              )
+            : TextField(
+                controller: controller.templateDescriptionController,
+                maxLines: 5,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: '여기에 작품에 대한 설명을 적어주세요',
+                  hintStyle: TextStyle(
+                    color: ColorPalette.grey_4,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontPalette.pretendard,
+                    fontSize: 14,
+                  ),
+                  counterText: '',
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: ColorPalette.black,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontPalette.pretendard,
+                  fontSize: 14,
+                ),
+              ),
       ],
     ),
   );
