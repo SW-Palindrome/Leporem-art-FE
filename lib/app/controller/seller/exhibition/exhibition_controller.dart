@@ -212,7 +212,7 @@ class ExhibitionController extends GetxController {
         exhibitionItems.firstWhere((element) => element.id == itemId);
 
     isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
-    isItemSailEnabled.value = exhibitionItem.isSoled;
+    isItemSailEnabled.value = exhibitionItem.isSale;
 
     List<String> imageList = exhibitionItem.imageUrls;
     isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
@@ -690,7 +690,7 @@ class ExhibitionController extends GetxController {
   }
 
   bool isValidItemSave() {
-    return exhibitionItems.where((element) => element.isSoled == true).length >=
+    return exhibitionItems.where((element) => element.isSale == true).length >=
         (exhibitionItems.length / 2).ceil();
   }
 }

@@ -573,7 +573,7 @@ class MockClient implements ApiClient {
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
         ],
-        isSoled: true,
+        isSale: true,
         isUsingTemplate: true,
         position: i,
         currentAmount: 5,

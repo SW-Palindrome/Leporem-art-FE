@@ -85,7 +85,7 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
             children: [
               Row(
                 children: [
-                  if (controller.exhibitionItems[index].isSoled == true)
+                  if (controller.exhibitionItems[index].isSale == true)
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
@@ -102,7 +102,7 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
                         ),
                       ),
                     ),
-                  if (controller.exhibitionItems[index].isSoled == true)
+                  if (controller.exhibitionItems[index].isSale == true)
                     SizedBox(width: 4),
                   Text(
                     controller.exhibitionItems[index].title,
