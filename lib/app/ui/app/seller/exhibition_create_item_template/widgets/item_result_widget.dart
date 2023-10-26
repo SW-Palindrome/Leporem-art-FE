@@ -30,6 +30,41 @@ itemResultWidget() {
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
+      case 3:
+        return template4EditWidget(
+          Color(controller
+              .colorList[controller.selectedItemBackgroundColor.value]),
+          controller.fontList[controller.displayedItemFont.value],
+          true,
+        );
+      case 4:
+        return template5EditWidget(
+          Color(controller
+              .colorList[controller.selectedItemBackgroundColor.value]),
+          controller.fontList[controller.displayedItemFont.value],
+          true,
+        );
+      case 5:
+        return template6EditWidget(
+          Color(controller
+              .colorList[controller.selectedItemBackgroundColor.value]),
+          controller.fontList[controller.displayedItemFont.value],
+          true,
+        );
+      case 6:
+        return template7EditWidget(
+          Color(controller
+              .colorList[controller.selectedItemBackgroundColor.value]),
+          controller.fontList[controller.displayedItemFont.value],
+          true,
+        );
+      case 7:
+        return template8EditWidget(
+          Color(controller
+              .colorList[controller.selectedItemBackgroundColor.value]),
+          controller.fontList[controller.displayedItemFont.value],
+          true,
+        );
       default:
         return template1EditWidget(
           Color(controller
