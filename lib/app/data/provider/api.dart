@@ -120,6 +120,7 @@ abstract class ApiClient {
   Future<List<Exhibition>> fetchSellerExhibitions();
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
+  Future<void> removeExhibitionItem(int itemId);
   Future<void> saveExhibitionIntroductionById(int exhibitionId);
   Future<void> saveExhibitionArtistById(int exhibitionId);
   Future<void> saveExhibitionItemById(int exhibitionId);

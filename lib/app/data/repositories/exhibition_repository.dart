@@ -16,4 +16,8 @@ class ExhibitionRepository {
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
     return apiClient.fetchExhibitionItemById(exhibitionId);
   }
+
+  Future<void> removeExhibitionItem(int itemId) async {
+    return apiClient.removeExhibitionItem(itemId);
+  }
 }

@@ -588,6 +588,9 @@ class MockClient implements ApiClient {
   }
 
   @override
+  Future<void> removeExhibitionItem(int itemId) async {}
+
+  @override
   Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
     return null;
   }

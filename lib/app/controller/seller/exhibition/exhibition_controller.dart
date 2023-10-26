@@ -99,6 +99,8 @@ class ExhibitionController extends GetxController {
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(1);
 
+  int get exhibitionId => Get.arguments['exhibition_id'];
+
   @override
   void onInit() async {
     exhibitionTitleController.addListener(() {
@@ -692,6 +694,11 @@ class ExhibitionController extends GetxController {
   bool isValidItemSave() {
     return exhibitionItems.where((element) => element.isSale == true).length >=
         (exhibitionItems.length / 2).ceil();
+  }
+
+  Future<void> removeExhibitionItem(int itemId) async {
+    await repository.removeExhibitionItem(itemId);
+    await fetchExhibitionItemsById(exhibitionId);
   }
 }
 
