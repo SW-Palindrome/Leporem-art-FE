@@ -369,7 +369,8 @@ class MockClient implements ApiClient {
   }
 
   @override
-  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
+  Future<int?> orderItem(int itemId, String name, String address,
+      String zipCode, String addressDetail, String phoneNumber) async {
     return 1;
   }
 
@@ -428,20 +429,20 @@ class MockClient implements ApiClient {
     List<BuyerOrder> buyerOrders = [];
     for (int i = 1; i < 11; i++) {
       buyerOrders.add(BuyerOrder(
-          thumbnailImage:
-              'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-          title: '감성 카페 접시',
-          price: 10000,
-          id: i,
-          isReviewed: false,
-          itemId: i,
-          orderedDatetime: DateTime.now(),
-          orderStatus: '주문완료',
-          buyerName: '홍길동 $i',
-          address: '서울시 강남구 도곡동 $i길',
-          addressDetail: '$i동 $i호',
-          zipCode: '12345',
-          phoneNumber: '01012345678',
+        thumbnailImage:
+            'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+        title: '감성 카페 접시',
+        price: 10000,
+        id: i,
+        isReviewed: false,
+        itemId: i,
+        orderedDatetime: DateTime.now(),
+        orderStatus: '주문완료',
+        buyerName: '홍길동 $i',
+        address: '서울시 강남구 도곡동 $i길',
+        addressDetail: '$i동 $i호',
+        zipCode: '12345',
+        phoneNumber: '01012345678',
       ));
     }
     return buyerOrders;
@@ -452,21 +453,21 @@ class MockClient implements ApiClient {
     List<SellerOrder> sellerOrders = [];
     for (int i = 1; i < 11; i++) {
       sellerOrders.add(SellerOrder(
-          thumbnailImage:
-              'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-          title: '감성 카페 접시',
-          price: 10000,
-          id: i,
-          isReviewed: false,
-          itemId: i,
-          orderedDatetime: DateTime.now(),
-          orderStatus: '주문완료',
-          buyerNickname: '공예쁨 $i',
-          buyerName: '홍길동 $i',
-          address: '서울시 강남구 도곡동 $i길',
-          addressDetail: '$i동 $i호',
-          zipCode: '12345',
-          phoneNumber: '01012345678',
+        thumbnailImage:
+            'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+        title: '감성 카페 접시',
+        price: 10000,
+        id: i,
+        isReviewed: false,
+        itemId: i,
+        orderedDatetime: DateTime.now(),
+        orderStatus: '주문완료',
+        buyerNickname: '공예쁨 $i',
+        buyerName: '홍길동 $i',
+        address: '서울시 강남구 도곡동 $i길',
+        addressDetail: '$i동 $i호',
+        zipCode: '12345',
+        phoneNumber: '01012345678',
       ));
     }
     return sellerOrders;
@@ -558,7 +559,7 @@ class MockClient implements ApiClient {
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
     List<ExhibitionItem> exhibitionItems = [];
-    for (int i = 1; i < 10; i++) {
+    for (int i = 1; i < 10; i += 2) {
       exhibitionItems.add(ExhibitionItem(
         id: i,
         title: '우유병 기획전',
@@ -575,6 +576,30 @@ class MockClient implements ApiClient {
         ],
         isSoled: true,
         isUsingTemplate: true,
+        position: i,
+        currentAmount: 5,
+        depth: '10',
+        height: '10',
+        width: '10',
+        shorts:
+            'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/items/item_shorts/15389329-b6f0-4dad-8318-3c43d42b3aaa.mp4',
+      ));
+      exhibitionItems.add(ExhibitionItem(
+        id: i + 1,
+        title: '우유병 기획전 비 템플릿',
+        price: 10000,
+        fontFamily: 'NotoSansKR',
+        description: '안녕하세요',
+        backgroundColor: '#000000',
+        category: [],
+        imageUrls: [
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+          'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+        ],
+        isSoled: true,
+        isUsingTemplate: false,
         position: i,
         currentAmount: 5,
         depth: '10',
