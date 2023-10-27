@@ -85,10 +85,10 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           children: [
             CarouselSlider(
               items: [
-                if (controller.itemImages.isEmpty)
+                if (controller.templateItemImages.isEmpty)
                   GestureDetector(
                     onTap: () {
-                      controller.selectImages(ImageType.item);
+                      controller.selectImages(ImageType.templateItem);
                     },
                     child: Container(
                       width: Get.width * 0.65,
@@ -117,12 +117,12 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       ),
                     ),
                   ),
-                if (controller.itemImages.isNotEmpty)
-                  for (int i = 0; i < controller.itemImages.length; i++)
+                if (controller.templateItemImages.isNotEmpty)
+                  for (int i = 0; i < controller.templateItemImages.length; i++)
                     GestureDetector(
                       onTap: () {
                         if (isColorFontChange == false) {
-                          controller.selectImages(ImageType.item);
+                          controller.selectImages(ImageType.templateItem);
                         }
                       },
                       child: Container(
@@ -130,7 +130,7 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                         height: Get.width * 0.65,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: FileImage(controller.itemImages[i]),
+                            image: FileImage(controller.templateItemImages[i]!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -233,7 +233,7 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
       children: [
         CarouselSlider(
           items: [
-            if (controller.itemImages.isEmpty)
+            if (controller.templateItemImages.isEmpty)
               Padding(
                 padding: EdgeInsets.only(left: 8, top: 8),
                 child: GestureDetector(
@@ -268,14 +268,14 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 ),
               ),
-            if (controller.itemImages.isNotEmpty)
-              for (int i = 0; i < controller.itemImages.length; i++)
+            if (controller.templateItemImages.isNotEmpty)
+              for (int i = 0; i < controller.templateItemImages.length; i++)
                 Padding(
                   padding: EdgeInsets.only(left: 8, top: 8),
                   child: GestureDetector(
                     onTap: () {
                       if (isColorFontChange == false) {
-                        controller.selectImages(ImageType.item);
+                        controller.selectImages(ImageType.templateItem);
                       }
                     },
                     child: Container(
@@ -283,7 +283,7 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       height: Get.width * 0.82,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(controller.itemImages[i]),
+                          image: FileImage(controller.templateItemImages[i]!),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -469,10 +469,10 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           children: [
             CarouselSlider(
               items: [
-                if (controller.itemImages.isEmpty)
+                if (controller.templateItemImages.isEmpty)
                   GestureDetector(
                     onTap: () {
-                      controller.selectImages(ImageType.item);
+                      controller.selectImages(ImageType.templateItem);
                     },
                     child: Container(
                       width: Get.width,
@@ -501,12 +501,12 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       ),
                     ),
                   ),
-                if (controller.itemImages.isNotEmpty)
-                  for (int i = 0; i < controller.itemImages.length; i++)
+                if (controller.templateItemImages.isNotEmpty)
+                  for (int i = 0; i < controller.templateItemImages.length; i++)
                     GestureDetector(
                       onTap: () {
                         if (isColorFontChange == false) {
-                          controller.selectImages(ImageType.item);
+                          controller.selectImages(ImageType.templateItem);
                         }
                       },
                       child: Container(
@@ -514,7 +514,7 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                         height: Get.width * 0.78,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: FileImage(controller.itemImages[i]),
+                            image: FileImage(controller.templateItemImages[i]!),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -559,6 +559,7 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
   );
 }
 
+<<<<<<< Updated upstream
 template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
   return Container(
     width: Get.width,
@@ -1209,15 +1210,211 @@ selectImageWidget(bool isEmpty, bool isColorFontChange, int index) {
               controller.selectImages(ImageType.templateItem, index: index);
             }
           },
-          child: Obx(
-            () => Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: FileImage(controller.templateItemImages[index]!),
-                  fit: BoxFit.cover,
-                ),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(controller.templateItemImages[index]!),
+                fit: BoxFit.cover,
               ),
             ),
           ),
         );
 }
+=======
+// template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
+//   return Container(
+//     width: Get.width,
+//     padding: EdgeInsets.all(16),
+//     color: color,
+//     child: Column(
+//       children: [
+//         isColorFontChange == true
+//             ? Center(
+//                 child: Text(
+//                   controller.templateTitle.value,
+//                   style: TextStyle(
+//                     color: color == ColorPalette.black
+//                         ? ColorPalette.white
+//                         : ColorPalette.black,
+//                     fontWeight: FontWeight.w700,
+//                     fontFamily: fontFamily,
+//                     fontSize: 26,
+//                   ),
+//                 ),
+//               )
+//             : TextField(
+//                 controller: controller.templateTitleController,
+//                 maxLength: 15,
+//                 textAlign: TextAlign.center,
+//                 decoration: InputDecoration(
+//                   hintText: '작품 이름을 입력해주세요',
+//                   hintStyle: TextStyle(
+//                     color: ColorPalette.grey_4,
+//                     fontWeight: FontWeight.w400,
+//                     fontFamily: FontPalette.pretendard,
+//                     fontSize: 26,
+//                   ),
+//                   counterText: '',
+//                   border: InputBorder.none,
+//                 ),
+//                 style: TextStyle(
+//                   color: ColorPalette.black,
+//                   fontWeight: FontWeight.w400,
+//                   fontFamily: FontPalette.pretendard,
+//                   fontSize: 26,
+//                 ),
+//               ),
+//         SizedBox(height: 6),
+//         Expanded(
+//           child: Row(
+//             children: [
+//               Expanded(
+//                 child: Column(
+//                   children: [
+//                     SizedBox(height: Get.width * 0.1),
+//                     Expanded(
+//                       child: controller.itemImages.isEmpty
+//                           ? GestureDetector(
+//                               onTap: () {
+//                                 controller.selectImages(ImageType.item);
+//                               },
+//                               child: Container(
+//                                 color: ColorPalette.grey_2,
+//                                 child: Column(
+//                                   mainAxisAlignment: MainAxisAlignment.center,
+//                                   children: [
+//                                     SvgPicture.asset(
+//                                       'assets/icons/camera.svg',
+//                                       colorFilter: ColorFilter.mode(
+//                                           ColorPalette.grey_3, BlendMode.srcIn),
+//                                       width: 32,
+//                                       height: 32,
+//                                     ),
+//                                     SizedBox(height: 4),
+//                                     Text(
+//                                       '작품 이미지를\n업로드해주세요',
+//                                       style: TextStyle(
+//                                         color: ColorPalette.grey_4,
+//                                         fontFamily: FontPalette.pretendard,
+//                                         fontSize: 14,
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             )
+//                           : GestureDetector(
+//                               onTap: () {
+//                                 if (isColorFontChange == false) {
+//                                   controller.selectImages(ImageType.item);
+//                                 }
+//                               },
+//                               child: Container(
+//                                 width: Get.width * 0.65,
+//                                 height: Get.width * 0.65,
+//                                 decoration: BoxDecoration(
+//                                   image: DecorationImage(
+//                                     image: FileImage(controller.itemImages[i]),
+//                                     fit: BoxFit.cover,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                     ),
+//                     SizedBox(height: 8),
+//                     Expanded(
+//                       child: CachedNetworkImage(
+//                         imageUrl: imageUrlList[1],
+//                         imageBuilder: (context, imageProvider) => Container(
+//                           decoration: BoxDecoration(
+//                             image: DecorationImage(
+//                               image: imageProvider,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               SizedBox(width: 8),
+//               Expanded(
+//                 child: Column(
+//                   children: [
+//                     Expanded(
+//                       child: CachedNetworkImage(
+//                         imageUrl: imageUrlList[2],
+//                         imageBuilder: (context, imageProvider) => Container(
+//                           decoration: BoxDecoration(
+//                             image: DecorationImage(
+//                               image: imageProvider,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(height: 8),
+//                     Expanded(
+//                       child: CachedNetworkImage(
+//                         imageUrl: imageUrlList[3],
+//                         imageBuilder: (context, imageProvider) => Container(
+//                           decoration: BoxDecoration(
+//                             image: DecorationImage(
+//                               image: imageProvider,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(height: Get.width * 0.1),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(height: 8),
+//         isColorFontChange == true
+//             ? Center(
+//                 child: Text(
+//                   controller.templateDescription.value,
+//                   style: TextStyle(
+//                     color: color == ColorPalette.black
+//                         ? ColorPalette.white
+//                         : ColorPalette.black,
+//                     fontWeight: FontWeight.w400,
+//                     fontFamily: fontFamily,
+//                     fontSize: 14,
+//                   ),
+//                 ),
+//               )
+//             : TextField(
+//                 controller: controller.templateDescriptionController,
+//                 maxLines: 5,
+//                 textAlign: TextAlign.center,
+//                 decoration: InputDecoration(
+//                   hintText: '여기에 작품에 대한 설명을 적어주세요',
+//                   hintStyle: TextStyle(
+//                     color: ColorPalette.grey_4,
+//                     fontWeight: FontWeight.w400,
+//                     fontFamily: FontPalette.pretendard,
+//                     fontSize: 14,
+//                   ),
+//                   counterText: '',
+//                   border: InputBorder.none,
+//                 ),
+//                 style: TextStyle(
+//                   color: ColorPalette.black,
+//                   fontWeight: FontWeight.w400,
+//                   fontFamily: FontPalette.pretendard,
+//                   fontSize: 14,
+//                 ),
+//               ),
+//       ],
+//     ),
+//   );
+// }
+>>>>>>> Stashed changes

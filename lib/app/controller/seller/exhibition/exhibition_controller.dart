@@ -376,8 +376,25 @@ class ExhibitionController extends GetxController {
             .assignAll(List.generate(pickedFiles.length, (_) => true));
         break;
       case ImageType.templateItem:
-        pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-        if (pickedFile == null) return;
+        if (selectedTemplateIndex.value == 0 ||
+            selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2) {
+          pickedFiles = await ImagePicker().pickMultiImage();
+          if (pickedFiles.length > 10) {
+            Get.snackbar(
+              '이미지 선택',
+              '이미지는 최대 10장까지 선택 가능합니다.',
+              snackPosition: SnackPosition.BOTTOM,
+            );
+            return;
+          } else if (pickedFiles.isEmpty) {
+            return;
+          }
+        } else {
+          pickedFile =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+          if (pickedFile == null) return;
+        }
         break;
     }
     // 압축한 이미지를 저장할 공간
@@ -424,11 +441,6 @@ class ExhibitionController extends GetxController {
             // 이미지 크기를 계산
             totalImageSize += compressedFile.lengthSync();
 
-            // // 압축한 이미지를 폰에 저장시키기
-            // final result = await ImageGallerySaver.saveFile(
-            //   compressedFile.path,
-            //   name: 'compressed_image_$index',
-            // );
             index++;
           }
         }
@@ -436,21 +448,46 @@ class ExhibitionController extends GetxController {
         itemImages.assignAll(compressedImages);
         break;
       case ImageType.templateItem:
-        final compressedImage = await compressImage(pickedFile!);
-        if (compressedImage != null) {
-          final compressedFile = File('${pickedFile.path}.compressed.jpg')
-            ..writeAsBytesSync(compressedImage);
-          for (File templateItemImage in templateItemImages.values) {
-            totalImageSize += templateItemImage.lengthSync();
+        if (selectedTemplateIndex.value == 0 ||
+            selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2) {
+          Map<int, File> compressedImages = {};
+          // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
+          // 이미지 크기를 계산하기위해 변수생성
+          int templateItemIndex = 0;
+          for (final imageFile in pickedFiles) {
+            final compressedImage = await compressImage(imageFile);
+            if (compressedImage != null) {
+              final compressedFile = File('${imageFile.path}.compressed.jpg')
+                ..writeAsBytesSync(compressedImage);
+
+              compressedImages[templateItemIndex!] = compressedFile;
+
+              // 이미지 크기를 계산
+              totalImageSize += compressedFile.lengthSync();
+            }
+            templateItemIndex++;
           }
-          totalImageSize += compressedFile.lengthSync();
-
           if (isFileLargerThanMB(totalImageSize, 4)) return;
-
-          templateItemImages[index!] = compressedFile;
+          templateItemImages.value = compressedImages;
           templateItemImages.refresh();
-          print(templateItemImages);
+        } else {
+          final compressedImage = await compressImage(pickedFile!);
+          if (compressedImage != null) {
+            final compressedFile = File('${pickedFile.path}.compressed.jpg')
+              ..writeAsBytesSync(compressedImage);
+            for (File templateItemImage in templateItemImages.values) {
+              totalImageSize += templateItemImage.lengthSync();
+            }
+            totalImageSize += compressedFile.lengthSync();
+
+            if (isFileLargerThanMB(totalImageSize, 4)) return;
+
+            templateItemImages[index!] = compressedFile;
+            templateItemImages.refresh();
+          }
         }
+
         break;
     }
   }
