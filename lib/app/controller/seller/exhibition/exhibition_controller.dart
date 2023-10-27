@@ -35,9 +35,6 @@ class ExhibitionController extends GetxController {
   TextEditingController itemTitleController = TextEditingController();
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
-  TextEditingController itemWidthController = TextEditingController();
-  TextEditingController itemDepthController = TextEditingController();
-  TextEditingController itemHeightController = TextEditingController();
 
   Rx<String> exhibitionTitle = Rx<String>('');
   Rx<String> sellerName = Rx<String>('');
@@ -81,7 +78,10 @@ class ExhibitionController extends GetxController {
   Rx<int> selectedTemplateIndex = Rx<int>(0);
   Rx<String> templateTitle = Rx<String>('');
   Rx<String> templateDescription = Rx<String>('');
+
   RxList<File> itemImages = RxList<File>([]);
+  RxMap<int, File> templateItemImages = RxMap<int, File>();
+
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
   Rx<bool> isItemSailEnabled = Rx<bool>(true);
@@ -89,13 +89,8 @@ class ExhibitionController extends GetxController {
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
-  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
-  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> itemTitle = Rx<String>('');
   Rx<String> itemDescription = Rx<String>('');
-  Rx<String> width = Rx<String>('');
-  Rx<String> depth = Rx<String>('');
-  Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(1);
 
@@ -132,15 +127,6 @@ class ExhibitionController extends GetxController {
     itemPriceController.addListener(() {
       if (itemPriceController.text == '') return;
       price.value = int.parse(itemPriceController.text.replaceAll(',', ''));
-    });
-    itemWidthController.addListener(() {
-      width.value = itemWidthController.text;
-    });
-    itemDepthController.addListener(() {
-      depth.value = itemDepthController.text;
-    });
-    itemHeightController.addListener(() {
-      height.value = itemHeightController.text;
     });
     await fetchSellerExhibitions();
     super.onInit();
@@ -221,31 +207,27 @@ class ExhibitionController extends GetxController {
     isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
     isItemSailEnabled.value = exhibitionItem.isSale;
 
-    List<String> imageList = exhibitionItem.imageUrls;
-    isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
-    itemImages.clear();
-    Dio dio = Dio();
-    // imageList에 있는 이미지들을 불러옴
-    for (int i = 0; i < imageList.length; i++) {
-      final response = await dio.get(imageList[i],
-          options: Options(responseType: ResponseType.bytes));
-
-      // 이미지 데이터를 바이트 배열로 가져옴
-      List<int> imageBytes = response.data;
-
-      // 파일 생성
-      Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/temp$i.jpg');
-
-      // 파일 쓰기
-      await imageFile.writeAsBytes(imageBytes);
-      itemImages.add(imageFile);
-      isItemImagesLoading[i] = false;
-    }
-    // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
-    itemImages.refresh();
-
     if (isItemTemplateUsed.value == true) {
+      List<String> imageList = exhibitionItem.imageUrls;
+      itemImages.clear();
+      Dio dio = Dio();
+      // imageList에 있는 이미지들을 불러옴
+      for (int i = 0; i < imageList.length; i++) {
+        final response = await dio.get(imageList[i],
+            options: Options(responseType: ResponseType.bytes));
+
+        // 이미지 데이터를 바이트 배열로 가져옴
+        List<int> imageBytes = response.data;
+
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+        // 파일 쓰기
+        await imageFile.writeAsBytes(imageBytes);
+        templateItemImages[i] = imageFile;
+      }
+      // 이미지 맵이 갱신되었으므로 상태변경됨을 알림
+      templateItemImages.refresh();
       templateTitleController.text = exhibitionItem.title;
       templateDescriptionController.text = exhibitionItem.description;
       switch (exhibitionItem.fontFamily) {
@@ -294,6 +276,30 @@ class ExhibitionController extends GetxController {
           selectedItemBackgroundColor.value = 9;
           break;
       }
+    } else {
+      List<String> imageList = exhibitionItem.imageUrls;
+      isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
+      itemImages.clear();
+      Dio dio = Dio();
+      // imageList에 있는 이미지들을 불러옴
+      for (int i = 0; i < imageList.length; i++) {
+        final response = await dio.get(imageList[i],
+            options: Options(responseType: ResponseType.bytes));
+
+        // 이미지 데이터를 바이트 배열로 가져옴
+        List<int> imageBytes = response.data;
+
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+
+        // 파일 쓰기
+        await imageFile.writeAsBytes(imageBytes);
+        itemImages.add(imageFile);
+        isItemImagesLoading[i] = false;
+      }
+      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+      itemImages.refresh();
     }
 
     if (isItemSailEnabled.value == true) {
@@ -302,24 +308,13 @@ class ExhibitionController extends GetxController {
                 RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                 (Match m) => '${m[1]},',
               );
-      itemWidthController.text = exhibitionItem.width.toString();
-      itemDepthController.text = exhibitionItem.depth.toString();
-      itemHeightController.text = exhibitionItem.height.toString();
-      List<String> categoryList = exhibitionItem.category;
-      for (int i = 0; i < categoryList.length; i++) {
-        for (int j = 0; j < categoryTypes.length; j++) {
-          if (categoryList[i] == categoryTypes[j]) {
-            selectedCategoryType[j] = true;
-            continue;
-          }
-        }
-      }
       itemTitleController.text = exhibitionItem.title;
       itemDescriptionController.text = exhibitionItem.description;
       amount.value = exhibitionItem.currentAmount!;
 
       isItemVideoLoading.value = true;
       // 비디오 불러오기
+      Dio dio = Dio();
       final response = await dio.get(exhibitionItem.shorts!,
           options: Options(responseType: ResponseType.bytes));
 
@@ -349,7 +344,7 @@ class ExhibitionController extends GetxController {
         await repository.fetchExhibitionItemById(exhibitionId);
   }
 
-  Future<void> selectImages(ImageType imageType) async {
+  Future<void> selectImages(ImageType imageType, {int? index}) async {
     XFile? pickedFile;
     List<XFile> pickedFiles = [];
     switch (imageType) {
@@ -379,6 +374,27 @@ class ExhibitionController extends GetxController {
         isItemImagesLoading
             .assignAll(List.generate(pickedFiles.length, (_) => true));
         break;
+      case ImageType.templateItem:
+        if (selectedTemplateIndex.value == 0 ||
+            selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2) {
+          pickedFiles = await ImagePicker().pickMultiImage();
+          if (pickedFiles.length > 10) {
+            Get.snackbar(
+              '이미지 선택',
+              '이미지는 최대 10장까지 선택 가능합니다.',
+              snackPosition: SnackPosition.BOTTOM,
+            );
+            return;
+          } else if (pickedFiles.isEmpty) {
+            return;
+          }
+        } else {
+          pickedFile =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+          if (pickedFile == null) return;
+        }
+        break;
     }
     // 압축한 이미지를 저장할 공간
     // 이미지를 압축하고 압축한 이미지를 compressedImage에 추가
@@ -394,15 +410,7 @@ class ExhibitionController extends GetxController {
           isExhibitionImageLoading.value = false;
           totalImageSize = compressedFile.lengthSync();
         }
-        if (totalImageSize > 5 * 1024 * 1024) {
-          logAnalytics(name: 'image_size_too_big');
-          Get.snackbar(
-            '경고',
-            '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-          return;
-        }
+        if (isFileLargerThanMB(totalImageSize, 4)) return;
         break;
       case ImageType.seller:
         final compressedImage = await compressImage(pickedFile!);
@@ -413,15 +421,7 @@ class ExhibitionController extends GetxController {
           isSellerImageLoading.value = false;
           totalImageSize = compressedFile.lengthSync();
         }
-        if (totalImageSize > 5 * 1024 * 1024) {
-          logAnalytics(name: 'image_size_too_big');
-          Get.snackbar(
-            '경고',
-            '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-          return;
-        }
+        if (isFileLargerThanMB(totalImageSize, 4)) return;
         break;
       case ImageType.item:
         // 압축한 이미지를 저장할 공간
@@ -440,16 +440,53 @@ class ExhibitionController extends GetxController {
             // 이미지 크기를 계산
             totalImageSize += compressedFile.lengthSync();
 
-            // // 압축한 이미지를 폰에 저장시키기
-            // final result = await ImageGallerySaver.saveFile(
-            //   compressedFile.path,
-            //   name: 'compressed_image_$index',
-            // );
             index++;
           }
         }
         if (isFileLargerThanMB(totalImageSize, 4)) return;
         itemImages.assignAll(compressedImages);
+        break;
+      case ImageType.templateItem:
+        if (selectedTemplateIndex.value == 0 ||
+            selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2) {
+          Map<int, File> compressedImages = {};
+          // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
+          // 이미지 크기를 계산하기위해 변수생성
+          int templateItemIndex = 0;
+          for (final imageFile in pickedFiles) {
+            final compressedImage = await compressImage(imageFile);
+            if (compressedImage != null) {
+              final compressedFile = File('${imageFile.path}.compressed.jpg')
+                ..writeAsBytesSync(compressedImage);
+
+              compressedImages[templateItemIndex!] = compressedFile;
+
+              // 이미지 크기를 계산
+              totalImageSize += compressedFile.lengthSync();
+            }
+            templateItemIndex++;
+          }
+          if (isFileLargerThanMB(totalImageSize, 4)) return;
+          templateItemImages.value = compressedImages;
+          templateItemImages.refresh();
+        } else {
+          final compressedImage = await compressImage(pickedFile!);
+          if (compressedImage != null) {
+            final compressedFile = File('${pickedFile.path}.compressed.jpg')
+              ..writeAsBytesSync(compressedImage);
+            for (File templateItemImage in templateItemImages.values) {
+              totalImageSize += templateItemImage.lengthSync();
+            }
+            totalImageSize += compressedFile.lengthSync();
+
+            if (isFileLargerThanMB(totalImageSize, 4)) return;
+
+            templateItemImages[index!] = compressedFile;
+            templateItemImages.refresh();
+          }
+        }
+
         break;
     }
   }
@@ -573,14 +610,6 @@ class ExhibitionController extends GetxController {
     thumbnail.value = null;
   }
 
-  void changeSelectedCategoryType(int index) {
-    selectedCategoryType[index] = !selectedCategoryType[index];
-  }
-
-  void resetSelectedCategoryType() {
-    selectedCategoryType.value = List.generate(5, (index) => false);
-  }
-
   void decreaseAmount() {
     if (amount.value > 0) {
       amount.value--;
@@ -613,12 +642,9 @@ class ExhibitionController extends GetxController {
     templateTitleController.clear();
     templateDescriptionController.clear();
     itemPriceController.clear();
-    itemHeightController.clear();
-    itemWidthController.clear();
-    itemDepthController.clear();
     thumbnail.value = null;
-    resetSelectedCategoryType();
     itemImages.clear();
+    templateItemImages.clear();
     itemVideo.clear();
     itemAudio.clear();
     itemTitle.value = '';
@@ -676,19 +702,46 @@ class ExhibitionController extends GetxController {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
       }
+      if (selectedTemplateIndex.value == 0 ||
+          selectedTemplateIndex.value == 1 ||
+          selectedTemplateIndex.value == 2) {
+        if (templateItemImages.isEmpty) {
+          return false;
+        }
+      } else if (selectedTemplateIndex.value == 3 ||
+          selectedTemplateIndex.value == 4) {
+        if (templateItemImages.length < 4) {
+          return false;
+        }
+      } else if (selectedTemplateIndex.value == 5 ||
+          selectedTemplateIndex.value == 6) {
+        if (templateItemImages.length < 2) {
+          return false;
+        } else if (selectedTemplateIndex.value == 7) {
+          if (templateItemImages.isEmpty) {
+            return false;
+          }
+        }
+      }
+      return (isItemSailEnabled.value &&
+              itemVideo.isNotEmpty &&
+              price.value >= 1000 &&
+              price.value <= 1000000 &&
+              amount.value > 0) ||
+          !isItemSailEnabled.value;
     } else {
       if (itemImages.isEmpty || itemImages.length > 10) {
         return false;
       }
+      return (isItemSailEnabled.value &&
+              itemVideo.isNotEmpty &&
+              itemTitle.value.isNotEmpty &&
+              itemDescription.value.isNotEmpty &&
+              price.value >= 1000 &&
+              price.value <= 1000000 &&
+              amount.value > 0) ||
+          !isItemSailEnabled.value;
     }
-    return (isItemSailEnabled.value &&
-            itemVideo.isNotEmpty &&
-            itemTitle.value.isNotEmpty &&
-            itemDescription.value.isNotEmpty &&
-            price.value >= 1000 &&
-            price.value <= 1000000 &&
-            amount.value > 0) ||
-        !isItemSailEnabled.value;
   }
 
   void initItemInfo() {
@@ -707,7 +760,7 @@ class ExhibitionController extends GetxController {
   }
 }
 
-enum ImageType { exhibition, seller, item }
+enum ImageType { exhibition, seller, item, templateItem }
 
 enum SellerIntroductionColor {
   white,
