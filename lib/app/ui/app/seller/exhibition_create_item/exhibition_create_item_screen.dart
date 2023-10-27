@@ -8,14 +8,12 @@ import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/item_amount_input_widget.dart';
 import 'widgets/item_audio_input_widget.dart';
-import 'widgets/item_category_input_widget.dart';
 import 'widgets/item_description_input_widget.dart';
 import 'widgets/item_edit_widget.dart';
 import 'widgets/item_flop_input_widget.dart';
 import 'widgets/item_image_input_widget.dart';
 import 'widgets/item_price_input_widget.dart';
 import 'widgets/item_sale_select_widget.dart';
-import 'widgets/item_size_input_widget.dart';
 import 'widgets/item_title_input_widget.dart';
 import 'widgets/template_select_widget.dart';
 
@@ -147,16 +145,12 @@ _itemSaleWidgets() {
       children: [
         SizedBox(height: 40),
         itemFlopInputWidget(),
-        SizedBox(height: 40),
-        itemCategoryInputWidget(),
         if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
         if (controller.isItemTemplateUsed.value == false)
           itemTitleInputWidget(),
         if (controller.isItemTemplateUsed.value == false) SizedBox(height: 40),
         if (controller.isItemTemplateUsed.value == false)
           itemDescriptionInputWidget(),
-        SizedBox(height: 40),
-        itemSizeInputWidget(),
         SizedBox(height: 40),
         itemPriceInputWidget(),
         SizedBox(height: 40),

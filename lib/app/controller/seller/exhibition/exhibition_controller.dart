@@ -35,9 +35,6 @@ class ExhibitionController extends GetxController {
   TextEditingController itemTitleController = TextEditingController();
   TextEditingController itemDescriptionController = TextEditingController();
   TextEditingController itemPriceController = TextEditingController();
-  TextEditingController itemWidthController = TextEditingController();
-  TextEditingController itemDepthController = TextEditingController();
-  TextEditingController itemHeightController = TextEditingController();
 
   Rx<String> exhibitionTitle = Rx<String>('');
   Rx<String> sellerName = Rx<String>('');
@@ -92,13 +89,8 @@ class ExhibitionController extends GetxController {
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
   Rx<Uint8List?> thumbnail = Rx<Uint8List?>(null);
-  List<String> categoryTypes = ['그릇', '접시', '컵', '화분', '기타'];
-  RxList<bool> selectedCategoryType = List.generate(5, (index) => false).obs;
   Rx<String> itemTitle = Rx<String>('');
   Rx<String> itemDescription = Rx<String>('');
-  Rx<String> width = Rx<String>('');
-  Rx<String> depth = Rx<String>('');
-  Rx<String> height = Rx<String>('');
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(1);
 
@@ -128,15 +120,6 @@ class ExhibitionController extends GetxController {
     itemPriceController.addListener(() {
       if (itemPriceController.text == '') return;
       price.value = int.parse(itemPriceController.text.replaceAll(',', ''));
-    });
-    itemWidthController.addListener(() {
-      width.value = itemWidthController.text;
-    });
-    itemDepthController.addListener(() {
-      depth.value = itemDepthController.text;
-    });
-    itemHeightController.addListener(() {
-      height.value = itemHeightController.text;
     });
     await fetchSellerExhibitions();
     super.onInit();
@@ -298,18 +281,6 @@ class ExhibitionController extends GetxController {
                 RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                 (Match m) => '${m[1]},',
               );
-      itemWidthController.text = exhibitionItem.width.toString();
-      itemDepthController.text = exhibitionItem.depth.toString();
-      itemHeightController.text = exhibitionItem.height.toString();
-      List<String> categoryList = exhibitionItem.category;
-      for (int i = 0; i < categoryList.length; i++) {
-        for (int j = 0; j < categoryTypes.length; j++) {
-          if (categoryList[i] == categoryTypes[j]) {
-            selectedCategoryType[j] = true;
-            continue;
-          }
-        }
-      }
       itemTitleController.text = exhibitionItem.title;
       itemDescriptionController.text = exhibitionItem.description;
       amount.value = exhibitionItem.currentAmount!;
@@ -611,14 +582,6 @@ class ExhibitionController extends GetxController {
     thumbnail.value = null;
   }
 
-  void changeSelectedCategoryType(int index) {
-    selectedCategoryType[index] = !selectedCategoryType[index];
-  }
-
-  void resetSelectedCategoryType() {
-    selectedCategoryType.value = List.generate(5, (index) => false);
-  }
-
   void decreaseAmount() {
     if (amount.value > 0) {
       amount.value--;
@@ -651,11 +614,7 @@ class ExhibitionController extends GetxController {
     templateTitleController.clear();
     templateDescriptionController.clear();
     itemPriceController.clear();
-    itemHeightController.clear();
-    itemWidthController.clear();
-    itemDepthController.clear();
     thumbnail.value = null;
-    resetSelectedCategoryType();
     itemImages.clear();
     templateItemImages.clear();
     itemVideo.clear();
