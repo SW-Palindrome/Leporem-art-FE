@@ -49,9 +49,9 @@ class ExhibitionArtist {
     return ExhibitionArtist(
       backgroundColor: json['background_color'],
       fontFamily: json['font_family'],
-      imageUrl: json['image_url'],
-      description: json['description'],
-      isUsingTemplate: json['is_using_template'],
+      imageUrl: json['artist_image'],
+      description: json['biography'],
+      isUsingTemplate: json['is_template'],
     );
   }
 }
@@ -70,7 +70,7 @@ class ExhibitionItem {
 
   // 판매 추가 정보
   final int? price;
-  final List<String> category;
+  final List<String> category = [];
   final String? shorts;
   final int? currentAmount;
   final String? width;
@@ -89,7 +89,6 @@ class ExhibitionItem {
     required this.isSale,
     required this.position,
     this.price,
-    required this.category,
     this.shorts,
     this.currentAmount,
     this.width,
@@ -99,20 +98,19 @@ class ExhibitionItem {
 
   factory ExhibitionItem.fromJson(Map<String, dynamic> json) {
     return ExhibitionItem(
-      id: json['id'],
-      isUsingTemplate: json['is_using_template'],
+      id: json['exhibition_item_id'],
+      isUsingTemplate: json['template'] != null ? false : true,
       fontFamily: json['font_family'],
       backgroundColor: json['background_color'],
-      imageUrls: List<String>.from(json['image_urls']),
-      audioUrl: json['audio_url'],
+      imageUrls: List<String>.from(json['images']),
+      audioUrl: json['sound'],
       title: json['title'],
       description: json['description'],
       isSale: json['is_sale'],
       position: json['position'],
       price: json['price'],
-      category: List<String>.from(json['category']),
       shorts: json['shorts'],
-      currentAmount: json['current_amount'],
+      currentAmount: json['max_amount'],
       width: json['width'],
       depth: json['depth'],
       height: json['height'],

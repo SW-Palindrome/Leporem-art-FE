@@ -1416,12 +1416,24 @@ class DioClient implements ApiClient {
 
   @override
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId) async {
-    return null;
+    final response = await _dioInstance.get('/exhibitions/$exhibitionId/artist-info');
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching exhibition artist in repository: $response');
+    }
+
+    return ExhibitionArtist.fromJson(response.data);
   }
 
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
-    return [];
+    final response = await _dioInstance.get('/exhibitions/$exhibitionId/items-info');
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching exhibition artist in repository: $response');
+    }
+
+    return response.data.map<ExhibitionItem>((json) => ExhibitionItem.fromJson(json)).toList();
   }
 
   @override
