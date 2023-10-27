@@ -695,19 +695,25 @@ class ExhibitionController extends GetxController {
           }
         }
       }
+      return (isItemSailEnabled.value &&
+              itemVideo.isNotEmpty &&
+              price.value >= 1000 &&
+              price.value <= 1000000 &&
+              amount.value > 0) ||
+          !isItemSailEnabled.value;
     } else {
       if (itemImages.isEmpty || itemImages.length > 10) {
         return false;
       }
+      return (isItemSailEnabled.value &&
+              itemVideo.isNotEmpty &&
+              itemTitle.value.isNotEmpty &&
+              itemDescription.value.isNotEmpty &&
+              price.value >= 1000 &&
+              price.value <= 1000000 &&
+              amount.value > 0) ||
+          !isItemSailEnabled.value;
     }
-    return (isItemSailEnabled.value &&
-            itemVideo.isNotEmpty &&
-            itemTitle.value.isNotEmpty &&
-            itemDescription.value.isNotEmpty &&
-            price.value >= 1000 &&
-            price.value <= 1000000 &&
-            amount.value > 0) ||
-        !isItemSailEnabled.value;
   }
 
   void initItemInfo() {
