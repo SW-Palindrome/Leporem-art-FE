@@ -200,31 +200,27 @@ class ExhibitionController extends GetxController {
     isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
     isItemSailEnabled.value = exhibitionItem.isSoled;
 
-    List<String> imageList = exhibitionItem.imageUrls;
-    isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
-    itemImages.clear();
-    Dio dio = Dio();
-    // imageList에 있는 이미지들을 불러옴
-    for (int i = 0; i < imageList.length; i++) {
-      final response = await dio.get(imageList[i],
-          options: Options(responseType: ResponseType.bytes));
-
-      // 이미지 데이터를 바이트 배열로 가져옴
-      List<int> imageBytes = response.data;
-
-      // 파일 생성
-      Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/temp$i.jpg');
-
-      // 파일 쓰기
-      await imageFile.writeAsBytes(imageBytes);
-      itemImages.add(imageFile);
-      isItemImagesLoading[i] = false;
-    }
-    // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
-    itemImages.refresh();
-
     if (isItemTemplateUsed.value == true) {
+      List<String> imageList = exhibitionItem.imageUrls;
+      itemImages.clear();
+      Dio dio = Dio();
+      // imageList에 있는 이미지들을 불러옴
+      for (int i = 0; i < imageList.length; i++) {
+        final response = await dio.get(imageList[i],
+            options: Options(responseType: ResponseType.bytes));
+
+        // 이미지 데이터를 바이트 배열로 가져옴
+        List<int> imageBytes = response.data;
+
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+        // 파일 쓰기
+        await imageFile.writeAsBytes(imageBytes);
+        templateItemImages[i] = imageFile;
+      }
+      // 이미지 맵이 갱신되었으므로 상태변경됨을 알림
+      templateItemImages.refresh();
       templateTitleController.text = exhibitionItem.title;
       templateDescriptionController.text = exhibitionItem.description;
       switch (exhibitionItem.fontFamily) {
@@ -273,6 +269,30 @@ class ExhibitionController extends GetxController {
           selectedItemBackgroundColor.value = 9;
           break;
       }
+    } else {
+      List<String> imageList = exhibitionItem.imageUrls;
+      isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
+      itemImages.clear();
+      Dio dio = Dio();
+      // imageList에 있는 이미지들을 불러옴
+      for (int i = 0; i < imageList.length; i++) {
+        final response = await dio.get(imageList[i],
+            options: Options(responseType: ResponseType.bytes));
+
+        // 이미지 데이터를 바이트 배열로 가져옴
+        List<int> imageBytes = response.data;
+
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+
+        // 파일 쓰기
+        await imageFile.writeAsBytes(imageBytes);
+        itemImages.add(imageFile);
+        isItemImagesLoading[i] = false;
+      }
+      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+      itemImages.refresh();
     }
 
     if (isItemSailEnabled.value == true) {
@@ -287,6 +307,7 @@ class ExhibitionController extends GetxController {
 
       isItemVideoLoading.value = true;
       // 비디오 불러오기
+      Dio dio = Dio();
       final response = await dio.get(exhibitionItem.shorts!,
           options: Options(responseType: ResponseType.bytes));
 
