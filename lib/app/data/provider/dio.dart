@@ -1395,17 +1395,45 @@ class DioClient implements ApiClient {
 
   @override
   Future<List<Exhibition>> fetchSellerExhibitions() async {
-    return [];
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/exhibitions/seller',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching seller exhibitions in repository: $response');
+    }
+
+    final data = response.data;
+    return data.map<Exhibition>((json) => Exhibition.fromJson(json)).toList();
   }
 
   @override
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId) async {
-    return null;
+    final response = await _dioInstance.get('/exhibitions/$exhibitionId/artist-info');
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching exhibition artist in repository: $response');
+    }
+
+    return ExhibitionArtist.fromJson(response.data);
   }
 
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
-    return [];
+    final response = await _dioInstance.get('/exhibitions/$exhibitionId/items-info');
+
+    if (response.statusCode != 200) {
+      logger.e('Error fetching exhibition artist in repository: $response');
+    }
+
+    return response.data.map<ExhibitionItem>((json) => ExhibitionItem.fromJson(json)).toList();
   }
 
   @override

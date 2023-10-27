@@ -3,26 +3,29 @@ class Exhibition {
   final String title;
   final String coverImage;
   final String seller;
-  final String startDate;
-  final String endDate;
+  final DateTime startDateTime;
+  final DateTime endDateTime;
+
+  String get startDate => '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
+  String get endDate => '${endDateTime.year}.${endDateTime.month}.${endDateTime.day}';
 
   Exhibition({
     required this.id,
     required this.title,
     required this.coverImage,
     required this.seller,
-    required this.startDate,
-    required this.endDate,
+    required this.startDateTime,
+    required this.endDateTime,
   });
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
     return Exhibition(
-      id: json['id'],
+      id: json['exhibition_id'],
       title: json['title'],
       coverImage: json['cover_image'],
-      seller: json['seller'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
+      seller: json['artist_name'],
+      startDateTime: DateTime.parse(json['start_date']),
+      endDateTime: DateTime.parse(json['end_date']),
     );
   }
 }
@@ -46,9 +49,9 @@ class ExhibitionArtist {
     return ExhibitionArtist(
       backgroundColor: json['background_color'],
       fontFamily: json['font_family'],
-      imageUrl: json['image_url'],
-      description: json['description'],
-      isUsingTemplate: json['is_using_template'],
+      imageUrl: json['artist_image'],
+      description: json['biography'],
+      isUsingTemplate: json['is_template'],
     );
   }
 }
@@ -67,7 +70,7 @@ class ExhibitionItem {
 
   // 판매 추가 정보
   final int? price;
-  final List<String> category;
+  final List<String> category = [];
   final String? shorts;
   final int? currentAmount;
   final String? width;
@@ -86,7 +89,6 @@ class ExhibitionItem {
     required this.isSale,
     required this.position,
     this.price,
-    required this.category,
     this.shorts,
     this.currentAmount,
     this.width,
@@ -96,20 +98,19 @@ class ExhibitionItem {
 
   factory ExhibitionItem.fromJson(Map<String, dynamic> json) {
     return ExhibitionItem(
-      id: json['id'],
-      isUsingTemplate: json['is_using_template'],
+      id: json['exhibition_item_id'],
+      isUsingTemplate: json['template'] != null ? false : true,
       fontFamily: json['font_family'],
       backgroundColor: json['background_color'],
-      imageUrls: List<String>.from(json['image_urls']),
-      audioUrl: json['audio_url'],
+      imageUrls: List<String>.from(json['images']),
+      audioUrl: json['sound'],
       title: json['title'],
       description: json['description'],
       isSale: json['is_sale'],
       position: json['position'],
       price: json['price'],
-      category: List<String>.from(json['category']),
       shorts: json['shorts'],
-      currentAmount: json['current_amount'],
+      currentAmount: json['max_amount'],
       width: json['width'],
       depth: json['depth'],
       height: json['height'],

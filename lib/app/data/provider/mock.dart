@@ -535,8 +535,8 @@ class MockClient implements ApiClient {
         coverImage:
             'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
         title: '우유병 기획전',
-        endDate: '2023-10-31',
-        startDate: '2023-10-24',
+        endDateTime: DateTime.parse('2023-10-31'),
+        startDateTime: DateTime.parse('2023-10-24'),
         seller: '유병우 작가',
       ));
     }
@@ -566,7 +566,6 @@ class MockClient implements ApiClient {
         fontFamily: 'NotoSansKR',
         description: '안녕하세요',
         backgroundColor: '#000000',
-        category: [],
         imageUrls: [
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
