@@ -238,7 +238,7 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 padding: EdgeInsets.only(left: 8, top: 8),
                 child: GestureDetector(
                   onTap: () {
-                    controller.selectImages(ImageType.item);
+                    controller.selectImages(ImageType.templateItem);
                   },
                   child: Container(
                     width: Get.width * 0.86,
