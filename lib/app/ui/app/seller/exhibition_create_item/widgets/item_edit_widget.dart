@@ -613,12 +613,16 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                     SizedBox(height: Get.width * 0.1),
                     Expanded(
                       child: selectImageWidget(
-                          controller.itemImages.isEmpty, isColorFontChange, 0),
+                          controller.templateItemImages.isEmpty,
+                          isColorFontChange,
+                          0),
                     ),
                     SizedBox(height: 8),
                     Expanded(
                       child: selectImageWidget(
-                          controller.itemImages.isEmpty, isColorFontChange, 1),
+                          controller.templateItemImages.isEmpty,
+                          isColorFontChange,
+                          1),
                     ),
                   ],
                 ),
@@ -629,12 +633,16 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   children: [
                     Expanded(
                       child: selectImageWidget(
-                          controller.itemImages.isEmpty, isColorFontChange, 2),
+                          controller.templateItemImages.isEmpty,
+                          isColorFontChange,
+                          2),
                     ),
                     SizedBox(height: 8),
                     Expanded(
                       child: selectImageWidget(
-                          controller.itemImages.isEmpty, isColorFontChange, 3),
+                          controller.templateItemImages.isEmpty,
+                          isColorFontChange,
+                          3),
                     ),
                     SizedBox(height: Get.width * 0.1),
                   ],
@@ -766,8 +774,8 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           child: Row(
             children: [
               Expanded(
-                child: selectImageWidget(
-                    controller.itemImages.isEmpty, isColorFontChange, 0),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 0),
               ),
               SizedBox(width: 8),
               Expanded(
@@ -775,7 +783,9 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   children: [
                     Expanded(
                       child: selectImageWidget(
-                          controller.itemImages.isEmpty, isColorFontChange, 1),
+                          controller.templateItemImages.isEmpty,
+                          isColorFontChange,
+                          1),
                     ),
                     SizedBox(height: 8),
                     Expanded(
@@ -783,14 +793,14 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                         children: [
                           Expanded(
                             child: selectImageWidget(
-                                controller.itemImages.isEmpty,
+                                controller.templateItemImages.isEmpty,
                                 isColorFontChange,
                                 2),
                           ),
                           SizedBox(width: 8),
                           Expanded(
                             child: selectImageWidget(
-                                controller.itemImages.isEmpty,
+                                controller.templateItemImages.isEmpty,
                                 isColorFontChange,
                                 3),
                           ),
@@ -820,13 +830,13 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           child: Column(
             children: [
               Expanded(
-                child: selectImageWidget(
-                    controller.itemImages.isEmpty, isColorFontChange, 0),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 0),
               ),
               SizedBox(height: 8),
               Expanded(
-                child: selectImageWidget(
-                    controller.itemImages.isEmpty, isColorFontChange, 1),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 1),
               ),
             ],
           ),
@@ -933,7 +943,9 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 width: Get.width * 0.75,
                 child: Expanded(
                   child: selectImageWidget(
-                      controller.itemImages.isEmpty, isColorFontChange, 0),
+                      controller.templateItemImages.isEmpty,
+                      isColorFontChange,
+                      0),
                 ),
               ),
               Spacer(),
@@ -1029,8 +1041,8 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               ),
               Expanded(
-                child: selectImageWidget(
-                    controller.itemImages.isEmpty, isColorFontChange, 1),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 1),
               ),
             ],
           ),
@@ -1054,8 +1066,8 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
               SizedBox(
                 width: Get.width * 0.77,
                 height: Get.width * 0.83,
-                child: selectImageWidget(
-                    controller.itemImages.isEmpty, isColorFontChange, 0),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 0),
               ),
               Spacer(),
               Padding(
@@ -1160,10 +1172,10 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
 }
 
 selectImageWidget(bool isEmpty, bool isColorFontChange, int index) {
-  return isEmpty
+  return isEmpty || controller.templateItemImages[index] == null
       ? GestureDetector(
           onTap: () {
-            controller.selectImages(ImageType.item);
+            controller.selectImages(ImageType.templateItem, index: index);
           },
           child: Container(
             color: ColorPalette.grey_2,
@@ -1194,14 +1206,16 @@ selectImageWidget(bool isEmpty, bool isColorFontChange, int index) {
       : GestureDetector(
           onTap: () {
             if (isColorFontChange == false) {
-              controller.selectImages(ImageType.item);
+              controller.selectImages(ImageType.templateItem, index: index);
             }
           },
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: FileImage(controller.itemImages[index]),
-                fit: BoxFit.cover,
+          child: Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: FileImage(controller.templateItemImages[index]!),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

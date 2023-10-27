@@ -81,7 +81,10 @@ class ExhibitionController extends GetxController {
   Rx<int> selectedTemplateIndex = Rx<int>(0);
   Rx<String> templateTitle = Rx<String>('');
   Rx<String> templateDescription = Rx<String>('');
+
   RxList<File> itemImages = RxList<File>([]);
+  RxMap<int, File> templateItemImages = RxMap<int, File>();
+
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
   Rx<bool> isItemSailEnabled = Rx<bool>(true);
@@ -342,7 +345,7 @@ class ExhibitionController extends GetxController {
         await repository.fetchExhibitionItemById(exhibitionId);
   }
 
-  Future<void> selectImages(ImageType imageType) async {
+  Future<void> selectImages(ImageType imageType, {int? index}) async {
     XFile? pickedFile;
     List<XFile> pickedFiles = [];
     switch (imageType) {
@@ -372,6 +375,10 @@ class ExhibitionController extends GetxController {
         isItemImagesLoading
             .assignAll(List.generate(pickedFiles.length, (_) => true));
         break;
+      case ImageType.templateItem:
+        pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (pickedFile == null) return;
+        break;
     }
     // 압축한 이미지를 저장할 공간
     // 이미지를 압축하고 압축한 이미지를 compressedImage에 추가
@@ -387,15 +394,7 @@ class ExhibitionController extends GetxController {
           isExhibitionImageLoading.value = false;
           totalImageSize = compressedFile.lengthSync();
         }
-        if (totalImageSize > 5 * 1024 * 1024) {
-          logAnalytics(name: 'image_size_too_big');
-          Get.snackbar(
-            '경고',
-            '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-          return;
-        }
+        if (isFileLargerThanMB(totalImageSize, 4)) return;
         break;
       case ImageType.seller:
         final compressedImage = await compressImage(pickedFile!);
@@ -406,15 +405,7 @@ class ExhibitionController extends GetxController {
           isSellerImageLoading.value = false;
           totalImageSize = compressedFile.lengthSync();
         }
-        if (totalImageSize > 5 * 1024 * 1024) {
-          logAnalytics(name: 'image_size_too_big');
-          Get.snackbar(
-            '경고',
-            '이미지 크기가 너무 큽니다. 다시 선택해주세요.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-          return;
-        }
+        if (isFileLargerThanMB(totalImageSize, 4)) return;
         break;
       case ImageType.item:
         // 압축한 이미지를 저장할 공간
@@ -443,6 +434,23 @@ class ExhibitionController extends GetxController {
         }
         if (isFileLargerThanMB(totalImageSize, 4)) return;
         itemImages.assignAll(compressedImages);
+        break;
+      case ImageType.templateItem:
+        final compressedImage = await compressImage(pickedFile!);
+        if (compressedImage != null) {
+          final compressedFile = File('${pickedFile.path}.compressed.jpg')
+            ..writeAsBytesSync(compressedImage);
+          for (File templateItemImage in templateItemImages.values) {
+            totalImageSize += templateItemImage.lengthSync();
+          }
+          totalImageSize += compressedFile.lengthSync();
+
+          if (isFileLargerThanMB(totalImageSize, 4)) return;
+
+          templateItemImages[index!] = compressedFile;
+          templateItemImages.refresh();
+          print(templateItemImages);
+        }
         break;
     }
   }
@@ -612,6 +620,7 @@ class ExhibitionController extends GetxController {
     thumbnail.value = null;
     resetSelectedCategoryType();
     itemImages.clear();
+    templateItemImages.clear();
     itemVideo.clear();
     itemAudio.clear();
     itemTitle.value = '';
@@ -716,7 +725,7 @@ class ExhibitionController extends GetxController {
   }
 }
 
-enum ImageType { exhibition, seller, item }
+enum ImageType { exhibition, seller, item, templateItem }
 
 enum SellerIntroductionColor {
   white,
