@@ -718,20 +718,20 @@ class ExhibitionController extends GetxController {
       if (selectedTemplateIndex.value == 0 ||
           selectedTemplateIndex.value == 1 ||
           selectedTemplateIndex.value == 2) {
-        if (itemImages.isEmpty) {
+        if (templateItemImages.isEmpty) {
           return false;
         }
       } else if (selectedTemplateIndex.value == 3 ||
           selectedTemplateIndex.value == 4) {
-        if (itemVideo.length < 4) {
+        if (templateItemImages.length < 4) {
           return false;
         }
       } else if (selectedTemplateIndex.value == 5 ||
           selectedTemplateIndex.value == 6) {
-        if (itemVideo.length < 2) {
+        if (templateItemImages.length < 2) {
           return false;
         } else if (selectedTemplateIndex.value == 7) {
-          if (itemVideo.isEmpty) {
+          if (templateItemImages.isEmpty) {
             return false;
           }
         }
