@@ -97,7 +97,8 @@ abstract class ApiClient {
   // 메시지 플러스기 능
   Future<List<MessageItem>> fetchShareMessageItem(int page, {String? nickname});
   Future<List<MessageItem>> fetchOrderMessageItem(int page, {String? nickname});
-  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber);
+  Future<int?> orderItem(int itemId, String name, String address,
+      String zipCode, String addressDetail, String phoneNumber);
   Future<List<ChatRoom>> fetchBuyerChatRooms();
   Future<List<ChatRoom>> fetchSellerChatRooms();
   Future<List<BuyerOrder>> fetchBuyerOrders();
@@ -120,8 +121,11 @@ abstract class ApiClient {
   Future<List<Exhibition>> fetchSellerExhibitions();
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
-  Future<void> removeExhibitionItem(int itemId);
-  Future<void> saveExhibitionIntroductionById(int exhibitionId);
-  Future<void> saveExhibitionArtistById(int exhibitionId);
-  Future<void> saveExhibitionItemById(int exhibitionId);
+  Future<dynamic> removeExhibitionItem(int itemId);
+  Future<dynamic> saveExhibitionIntroductionById(
+      int exhibitionId, FormData formData);
+  Future<dynamic> saveExhibitionArtistById(int exhibitionId, FormData formData);
+  Future<dynamic> createExhibitionItemById(int exhibitionId, FormData formData);
+  Future<dynamic> editExhibitionItemById(
+      int exhibitionId, int itemId, FormData formData);
 }

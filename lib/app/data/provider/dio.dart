@@ -950,7 +950,8 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<int?> orderItem(int itemId, String name, String address, String zipCode, String addressDetail, String phoneNumber) async {
+  Future<int?> orderItem(int itemId, String name, String address,
+      String zipCode, String addressDetail, String phoneNumber) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('access_token');
@@ -1416,7 +1417,8 @@ class DioClient implements ApiClient {
 
   @override
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId) async {
-    final response = await _dioInstance.get('/exhibitions/$exhibitionId/artist-info');
+    final response =
+        await _dioInstance.get('/exhibitions/$exhibitionId/artist-info');
 
     if (response.statusCode != 200) {
       logger.e('Error fetching exhibition artist in repository: $response');
@@ -1427,17 +1429,20 @@ class DioClient implements ApiClient {
 
   @override
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId) async {
-    final response = await _dioInstance.get('/exhibitions/$exhibitionId/items-info');
+    final response =
+        await _dioInstance.get('/exhibitions/$exhibitionId/items-info');
 
     if (response.statusCode != 200) {
       logger.e('Error fetching exhibition artist in repository: $response');
     }
 
-    return response.data.map<ExhibitionItem>((json) => ExhibitionItem.fromJson(json)).toList();
+    return response.data
+        .map<ExhibitionItem>((json) => ExhibitionItem.fromJson(json))
+        .toList();
   }
 
   @override
-  Future<void> removeExhibitionItem(int itemId) async {
+  Future<dynamic> removeExhibitionItem(int itemId) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.delete(
@@ -1448,23 +1453,74 @@ class DioClient implements ApiClient {
         },
       ),
     );
-    if (response.statusCode != 204) {
-      logger.e('Error removing exhibition item in repository: $response, url: ${response.realUri}');
-    }
+    return response;
   }
 
   @override
-  Future<Exhibition?> saveExhibitionIntroductionById(int exhibitionId) async {
-    return null;
+  Future<dynamic> saveExhibitionIntroductionById(
+      int exhibitionId, FormData formData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.patch(
+      '/exhibitions/$exhibitionId/introduction',
+      data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return response;
   }
 
   @override
-  Future<void> saveExhibitionArtistById(int exhibitionId) async {
-    return;
+  Future<dynamic> saveExhibitionArtistById(
+      int exhibitionId, FormData formData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.put(
+      '/exhibitions/$exhibitionId/artist-info',
+      data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return response;
   }
 
   @override
-  Future<void> saveExhibitionItemById(int exhibitionId) async {
-    return;
+  Future<dynamic> createExhibitionItemById(
+      int exhibitionId, FormData formData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.post(
+      '/exhibitions/$exhibitionId/item',
+      data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return response;
+  }
+
+  @override
+  Future<dynamic> editExhibitionItemById(
+      int exhibitionId, int itemId, FormData formData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.patch(
+      '/exhibitions/$exhibitionId/item/$itemId',
+      data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return response;
   }
 }
