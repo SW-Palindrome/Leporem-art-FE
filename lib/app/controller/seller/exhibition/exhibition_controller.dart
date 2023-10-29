@@ -393,8 +393,7 @@ class ExhibitionController extends GetxController {
       ),
     });
     final response =
-        await repository.saveExhibitionIntroductionById(exhibitionId, formData);
-
+        await repository.saveExhibitionArtistById(exhibitionId, formData);
     if (response.statusCode != 200) {
       Get.snackbar(
         '기획전 작가정보 저장 실패',
