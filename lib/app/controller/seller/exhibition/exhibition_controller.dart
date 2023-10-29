@@ -188,7 +188,7 @@ class ExhibitionController extends GetxController {
 
       // 파일 생성
       Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/temp0.jpg');
+      File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
 
       // 파일 쓰기
       await imageFile.writeAsBytes(imageBytes);
@@ -222,7 +222,7 @@ class ExhibitionController extends GetxController {
 
         // 파일 생성
         Directory cacheDir = await getTemporaryDirectory();
-        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+        File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
         // 파일 쓰기
         await imageFile.writeAsBytes(imageBytes);
         templateItemImages[i] = imageFile;
