@@ -60,7 +60,7 @@ class ExhibitionArtist {
 
 class ExhibitionItem {
   final int id;
-  final bool isUsingTemplate;
+  final int? template;
   final String fontFamily;
   final String backgroundColor;
   final List<String> imageUrls;
@@ -79,9 +79,11 @@ class ExhibitionItem {
   final String? depth;
   final String? height;
 
+  bool get isUsingTemplate => template != null ? true : false;
+
   ExhibitionItem({
     required this.id,
-    required this.isUsingTemplate,
+    required this.template,
     required this.fontFamily,
     required this.backgroundColor,
     required this.imageUrls,
@@ -101,7 +103,7 @@ class ExhibitionItem {
   factory ExhibitionItem.fromJson(Map<String, dynamic> json) {
     return ExhibitionItem(
       id: json['exhibition_item_id'],
-      isUsingTemplate: json['template'] != null ? true : false,
+      template: json['template'],
       fontFamily: json['font_family'],
       backgroundColor: json['background_color'],
       imageUrls: List<String>.from(json['images']),

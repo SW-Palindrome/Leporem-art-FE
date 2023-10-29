@@ -1171,8 +1171,8 @@ class ExhibitionController extends GetxController {
         (exhibitionItems.length / 2).ceil();
   }
 
-  Future<void> removeExhibitionItem(int itemId) async {
-    await repository.removeExhibitionItem(itemId);
+  Future<void> removeExhibitionItem(int exhibitionId, int itemId) async {
+    await repository.removeExhibitionItem(exhibitionId, itemId);
     await fetchExhibitionItemsById(exhibitionId);
   }
 }

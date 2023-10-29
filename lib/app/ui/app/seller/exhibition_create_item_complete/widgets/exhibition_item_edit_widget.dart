@@ -92,7 +92,7 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
         SizedBox(width: 12),
         GestureDetector(
           onTap: () async {
-            await controller.removeExhibitionItem(controller.exhibitionItems[index].id);
+            await controller.removeExhibitionItem(controller.exhibitionId, controller.exhibitionItems[index].id);
           },
           child: SvgPicture.asset(
             'assets/icons/cancel.svg',

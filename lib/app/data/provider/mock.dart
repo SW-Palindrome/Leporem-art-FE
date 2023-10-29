@@ -611,7 +611,7 @@ class MockClient implements ApiClient {
   }
 
   @override
-  Future<dynamic> removeExhibitionItem(int itemId) async {}
+  Future<dynamic> removeExhibitionItem(int exhibitionId, int itemId) async {}
 
   @override
   Future<dynamic> saveExhibitionIntroductionById(

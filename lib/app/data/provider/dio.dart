@@ -1442,11 +1442,11 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<dynamic> removeExhibitionItem(int itemId) async {
+  Future<dynamic> removeExhibitionItem(int exhibitionId, int itemId) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.delete(
-      '/exhibitions/items/$itemId',
+      '/exhibitions/$exhibitionId/item/$itemId',
       options: Options(
         headers: {
           "Authorization": "Bearer $accessToken",

@@ -19,8 +19,8 @@ class ExhibitionRepository {
     return apiClient.fetchExhibitionItemById(exhibitionId);
   }
 
-  Future<void> removeExhibitionItem(int itemId) async {
-    return apiClient.removeExhibitionItem(itemId);
+  Future<void> removeExhibitionItem(int exhibitionId, int itemId) async {
+    return apiClient.removeExhibitionItem(exhibitionId, itemId);
   }
 
   Future<dynamic> saveExhibitionIntroductionById(
