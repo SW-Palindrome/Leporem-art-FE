@@ -141,7 +141,7 @@ class MockClient implements ApiClient {
   Future<void> createReview(int orderId, int star, String description) async {}
 
   @override
-  Future<dynamic> getPreSignedUrl(String extension) async {}
+  Future<dynamic> getPreSignedShortsUrl(String extension) async {}
 
   @override
   Future<dynamic> createItem(FormData formData) async {
@@ -636,4 +636,7 @@ class MockClient implements ApiClient {
       int exhibitionId, int itemId, FormData formData) async {
     return;
   }
+
+  @override
+  Future<dynamic> getPreSignedSoundUrl(String extension) async {}
 }

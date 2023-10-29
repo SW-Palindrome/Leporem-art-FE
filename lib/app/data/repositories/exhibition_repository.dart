@@ -42,4 +42,12 @@ class ExhibitionRepository {
       int exhibitionId, int itemId, FormData formData) {
     return apiClient.editExhibitionItemById(exhibitionId, itemId, formData);
   }
+
+  Future<dynamic> getPreSignedShortsUrl(String extension) async {
+    return await apiClient.getPreSignedShortsUrl(extension);
+  }
+
+  Future<dynamic> getPreSignedSoundUrl(String extension) async {
+    return await apiClient.getPreSignedSoundUrl(extension);
+  }
 }

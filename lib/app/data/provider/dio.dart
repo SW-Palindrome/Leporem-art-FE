@@ -564,7 +564,7 @@ class DioClient implements ApiClient {
   }
 
   @override
-  Future<dynamic> getPreSignedUrl(String extension) async {
+  Future<dynamic> getPreSignedShortsUrl(String extension) async {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.get(
@@ -1514,6 +1514,22 @@ class DioClient implements ApiClient {
     final response = await _dioInstance.patch(
       '/exhibitions/$exhibitionId/item/$itemId',
       data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return response;
+  }
+
+  @override
+  Future<dynamic> getPreSignedSoundUrl(String extension) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/sellers/sound/upload-url',
+      queryParameters: {'extension': extension},
       options: Options(
         headers: {
           "Authorization": "Bearer $accessToken",

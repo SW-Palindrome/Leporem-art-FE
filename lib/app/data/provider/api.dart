@@ -54,7 +54,7 @@ abstract class ApiClient {
   Future<void> createReview(int orderId, int star, String description);
 
   // 판매자 작품등록 및 수정
-  Future<dynamic> getPreSignedUrl(String extension);
+  Future<dynamic> getPreSignedShortsUrl(String extension);
   Future<dynamic> createItem(FormData formData);
   Future<dynamic> editItem(int itemId, FormData formData);
   Future<dynamic> increaseAmount(int itemId);
@@ -94,7 +94,7 @@ abstract class ApiClient {
   Future<BuyerItemDetail?> fetchBuyerItemDetail(int itemID);
   Future<SellerItemDetail?> fetchSellerItemDetail(int itemID);
 
-  // 메시지 플러스기 능
+  // 메시지 플러스 기능
   Future<List<MessageItem>> fetchShareMessageItem(int page, {String? nickname});
   Future<List<MessageItem>> fetchOrderMessageItem(int page, {String? nickname});
   Future<int?> orderItem(int itemId, String name, String address,
@@ -128,4 +128,5 @@ abstract class ApiClient {
   Future<dynamic> createExhibitionItemById(int exhibitionId, FormData formData);
   Future<dynamic> editExhibitionItemById(
       int exhibitionId, int itemId, FormData formData);
+  Future<dynamic> getPreSignedSoundUrl(String extension);
 }

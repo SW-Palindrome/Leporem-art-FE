@@ -141,6 +141,7 @@ class ExhibitionController extends GetxController {
     exhibitionTitleController.text = exhibition.title;
     sellerNameController.text = exhibition.seller;
     String imageUrl = exhibition.coverImage;
+
     Dio dio = Dio();
     try {
       // 썸네일 이미지를 불러옴
@@ -404,6 +405,84 @@ class ExhibitionController extends GetxController {
     bool isSale = isItemSailEnabled.value;
     int price = int.parse(itemPriceController.text.replaceAll(',', ''));
 
+    var response = await repository
+        .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    String presignedUrl = response.data['url'];
+    Map<String, dynamic> payload = response.data['fields'];
+    var shortsUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        itemVideo.first.path,
+        filename: itemVideo.first.path.split('/').last,
+      ),
+    });
+
+    var uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+
+    if (uploadResponse.statusCode != 204) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    response = await repository
+        .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    presignedUrl = response.data['url'];
+    payload = response.data['fields'];
+    var soundUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        itemAudio.first.path,
+        filename: itemAudio.first.path.split('/').last,
+      ),
+    });
+
+    uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+
+    if (uploadResponse.statusCode != 204) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
     final formData = FormData.fromMap({
       'is_custom': isCustom,
       'template': template,
@@ -415,10 +494,8 @@ class ExhibitionController extends GetxController {
       'position': exhibitionItems.length + 1,
       'price': price,
       'amount': amount.value,
-      'shorts_url': await MultipartFile.fromFile(
-        itemVideo.first.path,
-        filename: itemVideo.first.path.split('/').last,
-      ),
+      'shorts_url': shortsUrl,
+      'sound': soundUrl,
     });
 
     List<MapEntry<String, MultipartFile>> imageList = [];
@@ -444,11 +521,183 @@ class ExhibitionController extends GetxController {
       }
     }
     formData.files.addAll(imageList);
+    try {
+      final response =
+          await repository.createExhibitionItemById(exhibitionId, formData);
+
+      if (response.statusCode == 201) {
+        Get.snackbar(
+          '작품 등록',
+          '작품이 성공적으로 등록되었습니다.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          '작품 등록 실패',
+          '작품 등록에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (error) {
+      Get.snackbar(
+        '작품 등록 실패',
+        '작품 등록 중 오류가 발생하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   Future<dynamic> editExhibitionItemById(
-      int exhibitionId, int itemId, FormData formData) {
-    return apiClient.editExhibitionItemById(exhibitionId, itemId, formData);
+      int exhibitionId, int itemId, FormData formData) async {
+    bool isCustom = isItemTemplateUsed.value;
+    int template = selectedTemplateIndex.value;
+    String title = itemTitleController.text;
+    String description = itemDescriptionController.text;
+    String backgroundColor = selectedItemBackgroundColor.value.toString();
+    String fontFamily = displayedItemFont.value.toString();
+    bool isSale = isItemSailEnabled.value;
+    int price = int.parse(itemPriceController.text.replaceAll(',', ''));
+
+    var response = await repository
+        .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    String presignedUrl = response.data['url'];
+    Map<String, dynamic> payload = response.data['fields'];
+    var shortsUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        itemVideo.first.path,
+        filename: itemVideo.first.path.split('/').last,
+      ),
+    });
+
+    var uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+
+    if (uploadResponse.statusCode != 204) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    response = await repository
+        .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    presignedUrl = response.data['url'];
+    payload = response.data['fields'];
+    var soundUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        itemAudio.first.path,
+        filename: itemAudio.first.path.split('/').last,
+      ),
+    });
+
+    uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+
+    if (uploadResponse.statusCode != 204) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    final formData = FormData.fromMap({
+      'is_custom': isCustom,
+      'template': template,
+      'title': title,
+      'description': description,
+      'background_color': backgroundColor,
+      'font_family': fontFamily,
+      'is_sale': isSale,
+      'position': exhibitionItems.length + 1,
+      'price': price,
+      'amount': amount.value,
+      'shorts_url': shortsUrl,
+      'sound': soundUrl,
+    });
+
+    List<MapEntry<String, MultipartFile>> imageList = [];
+    if (isCustom == true) {
+      for (int i = 0; i < templateItemImages.length; i++) {
+        imageList.add(MapEntry(
+          'images',
+          await MultipartFile.fromFile(
+            templateItemImages[i]!.path,
+            filename: templateItemImages[i]!.path.split('/').last,
+          ),
+        ));
+      }
+    } else {
+      for (int i = 0; i < itemImages.length; i++) {
+        imageList.add(MapEntry(
+          'images',
+          await MultipartFile.fromFile(
+            itemImages[i].path,
+            filename: itemImages[i].path.split('/').last,
+          ),
+        ));
+      }
+    }
+    formData.files.addAll(imageList);
+    try {
+      final response = await repository.editExhibitionItemById(
+          exhibitionId, itemId, formData);
+
+      if (response.statusCode == 201) {
+        Get.snackbar(
+          '작품 수정',
+          '작품이 성공적으로 등록되었습니다.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (error) {
+      Get.snackbar(
+        '작품 수정 실패',
+        '작품 수정 중 오류가 발생하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   Future<void> selectImages(ImageType imageType, {int? index}) async {
