@@ -80,7 +80,8 @@ class DioClient implements ApiClient {
           return handler.next(response);
         },
         onError: (error, handler) {
-          print('에러경로: ${error.response!.realUri}');
+          print(
+              '에러경로: ${error.response!.realUri}\n에러코드: ${error.response!.statusCode}\}\n에러본문: ${error.response!.data}');
           return handler.next(error);
         },
       ),

@@ -42,12 +42,14 @@ class ExhibitionCreateItemTemplateScreen extends GetView<ExhibitionController> {
                   text: '저장하기',
                   value: true,
                   onTap: () async {
-                    controller.initItemInfo();
-                    await controller.fetchExhibitionItemsById(
-                        Get.arguments['exhibition_id']);
-                    Get.until((route) =>
-                        Get.currentRoute ==
-                        Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
+                    if (controller.isEditingItem.value == true) {
+                      await controller.editExhibitionItemById(
+                          Get.arguments['exhibition_id'],
+                          Get.arguments['item_id']);
+                    } else {
+                      await controller.createExhibitionItemById(
+                          Get.arguments['exhibition_id']);
+                    }
                   },
                 ),
               ),

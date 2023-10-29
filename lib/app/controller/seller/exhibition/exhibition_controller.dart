@@ -409,96 +409,116 @@ class ExhibitionController extends GetxController {
   }
 
   Future<dynamic> createExhibitionItemById(int exhibitionId) async {
-    bool isCustom = isItemTemplateUsed.value;
+    bool isCustom = !isItemTemplateUsed.value;
     int template = selectedTemplateIndex.value;
-    String title = itemTitleController.text;
-    String description = itemDescriptionController.text;
+    bool isSale = isItemSailEnabled.value;
+    String title =
+        isCustom ? (isSale ? itemTitle.value : '') : templateTitle.value;
+    String description = isCustom
+        ? (isSale ? itemDescription.value : '')
+        : templateDescription.value;
     String backgroundColor = selectedItemBackgroundColor.value.toString();
     String fontFamily = displayedItemFont.value.toString();
-    bool isSale = isItemSailEnabled.value;
-    int price = int.parse(itemPriceController.text.replaceAll(',', ''));
+    int price = int.tryParse(itemPriceController.text.replaceAll(',', '')) ?? 0;
+    String? shortsUrl;
+    String? soundUrl;
 
-    var response = await repository
-        .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
+    if (itemVideo.isNotEmpty) {
+      var response = await repository
+          .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
 
-    if (response.statusCode != 200) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
+      if (response.statusCode != 200) {
+        Get.snackbar(
+          '작품 등록 실패',
+          '작품 등록에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
+      String presignedUrl = response.data['url'];
+      Map<String, dynamic> payload = response.data['fields'];
+      shortsUrl = payload['key'];
+      payload.addAll({
+        'file': await MultipartFile.fromFile(
+          itemVideo.first.path,
+          filename: itemVideo.first.path.split('/').last,
+        ),
+      });
+
+      var uploadResponse = await Dio().post(
+        presignedUrl,
+        data: FormData.fromMap(payload),
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
-      return;
+
+      if (uploadResponse.statusCode != 204) {
+        Get.snackbar(
+          '작품 등록 실패',
+          '작품 등록에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
     }
 
-    String presignedUrl = response.data['url'];
-    Map<String, dynamic> payload = response.data['fields'];
-    var shortsUrl = payload['key'];
-    payload.addAll({
-      'file': await MultipartFile.fromFile(
-        itemVideo.first.path,
-        filename: itemVideo.first.path.split('/').last,
-      ),
-    });
+    if (itemAudio.isNotEmpty) {
+      var response = await repository
+          .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
 
-    var uploadResponse = await Dio().post(
-      presignedUrl,
-      data: FormData.fromMap(payload),
-      options: Options(
-        contentType: 'multipart/form-data',
-      ),
-    );
+      if (response.statusCode != 200) {
+        Get.snackbar(
+          '작품 등록 실패',
+          '작품 등록에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
 
-    if (uploadResponse.statusCode != 204) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
+      String presignedUrl = response.data['url'];
+      Map<String, dynamic> payload = response.data['fields'];
+      soundUrl = payload['key'];
+      payload.addAll({
+        'file': await MultipartFile.fromFile(
+          itemAudio.first.path,
+          filename: itemAudio.first.path.split('/').last,
+        ),
+      });
+
+      var uploadResponse = await Dio().post(
+        presignedUrl,
+        data: FormData.fromMap(payload),
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
-      return;
+
+      if (uploadResponse.statusCode != 204) {
+        Get.snackbar(
+          '작품 등록 실패',
+          '작품 등록에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
     }
-
-    response = await repository
-        .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
-
-    if (response.statusCode != 200) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
-
-    presignedUrl = response.data['url'];
-    payload = response.data['fields'];
-    var soundUrl = payload['key'];
-    payload.addAll({
-      'file': await MultipartFile.fromFile(
-        itemAudio.first.path,
-        filename: itemAudio.first.path.split('/').last,
-      ),
-    });
-
-    uploadResponse = await Dio().post(
-      presignedUrl,
-      data: FormData.fromMap(payload),
-      options: Options(
-        contentType: 'multipart/form-data',
-      ),
-    );
-
-    if (uploadResponse.statusCode != 204) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
+    print('isCustom: $isCustom\n'
+        'template: $template\n'
+        'title: $title\n'
+        'description: $description\n'
+        'backgroundColor: $backgroundColor\n'
+        'fontFamily: $fontFamily\n'
+        'isSale: $isSale\n'
+        'price: $price\n'
+        'amount: ${amount.value}\n'
+        'shortsUrl: $shortsUrl\n'
+        'soundUrl: $soundUrl\n');
 
     final formData = FormData.fromMap({
       'is_custom': isCustom,
-      'template': template,
+      'template': template + 1,
       'title': title,
       'description': description,
       'background_color': backgroundColor,
@@ -512,7 +532,7 @@ class ExhibitionController extends GetxController {
     });
 
     List<MapEntry<String, MultipartFile>> imageList = [];
-    if (isCustom == true) {
+    if (isCustom == false) {
       for (int i = 0; i < templateItemImages.length; i++) {
         imageList.add(MapEntry(
           'images',
@@ -544,11 +564,10 @@ class ExhibitionController extends GetxController {
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
-        await fetchExhibitionItemsById(exhibitionId);
-        Get.until(
-          (route) =>
-              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-        );
+        initItemInfo();
+        await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+        Get.until((route) =>
+            Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
       } else {
         Get.snackbar(
           '작품 등록 실패',
@@ -566,92 +585,112 @@ class ExhibitionController extends GetxController {
   }
 
   Future<dynamic> editExhibitionItemById(int exhibitionId, int itemId) async {
-    bool isCustom = isItemTemplateUsed.value;
+    bool isCustom = !isItemTemplateUsed.value;
     int template = selectedTemplateIndex.value;
-    String title = itemTitleController.text;
-    String description = itemDescriptionController.text;
+    bool isSale = isItemSailEnabled.value;
+    String title =
+        isCustom ? (isSale ? itemTitle.value : '') : templateTitle.value;
+    String description = isCustom
+        ? (isSale ? itemDescription.value : '')
+        : templateDescription.value;
     String backgroundColor = selectedItemBackgroundColor.value.toString();
     String fontFamily = displayedItemFont.value.toString();
-    bool isSale = isItemSailEnabled.value;
-    int price = int.parse(itemPriceController.text.replaceAll(',', ''));
+    int price = int.tryParse(itemPriceController.text.replaceAll(',', '')) ?? 0;
+    String? shortsUrl;
+    String? soundUrl;
 
-    var response = await repository
-        .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
+    if (itemVideo.isNotEmpty) {
+      var response = await repository
+          .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
 
-    if (response.statusCode != 200) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
+      if (response.statusCode != 200) {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
+      String presignedUrl = response.data['url'];
+      Map<String, dynamic> payload = response.data['fields'];
+      shortsUrl = payload['key'];
+      payload.addAll({
+        'file': await MultipartFile.fromFile(
+          itemVideo.first.path,
+          filename: itemVideo.first.path.split('/').last,
+        ),
+      });
+
+      var uploadResponse = await Dio().post(
+        presignedUrl,
+        data: FormData.fromMap(payload),
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
-      return;
+
+      if (uploadResponse.statusCode != 204) {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
     }
 
-    String presignedUrl = response.data['url'];
-    Map<String, dynamic> payload = response.data['fields'];
-    var shortsUrl = payload['key'];
-    payload.addAll({
-      'file': await MultipartFile.fromFile(
-        itemVideo.first.path,
-        filename: itemVideo.first.path.split('/').last,
-      ),
-    });
+    if (itemAudio.isNotEmpty) {
+      var response = await repository
+          .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
 
-    var uploadResponse = await Dio().post(
-      presignedUrl,
-      data: FormData.fromMap(payload),
-      options: Options(
-        contentType: 'multipart/form-data',
-      ),
-    );
+      if (response.statusCode != 200) {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
 
-    if (uploadResponse.statusCode != 204) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
+      String presignedUrl = response.data['url'];
+      Map<String, dynamic> payload = response.data['fields'];
+      soundUrl = payload['key'];
+      payload.addAll({
+        'file': await MultipartFile.fromFile(
+          itemAudio.first.path,
+          filename: itemAudio.first.path.split('/').last,
+        ),
+      });
+
+      var uploadResponse = await Dio().post(
+        presignedUrl,
+        data: FormData.fromMap(payload),
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
-      return;
+
+      if (uploadResponse.statusCode != 204) {
+        Get.snackbar(
+          '작품 수정 실패',
+          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
     }
-
-    response = await repository
-        .getPreSignedSoundUrl(itemAudio.first.path.split('.').last);
-
-    if (response.statusCode != 200) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
-
-    presignedUrl = response.data['url'];
-    payload = response.data['fields'];
-    var soundUrl = payload['key'];
-    payload.addAll({
-      'file': await MultipartFile.fromFile(
-        itemAudio.first.path,
-        filename: itemAudio.first.path.split('/').last,
-      ),
-    });
-
-    uploadResponse = await Dio().post(
-      presignedUrl,
-      data: FormData.fromMap(payload),
-      options: Options(
-        contentType: 'multipart/form-data',
-      ),
-    );
-
-    if (uploadResponse.statusCode != 204) {
-      Get.snackbar(
-        '작품 수정 실패',
-        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
+    print('isCustom: $isCustom\n'
+        'template: $template\n'
+        'title: $title\n'
+        'description: $description\n'
+        'backgroundColor: $backgroundColor\n'
+        'fontFamily: $fontFamily\n'
+        'isSale: $isSale\n'
+        'price: $price\n'
+        'amount: ${amount.value}\n'
+        'shortsUrl: $shortsUrl\n'
+        'soundUrl: $soundUrl\n');
 
     final formData = FormData.fromMap({
       'is_custom': isCustom,
@@ -698,14 +737,13 @@ class ExhibitionController extends GetxController {
       if (response.statusCode == 201) {
         Get.snackbar(
           '작품 수정',
-          '작품이 성공적으로 등록되었습니다.',
+          '작품이 성공적으로 수정되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
         );
-        await fetchExhibitionItemsById(exhibitionId);
-        Get.until(
-          (route) =>
-              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-        );
+        initItemInfo();
+        await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+        Get.until((route) =>
+            Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
       } else {
         Get.snackbar(
           '작품 수정 실패',
