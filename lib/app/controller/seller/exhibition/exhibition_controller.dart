@@ -15,6 +15,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../data/models/exhibition.dart';
 import '../../../data/repositories/exhibition_repository.dart';
+import '../../../routes/app_pages.dart';
 import '../../../utils/log_analytics.dart';
 
 class ExhibitionController extends GetxController {
@@ -365,6 +366,11 @@ class ExhibitionController extends GetxController {
         '기획전 소개 저장에 실패하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
+    } else {
+      Get.toNamed(
+        Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
+        arguments: {"exhibition_id": Get.arguments["exhibition_id"]},
+      );
     }
   }
 
@@ -391,6 +397,11 @@ class ExhibitionController extends GetxController {
         '기획전 작가정보 저장 실패',
         '기획전 작가정보 저장에 실패하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
+      );
+    } else {
+      Get.toNamed(
+        Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
+        arguments: {'exhibition_id': Get.arguments['exhibition_id']},
       );
     }
   }
@@ -530,6 +541,11 @@ class ExhibitionController extends GetxController {
           '작품 등록',
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
+        );
+        await fetchExhibitionItemsById(exhibitionId);
+        Get.until(
+          (route) =>
+              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
         );
       } else {
         Get.snackbar(
@@ -683,6 +699,11 @@ class ExhibitionController extends GetxController {
           '작품 수정',
           '작품이 성공적으로 등록되었습니다.',
           snackPosition: SnackPosition.BOTTOM,
+        );
+        await fetchExhibitionItemsById(exhibitionId);
+        Get.until(
+          (route) =>
+              Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
         );
       } else {
         Get.snackbar(
