@@ -176,7 +176,10 @@ class ExhibitionController extends GetxController {
     sellerIntroductionController.text = exhibitionArtist.value!.description;
     isSellerTemplateUsed.value = exhibitionArtist.value!.isUsingTemplate;
 
-    String imageUrl = exhibitionArtist.value!.imageUrl;
+    String? imageUrl = exhibitionArtist.value!.imageUrl;
+
+    if (imageUrl == null) return;
+
     Dio dio = Dio();
     try {
       // 썸네일 이미지를 불러옴
