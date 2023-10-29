@@ -40,14 +40,9 @@ class ExhibitionCreateSellerTemplateScreen
                 NextButton(
                   text: '저장하기',
                   value: true,
-                  onTap: () {
-                    //TODO: 작가 소개 저장
-                    Get.toNamed(
-                      Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
-                      arguments: {
-                        'exhibition_id': Get.arguments['exhibition_id']
-                      },
-                    );
+                  onTap: () async {
+                    await controller.saveExhibitionArtistById(
+                        Get.arguments['exhibition_id']);
                   },
                 ),
               ],

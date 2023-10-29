@@ -250,8 +250,8 @@ class ItemCreateDetailController extends GetxController {
     }
 
     // 쇼츠 등록 PRESIGNED URL을 얻기 위한 API 호출
-    final response =
-        await repository.getPreSignedUrl(videos.first.path.split('.').last);
+    final response = await repository
+        .getPreSignedShortsUrl(videos.first.path.split('.').last);
 
     if (response.statusCode != 200) {
       Get.snackbar(

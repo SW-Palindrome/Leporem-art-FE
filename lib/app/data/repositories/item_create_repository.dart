@@ -5,8 +5,8 @@ class ItemCreateRepository {
   final ApiClient apiClient;
   ItemCreateRepository({required this.apiClient}) : assert(apiClient != null);
 
-  Future<dynamic> getPreSignedUrl(String extension) async {
-    return await apiClient.getPreSignedUrl(extension);
+  Future<dynamic> getPreSignedShortsUrl(String extension) async {
+    return await apiClient.getPreSignedShortsUrl(extension);
   }
 
   Future<dynamic> createItem(FormData formData) async {

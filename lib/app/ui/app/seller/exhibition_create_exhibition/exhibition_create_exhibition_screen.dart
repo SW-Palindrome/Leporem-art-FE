@@ -70,12 +70,10 @@ class ExhibitionCreateExhibitionScreen extends GetView<ExhibitionController> {
                 () => NextButton(
                   text: '저장하기',
                   value: controller.isValidExhibitionSave(),
-                  onTap: () => Get.toNamed(
-                    Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
-                    arguments: {
-                      "exhibition_id": Get.arguments["exhibition_id"]
-                    },
-                  ),
+                  onTap: () async {
+                    await controller.saveExhibitionIntroductionById(
+                        Get.arguments['exhibition_id']);
+                  },
                 ),
               ),
             ],

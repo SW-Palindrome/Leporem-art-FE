@@ -49,14 +49,9 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
                             },
                           );
                         }
-                      : () {
-                          //TODO: 작가 소개 저장
-                          Get.toNamed(
-                            Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
-                            arguments: {
-                              'exhibition_id': Get.arguments['exhibition_id']
-                            },
-                          );
+                      : () async {
+                          await controller.saveExhibitionArtistById(
+                              Get.arguments['exhibition_id']);
                         },
                 ),
               ],

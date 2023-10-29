@@ -93,13 +93,14 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                           },
                         );
                       } else {
-                        await controller.fetchExhibitionItemsById(
-                            Get.arguments['exhibition_id']);
-                        Get.until(
-                          (route) =>
-                              Get.currentRoute ==
-                              Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-                        );
+                        if (controller.isEditingItem.value == true) {
+                          await controller.editExhibitionItemById(
+                              Get.arguments['exhibition_id'],
+                              Get.arguments['item_id']);
+                        } else {
+                          await controller.createExhibitionItemById(
+                              Get.arguments['exhibition_id']);
+                        }
                       }
                     },
                     text: controller.isItemTemplateUsed.value == true
