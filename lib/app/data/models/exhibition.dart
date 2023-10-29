@@ -6,8 +6,10 @@ class Exhibition {
   final DateTime startDateTime;
   final DateTime endDateTime;
 
-  String get startDate => '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
-  String get endDate => '${endDateTime.year}.${endDateTime.month}.${endDateTime.day}';
+  String get startDate =>
+      '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
+  String get endDate =>
+      '${endDateTime.year}.${endDateTime.month}.${endDateTime.day}';
 
   Exhibition({
     required this.id,
@@ -33,7 +35,7 @@ class Exhibition {
 class ExhibitionArtist {
   final String backgroundColor;
   final String fontFamily;
-  final String imageUrl;
+  final String? imageUrl;
   final String description;
   final bool isUsingTemplate;
 

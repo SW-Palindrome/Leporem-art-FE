@@ -94,10 +94,8 @@ class ExhibitionController extends GetxController {
   Rx<int> price = Rx<int>(0);
   Rx<int> amount = Rx<int>(1);
 
-
   // 작품 리스트
   Rx<bool> isEditingItemList = Rx<bool>(false);
-
 
   int get exhibitionId => Get.arguments['exhibition_id'];
 
@@ -175,28 +173,30 @@ class ExhibitionController extends GetxController {
     sellerIntroductionController.text = exhibitionArtist.value!.description;
     isSellerTemplateUsed.value = exhibitionArtist.value!.isUsingTemplate;
 
-    String imageUrl = exhibitionArtist.value!.imageUrl;
+    String? imageUrl = exhibitionArtist.value!.imageUrl;
     Dio dio = Dio();
-    try {
-      // 썸네일 이미지를 불러옴
-      var response = await dio.get(imageUrl,
-          options: Options(responseType: ResponseType.bytes));
+    if (imageUrl != null) {
+      try {
+        // 썸네일 이미지를 불러옴
+        var response = await dio.get(imageUrl,
+            options: Options(responseType: ResponseType.bytes));
 
-      // 이미지 데이터를 바이트 배열로 가져옴
-      List<int> imageBytes = response.data;
+        // 이미지 데이터를 바이트 배열로 가져옴
+        List<int> imageBytes = response.data;
 
-      // 파일 생성
-      Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/temp0.jpg');
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/temp0.jpg');
 
-      // 파일 쓰기
-      await imageFile.writeAsBytes(imageBytes);
-      sellerImage.assignAll([imageFile]);
-      // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
-      sellerImage.refresh();
-    } catch (e) {
-      Logger logger = Logger(printer: PrettyPrinter());
-      logger.e(e);
+        // 파일 쓰기
+        await imageFile.writeAsBytes(imageBytes);
+        sellerImage.assignAll([imageFile]);
+        // 이미지 리스트가 갱신되었으므로 상태변경됨을 알림
+        sellerImage.refresh();
+      } catch (e) {
+        Logger logger = Logger(printer: PrettyPrinter());
+        logger.e(e);
+      }
     }
   }
 
@@ -342,6 +342,113 @@ class ExhibitionController extends GetxController {
   Future<void> fetchExhibitionItemsById(int exhibitionId) async {
     exhibitionItems.value =
         await repository.fetchExhibitionItemById(exhibitionId);
+  }
+
+  Future<dynamic> saveExhibitionIntroductionById(int exhibitionId) async {
+    String title = exhibitionTitleController.text;
+    String artistName = sellerNameController.text;
+    final formData = FormData.fromMap({
+      'title': title,
+      'artist_name': artistName,
+      'cover_image': await MultipartFile.fromFile(
+        exhibitionImage.first.path,
+        filename: exhibitionImage.first.path.split('/').last,
+      ),
+    });
+    final response =
+        await repository.saveExhibitionIntroductionById(exhibitionId, formData);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '기획전 소개 저장 실패',
+        '기획전 소개 저장에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<dynamic> saveExhibitionArtistById(int exhibitionId) async {
+    bool isTemplate = isSellerTemplateUsed.value;
+    String biography = sellerIntroductionController.text;
+    String fontFamily = displayedSellerIntroductionFont.value.toString();
+    String backgroundColor = selectedSellerIntroductionColor.value.toString();
+    final formData = FormData.fromMap({
+      'is_template': isTemplate,
+      'biography': biography,
+      'font_family': fontFamily,
+      'background_color': backgroundColor,
+      'artist_image': await MultipartFile.fromFile(
+        sellerImage.first.path,
+        filename: sellerImage.first.path.split('/').last,
+      ),
+    });
+    final response =
+        await repository.saveExhibitionIntroductionById(exhibitionId, formData);
+
+    if (response.statusCode != 200) {
+      Get.snackbar(
+        '기획전 작가정보 저장 실패',
+        '기획전 작가정보 저장에 실패하였습니다. 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<dynamic> createExhibitionItemById(int exhibitionId) async {
+    bool isCustom = isItemTemplateUsed.value;
+    int template = selectedTemplateIndex.value;
+    String title = itemTitleController.text;
+    String description = itemDescriptionController.text;
+    String backgroundColor = selectedItemBackgroundColor.value.toString();
+    String fontFamily = displayedItemFont.value.toString();
+    bool isSale = isItemSailEnabled.value;
+    int price = int.parse(itemPriceController.text.replaceAll(',', ''));
+
+    final formData = FormData.fromMap({
+      'is_custom': isCustom,
+      'template': template,
+      'title': title,
+      'description': description,
+      'background_color': backgroundColor,
+      'font_family': fontFamily,
+      'is_sale': isSale,
+      'position': exhibitionItems.length + 1,
+      'price': price,
+      'amount': amount.value,
+      'shorts_url': await MultipartFile.fromFile(
+        itemVideo.first.path,
+        filename: itemVideo.first.path.split('/').last,
+      ),
+    });
+
+    List<MapEntry<String, MultipartFile>> imageList = [];
+    if (isCustom == true) {
+      for (int i = 0; i < templateItemImages.length; i++) {
+        imageList.add(MapEntry(
+          'images',
+          await MultipartFile.fromFile(
+            templateItemImages[i]!.path,
+            filename: templateItemImages[i]!.path.split('/').last,
+          ),
+        ));
+      }
+    } else {
+      for (int i = 0; i < itemImages.length; i++) {
+        imageList.add(MapEntry(
+          'images',
+          await MultipartFile.fromFile(
+            itemImages[i].path,
+            filename: itemImages[i].path.split('/').last,
+          ),
+        ));
+      }
+    }
+    formData.files.addAll(imageList);
+  }
+
+  Future<dynamic> editExhibitionItemById(
+      int exhibitionId, int itemId, FormData formData) {
+    return apiClient.editExhibitionItemById(exhibitionId, itemId, formData);
   }
 
   Future<void> selectImages(ImageType imageType, {int? index}) async {

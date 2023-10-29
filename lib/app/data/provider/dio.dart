@@ -1419,11 +1419,10 @@ class DioClient implements ApiClient {
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId) async {
     final response =
         await _dioInstance.get('/exhibitions/$exhibitionId/artist-info');
-
     if (response.statusCode != 200) {
       logger.e('Error fetching exhibition artist in repository: $response');
     }
-
+    print('$exhibitionId \n${response.data}');
     return ExhibitionArtist.fromJson(response.data);
   }
 
