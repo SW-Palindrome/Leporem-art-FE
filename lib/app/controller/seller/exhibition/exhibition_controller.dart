@@ -9,6 +9,7 @@ import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -154,7 +155,7 @@ class ExhibitionController extends GetxController {
 
       // 파일 생성
       Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/temp0.jpg');
+      File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
 
       // 파일 쓰기
       await imageFile.writeAsBytes(imageBytes);
@@ -291,7 +292,7 @@ class ExhibitionController extends GetxController {
 
         // 파일 생성
         Directory cacheDir = await getTemporaryDirectory();
-        File imageFile = File('${cacheDir.path}/temp$i.jpg');
+        File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
 
         // 파일 쓰기
         await imageFile.writeAsBytes(imageBytes);
