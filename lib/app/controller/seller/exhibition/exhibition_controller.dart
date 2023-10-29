@@ -369,6 +369,7 @@ class ExhibitionController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
+      await fetchSellerExhibitions();
       Get.toNamed(
         Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
         arguments: {"exhibition_id": Get.arguments["exhibition_id"]},

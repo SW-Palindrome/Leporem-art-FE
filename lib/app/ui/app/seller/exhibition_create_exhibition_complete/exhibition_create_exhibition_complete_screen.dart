@@ -42,7 +42,7 @@ class ExhibitionCreateExhibitionCompleteScreen
               ),
               SizedBox(height: 40),
               exhibitionWidget(
-                exhibitionId: 1,
+                exhibitionId: Get.arguments['exhibition_id'],
                 title: controller.exhibitions
                     .firstWhere((element) =>
                         element.id == Get.arguments['exhibition_id'])
