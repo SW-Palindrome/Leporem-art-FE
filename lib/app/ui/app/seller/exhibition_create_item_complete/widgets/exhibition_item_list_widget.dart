@@ -32,6 +32,7 @@ exhibitionItemListWidget() {
                     'exhibition_id': Get.arguments['exhibition_id'],
                   },
                 );
+                controller.isEditingItem.value = false;
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -157,8 +158,10 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
               Routes.SELLER_EXHIBITION_CREATE_ITEM,
               arguments: {
                 'exhibition_id': Get.arguments['exhibition_id'],
+                'item_id': controller.exhibitionItems[index].id,
               },
             );
+            controller.isEditingItem.value = true;
           },
           child: SvgPicture.asset(
             'assets/icons/edit.svg',

@@ -96,6 +96,8 @@ class ExhibitionController extends GetxController {
   Rx<int> amount = Rx<int>(1);
 
   // 작품 리스트
+
+  Rx<bool> isEditingItem = Rx<bool>(false);
   Rx<bool> isEditingItemList = Rx<bool>(false);
 
   int get exhibitionId => Get.arguments['exhibition_id'];
@@ -563,8 +565,7 @@ class ExhibitionController extends GetxController {
     }
   }
 
-  Future<dynamic> editExhibitionItemById(
-      int exhibitionId, int itemId, FormData formData) async {
+  Future<dynamic> editExhibitionItemById(int exhibitionId, int itemId) async {
     bool isCustom = isItemTemplateUsed.value;
     int template = selectedTemplateIndex.value;
     String title = itemTitleController.text;
