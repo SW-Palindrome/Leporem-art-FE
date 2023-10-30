@@ -17,6 +17,7 @@ class ExhibitionScreen extends GetView<ExhibitionController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20),
               Text(
                 '기획전',
                 style: TextStyle(
