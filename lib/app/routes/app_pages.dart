@@ -53,7 +53,7 @@ import '../ui/app/seller/exhibition_create_seller_complete/exhibition_create_sel
 import '../ui/app/seller/exhibition_create_seller_example/exhibition_create_seller_example_screen.dart';
 import '../ui/app/seller/exhibition_create_seller_template/exhibition_create_seller_template_screen.dart';
 import '../ui/app/seller/exhibition_create_start/exhibition_create_start_screen.dart';
-import '../ui/app/seller/item_create_detail/item_create_detail_screen.dart';
+import '../ui/app/seller/item_create/item_create_screen.dart';
 import '../ui/app/seller/item_delivery_edit/item_delivery_edit_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
 import '../ui/app/seller/item_edit/item_edit_screen.dart';
@@ -180,7 +180,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SELLER_ITEM_CREATE,
-      page: () => ItemCreateDetailScreen(),
+      page: () => ItemCreateScreen(),
       binding: ItemCreateDetailBinding(),
     ),
     GetPage(

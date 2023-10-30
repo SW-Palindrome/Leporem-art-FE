@@ -74,7 +74,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           GestureDetector(
             onTap: () {
               logAnalytics(name: "enter_item_create");
-              Get.toNamed(Routes.SELLER_ITEM_CREATE_DETAIL);
+              Get.toNamed(Routes.SELLER_ITEM_CREATE);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 17),
@@ -186,7 +186,7 @@ class SellerHomeScreen extends GetView<SellerHomeController> {
           child: GestureDetector(
             onTap: () {
               logAnalytics(name: "enter_item_create");
-              Get.toNamed(Routes.SELLER_ITEM_CREATE_DETAIL);
+              Get.toNamed(Routes.SELLER_ITEM_CREATE);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 11.5),

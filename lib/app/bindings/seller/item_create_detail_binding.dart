@@ -7,7 +7,7 @@ import '../../data/repositories/item_create_repository.dart';
 class ItemCreateDetailBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(ItemCreateDetailController(
+    Get.put(ItemCreateController(
         repository: ItemCreateRepository(apiClient: DioClient())));
   }
 }

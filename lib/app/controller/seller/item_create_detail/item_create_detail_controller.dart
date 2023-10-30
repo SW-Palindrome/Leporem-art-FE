@@ -15,10 +15,9 @@ import '../../../data/repositories/item_create_repository.dart';
 import '../../../utils/log_analytics.dart';
 import '../home/seller_home_controller.dart';
 
-class ItemCreateDetailController extends GetxController {
+class ItemCreateController extends GetxController {
   final ItemCreateRepository repository;
-  ItemCreateDetailController({required this.repository})
-      : assert(repository != null);
+  ItemCreateController({required this.repository}) : assert(repository != null);
 
   RxList<File> images = RxList<File>([]);
   RxList<bool> isImagesLoading = RxList<bool>([]);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/app/controller/common/user_global_info/user_global_info_controller.dart';
 
 import '../../../data/models/item.dart';
 import '../../../data/repositories/home_repository.dart';
@@ -50,8 +51,7 @@ class SellerHomeController extends GetxController {
       final List<SellerHomeItem> fetchedItems =
           await repository.fetchSellerHomeItems(
         currentPage,
-        nickname:
-            Get.find<SellerProfileController>().sellerProfile.value.nickname,
+        nickname: Get.find<UserGlobalInfoController>().nickname,
         keyword: Get.find<SellerSearchController>().searchController.text,
         ordering: ordering,
       );

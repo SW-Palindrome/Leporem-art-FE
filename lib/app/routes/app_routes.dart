@@ -25,12 +25,12 @@ abstract class Routes {
   static const BUYER_REVIEW_STAR = '/buyer/profile/order/review-star';
   static const BUYER_REVIEW_DETAIL = '/buyer/profile/order/review-detail';
   static const BUYER_REVIEW_COMPLETE = '/buyer/profile/order/review-complete';
-  static const BUYER_DELIVERY_INFO_WEBVIEW = '/buyer/profile/order/delivery-info/webview';
+  static const BUYER_DELIVERY_INFO_WEBVIEW =
+      '/buyer/profile/order/delivery-info/webview';
   static const SELLER_APP = '/seller';
   static const SELLER_SEARCH = '/seller/search';
   static const SELLER_ITEM_DETAIL = '/seller/item';
   static const SELLER_ITEM_CREATE = '/seller/item/create';
-  static const SELLER_ITEM_CREATE_DETAIL = '/seller/item/create/detail';
   static const SELLER_ITEM_EDIT = '/seller/item/edit';
   static const SELLER_PROFILE = '/seller/profile';
   static const SELLER_PROFILE_EDIT = '/seller/profile/edit';

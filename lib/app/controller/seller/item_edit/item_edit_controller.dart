@@ -11,7 +11,7 @@ import '../home/seller_home_controller.dart';
 import '../item_create_detail/item_create_detail_controller.dart';
 import '../item_detail/seller_item_detail_controller.dart';
 
-class ItemEditController extends ItemCreateDetailController {
+class ItemEditController extends ItemCreateController {
   ItemEditController({required super.repository});
 
   Rx<bool> isImageChanged = false.obs;
