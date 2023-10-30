@@ -185,6 +185,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Center(
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             controller: Get.find<BuyerSearchController>().searchController,
             onSubmitted: (value) async {
               logAnalytics(
@@ -263,6 +265,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Center(
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             controller: Get.find<SellerSearchController>().searchController,
             onSubmitted: (value) async {
               logAnalytics(

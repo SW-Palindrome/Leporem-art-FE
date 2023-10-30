@@ -49,6 +49,8 @@ itemPriceInputWidget() {
           ),
         ),
         child: TextField(
+          onTapOutside: (event) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           keyboardType: TextInputType.number,
           controller: controller.itemPriceController,
           maxLength: 9,

@@ -131,6 +131,8 @@ sellerIntroductionEditorWidget() {
               ),
               SizedBox(height: 16),
               TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 textAlign: TextAlign.center,
                 controller: controller.sellerIntroductionController,
                 maxLines: 5,

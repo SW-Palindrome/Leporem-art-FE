@@ -52,6 +52,8 @@ class MessageItemShareScreen extends GetView<MessageItemShareController> {
       ),
       child: Center(
         child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '작품명을 입력해주세요.',

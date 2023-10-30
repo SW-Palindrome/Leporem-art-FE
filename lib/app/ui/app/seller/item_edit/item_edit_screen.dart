@@ -566,6 +566,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             controller: controller.titleController,
             maxLength: 46,
             onChanged: (value) => controller.checkTitleChanged(value),
@@ -619,6 +621,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 255,
             maxLines: null,
             controller: controller.descriptionController,
@@ -697,6 +701,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: controller.widthController,
@@ -804,6 +810,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType: TextInputType.number,
                       controller: controller.depthController,
                       inputFormatters: [
@@ -910,6 +918,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType: TextInputType.number,
                       controller: controller.heightController,
                       inputFormatters: [
@@ -1040,6 +1050,8 @@ class ItemEditScreen extends GetView<ItemEditController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             keyboardType: TextInputType.number,
             controller: controller.priceController,
             maxLength: 9,

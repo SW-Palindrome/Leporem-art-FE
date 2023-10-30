@@ -10,7 +10,8 @@ import '../../../theme/app_theme.dart';
 import '../../widgets/next_button.dart';
 import '../message_item_order_address/message_item_order_address_screen.dart';
 
-class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController> {
+class MessageItemOrderInfoScreen
+    extends GetView<MessageItemOrderInfoController> {
   const MessageItemOrderInfoScreen({super.key});
 
   @override
@@ -58,106 +59,111 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
   }
 
   _orderNameEdit() {
-    return Column(
+    return Column(children: [
+      Row(
         children: [
-          Row(
-            children: [
-              Text(
-                '주문자명',
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontPalette.pretendard,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
-          SizedBox(height: 10),
-          TextFormField(
-            controller: controller.name,
+          Text(
+            '주문자명',
             style: TextStyle(
               color: ColorPalette.black,
-              fontSize: 18,
-              height: 1,
-            ),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorPalette.grey_4,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorPalette.purple,
-                ),
-              ),
+              fontWeight: FontWeight.w500,
+              fontFamily: FontPalette.pretendard,
+              fontStyle: FontStyle.normal,
+              fontSize: 14.0,
             ),
           ),
-        ]);
+          Spacer(),
+        ],
+      ),
+      SizedBox(height: 10),
+      TextField(
+        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+        controller: controller.name,
+        style: TextStyle(
+          color: ColorPalette.black,
+          fontSize: 18,
+          height: 1,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalette.grey_4,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalette.purple,
+            ),
+          ),
+        ),
+      ),
+    ]);
   }
 
   _orderAddressEdit(BuildContext context) {
     return Obx(() {
-      return Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                '주소',
+      return Column(children: [
+        Row(
+          children: [
+            Text(
+              '주소',
+              style: TextStyle(
+                color: ColorPalette.black,
+                fontWeight: FontWeight.w500,
+                fontFamily: FontPalette.pretendard,
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0,
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+        SizedBox(height: 10),
+        GestureDetector(
+          onTap: () async {
+            DataModel model = await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => MessageItemOrderAddressScreen(),
+              ),
+            );
+            controller.address.value = model.address;
+            controller.zipCode.value = model.zonecode;
+            controller.isAddressLoaded.value = true;
+            controller.update();
+          },
+          child: Container(
+            width: Get.width,
+            height: 58,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: ColorPalette.grey_4,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: EdgeInsets.all(12),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                controller.isAddressLoaded.value
+                    ? '[${controller.zipCode.value}] ${controller.address.value}'
+                    : '주소 검색',
                 style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontPalette.pretendard,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
-          SizedBox(height: 10),
-          GestureDetector(
-            onTap: () async {
-              DataModel model = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => MessageItemOrderAddressScreen(),
-                ),
-              );
-              controller.address.value = model.address;
-              controller.zipCode.value = model.zonecode;
-              controller.isAddressLoaded.value = true;
-              controller.update();
-            },
-            child: Container(
-              width: Get.width,
-              height: 58,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: ColorPalette.grey_4,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: EdgeInsets.all(12),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  controller.isAddressLoaded.value ? '[${controller.zipCode.value}] ${controller.address.value}' : '주소 검색',
-                  style: TextStyle(
-                    color: controller.isAddressLoaded.value ? ColorPalette.black : ColorPalette.grey_4,
-                    fontSize: 18,
-                    height: 1,
-                  ),
+                  color: controller.isAddressLoaded.value
+                      ? ColorPalette.black
+                      : ColorPalette.grey_4,
+                  fontSize: 18,
+                  height: 1,
                 ),
               ),
             ),
           ),
-          if (controller.isAddressLoaded.value) SizedBox(height: 10),
-          if (controller.isAddressLoaded.value)
-          TextFormField(
+        ),
+        if (controller.isAddressLoaded.value) SizedBox(height: 10),
+        if (controller.isAddressLoaded.value)
+          TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             controller: controller.addressDetail,
             style: TextStyle(
               color: ColorPalette.black,
@@ -182,59 +188,59 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
               ),
             ),
           ),
-        ]);
+      ]);
     });
   }
 
   _orderPhoneNumberEdit() {
-    return Column(
+    return Column(children: [
+      Row(
         children: [
-          Row(
-            children: [
-              Text(
-                '전화번호',
-                style: TextStyle(
-                  color: ColorPalette.black,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontPalette.pretendard,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 14.0,
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
-          SizedBox(height: 10),
-          TextFormField(
-            controller: controller.phoneNumber,
-            maxLength: 13,
+          Text(
+            '전화번호',
             style: TextStyle(
               color: ColorPalette.black,
-              fontSize: 18,
-              height: 1,
+              fontWeight: FontWeight.w500,
+              fontFamily: FontPalette.pretendard,
+              fontStyle: FontStyle.normal,
+              fontSize: 14.0,
             ),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorPalette.grey_4,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorPalette.purple,
-                ),
-              ),
-              hintText: '010-0000-0000',
-              hintStyle: TextStyle(
-                color: ColorPalette.grey_4,
-              ),
-            ),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^[0-9-]+$')),
-            ],
           ),
-        ]);
+          Spacer(),
+        ],
+      ),
+      SizedBox(height: 10),
+      TextField(
+        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+        controller: controller.phoneNumber,
+        maxLength: 13,
+        style: TextStyle(
+          color: ColorPalette.black,
+          fontSize: 18,
+          height: 1,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalette.grey_4,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalette.purple,
+            ),
+          ),
+          hintText: '010-0000-0000',
+          hintStyle: TextStyle(
+            color: ColorPalette.grey_4,
+          ),
+        ),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^[0-9-]+$')),
+        ],
+      ),
+    ]);
   }
 
   _bottomButton() {
@@ -246,7 +252,11 @@ class MessageItemOrderInfoScreen extends GetView<MessageItemOrderInfoController>
         top: 20,
       ),
       child: AnimatedBuilder(
-        animation: Listenable.merge([controller.name, controller.phoneNumber, controller.addressDetail]),
+        animation: Listenable.merge([
+          controller.name,
+          controller.phoneNumber,
+          controller.addressDetail
+        ]),
         builder: (BuildContext context, Widget? child) {
           return NextButton(
             text: '주문하기',

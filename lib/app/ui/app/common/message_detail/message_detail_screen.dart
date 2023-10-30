@@ -326,6 +326,8 @@ class MessageDetailScreen extends GetView<MessageController> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                       child: TextField(
+                        onTapOutside: (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
                         controller: _textEditingController,
                         maxLines: null,
                         decoration: InputDecoration(

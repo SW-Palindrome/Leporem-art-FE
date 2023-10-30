@@ -50,6 +50,8 @@ class NicknameScreen extends GetView<NicknameController> {
                 },
                 child: Obx(
                   () => TextFormField(
+                    onTapOutside: (event) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
                     controller: controller.nicknameController,
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,

@@ -51,7 +51,9 @@ class EmailScreen extends GetView<EmailController> {
                             name: 'seller_signup',
                             parameters: {'action': 'code_form_focus'});
                       },
-                      child: TextFormField(
+                      child: TextField(
+                        onTapOutside: (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
                         onChanged: (text) {
                           controller.isCodeValidated(text);
                         },
@@ -113,7 +115,9 @@ class EmailScreen extends GetView<EmailController> {
                       print(controller.isDisplayError.value);
                     }
                   },
-                  child: TextFormField(
+                  child: TextField(
+                    onTapOutside: (event) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,

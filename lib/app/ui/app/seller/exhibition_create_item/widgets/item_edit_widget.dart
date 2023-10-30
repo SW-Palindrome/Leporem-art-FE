@@ -59,6 +59,8 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               )
             : TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateTitleController,
                 maxLength: 15,
                 textAlign: TextAlign.center,
@@ -196,6 +198,8 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 )
               : TextField(
+                  onTapOutside: (event) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateDescriptionController,
                   maxLines: 5,
                   textAlign: TextAlign.center,
@@ -314,6 +318,8 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 )
               : TextField(
+                  onTapOutside: (event) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateTitleController,
                   maxLength: 15,
                   decoration: InputDecoration(
@@ -351,6 +357,8 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 )
               : TextField(
+                  onTapOutside: (event) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateDescriptionController,
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -402,6 +410,8 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 )
               : TextField(
+                  onTapOutside: (event) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateTitleController,
                   maxLength: 15,
                   decoration: InputDecoration(
@@ -442,6 +452,8 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   ),
                 )
               : TextField(
+                  onTapOutside: (event) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateDescriptionController,
                   minLines: 1,
                   maxLines: 5,
@@ -582,6 +594,8 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               )
             : TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateTitleController,
                 maxLength: 15,
                 decoration: InputDecoration(
@@ -668,6 +682,8 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               )
             : TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -713,6 +729,8 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               )
             : TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateTitleController,
                 maxLength: 15,
                 decoration: InputDecoration(
@@ -747,6 +765,8 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 ),
               )
             : TextField(
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
                 minLines: 1,
@@ -862,6 +882,8 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                         ),
                       )
                     : TextField(
+                        onTapOutside: (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
                         controller: controller.templateTitleController,
                         maxLength: 15,
                         textAlign: TextAlign.center,
@@ -899,6 +921,8 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                         ),
                       )
                     : TextField(
+                        onTapOutside: (event) =>
+                            FocusManager.instance.primaryFocus?.unfocus(),
                         controller: controller.templateDescriptionController,
                         maxLines: 18,
                         decoration: InputDecoration(
@@ -968,6 +992,8 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                           ),
                         )
                       : TextField(
+                          onTapOutside: (event) =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateTitleController,
                           maxLength: 15,
                           textAlign: TextAlign.center,
@@ -1017,6 +1043,8 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                           ),
                         )
                       : TextField(
+                          onTapOutside: (event) =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateDescriptionController,
                           maxLines: 7,
                           textAlign: TextAlign.center,
@@ -1089,6 +1117,8 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                           ),
                         )
                       : TextField(
+                          onTapOutside: (event) =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateTitleController,
                           maxLength: 15,
                           textAlign: TextAlign.center,
@@ -1140,6 +1170,8 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                           ),
                         )
                       : TextField(
+                          onTapOutside: (event) =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateDescriptionController,
                           maxLines: 5,
                           textAlign: TextAlign.center,

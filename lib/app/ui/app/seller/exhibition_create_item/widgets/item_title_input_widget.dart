@@ -38,6 +38,8 @@ itemTitleInputWidget() {
           ),
         ),
         child: TextField(
+          onTapOutside: (event) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           controller: controller.itemTitleController,
           maxLength: 46,
           decoration: InputDecoration(

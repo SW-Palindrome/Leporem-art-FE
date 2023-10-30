@@ -565,6 +565,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             controller: controller.titleController,
             maxLength: 46,
             decoration: InputDecoration(
@@ -617,6 +619,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 255,
             maxLines: null,
             controller: controller.descriptionController,
@@ -694,6 +698,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: controller.widthController,
@@ -800,6 +806,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType: TextInputType.number,
                       controller: controller.depthController,
                       inputFormatters: [
@@ -905,6 +913,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
                       ),
                     ),
                     child: TextField(
+                      onTapOutside: (event) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
                       keyboardType: TextInputType.number,
                       controller: controller.heightController,
                       inputFormatters: [
@@ -1034,6 +1044,8 @@ class ItemCreateScreen extends GetView<ItemCreateController> {
             ),
           ),
           child: TextField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             keyboardType: TextInputType.number,
             controller: controller.priceController,
             maxLength: 9,

@@ -116,7 +116,9 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                   name: 'buyer_profile_edit',
                   parameters: {'action': 'description_form_focus'});
             },
-            child: TextFormField(
+            child: TextField(
+              onTapOutside: (event) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               controller: controller.descriptionController,
               maxLength: 60,
               maxLines: null,
@@ -172,7 +174,9 @@ class SellerProfileEditScreen extends GetView<SellerProfileEditController> {
                 controller.firstEdit.value = true;
               }
             },
-            child: TextFormField(
+            child: TextField(
+              onTapOutside: (event) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               controller: controller.nicknameController,
               maxLength: 10,
               style: TextStyle(

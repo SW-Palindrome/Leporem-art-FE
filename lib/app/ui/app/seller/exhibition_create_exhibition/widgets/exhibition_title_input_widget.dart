@@ -32,6 +32,8 @@ Widget exhibitionTitleInputWidget() {
           ),
         ),
         child: TextField(
+          onTapOutside: (event) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           maxLength: 46,
           controller: controller.exhibitionTitleController,
           decoration: InputDecoration(

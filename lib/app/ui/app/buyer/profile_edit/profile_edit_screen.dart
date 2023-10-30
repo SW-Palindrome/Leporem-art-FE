@@ -113,7 +113,9 @@ class BuyerProfileEditScreen extends GetView<BuyerProfileEditController> {
                 controller.firstEdit.value = true;
               }
             },
-            child: TextFormField(
+            child: TextField(
+              onTapOutside: (event) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               controller: controller.nicknameController,
               maxLength: 10,
               style: TextStyle(

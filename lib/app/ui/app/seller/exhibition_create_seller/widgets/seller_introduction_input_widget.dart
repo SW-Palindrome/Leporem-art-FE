@@ -37,6 +37,8 @@ sellerIntroductionInputWidget() {
           ),
         ),
         child: TextField(
+          onTapOutside: (event) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           maxLength: 255,
           maxLines: null,
           controller: controller.sellerIntroductionController,
