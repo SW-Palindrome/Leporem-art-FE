@@ -199,7 +199,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
               onTap: () async {
                 logAnalytics(name: 'swap_seller');
                 Get.find<MyBottomNavigationbarController>()
-                    .changeSellerIndex(3);
+                    .changeSellerIndex(2);
                 Get.offAllNamed(Routes.SELLER_APP);
               },
               child: Container(
