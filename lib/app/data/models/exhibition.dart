@@ -104,8 +104,8 @@ class ExhibitionItem {
     return ExhibitionItem(
       id: json['exhibition_item_id'],
       template: json['template'],
-      fontFamily: json['font_family'],
-      backgroundColor: json['background_color'],
+      fontFamily: json['font_family'] ?? '0',
+      backgroundColor: json['background_color'] ?? '0',
       imageUrls: List<String>.from(json['images']),
       audioUrl: json['sound'],
       title: json['title'] ?? '',
