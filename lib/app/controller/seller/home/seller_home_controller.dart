@@ -51,7 +51,8 @@ class SellerHomeController extends GetxController {
       final List<SellerHomeItem> fetchedItems =
           await repository.fetchSellerHomeItems(
         currentPage,
-        nickname: Get.find<UserGlobalInfoController>().nickname,
+        nickname:
+            Get.find<SellerProfileController>().sellerProfile.value.nickname,
         keyword: Get.find<SellerSearchController>().searchController.text,
         ordering: ordering,
       );
