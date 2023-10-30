@@ -25,9 +25,9 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
           return _homeScaffold();
         case 1:
           return _exhibitionScaffold();
-        case 1:
-          return _messageScaffold();
         case 2:
+          return _messageScaffold();
+        case 3:
           Get.find<SellerProfileController>().fetch();
           return _profileScaffold();
         default:

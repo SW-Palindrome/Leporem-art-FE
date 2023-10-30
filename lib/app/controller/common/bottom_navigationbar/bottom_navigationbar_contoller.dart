@@ -45,7 +45,7 @@ class MyBottomNavigationbarController extends GetxService {
   }
 
   void changeSellerIndex(int index) {
-    selectedSellerIndex(index);
+    selectedSellerIndex.value = index;
     //하단바 선택시 로그
     late String pageStr;
     switch (index) {
