@@ -189,9 +189,9 @@ class ExhibitionController extends GetxController {
         // 이미지 데이터를 바이트 배열로 가져옴
         List<int> imageBytes = response.data;
 
-      // 파일 생성
-      Directory cacheDir = await getTemporaryDirectory();
-      File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
+        // 파일 생성
+        Directory cacheDir = await getTemporaryDirectory();
+        File imageFile = File('${cacheDir.path}/${Uuid().v4()}.jpg');
 
         // 파일 쓰기
         await imageFile.writeAsBytes(imageBytes);
@@ -210,6 +210,7 @@ class ExhibitionController extends GetxController {
         exhibitionItems.firstWhere((element) => element.id == itemId);
 
     isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
+    selectedTemplateIndex.value = exhibitionItem.template ?? 0;
     isItemSailEnabled.value = exhibitionItem.isSale;
 
     if (isItemTemplateUsed.value == true) {
