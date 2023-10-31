@@ -11,8 +11,6 @@ import '../buyer/profile/profile_screen.dart';
 import '../common/message/message_screen.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/my_bottom_navigationbar.dart';
-import 'auction/auction_screen.dart';
-import 'flop/flop_screen.dart';
 import 'home/home_screen.dart';
 
 class BuyerApp extends GetView<MyBottomNavigationbarController> {
@@ -25,11 +23,8 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
         case 0:
           return _homeScaffold();
         // case 1:
-        //   return _auctionScaffold();
         case 1:
           return _messageScaffold();
-        // case 3:
-        //   return _flopScaffold();
         case 2:
           Get.find<BuyerProfileController>().fetch();
           return _profileScaffold();
@@ -61,28 +56,10 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  _auctionScaffold() {
-    return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: AuctionScreen(),
-      bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
-    );
-  }
-
   _messageScaffold() {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: BuyerMessageScreen(),
-      bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
-    );
-  }
-
-  _flopScaffold() {
-    return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: FlopScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
