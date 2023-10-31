@@ -90,7 +90,8 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
                         Get.toNamed(
                           Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
                           arguments: {
-                            'exhibition_id': Get.arguments['exhibition_id']
+                            'exhibition_id': Get.arguments['exhibition_id'],
+                            'item_id': Get.arguments['item_id'],
                           },
                         );
                       } else {

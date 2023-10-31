@@ -466,17 +466,6 @@ class ExhibitionController extends GetxController {
         return;
       }
     }
-    print('isCustom: $isCustom\n'
-        'template: $template\n'
-        'title: $title\n'
-        'description: $description\n'
-        'backgroundColor: $backgroundColor\n'
-        'fontFamily: $fontFamily\n'
-        'isSale: $isSale\n'
-        'price: $price\n'
-        'amount: ${amount.value}\n'
-        'shortsUrl: $shortsUrl\n'
-        'soundUrl: $soundUrl\n');
 
     final formData = FormData.fromMap({
       'is_custom': isCustom,
@@ -642,17 +631,6 @@ class ExhibitionController extends GetxController {
         return;
       }
     }
-    print('isCustom: $isCustom\n'
-        'template: $template\n'
-        'title: $title\n'
-        'description: $description\n'
-        'backgroundColor: $backgroundColor\n'
-        'fontFamily: $fontFamily\n'
-        'isSale: $isSale\n'
-        'price: $price\n'
-        'amount: ${amount.value}\n'
-        'shortsUrl: $shortsUrl\n'
-        'soundUrl: $soundUrl\n');
 
     final formData = FormData.fromMap({
       'is_custom': isCustom,
@@ -670,7 +648,7 @@ class ExhibitionController extends GetxController {
     });
 
     List<MapEntry<String, MultipartFile>> imageList = [];
-    if (isCustom == true) {
+    if (isCustom == false) {
       for (int i = 0; i < templateItemImages.length; i++) {
         imageList.add(MapEntry(
           'images',
@@ -691,35 +669,29 @@ class ExhibitionController extends GetxController {
         ));
       }
     }
-    formData.files.addAll(imageList);
-    try {
-      final response = await repository.editExhibitionItemById(
-          exhibitionId, itemId, formData);
 
-      if (response.statusCode == 201) {
-        Get.snackbar(
-          '작품 수정',
-          '작품이 성공적으로 수정되었습니다.',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        initItemInfo();
-        await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
-        Get.until((route) =>
-            Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
-      } else {
-        Get.snackbar(
-          '작품 수정 실패',
-          '작품 수정에 실패하였습니다. 다시 시도해주세요.',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } catch (error) {
+    formData.files.addAll(imageList);
+    final response = await repository.editExhibitionItemById(
+        exhibitionId, itemId, formData);
+
+    if (response.statusCode == 200) {
+      Get.snackbar(
+        '작품 수정',
+        '작품이 성공적으로 수정되었습니다.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      initItemInfo();
+      await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+      Get.until((route) =>
+          Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
+    } else {
       Get.snackbar(
         '작품 수정 실패',
-        '작품 수정 중 오류가 발생하였습니다. 다시 시도해주세요.',
+        '작품 수정에 실패하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+
   }
 
   Future<void> selectImages(ImageType imageType, {int? index}) async {
