@@ -18,6 +18,7 @@ class ExhibitionCreateExhibitionScreen extends GetView<ExhibitionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: ColorPalette.white,
       appBar: MyAppBar(
         isWhite: true,
