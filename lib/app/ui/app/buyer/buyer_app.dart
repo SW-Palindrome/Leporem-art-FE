@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/app/controller/buyer/exhibition/buyer_exhibition_controller.dart';
 
 import '../../../controller/buyer/home/buyer_home_controller.dart';
 import '../../../controller/buyer/profile/buyer_profile_controller.dart';
@@ -24,6 +25,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
         case 0:
           return _homeScaffold();
         case 1:
+          Get.find<BuyerExhibitionController>().fetchBuyerExhibitions();
           return _exhibitionScaffold();
         case 2:
           return _messageScaffold();

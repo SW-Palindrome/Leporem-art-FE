@@ -12,6 +12,9 @@ class BuyerExhibitionController extends GetxController {
   Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
   RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([]);
 
+  Exhibition get exhibition => exhibitions.firstWhere(
+      (element) => element.id == Get.arguments['buyer_exhibition_id']);
+
   Future<void> fetchBuyerExhibitions() async {
     exhibitions.value = await repository.fetchBuyerExhibitions();
   }
