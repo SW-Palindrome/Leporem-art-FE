@@ -60,10 +60,6 @@ class MessageController extends GetxService {
     chatRoomList.clear();
     chatRoomList.addAll(fetchedBuyerChatRoomList);
     chatRoomList.addAll(fetchedSellerChatRoomList);
-
-    for (final chatRoom in chatRoomList) {
-      fetchChatRoomMessages(chatRoom.chatRoomUuid);
-    }
     isLoading.value = false;
   }
 
