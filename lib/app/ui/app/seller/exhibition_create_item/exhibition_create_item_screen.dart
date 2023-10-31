@@ -39,23 +39,27 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
             if (controller.isItemTemplateUsed.value == false)
               Center(
                 child: GestureDetector(
-                  onTap: () {
-                    Get.bottomSheet(
-                      previewBottomSheetWidget(),
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(30.0),
-                        ),
-                      ),
-                    );
-                  },
+                  onTap: controller.itemImages.isNotEmpty
+                      ? () {
+                          Get.bottomSheet(
+                            previewBottomSheetWidget(),
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30.0),
+                              ),
+                            ),
+                          );
+                        }
+                      : () {},
                   child: Padding(
                     padding: EdgeInsets.only(right: 18.5),
                     child: Text(
                       '미리보기',
                       style: TextStyle(
-                        color: ColorPalette.purple,
+                        color: controller.itemImages.isNotEmpty
+                            ? ColorPalette.purple
+                            : ColorPalette.grey_6,
                         fontFamily: FontPalette.pretendard,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
