@@ -236,52 +236,12 @@ class ExhibitionController extends GetxController {
       templateItemImages.refresh();
       templateTitleController.text = exhibitionItem.title;
       templateDescriptionController.text = exhibitionItem.description;
-      switch (exhibitionItem.fontFamily) {
-        case 'pretenderd':
-          selectedItemBackgroundColor.value = 0;
-          break;
-        case 'gmarketSans':
-          selectedItemBackgroundColor.value = 1;
-          break;
-        case 'kBoDiaGothic':
-          selectedItemBackgroundColor.value = 2;
-          break;
-        case 'chosun':
-          selectedItemBackgroundColor.value = 3;
-          break;
-      }
-      switch (exhibitionItem.backgroundColor) {
-        case 'white':
-          selectedItemBackgroundColor.value = 0;
-          break;
-        case 'red':
-          selectedItemBackgroundColor.value = 1;
-          break;
-        case 'orange':
-          selectedItemBackgroundColor.value = 2;
-          break;
-        case 'green':
-          selectedItemBackgroundColor.value = 3;
-          break;
-        case 'blue':
-          selectedItemBackgroundColor.value = 4;
-          break;
-        case 'purple':
-          selectedItemBackgroundColor.value = 5;
-          break;
-        case 'brown':
-          selectedItemBackgroundColor.value = 6;
-          break;
-        case 'olive':
-          selectedItemBackgroundColor.value = 7;
-          break;
-        case 'indigo':
-          selectedItemBackgroundColor.value = 8;
-          break;
-        case 'black':
-          selectedItemBackgroundColor.value = 9;
-          break;
-      }
+      selectedItemBackgroundColor.value = int.parse(exhibitionItem.backgroundColor);
+      selectedItemFont.value = int.parse(exhibitionItem.fontFamily);
+      displayedItemFont.value = int.parse(exhibitionItem.fontFamily);
+      selectedItemBackgroundColor.refresh();
+      selectedItemFont.refresh();
+      displayedItemFont.refresh();
     } else {
       List<String> imageList = exhibitionItem.imageUrls;
       isItemImagesLoading.assignAll(List.filled(imageList.length + 1, true));
