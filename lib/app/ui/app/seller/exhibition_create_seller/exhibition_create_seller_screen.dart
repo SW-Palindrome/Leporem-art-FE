@@ -27,34 +27,39 @@ class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Obx(
-            () => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                templateSelectWidget(),
-                SizedBox(height: 24),
-                sellerIntroductionEditorWidget(),
-                Spacer(),
-                NextButton(
-                  text: controller.isSellerTemplateUsed.value == true
-                      ? '다음'
-                      : '저장하기',
-                  value: controller.isValidSellerSave(),
-                  onTap: controller.isSellerTemplateUsed.value == true
-                      ? () {
-                          Get.toNamed(
-                            Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
-                            arguments: {
-                              'exhibition_id': Get.arguments['exhibition_id']
+            () => SingleChildScrollView(
+              child: SizedBox(
+                height: Get.height * 0.835,
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
+                    templateSelectWidget(),
+                    SizedBox(height: 24),
+                    sellerIntroductionEditorWidget(),
+                    Spacer(),
+                    NextButton(
+                      text: controller.isSellerTemplateUsed.value == true
+                          ? '다음'
+                          : '저장하기',
+                      value: controller.isValidSellerSave(),
+                      onTap: controller.isSellerTemplateUsed.value == true
+                          ? () {
+                              Get.toNamed(
+                                Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+                                arguments: {
+                                  'exhibition_id':
+                                      Get.arguments['exhibition_id']
+                                },
+                              );
+                            }
+                          : () async {
+                              await controller.saveExhibitionArtistById(
+                                  Get.arguments['exhibition_id']);
                             },
-                          );
-                        }
-                      : () async {
-                          await controller.saveExhibitionArtistById(
-                              Get.arguments['exhibition_id']);
-                        },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
