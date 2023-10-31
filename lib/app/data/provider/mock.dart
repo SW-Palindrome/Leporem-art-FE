@@ -639,4 +639,21 @@ class MockClient implements ApiClient {
 
   @override
   Future<dynamic> getPreSignedSoundUrl(String extension) async {}
+
+  @override
+  Future<List<Exhibition>> fetchBuyerExhibitions() async {
+    List<Exhibition> exhibitions = [];
+    for (int i = 1; i < 11; i++) {
+      exhibitions.add(Exhibition(
+        id: i,
+        coverImage:
+            'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
+        title: '우유병 기획전',
+        endDateTime: DateTime.parse('2023-10-31'),
+        startDateTime: DateTime.parse('2023-10-24'),
+        seller: '유병우 작가',
+      ));
+    }
+    return exhibitions;
+  }
 }
