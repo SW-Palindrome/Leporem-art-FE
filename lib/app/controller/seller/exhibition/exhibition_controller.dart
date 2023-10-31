@@ -776,7 +776,7 @@ class ExhibitionController extends GetxController {
         if (pickedFile == null) return;
         isSellerImageLoading.value = true;
         break;
-      case ImageType.item:
+      case ImageType.itemNotSale:
         pickedFiles = await ImagePicker().pickMultiImage();
         // 이미지 개수가 10개를 초과하면 에러 메시지를 표시하고 리턴
         if (pickedFiles.length > 10) {
@@ -791,6 +791,11 @@ class ExhibitionController extends GetxController {
         }
         isItemImagesLoading
             .assignAll(List.generate(pickedFiles.length, (_) => true));
+        break;
+      case ImageType.itemSale:
+        pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (pickedFile == null) return;
+        isItemImagesLoading.assignAll(List.generate(1, (_) => true));
         break;
       case ImageType.templateItem:
         if (selectedTemplateIndex.value == 0 ||
@@ -835,13 +840,13 @@ class ExhibitionController extends GetxController {
         if (compressedImage != null) {
           final compressedFile = File('${pickedFile.path}.compressed.jpg')
             ..writeAsBytesSync(compressedImage);
+          totalImageSize = compressedFile.lengthSync();
+          if (isFileLargerThanMB(totalImageSize, 4)) return;
           sellerImage.assignAll([compressedFile]);
           isSellerImageLoading.value = false;
-          totalImageSize = compressedFile.lengthSync();
         }
-        if (isFileLargerThanMB(totalImageSize, 4)) return;
         break;
-      case ImageType.item:
+      case ImageType.itemNotSale:
         // 압축한 이미지를 저장할 공간
         List<File> compressedImages = [];
         int index = 0;
@@ -863,6 +868,17 @@ class ExhibitionController extends GetxController {
         }
         if (isFileLargerThanMB(totalImageSize, 4)) return;
         itemImages.assignAll(compressedImages);
+        break;
+      case ImageType.itemSale:
+        final compressedImage = await compressImage(pickedFile!);
+        if (compressedImage != null) {
+          final compressedFile = File('${pickedFile.path}.compressed.jpg')
+            ..writeAsBytesSync(compressedImage);
+          totalImageSize = compressedFile.lengthSync();
+          if (isFileLargerThanMB(totalImageSize, 4)) return;
+          itemImages.assignAll([compressedFile]);
+          isItemImagesLoading[0] = false;
+        }
         break;
       case ImageType.templateItem:
         if (selectedTemplateIndex.value == 0 ||
@@ -939,7 +955,7 @@ class ExhibitionController extends GetxController {
       case ImageType.seller:
         sellerImage.value = [];
         break;
-      case ImageType.item:
+      case ImageType.itemSale:
         if (index! >= 0 && index! < itemImages.length) {
           itemImages.removeAt(index);
         }
@@ -1178,7 +1194,7 @@ class ExhibitionController extends GetxController {
   }
 }
 
-enum ImageType { exhibition, seller, item, templateItem }
+enum ImageType { exhibition, seller, itemSale, itemNotSale, templateItem }
 
 enum SellerIntroductionColor {
   white,

@@ -22,41 +22,42 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorPalette.white,
-      appBar: MyAppBar(
-        appBarType: AppBarType.backAppBar,
-        isWhite: true,
-        title: '작품 등록',
-        onTapLeadingIcon: () {
-          Get.back();
-        },
-        actions: [
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                print('미리보기');
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 18.5),
-                child: Text(
-                  '미리보기',
-                  style: TextStyle(
-                    color: ColorPalette.purple,
-                    fontFamily: FontPalette.pretendard,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
+    return Obx(
+      () => Scaffold(
+        backgroundColor: ColorPalette.white,
+        appBar: MyAppBar(
+          appBarType: AppBarType.backAppBar,
+          isWhite: true,
+          title: '작품 등록',
+          onTapLeadingIcon: () {
+            Get.back();
+          },
+          actions: [
+            if (controller.isItemTemplateUsed.value == false)
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    print('미리보기');
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 18.5),
+                    child: Text(
+                      '미리보기',
+                      style: TextStyle(
+                        color: ColorPalette.purple,
+                        fontFamily: FontPalette.pretendard,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Obx(
-            () => Column(
+          ],
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20),
