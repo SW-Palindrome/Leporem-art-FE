@@ -12,8 +12,8 @@ class BuyerExhibitionController extends GetxController {
   Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
   RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([]);
 
-  Future<void> fetchSellerExhibitions() async {
-    exhibitions.value = await repository.fetchSellerExhibitions();
+  Future<void> fetchBuyerExhibitions() async {
+    exhibitions.value = await repository.fetchBuyerExhibitions();
   }
 
   Future<void> fetchExhibitionArtistById(int exhibitionId) async {

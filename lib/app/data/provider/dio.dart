@@ -1544,7 +1544,7 @@ class DioClient implements ApiClient {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.get(
-      '/exhibitions/seller',
+      '/exhibitions/buyer',
       options: Options(
         headers: {
           'Authorization': 'Bearer $accessToken',
@@ -1553,7 +1553,7 @@ class DioClient implements ApiClient {
     );
 
     if (response.statusCode != 200) {
-      logger.e('Error fetching seller exhibitions in repository: $response');
+      logger.e('Error fetching buyer exhibitions in repository: $response');
     }
 
     final data = response.data;
