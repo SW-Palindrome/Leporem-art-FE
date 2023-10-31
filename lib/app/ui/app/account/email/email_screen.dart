@@ -31,7 +31,7 @@ class EmailScreen extends GetView<EmailController> {
             children: [
               SizedBox(height: Get.height * 0.1),
               Text(
-                "인증을 위해 학교 이메일 주소를\n입력해주세요.",
+                "인증을 위해 이메일 주소를\n입력해주세요.",
                 style: TextStyle(
                   color: Color(0xff000000),
                   fontWeight: FontWeight.w600,
@@ -181,7 +181,7 @@ class EmailScreen extends GetView<EmailController> {
                               MyBottomSheet(
                                 title: "인증 성공",
                                 description:
-                                    "학교 메일 인증에 성공했습니다.\n공예쁨에서 상상의 나래를 펼쳐주세요!",
+                                    "이메일 인증에 성공했습니다.\n공예쁨에서 상상의 나래를 펼쳐주세요!",
                                 height: Get.height * 0.3,
                                 buttonType: BottomSheetType.oneButton,
                                 leftButtonText: "공예쁨 시작하기",
@@ -204,7 +204,7 @@ class EmailScreen extends GetView<EmailController> {
                         },
                       )
                     : NextButton(
-                        text: "인증메일 전송하기",
+                        text: "인증 이메일 전송하기",
                         value: !controller.isDisplayError.value &&
                             controller.isEmailValid.value,
                         onTap: () {

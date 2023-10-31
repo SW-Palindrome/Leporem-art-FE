@@ -92,7 +92,7 @@ class AccountTypeScreen extends GetView<AccountTypeController> {
                           : ColorPalette.white,
                     ),
                     child: Text(
-                      "학생 판매자",
+                      "판매자",
                       style: TextStyle(
                         color: controller.typeList[1]
                             ? ColorPalette.purple

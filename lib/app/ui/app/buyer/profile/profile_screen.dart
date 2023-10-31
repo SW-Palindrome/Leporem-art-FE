@@ -58,7 +58,7 @@ class BuyerProfileScreen extends GetView<BuyerProfileController> {
                 if (!controller.buyerProfile.value.isSeller)
                   _menuColumn(
                     title: '판매자 인증',
-                    contents: ['학교 이메일 인증'],
+                    contents: ['이메일 인증'],
                     icons: ['mail'],
                     onTaps: [
                       () {
