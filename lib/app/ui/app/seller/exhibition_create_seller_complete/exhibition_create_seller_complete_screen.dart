@@ -41,9 +41,11 @@ class ExhibitionCreateSellerCompleteScreen
                 ),
               ),
               SizedBox(height: 40),
-              controller.isSellerTemplateUsed.value == true
-                  ? sellerIntroductionResultWidget()
-                  : sellerIntroductionEditorWidget(),
+              Center(
+                child: controller.isSellerTemplateUsed.value == true
+                    ? sellerIntroductionResultWidget()
+                    : sellerIntroductionEditorWidget(),
+              ),
               Spacer(),
               NextButton(
                 text: '이어서 작품 등록하기',
