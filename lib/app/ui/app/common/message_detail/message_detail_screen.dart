@@ -18,6 +18,7 @@ class MessageDetailScreen extends GetView<MessageController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchChatRoomMessages(controller.chatRoom.chatRoomUuid);
     return Scaffold(
       appBar: MyAppBar(
         appBarType: AppBarType.backAppBar,
