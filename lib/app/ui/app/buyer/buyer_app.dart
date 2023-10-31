@@ -22,11 +22,10 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
           return _homeScaffold();
+        // case 1:
         case 1:
-          return _exhibitionScaffold();
-        case 2:
           return _messageScaffold();
-        case 3:
+        case 2:
           Get.find<BuyerProfileController>().fetch();
           return _profileScaffold();
         default:
@@ -52,15 +51,6 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
               appBarType: AppBarType.mainPageAppBar,
               onTapFirstActionIcon: () => Get.toNamed(Routes.BUYER_SEARCH)),
       body: BuyerHomeScreen(),
-      bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
-    );
-  }
-
-  _exhibitionScaffold() {
-    return Scaffold(
-      backgroundColor: ColorPalette.white,
-      body: SafeArea(child: Buyer()),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
