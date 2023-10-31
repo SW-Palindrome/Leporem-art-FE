@@ -4,12 +4,13 @@ import 'package:leporemart/app/ui/app/seller/exhibition_create_item_complete/wid
 import 'package:leporemart/app/ui/app/seller/exhibition_create_item_complete/widgets/exhibition_item_edit_widget.dart';
 import 'package:leporemart/app/ui/app/widgets/my_app_bar.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import 'widgets/exhibition_item_list_widget.dart';
 
-class ExhibitionCreateItemCompleteScreen extends GetView<ExhibitionController> {
+class ExhibitionCreateItemCompleteScreen
+    extends GetView<SellerExhibitionController> {
   const ExhibitionCreateItemCompleteScreen({super.key});
 
   @override

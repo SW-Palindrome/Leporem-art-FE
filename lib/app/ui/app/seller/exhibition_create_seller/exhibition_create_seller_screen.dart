@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/seller/exhibition_create_seller/widgets/seller_introduction_editor_widget.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/template_select_widget.dart';
 
-class ExhibitionCreateSellerScreen extends GetView<ExhibitionController> {
+class ExhibitionCreateSellerScreen extends GetView<SellerExhibitionController> {
   const ExhibitionCreateSellerScreen({super.key});
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/my_app_bar.dart';
@@ -9,7 +9,8 @@ import '../../widgets/next_button.dart';
 import 'widgets/design_changer_widget.dart';
 import 'widgets/item_result_widget.dart';
 
-class ExhibitionCreateItemTemplateScreen extends GetView<ExhibitionController> {
+class ExhibitionCreateItemTemplateScreen
+    extends GetView<SellerExhibitionController> {
   const ExhibitionCreateItemTemplateScreen({super.key});
 
   @override

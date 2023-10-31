@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/widgets/next_button.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/bottom_sheet.dart';
@@ -12,7 +12,8 @@ import 'widgets/exhibition_seller_input_widget.dart';
 import 'widgets/exhibition_thumbnail_input_widget.dart';
 import 'widgets/exhibition_title_input_widget.dart';
 
-class ExhibitionCreateExhibitionScreen extends GetView<ExhibitionController> {
+class ExhibitionCreateExhibitionScreen
+    extends GetView<SellerExhibitionController> {
   const ExhibitionCreateExhibitionScreen({super.key});
 
   @override

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
 import '../../widgets/next_button.dart';
@@ -10,7 +10,7 @@ import 'widgets/exhibition_period_widget.dart';
 import 'widgets/exhibition_process_widget.dart';
 import 'widgets/start_inquiry_widget.dart';
 
-class ExhibitionCreateStartScreen extends GetView<ExhibitionController> {
+class ExhibitionCreateStartScreen extends GetView<SellerExhibitionController> {
   const ExhibitionCreateStartScreen({super.key});
 
   @override

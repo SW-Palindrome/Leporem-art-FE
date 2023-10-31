@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/ui/app/widgets/my_app_bar.dart';
 
-import '../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../theme/app_theme.dart';
 
 class ExhibitionCreateSellerExampleScreen
-    extends GetView<ExhibitionController> {
+    extends GetView<SellerExhibitionController> {
   const ExhibitionCreateSellerExampleScreen({super.key});
 
   @override
