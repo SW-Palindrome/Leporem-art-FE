@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:leporemart/app/ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
+import 'package:leporemart/app/ui/app/buyer/exhibition/exhibition_screen.dart';
 import 'package:leporemart/app/ui/app/buyer/order_info/order_info_screen.dart';
 import 'package:leporemart/app/ui/app/common/message_item_order_info/message_item_order_info_screen.dart';
 
@@ -133,6 +134,10 @@ class AppPages {
       name: Routes.BUYER_ITEM_DETAIL,
       page: () => BuyerItemDetailScreen(),
       binding: BuyerItemDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.BUYER_EXHIBITION,
+      page: () => BuyerExhibitionScreen(),
     ),
     GetPage(
       name: Routes.BUYER_ORDER,

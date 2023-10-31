@@ -14,8 +14,7 @@ abstract class Routes {
   static const BUYER_SEARCH = '/buyer/search';
   static const BUYER_ITEM_DETAIL = '/buyer/item';
   static const BUYER_ITEM_CREATOR = '/buyer/creator';
-  static const BUYER_FLOP = '/buyer/flop';
-  static const BUYER_AUCTION = '/buyer/auction';
+  static const BUYER_EXHIBITION = '/buyer/exhibition';
   static const BUYER_PROFILE = '/buyer/profile';
   static const BUYER_PROFILE_EDIT = '/buyer/profile/edit';
   static const BUYER_ORDER = '/buyer/profile/order';
