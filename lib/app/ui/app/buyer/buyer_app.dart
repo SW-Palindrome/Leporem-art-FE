@@ -11,6 +11,7 @@ import '../buyer/profile/profile_screen.dart';
 import '../common/message/message_screen.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/my_bottom_navigationbar.dart';
+import 'exhibition/exhibition_screen.dart';
 import 'home/home_screen.dart';
 
 class BuyerApp extends GetView<MyBottomNavigationbarController> {
@@ -59,8 +60,7 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
 
   _exhibitionScaffold() {
     return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: Container(),
+      body: SafeArea(child: BuyerExhibitionScreen()),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
