@@ -32,9 +32,9 @@ itemImageInputWidget() {
                 onTap: () {
                   logAnalytics(name: "item_create_select_image");
                   if (controller.isItemSailEnabled.value == true) {
-                    controller.selectImages(ImageType.itemSale);
+                    controller.selectImages(ImageType.itemWithTemplate);
                   } else {
-                    controller.selectImages(ImageType.itemNotSale);
+                    controller.selectImages(ImageType.itemWithNotTemplate);
                   }
                 },
                 child: DottedBorder(
@@ -61,7 +61,7 @@ itemImageInputWidget() {
                       Positioned(
                         bottom: Get.height * 0.025,
                         child: Text(
-                          '${controller.itemImages.length}/${controller.isItemSailEnabled.value ? 1 : 10}',
+                          '${controller.itemImages.length}/1',
                           style: TextStyle(
                             color: ColorPalette.grey_6,
                             fontWeight: FontWeight.w600,
@@ -110,7 +110,8 @@ itemImageInputWidget() {
                             child: GestureDetector(
                               onTap: () {
                                 logAnalytics(name: "item_create_remove_image");
-                                controller.removeImage(ImageType.itemSale,
+                                controller.removeImage(
+                                    ImageType.itemWithTemplate,
                                     index: i);
                               },
                               child: CircleAvatar(

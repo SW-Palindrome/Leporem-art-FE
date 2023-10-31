@@ -1423,7 +1423,6 @@ class DioClient implements ApiClient {
     if (response.statusCode != 200) {
       logger.e('Error fetching exhibition artist in repository: $response');
     }
-    print('$exhibitionId \n${response.data}');
     return ExhibitionArtist.fromJson(response.data);
   }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/app/ui/app/seller/exhibition_create_item/widgets/preview_bottomsheet_widget.dart';
 
 import '../../../../controller/seller/exhibition/exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
+import '../../widgets/bottom_sheet.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/item_amount_input_widget.dart';
@@ -37,7 +40,15 @@ class ExhibitionCreateItemScreen extends GetView<ExhibitionController> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    print('미리보기');
+                    Get.bottomSheet(
+                      previewBottomSheetWidget(),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(30.0),
+                        ),
+                      ),
+                    );
                   },
                   child: Padding(
                     padding: EdgeInsets.only(right: 18.5),
