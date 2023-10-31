@@ -52,33 +52,20 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                       ),
                       label: '홈',
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: SvgPicture.asset(
-                    //     'assets/icons/auction.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.grey_4, BlendMode.srcIn),
-                    //   ),
-                    //   activeIcon: SvgPicture.asset(
-                    //     'assets/icons/auction.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.purple, BlendMode.srcIn),
-                    //   ),
-                    //   label: '경매',
-                    // ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset(
+                        'assets/icons/collection.svg',
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.grey_4, BlendMode.srcIn),
+                      ),
+                      activeIcon: SvgPicture.asset(
+                        'assets/icons/collection.svg',
+                        colorFilter: ColorFilter.mode(
+                            ColorPalette.purple, BlendMode.srcIn),
+                      ),
+                      label: '기획전',
+                    ),
                     _chattingBottomNavigationBarItem(),
-                    // BottomNavigationBarItem(
-                    //   icon: SvgPicture.asset(
-                    //     'assets/icons/flop.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.grey_4, BlendMode.srcIn),
-                    //   ),
-                    //   activeIcon: SvgPicture.asset(
-                    //     'assets/icons/flop.svg',
-                    //     colorFilter: ColorFilter.mode(
-                    //         ColorPalette.purple, BlendMode.srcIn),
-                    //   ),
-                    //   label: '플롭',
-                    // ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         'assets/icons/profile.svg',
