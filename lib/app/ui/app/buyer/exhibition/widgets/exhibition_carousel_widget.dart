@@ -7,8 +7,8 @@ import '../../../../../controller/buyer/exhibition/buyer_exhibition_controller.d
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
+final controller = Get.find<BuyerExhibitionController>();
 exhibitionCarouselWidget() {
-  final controller = Get.find<BuyerExhibitionController>();
   return CarouselSlider(
     items: [
       for (var exhibition in controller.exhibitions.value)
@@ -50,7 +50,9 @@ _exhibitionCarouselItem(
         ],
       ),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          await controller.fetchExhibitionArtistById(id);
+          await controller.fetchExhibitionItemsById(id);
           Get.toNamed(
             Routes.BUYER_EXHIBITION,
             arguments: {'buyer_exhibition_id': id},

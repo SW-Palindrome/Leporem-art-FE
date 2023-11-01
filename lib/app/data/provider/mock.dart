@@ -549,10 +549,10 @@ class MockClient implements ApiClient {
     return ExhibitionArtist(
       imageUrl:
           'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/user/profile_images/default.png',
-      backgroundColor: '#000000',
+      backgroundColor: '0',
       description: '안녕하세요',
-      fontFamily: 'NotoSansKR',
-      isUsingTemplate: true,
+      fontFamily: '1',
+      isUsingTemplate: false,
     );
   }
 
@@ -564,9 +564,9 @@ class MockClient implements ApiClient {
         id: i,
         title: '우유병 기획전',
         price: 10000,
-        fontFamily: 'NotoSansKR',
+        fontFamily: '1',
         description: '안녕하세요',
-        backgroundColor: '#000000',
+        backgroundColor: '0',
         imageUrls: [
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
@@ -587,9 +587,9 @@ class MockClient implements ApiClient {
         id: i + 1,
         title: '우유병 기획전 비 템플릿',
         price: 10000,
-        fontFamily: 'NotoSansKR',
+        fontFamily: '0',
         description: '안녕하세요',
-        backgroundColor: '#000000',
+        backgroundColor: '0',
         imageUrls: [
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
