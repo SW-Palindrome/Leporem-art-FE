@@ -20,7 +20,6 @@ _sellerWithTemplateWidget() {
     width: Get.width,
     padding: EdgeInsets.all(24),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
       color: Color(controller.colorList[colorIndex]),
       border: Border.all(
         color: colorIndex == 0 ? ColorPalette.grey_2 : Colors.transparent,
