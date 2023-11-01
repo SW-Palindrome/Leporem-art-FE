@@ -124,7 +124,7 @@ class ExhibitionItem {
   factory ExhibitionItem.fromJson(Map<String, dynamic> json) {
     return ExhibitionItem(
       id: json['exhibition_item_id'],
-      template: json['template'] == null ? null : json['template'] - 1,
+      template: json['template'],
       fontFamily: json['font_family'] ?? '0',
       backgroundColor: json['background_color'] ?? '0',
       imageUrls: List<String>.from(json['images']),
