@@ -84,11 +84,11 @@ class ExhibitionCreateItemScreen extends GetView<SellerExhibitionController> {
                   _templateUseWidget(),
                 if (controller.isItemTemplateUsed.value == false)
                   _templateNotUseWidget(),
-                SizedBox(height: 40),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: itemAudioInputWidget(),
-                ),
+                // SizedBox(height: 40),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 24),
+                //   child: itemAudioInputWidget(),
+                // ),
                 SizedBox(height: 40),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24),
