@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../seller/exhibition/widgets/empty_exhibition_widgets.dart';
 import 'widgets/exhibition_carousel_widget.dart';
 
 class BuyerExhibitionScreen extends StatelessWidget {
@@ -27,7 +28,10 @@ class BuyerExhibitionScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 24),
-          exhibitionCarouselWidget(),
+          if (controller.exhibitions.isEmpty)
+            emptyExhibitionWidget()
+          else
+            exhibitionCarouselWidget()
         ],
       ),
     );
