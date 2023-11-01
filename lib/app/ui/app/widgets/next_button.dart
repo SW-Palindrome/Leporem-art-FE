@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../theme/app_theme.dart';
+import 'single_gesture_detector.dart';
 
 class NextButton extends StatelessWidget {
   const NextButton({
@@ -19,8 +20,8 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: value ? onTap : null,
+    return SingleGestureDetector(
+      onTap: value ? onTap : () {},
       child: Container(
         width: width,
         height: Get.height * 0.06,
