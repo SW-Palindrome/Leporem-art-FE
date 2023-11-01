@@ -39,11 +39,13 @@ class ExhibitionCreateStartScreen extends GetView<SellerExhibitionController> {
               controller.exhibitions
                   .firstWhere(
                       (element) => element.id == Get.arguments['exhibition_id'])
-                  .startDate,
+                  .startDateTime
+                  .toString(),
               controller.exhibitions
                   .firstWhere(
                       (element) => element.id == Get.arguments['exhibition_id'])
-                  .endDate,
+                  .endDateTime
+                  .toString(),
             ),
             SizedBox(height: 40),
             exhibitionProcessWidget(),
