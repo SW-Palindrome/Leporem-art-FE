@@ -36,7 +36,7 @@ class ExhibitionCreateItemCompleteScreen
                       child: Text(
                         '완료',
                         style: TextStyle(
-                          color: ColorPalette.grey_4,
+                          color: ColorPalette.blue,
                           fontSize: 16,
                         ),
                       ),
