@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionPeriodWidget(String startDate, String endDate) {
-  print(startDate);
-  print(endDate);
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     margin: EdgeInsets.symmetric(horizontal: 16),

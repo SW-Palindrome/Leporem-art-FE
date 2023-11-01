@@ -71,7 +71,6 @@ _exhibitionItemWithTemplate(
   } else {
     font = FontPalette.chosun;
   }
-  print('template: $template\ncolor: $color\nfont: $font');
 
   switch (template!) {
     case 1:
