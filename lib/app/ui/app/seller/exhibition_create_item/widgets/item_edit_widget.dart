@@ -9,28 +9,28 @@ import '../../../../theme/app_theme.dart';
 final controller = Get.find<SellerExhibitionController>();
 itemEditWidget() {
   switch (controller.selectedTemplateIndex.value) {
-    case 0:
+    case 1:
       return template1EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 1:
+    case 2:
       return template2EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 2:
+    case 3:
       return template3EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 3:
+    case 4:
       return template4EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 4:
+    case 5:
       return template5EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 5:
+    case 6:
       return template6EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 6:
+    case 7:
       return template7EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
-    case 7:
+    case 8:
       return template8EditWidget(
           ColorPalette.white, FontPalette.pretendard, false);
   }

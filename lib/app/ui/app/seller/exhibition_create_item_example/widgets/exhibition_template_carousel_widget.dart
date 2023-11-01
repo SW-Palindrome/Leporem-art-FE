@@ -106,7 +106,7 @@ exhibitionTemplateCarouselWidget() {
           viewportFraction: 1,
           enableInfiniteScroll: false,
           onPageChanged: (index, reason) {
-            controller.selectedTemplateIndex.value = index;
+            controller.selectedTemplateIndex.value = index + 1;
           },
         ),
       ),
@@ -123,7 +123,7 @@ exhibitionTemplateCarouselWidget() {
                 height: 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: index == controller.selectedTemplateIndex.value
+                  color: index + 1 == controller.selectedTemplateIndex.value
                       ? ColorPalette.purple
                       : ColorPalette.grey_3,
                 ),
