@@ -510,7 +510,6 @@ class SellerExhibitionController extends GetxController {
     try {
       final response =
           await repository.createExhibitionItemById(exhibitionId, formData);
-
       if (response.statusCode == 201) {
         Get.snackbar(
           '작품 등록',

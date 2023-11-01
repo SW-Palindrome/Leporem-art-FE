@@ -26,13 +26,18 @@ previewBottomSheetWidget() {
                 ),
               ),
               Spacer(),
-              SvgPicture.asset(
-                'assets/icons/cancel.svg',
-                width: 24,
-                height: 24,
-                colorFilter: ColorFilter.mode(
-                  ColorPalette.black,
-                  BlendMode.srcIn,
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: SvgPicture.asset(
+                  'assets/icons/cancel.svg',
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    ColorPalette.black,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ],
