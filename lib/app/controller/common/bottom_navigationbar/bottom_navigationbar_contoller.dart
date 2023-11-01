@@ -11,7 +11,7 @@ class MyBottomNavigationbarController extends GetxService {
 
   // 탭 이벤트가 발생할 시 selectedIndex값을 변경해줄 함수
   void changeBuyerIndex(int index) {
-    if (index == 1 || index == 2) {
+    if (index == 1 || index == 2 || index == 3) {
       induceMembership(() {
         selectedBuyerIndex.value = index;
       });
@@ -24,16 +24,16 @@ class MyBottomNavigationbarController extends GetxService {
       case 0:
         pageStr = "Home";
         break;
-      // case 1:
-      //   pageStr = "Auction";
-      //   break;
       case 1:
+        pageStr = "Exhibition";
+        break;
+      case 2:
         pageStr = "Chat";
         break;
       // case 3:
       //   pageStr = "Flop";
       //   break;
-      case 2:
+      case 3:
         pageStr = "MyPage";
         break;
     }

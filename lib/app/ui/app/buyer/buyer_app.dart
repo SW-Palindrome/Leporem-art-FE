@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leporemart/app/controller/buyer/exhibition/buyer_exhibition_controller.dart';
 
 import '../../../controller/buyer/home/buyer_home_controller.dart';
 import '../../../controller/buyer/profile/buyer_profile_controller.dart';
@@ -11,8 +12,7 @@ import '../buyer/profile/profile_screen.dart';
 import '../common/message/message_screen.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/my_bottom_navigationbar.dart';
-import 'auction/auction_screen.dart';
-import 'flop/flop_screen.dart';
+import 'exhibition/exhibition_screen.dart';
 import 'home/home_screen.dart';
 
 class BuyerApp extends GetView<MyBottomNavigationbarController> {
@@ -24,13 +24,12 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
       switch (controller.selectedBuyerIndex.value) {
         case 0:
           return _homeScaffold();
-        // case 1:
-        //   return _auctionScaffold();
         case 1:
-          return _messageScaffold();
-        // case 3:
-        //   return _flopScaffold();
+          Get.find<BuyerExhibitionController>().fetchBuyerExhibitions();
+          return _exhibitionScaffold();
         case 2:
+          return _messageScaffold();
+        case 3:
           Get.find<BuyerProfileController>().fetch();
           return _profileScaffold();
         default:
@@ -61,10 +60,9 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     );
   }
 
-  _auctionScaffold() {
+  _exhibitionScaffold() {
     return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: AuctionScreen(),
+      body: SafeArea(child: BuyerExhibitionScreen()),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );
@@ -74,15 +72,6 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
     return Scaffold(
       appBar: MyAppBar(appBarType: AppBarType.none),
       body: BuyerMessageScreen(),
-      bottomNavigationBar:
-          MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
-    );
-  }
-
-  _flopScaffold() {
-    return Scaffold(
-      appBar: MyAppBar(appBarType: AppBarType.none),
-      body: FlopScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),
     );

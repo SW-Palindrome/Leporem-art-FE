@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
 
 itemFlopInputWidget() {
-  final controller = Get.find<ExhibitionController>();
+  final controller = Get.find<SellerExhibitionController>();
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

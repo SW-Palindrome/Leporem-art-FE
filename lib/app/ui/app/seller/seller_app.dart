@@ -61,7 +61,7 @@ class SellerApp extends GetView<MyBottomNavigationbarController> {
 
   _exhibitionScaffold() {
     return Scaffold(
-      body: SafeArea(child: ExhibitionScreen()),
+      body: SafeArea(child: SellerExhibitionScreen()),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.seller),
     );

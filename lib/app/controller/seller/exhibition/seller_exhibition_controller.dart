@@ -19,9 +19,10 @@ import '../../../data/repositories/exhibition_repository.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/log_analytics.dart';
 
-class ExhibitionController extends GetxController {
+class SellerExhibitionController extends GetxController {
   final ExhibitionRepository repository;
-  ExhibitionController({required this.repository}) : assert(repository != null);
+  SellerExhibitionController({required this.repository})
+      : assert(repository != null);
 
   RxList<Exhibition> exhibitions = RxList<Exhibition>([]);
   Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
@@ -236,7 +237,8 @@ class ExhibitionController extends GetxController {
       templateItemImages.refresh();
       templateTitleController.text = exhibitionItem.title;
       templateDescriptionController.text = exhibitionItem.description;
-      selectedItemBackgroundColor.value = int.parse(exhibitionItem.backgroundColor);
+      selectedItemBackgroundColor.value =
+          int.parse(exhibitionItem.backgroundColor);
       selectedItemFont.value = int.parse(exhibitionItem.fontFamily);
       displayedItemFont.value = int.parse(exhibitionItem.fontFamily);
       selectedItemBackgroundColor.refresh();
@@ -671,8 +673,8 @@ class ExhibitionController extends GetxController {
     }
 
     formData.files.addAll(imageList);
-    final response = await repository.editExhibitionItemById(
-        exhibitionId, itemId, formData);
+    final response =
+        await repository.editExhibitionItemById(exhibitionId, itemId, formData);
 
     if (response.statusCode == 200) {
       Get.snackbar(
@@ -691,7 +693,6 @@ class ExhibitionController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
-
   }
 
   Future<void> selectImages(ImageType imageType, {int? index}) async {

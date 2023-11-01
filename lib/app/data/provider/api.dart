@@ -117,7 +117,7 @@ abstract class ApiClient {
       int orderId, String deliveryCompany, String invoiceNumber);
   Future<DeliveryInfo?> fetchDeliveryInfo(int orderId);
 
-  // 전시전
+  // 판매자 전시전
   Future<List<Exhibition>> fetchSellerExhibitions();
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
@@ -129,4 +129,7 @@ abstract class ApiClient {
   Future<dynamic> editExhibitionItemById(
       int exhibitionId, int itemId, FormData formData);
   Future<dynamic> getPreSignedSoundUrl(String extension);
+
+  // 구매자 전시전
+  Future<List<Exhibition>> fetchBuyerExhibitions();
 }

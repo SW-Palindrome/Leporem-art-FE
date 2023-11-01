@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
+import 'package:leporemart/app/controller/seller/exhibition/seller_exhibition_controller.dart';
 import 'package:leporemart/app/ui/app/seller/exhibition/widgets/empty_exhibition_widgets.dart';
 import '../../../theme/app_theme.dart';
 import 'widgets/exhibition_list_widget.dart';
 
-class ExhibitionScreen extends GetView<ExhibitionController> {
-  const ExhibitionScreen({super.key});
+class SellerExhibitionScreen extends GetView<SellerExhibitionController> {
+  const SellerExhibitionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

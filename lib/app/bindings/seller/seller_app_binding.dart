@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../controller/seller/home/seller_home_controller.dart';
 import '../../controller/seller/profile/seller_profile_controller.dart';
 import '../../controller/seller/search/seller_search_controller.dart';
@@ -17,7 +17,7 @@ class SellerAppBinding implements Bindings {
         repository: HomeRepository(apiClient: DioClient())));
     Get.lazyPut(() => SellerProfileController(
         repository: ProfileRepository(apiClient: DioClient())));
-    Get.lazyPut(() => ExhibitionController(
+    Get.lazyPut(() => SellerExhibitionController(
         repository: ExhibitionRepository(apiClient: DioClient())));
   }
 }

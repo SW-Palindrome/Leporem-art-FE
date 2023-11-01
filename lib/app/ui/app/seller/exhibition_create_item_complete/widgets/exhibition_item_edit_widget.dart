@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionItemEditWidget() {
-  final controller = Get.find<ExhibitionController>();
+  final controller = Get.find<SellerExhibitionController>();
   return Column(
     children: [
       for (int index = 0; index < controller.exhibitionItems.length; index++)
@@ -23,7 +23,7 @@ exhibitionItemEditWidget() {
   );
 }
 
-_exhibitionItemWidget(ExhibitionController controller, int index) {
+_exhibitionItemWidget(SellerExhibitionController controller, int index) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
@@ -92,7 +92,8 @@ _exhibitionItemWidget(ExhibitionController controller, int index) {
         SizedBox(width: 12),
         GestureDetector(
           onTap: () async {
-            await controller.removeExhibitionItem(controller.exhibitionId, controller.exhibitionItems[index].id);
+            await controller.removeExhibitionItem(
+                controller.exhibitionId, controller.exhibitionItems[index].id);
           },
           child: SvgPicture.asset(
             'assets/icons/cancel.svg',

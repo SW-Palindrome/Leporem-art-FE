@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leporemart/app/controller/seller/exhibition/exhibition_controller.dart';
+import 'package:leporemart/app/controller/seller/exhibition/seller_exhibition_controller.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
@@ -9,7 +9,7 @@ import '../../widgets/next_button.dart';
 import '../exhibition/widgets/exhibition_widget.dart';
 
 class ExhibitionCreateExhibitionCompleteScreen
-    extends GetView<ExhibitionController> {
+    extends GetView<SellerExhibitionController> {
   const ExhibitionCreateExhibitionCompleteScreen({super.key});
 
   @override

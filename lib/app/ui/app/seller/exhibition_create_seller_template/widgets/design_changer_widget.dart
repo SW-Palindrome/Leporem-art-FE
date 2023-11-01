@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../../utils/log_analytics.dart';
 import '../../../../theme/app_theme.dart';
 import '../../../widgets/bottom_sheet.dart';
 import '../../../widgets/next_button.dart';
 
 designChangerWidget() {
-  final controller = Get.find<ExhibitionController>();
+  final controller = Get.find<SellerExhibitionController>();
   return Column(
     children: [
       Row(

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
 
 sellerIntroductionResultWidget() {
-  final controller = Get.find<ExhibitionController>();
+  final controller = Get.find<SellerExhibitionController>();
   return Container(
     width: Get.width,
     padding: EdgeInsets.all(24),

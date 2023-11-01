@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../controller/seller/exhibition/exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../../utils/log_analytics.dart';
 import '../../../../theme/app_theme.dart';
 
 Widget sellerThumbnailInputWidget() {
-  final controller = Get.find<ExhibitionController>();
+  final controller = Get.find<SellerExhibitionController>();
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -33,7 +33,7 @@ Widget sellerThumbnailInputWidget() {
   );
 }
 
-_buildImageWidget(ExhibitionController controller) {
+_buildImageWidget(SellerExhibitionController controller) {
   if (controller.sellerImage.isEmpty) {
     // 이미지가 없을 때
     return DottedBorder(
