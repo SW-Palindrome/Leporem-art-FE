@@ -80,7 +80,7 @@ class SellerExhibitionController extends GetxController {
 
   // 작품 등록
   Rx<bool> isItemTemplateUsed = Rx<bool>(false);
-  Rx<int> selectedTemplateIndex = Rx<int>(0);
+  Rx<int> selectedTemplateIndex = Rx<int>(1);
   Rx<String> templateTitle = Rx<String>('');
   Rx<String> templateDescription = Rx<String>('');
 
@@ -1031,6 +1031,7 @@ class SellerExhibitionController extends GetxController {
     templateTitle.value = '';
     templateDescription.value = '';
     selectedItemBackgroundColor.value = 0;
+    selectedTemplateIndex.value = 1;
     selectedItemFont.value = 0;
     displayedItemFont.value = 0;
   }
