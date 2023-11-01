@@ -87,7 +87,7 @@ class SellerExhibitionController extends GetxController {
 
   RxList<bool> isItemImagesLoading = RxList<bool>([]);
   RxList<File> itemAudio = RxList<File>([]);
-  Rx<bool> isItemSailEnabled = Rx<bool>(true);
+  Rx<bool> isItemSailEnabled = Rx<bool>(false);
   RxList<File> itemVideo = RxList<File>([]);
   Rx<bool> isItemVideoLoading = Rx<bool>(false);
   Rx<bool> isItemAudioLoading = Rx<bool>(false);
@@ -1017,7 +1017,7 @@ class SellerExhibitionController extends GetxController {
     itemDescription.value = '';
     price.value = 0;
     amount.value = 1;
-    isItemSailEnabled.value = true;
+    isItemSailEnabled.value = false;
     templateTitle.value = '';
     templateDescription.value = '';
     selectedItemBackgroundColor.value = 0;

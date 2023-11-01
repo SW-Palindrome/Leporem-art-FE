@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
-import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionItemEditWidget() {
