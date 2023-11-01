@@ -648,7 +648,10 @@ class SellerExhibitionController extends GetxController {
       'background_color': backgroundColor,
       'font_family': fontFamily,
       'is_sale': isSale,
-      'position': exhibitionItems.length + 1,
+      'position': exhibitionItems
+          .where((element) => element.id == itemId)
+          .first
+          .position,
       'price': price,
       'amount': amount.value,
       'shorts_url': shortsUrl,
