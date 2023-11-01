@@ -23,7 +23,7 @@ class Exhibition {
   });
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
-    ExhibitionStatus status;
+    ExhibitionStatus? status;
     switch (json['status']) {
       case '생성':
         status = ExhibitionStatus.created;

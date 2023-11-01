@@ -1433,8 +1433,7 @@ class DioClient implements ApiClient {
       logger.e('Error fetching seller exhibitions in repository: $response');
     }
 
-    final data = response.data;
-    return data.map<Exhibition>((json) => Exhibition.fromJson(json)).toList();
+    return Exhibition.fromJson(response.data);
   }
 
   @override
