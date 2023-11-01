@@ -9,7 +9,7 @@ exhibitionProcessWidget() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '기획전 등은 아래 순서로 진행돼요!',
+          '기획전 등록은 아래 순서로 진행돼요!',
           style: TextStyle(
             color: ColorPalette.black,
             fontFamily: FontPalette.pretendard,
