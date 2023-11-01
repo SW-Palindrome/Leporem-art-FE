@@ -394,7 +394,7 @@ class SellerExhibitionController extends GetxController {
     String? shortsUrl;
     String? soundUrl;
 
-    if (itemVideo.isNotEmpty) {
+    if (itemVideo.isNotEmpty && isSale) {
       var response = await repository
           .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
 
@@ -558,7 +558,7 @@ class SellerExhibitionController extends GetxController {
     String? shortsUrl;
     String? soundUrl;
 
-    if (itemVideo.isNotEmpty) {
+    if (itemVideo.isNotEmpty && isSale) {
       var response = await repository
           .getPreSignedShortsUrl(itemVideo.first.path.split('.').last);
 
