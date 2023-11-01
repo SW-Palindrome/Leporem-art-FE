@@ -642,7 +642,7 @@ class SellerExhibitionController extends GetxController {
 
     final formData = FormData.fromMap({
       'is_custom': isCustom,
-      'template': template,
+      'template': template + 1,
       'title': title,
       'description': description,
       'background_color': backgroundColor,
