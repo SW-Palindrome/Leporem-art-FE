@@ -44,10 +44,10 @@ class HomeScreen extends StatelessWidget {
       FirebaseConfig.registerFcmDevice();
       ChattingSocketSingleton();
       FlutterNativeSplash.remove();
-      Get.toNamed(Routes.BUYER_APP);
+      Get.offAllNamed(Routes.BUYER_APP);
     } else {
       FlutterNativeSplash.remove();
-      Get.toNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.LOGIN);
     }
   }
 }

@@ -11,6 +11,10 @@ class ExhibitionRepository {
     return apiClient.fetchSellerExhibitions();
   }
 
+  Future<Exhibition> fetchExhibitionById(int exhibitionId) async {
+    return apiClient.fetchExhibitionById(exhibitionId);
+  }
+
   Future<List<Exhibition>> fetchBuyerExhibitions() async {
     return apiClient.fetchBuyerExhibitions();
   }

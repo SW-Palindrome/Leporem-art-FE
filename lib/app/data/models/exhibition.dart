@@ -3,6 +3,7 @@ class Exhibition {
   final String title;
   final String coverImage;
   final String seller;
+  final ExhibitionStatus? status;
   final DateTime startDateTime;
   final DateTime endDateTime;
 
@@ -16,16 +17,36 @@ class Exhibition {
     required this.title,
     required this.coverImage,
     required this.seller,
+    required this.status,
     required this.startDateTime,
     required this.endDateTime,
   });
 
   factory Exhibition.fromJson(Map<String, dynamic> json) {
+    ExhibitionStatus? status;
+    switch (json['status']) {
+      case '생성':
+        status = ExhibitionStatus.created;
+        break;
+      case '소개 작성 완료':
+        status = ExhibitionStatus.introductionWritten;
+        break;
+      case '작가 소개 작성 완료':
+        status = ExhibitionStatus.artistWritten;
+        break;
+      case '작품 등록 완료':
+        status = ExhibitionStatus.itemRegistered;
+        break;
+      default:
+        status = ExhibitionStatus.created;
+        break;
+    }
     return Exhibition(
-      id: json['exhibition_id'],
+      id: json['exhibition_id'] ?? -1,
       title: json['title'],
       coverImage: json['cover_image'],
       seller: json['artist_name'],
+      status: status,
       startDateTime: DateTime.parse(json['start_date']),
       endDateTime: DateTime.parse(json['end_date']),
     );
@@ -120,4 +141,11 @@ class ExhibitionItem {
       height: json['height'],
     );
   }
+}
+
+enum ExhibitionStatus {
+  created,
+  introductionWritten,
+  artistWritten,
+  itemRegistered,
 }

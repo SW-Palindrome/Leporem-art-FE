@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
 
@@ -13,9 +13,11 @@ exhibitionWidget({
   required int exhibitionId,
   bool isTouchable = true,
 }) {
+  final controller = Get.find<SellerExhibitionController>();
   return GestureDetector(
     onTap: isTouchable
-        ? () {
+        ? () async {
+            await controller.fetchExhibitionById(exhibitionId);
             Get.toNamed(Routes.SELLER_EXHIBITION_CREATE_START,
                 arguments: {'exhibition_id': exhibitionId});
           }
