@@ -60,17 +60,17 @@ exhibitionItemListWidget() {
           ],
         ),
       SizedBox(height: 40),
-      Center(
-        child: Text(
-          '판매중인 작품 ${((controller.exhibitionItems.length / 2).ceil())}개 이상이어야 합니다.',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: ColorPalette.red,
-          ),
-        ),
-      ),
-      SizedBox(height: 24),
+      // Center(
+      //   child: Text(
+      //     '판매중인 작품 ${((controller.exhibitionItems.length / 2).ceil())}개 이상이어야 합니다.',
+      //     style: TextStyle(
+      //       fontSize: 14,
+      //       fontWeight: FontWeight.w400,
+      //       color: ColorPalette.red,
+      //     ),
+      //   ),
+      // ),
+      // SizedBox(height: 24),
       NextButton(
         text: '완료',
         value: controller.isValidItemSave(),
