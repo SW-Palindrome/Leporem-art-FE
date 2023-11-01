@@ -119,6 +119,7 @@ abstract class ApiClient {
 
   // 판매자 전시전
   Future<List<Exhibition>> fetchSellerExhibitions();
+  Future<Exhibition> fetchExhibitionById(int exhibitionId);
   Future<ExhibitionArtist?> fetchExhibitionArtistById(int exhibitionId);
   Future<List<ExhibitionItem>> fetchExhibitionItemById(int exhibitionId);
   Future<dynamic> removeExhibitionItem(int exhibitionId, int itemId);

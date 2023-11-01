@@ -29,6 +29,8 @@ class SellerExhibitionController extends GetxController {
   RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([]);
 
   // 기획전 소개
+  Rx<ExhibitionStatus> exhibitionStatus =
+      Rx<ExhibitionStatus>(ExhibitionStatus.created);
   RxList<File> exhibitionImage = RxList<File>([]);
   Rx<bool> isExhibitionImageLoading = Rx<bool>(false);
   TextEditingController exhibitionTitleController = TextEditingController();
@@ -137,6 +139,11 @@ class SellerExhibitionController extends GetxController {
 
   Future<void> fetchSellerExhibitions() async {
     exhibitions.value = await repository.fetchSellerExhibitions();
+  }
+
+  Future<void> fetchExhibitionById(int exhibitionId) async {
+    Exhibition exhibition = await repository.fetchExhibitionById(exhibitionId);
+    exhibitionStatus.value = exhibition.status!;
   }
 
   Future<void> fetchSellerExhibitionById(int exhibitionId) async {
