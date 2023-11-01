@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:leporemart/app/data/provider/mock.dart';
 
 import '../../controller/buyer/exhibition/buyer_exhibition_controller.dart';
 import '../../controller/buyer/home/buyer_home_controller.dart';
@@ -19,6 +18,6 @@ class BuyerAppBinding implements Bindings {
     Get.lazyPut(() => BuyerProfileController(
         repository: ProfileRepository(apiClient: DioClient())));
     Get.lazyPut(() => BuyerExhibitionController(
-        repository: ExhibitionRepository(apiClient: MockClient())));
+        repository: ExhibitionRepository(apiClient: DioClient())));
   }
 }
