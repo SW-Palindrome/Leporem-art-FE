@@ -26,6 +26,7 @@ exhibitionItemListWidget() {
             SizedBox(height: 24),
             GestureDetector(
               onTap: () {
+                controller.selectedTemplateIndex.value = 1;
                 controller.resetItemInfo();
                 Get.toNamed(
                   Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,

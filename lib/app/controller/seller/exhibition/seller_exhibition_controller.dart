@@ -1031,7 +1031,6 @@ class SellerExhibitionController extends GetxController {
     templateTitle.value = '';
     templateDescription.value = '';
     selectedItemBackgroundColor.value = 0;
-    selectedTemplateIndex.value = 1;
     selectedItemFont.value = 0;
     displayedItemFont.value = 0;
   }

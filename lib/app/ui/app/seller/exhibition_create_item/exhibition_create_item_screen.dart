@@ -10,7 +10,6 @@ import '../../widgets/bottom_sheet.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/next_button.dart';
 import 'widgets/item_amount_input_widget.dart';
-import 'widgets/item_audio_input_widget.dart';
 import 'widgets/item_description_input_widget.dart';
 import 'widgets/item_edit_widget.dart';
 import 'widgets/item_flop_input_widget.dart';
