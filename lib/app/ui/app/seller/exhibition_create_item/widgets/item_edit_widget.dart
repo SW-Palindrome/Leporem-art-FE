@@ -187,16 +187,18 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         SizedBox(
           width: Get.width * 0.65,
           child: isColorFontChange == true
-              ? Text(
-                  controller.templateDescription.value,
-                  maxLines: 5,
-                  style: TextStyle(
-                    color: color == ColorPalette.black
-                        ? ColorPalette.white
-                        : ColorPalette.black,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: fontFamily,
-                    fontSize: 14,
+              ? Center(
+                  child: Text(
+                    controller.templateDescription.value,
+                    maxLines: 5,
+                    style: TextStyle(
+                      color: color == ColorPalette.black
+                          ? ColorPalette.white
+                          : ColorPalette.black,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: fontFamily,
+                      fontSize: 14,
+                    ),
                   ),
                 )
               : TextField(
@@ -760,6 +762,7 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         isColorFontChange == true
             ? Text(
@@ -922,19 +925,18 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 8, 4, 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 isColorFontChange == true
-                    ? Center(
-                        child: Text(
-                          controller.templateTitle.value,
-                          style: TextStyle(
-                            color: color == ColorPalette.black
-                                ? ColorPalette.white
-                                : ColorPalette.black,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: fontFamily,
-                            fontSize: 26,
-                          ),
+                    ? Text(
+                        controller.templateTitle.value,
+                        style: TextStyle(
+                          color: color == ColorPalette.black
+                              ? ColorPalette.white
+                              : ColorPalette.black,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: fontFamily,
+                          fontSize: 26,
                         ),
                       )
                     : TextField(
@@ -942,7 +944,6 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                             FocusManager.instance.primaryFocus?.unfocus(),
                         controller: controller.templateTitleController,
                         maxLength: 15,
-                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: '작품 이름을 입력해주세요',
                           hintStyle: TextStyle(
@@ -963,18 +964,16 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       ),
                 SizedBox(height: 8),
                 isColorFontChange == true
-                    ? Center(
-                        child: Text(
-                          controller.templateDescription.value,
-                          maxLines: 18,
-                          style: TextStyle(
-                            color: color == ColorPalette.black
-                                ? ColorPalette.white
-                                : ColorPalette.black,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: fontFamily,
-                            fontSize: 14,
-                          ),
+                    ? Text(
+                        controller.templateDescription.value,
+                        maxLines: 18,
+                        style: TextStyle(
+                          color: color == ColorPalette.black
+                              ? ColorPalette.white
+                              : ColorPalette.black,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: fontFamily,
+                          fontSize: 14,
                         ),
                       )
                     : TextField(
@@ -1029,6 +1028,7 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         SizedBox(
           height: Get.width * 0.6,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: Get.width * 0.75,
@@ -1045,17 +1045,15 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 child: RotatedBox(
                   quarterTurns: 1,
                   child: isColorFontChange == true
-                      ? Center(
-                          child: Text(
-                            controller.templateTitle.value,
-                            style: TextStyle(
-                              color: color == ColorPalette.black
-                                  ? ColorPalette.white
-                                  : ColorPalette.black,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: fontFamily,
-                              fontSize: 26,
-                            ),
+                      ? Text(
+                          controller.templateTitle.value,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: fontFamily,
+                            fontSize: 26,
                           ),
                         )
                       : TextField(
@@ -1063,7 +1061,6 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateTitleController,
                           maxLength: 15,
-                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '작품 이름을 입력해주세요',
                             hintStyle: TextStyle(
@@ -1096,18 +1093,16 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: isColorFontChange == true
-                      ? Center(
-                          child: Text(
-                            controller.templateDescription.value,
-                            maxLines: 7,
-                            style: TextStyle(
-                              color: color == ColorPalette.black
-                                  ? ColorPalette.white
-                                  : ColorPalette.black,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: fontFamily,
-                              fontSize: 14,
-                            ),
+                      ? Text(
+                          controller.templateDescription.value,
+                          maxLines: 7,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: fontFamily,
+                            fontSize: 14,
                           ),
                         )
                       : TextField(
@@ -1126,7 +1121,6 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               }
                             }),
                           ],
-                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '여기에 작품에 대한 설명을 적어주세요',
                             hintStyle: TextStyle(
@@ -1169,6 +1163,7 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         SizedBox(
           height: Get.width * 0.83,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: Get.width * 0.77,
@@ -1182,17 +1177,15 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 child: RotatedBox(
                   quarterTurns: 1,
                   child: isColorFontChange == true
-                      ? Center(
-                          child: Text(
-                            controller.templateTitle.value,
-                            style: TextStyle(
-                              color: color == ColorPalette.black
-                                  ? ColorPalette.white
-                                  : ColorPalette.black,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: fontFamily,
-                              fontSize: 26,
-                            ),
+                      ? Text(
+                          controller.templateTitle.value,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: fontFamily,
+                            fontSize: 26,
                           ),
                         )
                       : TextField(
@@ -1200,7 +1193,6 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateTitleController,
                           maxLength: 15,
-                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '작품 이름을 입력해주세요',
                             hintStyle: TextStyle(
@@ -1235,18 +1227,16 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 child: SizedBox(
                   width: Get.width * 0.5,
                   child: isColorFontChange == true
-                      ? Center(
-                          child: Text(
-                            controller.templateDescription.value,
-                            maxLines: 5,
-                            style: TextStyle(
-                              color: color == ColorPalette.black
-                                  ? ColorPalette.white
-                                  : ColorPalette.black,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: fontFamily,
-                              fontSize: 14,
-                            ),
+                      ? Text(
+                          controller.templateDescription.value,
+                          maxLines: 5,
+                          style: TextStyle(
+                            color: color == ColorPalette.black
+                                ? ColorPalette.white
+                                : ColorPalette.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: fontFamily,
+                            fontSize: 14,
                           ),
                         )
                       : TextField(
@@ -1265,7 +1255,6 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               }
                             }),
                           ],
-                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '여기에 작품에 대한 설명을 적어주세요',
                             hintStyle: TextStyle(
