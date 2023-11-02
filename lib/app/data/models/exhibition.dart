@@ -71,6 +71,7 @@ class ExhibitionArtist {
   });
 
   factory ExhibitionArtist.fromJson(Map<String, dynamic> json) {
+    print(json);
     return ExhibitionArtist(
       backgroundColor: json['background_color'] ?? '',
       fontFamily: json['font_family'] ?? '',
