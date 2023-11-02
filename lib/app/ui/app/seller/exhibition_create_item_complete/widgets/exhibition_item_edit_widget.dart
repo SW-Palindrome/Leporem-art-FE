@@ -8,17 +8,19 @@ import '../../../../theme/app_theme.dart';
 
 exhibitionItemEditWidget() {
   final controller = Get.find<SellerExhibitionController>();
-  return Column(
-    children: [
-      for (int index = 0; index < controller.exhibitionItems.length; index++)
-        Column(
-          children: [
-            _exhibitionItemWidget(controller, index),
-            if (index != controller.exhibitionItems.length)
-              SizedBox(height: 16),
-          ],
-        ),
-    ],
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        for (int index = 0; index < controller.exhibitionItems.length; index++)
+          Column(
+            children: [
+              _exhibitionItemWidget(controller, index),
+              if (index != controller.exhibitionItems.length)
+                SizedBox(height: 16),
+            ],
+          ),
+      ],
+    ),
   );
 }
 

@@ -16,6 +16,7 @@ import '../bindings/buyer/review_binding.dart';
 import '../bindings/common/message_item_order_binding.dart';
 import '../bindings/common/message_item_order_info_binding.dart';
 import '../bindings/common/message_item_share_binding.dart';
+import '../bindings/seller/exhibition_preview_binding.dart';
 import '../bindings/seller/item_create_detail_binding.dart';
 import '../bindings/seller/item_delivery_edit_binding.dart';
 import '../bindings/seller/item_edit_binding.dart';
@@ -54,6 +55,7 @@ import '../ui/app/seller/exhibition_create_seller_complete/exhibition_create_sel
 import '../ui/app/seller/exhibition_create_seller_example/exhibition_create_seller_example_screen.dart';
 import '../ui/app/seller/exhibition_create_seller_template/exhibition_create_seller_template_screen.dart';
 import '../ui/app/seller/exhibition_create_start/exhibition_create_start_screen.dart';
+import '../ui/app/seller/exhibition_preview/exhibition_preview_screen.dart';
 import '../ui/app/seller/item_create/item_create_screen.dart';
 import '../ui/app/seller/item_delivery_edit/item_delivery_edit_screen.dart';
 import '../ui/app/seller/item_detail/item_detail_screen.dart';
@@ -270,6 +272,7 @@ class AppPages {
     GetPage(
       name: Routes.SELLER_EXHIBITION_PREVIEW,
       page: () => ExhibitionPreviewScreen(),
+      binding: ExhibitionPreviewBinding(),
     ),
   ];
 }

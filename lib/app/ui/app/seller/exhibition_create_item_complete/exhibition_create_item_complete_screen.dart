@@ -7,6 +7,7 @@ import 'package:leporemart/app/ui/app/widgets/my_app_bar.dart';
 import '../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../theme/app_theme.dart';
+import '../../widgets/next_button.dart';
 import 'widgets/exhibition_item_list_widget.dart';
 
 class ExhibitionCreateItemCompleteScreen
@@ -59,20 +60,35 @@ class ExhibitionCreateItemCompleteScreen
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                exhibitionItemCompleteTextWidget(),
-                SizedBox(height: 40),
-                Obx(() => !controller.isEditingItemList.value
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              exhibitionItemCompleteTextWidget(),
+              SizedBox(height: 40),
+              Expanded(
+                child: Obx(() => !controller.isEditingItemList.value
                     ? exhibitionItemListWidget()
                     : exhibitionItemEditWidget()),
-              ],
-            ),
+              ),
+              SizedBox(height: 40),
+              Obx(() => controller.isEditingItemList.value == false
+                  ? NextButton(
+                      text: '미리보기',
+                      value: true, //controller.isValidItemSave(),
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.SELLER_EXHIBITION_PREVIEW,
+                          arguments: {
+                            'exhibition_id': Get.arguments['exhibition_id'],
+                          },
+                        );
+                      },
+                    )
+                  : Container()),
+            ],
           ),
         ),
       ),

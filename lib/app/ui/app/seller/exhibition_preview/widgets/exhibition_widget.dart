@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../../controller/buyer/exhibition/buyer_exhibition_controller.dart';
+import '../../../../../controller/seller/exhibition/exhibition_preview_controller.dart';
 import '../../../../theme/app_theme.dart';
 
 exhibitionWidget() {
-  final controller = Get.find<BuyerExhibitionController>();
+  final controller = Get.find<ExhibitionPreviewController>();
   return Stack(
     children: [
       ClipRRect(

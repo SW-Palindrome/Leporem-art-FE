@@ -6,82 +6,64 @@ import 'package:get/get.dart';
 import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../theme/app_theme.dart';
-import '../../../widgets/next_button.dart';
 
 exhibitionItemListWidget() {
   final controller = Get.find<SellerExhibitionController>();
-  return Column(
-    children: [
-      for (int index = 0; index < controller.exhibitionItems.length; index++)
-        Column(
-          children: [
-            _exhibitionItemWidget(controller, index),
-            if (index != controller.exhibitionItems.length)
-              SizedBox(height: 16),
-          ],
-        ),
-      if (controller.exhibitionItems.length <= 9)
-        Column(
-          children: [
-            SizedBox(height: 24),
-            GestureDetector(
-              onTap: () {
-                controller.selectedTemplateIndex.value = 1;
-                controller.resetItemInfo();
-                Get.toNamed(
-                  Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
-                  arguments: {
-                    'exhibition_id': Get.arguments['exhibition_id'],
-                  },
-                );
-                controller.isEditingItem.value = false;
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/plus.svg',
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalette.grey_4,
-                      BlendMode.srcIn,
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        for (int index = 0; index < controller.exhibitionItems.length; index++)
+          Column(
+            children: [
+              _exhibitionItemWidget(controller, index),
+              if (index != controller.exhibitionItems.length)
+                SizedBox(height: 16),
+            ],
+          ),
+        if (controller.exhibitionItems.length <= 9)
+          Column(
+            children: [
+              SizedBox(height: 24),
+              GestureDetector(
+                onTap: () {
+                  controller.selectedTemplateIndex.value = 1;
+                  controller.resetItemInfo();
+                  Get.toNamed(
+                    Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+                    arguments: {
+                      'exhibition_id': Get.arguments['exhibition_id'],
+                    },
+                  );
+                  controller.isEditingItem.value = false;
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/plus.svg',
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        ColorPalette.grey_4,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    '작품 추가하기',
-                    style: TextStyle(
-                      color: ColorPalette.grey_4,
-                      fontSize: 16,
+                    SizedBox(width: 4),
+                    Text(
+                      '작품 추가하기',
+                      style: TextStyle(
+                        color: ColorPalette.grey_4,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      SizedBox(height: 40),
-      // Center(
-      //   child: Text(
-      //     '판매중인 작품 ${((controller.exhibitionItems.length / 2).ceil())}개 이상이어야 합니다.',
-      //     style: TextStyle(
-      //       fontSize: 14,
-      //       fontWeight: FontWeight.w400,
-      //       color: ColorPalette.red,
-      //     ),
-      //   ),
-      // ),
-      // SizedBox(height: 24),
-      NextButton(
-        text: '미리보기',
-        value: controller.isValidItemSave(),
-        onTap: () {
-          // TODO: 작품 등록 저장하기
-          Get.until((route) => Get.currentRoute == Routes.SELLER_APP);
-        },
-      ),
-    ],
+              SizedBox(height: 24),
+            ],
+          ),
+      ],
+    ),
   );
 }
 
