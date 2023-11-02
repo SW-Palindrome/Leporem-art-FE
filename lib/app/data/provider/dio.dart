@@ -664,7 +664,7 @@ class DioClient implements ApiClient {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('access_token');
-      final response = await _dioInstance.get('/items/filter',
+      final response = await _dioInstance.get('/items',
           queryParameters: {
             'page': page,
             'search': keyword,
@@ -684,7 +684,7 @@ class DioClient implements ApiClient {
       }
       final data = response.data;
       //items를 리스트에 넣고 파싱
-      final List<dynamic> itemsData = data['items'];
+      final List<dynamic> itemsData = data['list']['items'];
       // 아이템 데이터를 변환하여 리스트로 생성
       final List<BuyerHomeItem> items =
           itemsData.map((json) => BuyerHomeItem.fromJson(json)).toList();
@@ -707,7 +707,7 @@ class DioClient implements ApiClient {
   }) async {
     try {
       final response = await _dioInstance.get(
-        '/items/guest',
+        '/items',
         queryParameters: {
           'page': page,
           'search': keyword,
@@ -723,7 +723,7 @@ class DioClient implements ApiClient {
       }
       final data = response.data;
       //items를 리스트에 넣고 파싱
-      final List<dynamic> itemsData = data['items'];
+      final List<dynamic> itemsData = data['list']['items'];
       // 아이템 데이터를 변환하여 리스트로 생성
       final List<BuyerHomeItem> items =
           itemsData.map((json) => BuyerHomeItem.fromJson(json)).toList();
