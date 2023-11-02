@@ -152,7 +152,9 @@ class SellerExhibitionController extends GetxController {
 
     exhibitionTitleController.text = exhibition.title;
     sellerNameController.text = exhibition.seller;
-    String imageUrl = exhibition.coverImage;
+    String? imageUrl = exhibition.coverImage;
+
+    if (imageUrl == null) return;
 
     Dio dio = Dio();
     try {

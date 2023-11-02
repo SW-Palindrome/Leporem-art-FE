@@ -31,7 +31,7 @@ exhibitionCarouselWidget() {
 _exhibitionCarouselItem(
   int id,
   String title,
-  String coverImage,
+  String? coverImage,
   String seller,
   String startDate,
   String endDate,
@@ -60,7 +60,7 @@ _exhibitionCarouselItem(
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: CachedNetworkImage(
-                imageUrl: coverImage,
+                imageUrl: coverImage ?? 'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
                 fit: BoxFit.cover,
                 width: Get.width * 0.8,
                 height: Get.height * 0.56,

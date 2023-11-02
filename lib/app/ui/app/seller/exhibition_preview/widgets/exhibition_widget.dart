@@ -10,7 +10,7 @@ exhibitionWidget() {
     children: [
       ClipRRect(
         child: CachedNetworkImage(
-          imageUrl: controller.exhibition.coverImage,
+          imageUrl: controller.exhibition.coverImage ?? 'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
           fit: BoxFit.cover,
           width: Get.width,
         ),

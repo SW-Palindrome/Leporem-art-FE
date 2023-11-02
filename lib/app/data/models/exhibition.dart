@@ -1,7 +1,7 @@
 class Exhibition {
   final int id;
   final String title;
-  final String coverImage;
+  final String? coverImage;
   final String seller;
   final ExhibitionStatus? status;
   final DateTime startDateTime;

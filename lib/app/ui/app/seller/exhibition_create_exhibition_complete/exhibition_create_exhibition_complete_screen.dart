@@ -50,7 +50,7 @@ class ExhibitionCreateExhibitionCompleteScreen
                 imageUrl: controller.exhibitions
                     .firstWhere((element) =>
                         element.id == Get.arguments['exhibition_id'])
-                    .coverImage,
+                    .coverImage ?? 'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
                 seller: controller.exhibitions
                     .firstWhere((element) =>
                         element.id == Get.arguments['exhibition_id'])
