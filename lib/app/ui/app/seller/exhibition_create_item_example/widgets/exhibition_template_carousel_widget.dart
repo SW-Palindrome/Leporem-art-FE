@@ -257,7 +257,7 @@ template2Widget(String title, String description, List<String> imageUrlList,
     color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CarouselSlider(
           items: [
@@ -325,7 +325,7 @@ template3Widget(String title, String description, List<String> imageUrlList,
     color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 16),
         Align(
@@ -423,6 +423,7 @@ template4Widget(String title, String description, List<String> imageUrlList,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
           alignment: Alignment.topLeft,
@@ -539,6 +540,7 @@ template5Widget(String title, String description, List<String> imageUrlList,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
           alignment: Alignment.topLeft,
@@ -694,6 +696,7 @@ template6Widget(String title, String description, List<String> imageUrlList,
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 8, 4, 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
@@ -738,6 +741,7 @@ template7Widget(String title, String description, List<String> imageUrlList,
         SizedBox(
           height: Get.width * 0.6,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
                 imageUrl: imageUrlList[0],
