@@ -9,56 +9,56 @@ itemResultWidget() {
 
   return Obx(() {
     switch (controller.selectedTemplateIndex.value) {
-      case 0:
+      case 1:
         return template1EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 1:
+      case 2:
         return template2EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 2:
+      case 3:
         return template3EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 3:
+      case 4:
         return template4EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 4:
+      case 5:
         return template5EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 5:
+      case 6:
         return template6EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 6:
+      case 7:
         return template7EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
           controller.fontList[controller.displayedItemFont.value],
           true,
         );
-      case 7:
+      case 8:
         return template8EditWidget(
           Color(controller
               .colorList[controller.selectedItemBackgroundColor.value]),
