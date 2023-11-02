@@ -1032,12 +1032,8 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
             children: [
               SizedBox(
                 width: Get.width * 0.75,
-                child: Expanded(
-                  child: selectImageWidget(
-                      controller.templateItemImages.isEmpty,
-                      isColorFontChange,
-                      0),
-                ),
+                child: selectImageWidget(controller.templateItemImages.isEmpty,
+                    isColorFontChange, 0),
               ),
               Spacer(),
               Padding(
