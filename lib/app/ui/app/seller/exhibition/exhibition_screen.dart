@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:leporemart/app/controller/seller/exhibition/seller_exhibition_controller.dart';
 import 'package:leporemart/app/ui/app/seller/exhibition/widgets/empty_exhibition_widgets.dart';
 import '../../../theme/app_theme.dart';
-import 'widgets/exhibition_list_widget.dart';
+import 'widgets/exhibition_carousel_widget.dart';
 
 class SellerExhibitionScreen extends GetView<SellerExhibitionController> {
   const SellerExhibitionScreen({super.key});
@@ -31,24 +31,7 @@ class SellerExhibitionScreen extends GetView<SellerExhibitionController> {
               if (controller.exhibitions.isEmpty)
                 emptyExhibitionWidget()
               else
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return exhibitionListWidget(
-                      controller.exhibitions[index].title,
-                      controller.exhibitions[index].coverImage,
-                      controller.exhibitions[index].seller,
-                      controller.exhibitions[index].startDate,
-                      controller.exhibitions[index].endDate,
-                      controller.exhibitions[index].id,
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 24);
-                  },
-                  itemCount: controller.exhibitions.length,
-                ),
+                exhibitionCarouselWidget()
             ],
           ),
         ),
