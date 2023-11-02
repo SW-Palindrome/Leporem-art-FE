@@ -1,9 +1,4 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:leporemart/app/ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
-import 'package:leporemart/app/ui/app/buyer/exhibition/exhibition_screen.dart';
-import 'package:leporemart/app/ui/app/buyer/exhibition_detail/exhibition_detail_screen.dart';
-import 'package:leporemart/app/ui/app/buyer/order_info/order_info_screen.dart';
-import 'package:leporemart/app/ui/app/common/message_item_order_info/message_item_order_info_screen.dart';
 
 import '../bindings/account/account_type_binding.dart';
 import '../bindings/account/agreement_binding.dart';
@@ -34,8 +29,11 @@ import '../ui/app/account/email/email_screen.dart';
 import '../ui/app/account/login/login_screen.dart';
 import '../ui/app/account/nickname/nickname_screen.dart';
 import '../ui/app/buyer/buyer_app.dart';
+import '../ui/app/buyer/delivery_info_webview/delivery_info_webview_screen.dart';
+import '../ui/app/buyer/exhibition_detail/exhibition_detail_screen.dart';
 import '../ui/app/buyer/item_creator/item_creator_screen.dart';
 import '../ui/app/buyer/item_detail/item_detail_screen.dart';
+import '../ui/app/buyer/order_info/order_info_screen.dart';
 import '../ui/app/buyer/order_list/order_list_screen.dart';
 import '../ui/app/buyer/profile_edit/profile_edit_screen.dart';
 import '../ui/app/buyer/recent_item/recent_item_screen.dart';
@@ -43,6 +41,7 @@ import '../ui/app/buyer/review_star/review_star_screen.dart';
 import '../ui/app/buyer/search/search_screen.dart';
 import '../ui/app/common/message_detail/message_detail_screen.dart';
 import '../ui/app/common/message_item_order/message_item_order_screen.dart';
+import '../ui/app/common/message_item_order_info/message_item_order_info_screen.dart';
 import '../ui/app/common/message_item_share/message_item_share_screen.dart';
 import '../ui/app/seller/exhibition_create_exhibition/exhibition_create_exhibition_screen.dart';
 import '../ui/app/seller/exhibition_create_exhibition_complete/exhibition_create_exhibition_complete_screen.dart';
@@ -220,129 +219,57 @@ class AppPages {
       binding: ItemManagementBinding(),
     ),
     GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_START,
-      page: () => ExhibitionCreateStartScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
-      page: () => ExhibitionCreateExhibitionScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
-      page: () => ExhibitionCreateExhibitionCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
-      page: () => ExhibitionCreateSellerScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
-      page: () => ExhibitionCreateSellerExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
-      page: () => ExhibitionCreateSellerTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
-      page: () => ExhibitionCreateSellerCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
-      page: () => ExhibitionCreateItemScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_START,
-      page: () => ExhibitionCreateStartScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
-      page: () => ExhibitionCreateExhibitionScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
-      page: () => ExhibitionCreateExhibitionCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
-      page: () => ExhibitionCreateSellerScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
-      page: () => ExhibitionCreateSellerExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
-      page: () => ExhibitionCreateSellerTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
-      page: () => ExhibitionCreateSellerCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
-      page: () => ExhibitionCreateItemScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
-      page: () => ExhibitionCreateItemExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
-      page: () => ExhibitionCreateItemTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-      page: () => ExhibitionCreateItemCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_START,
-      page: () => ExhibitionCreateStartScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
-      page: () => ExhibitionCreateExhibitionScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
-      page: () => ExhibitionCreateExhibitionCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
-      page: () => ExhibitionCreateSellerScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
-      page: () => ExhibitionCreateSellerExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
-      page: () => ExhibitionCreateSellerTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
-      page: () => ExhibitionCreateSellerCompleteScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
-      page: () => ExhibitionCreateItemScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
-      page: () => ExhibitionCreateItemExampleScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
-      page: () => ExhibitionCreateItemTemplateScreen(),
-    ),
-    GetPage(
-      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
-      page: () => ExhibitionCreateItemCompleteScreen(),
-    ),
-    GetPage(
       name: Routes.SELLER_ITEM_DELIVERY_EDIT,
       page: () => SellerItemDeliveryEditScreen(),
       binding: SellerItemDeliverEditBinding(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_START,
+      page: () => ExhibitionCreateStartScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION,
+      page: () => ExhibitionCreateExhibitionScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
+      page: () => ExhibitionCreateExhibitionCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER,
+      page: () => ExhibitionCreateSellerScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_EXAMPLE,
+      page: () => ExhibitionCreateSellerExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_TEMPLATE,
+      page: () => ExhibitionCreateSellerTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
+      page: () => ExhibitionCreateSellerCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM,
+      page: () => ExhibitionCreateItemScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_TEMPLATE,
+      page: () => ExhibitionCreateItemTemplateScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE,
+      page: () => ExhibitionCreateItemCompleteScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_CREATE_ITEM_EXAMPLE,
+      page: () => ExhibitionCreateItemExampleScreen(),
+    ),
+    GetPage(
+      name: Routes.SELLER_EXHIBITION_PREVIEW,
+      page: () => ExhibitionPreviewScreen(),
     ),
   ];
 }
