@@ -812,6 +812,7 @@ template8Widget(String title, String description, List<String> imageUrlList,
         SizedBox(
           height: Get.width * 0.83,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
                 imageUrl: imageUrlList[0],
