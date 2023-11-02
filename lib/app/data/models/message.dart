@@ -76,7 +76,7 @@ class Message {
     return Message(
       messageUuid: json['uuid'],
       userId: json['user_id'],
-      writeDatetime: DateTime.parse(json['write_datetime']),
+      writeDatetime: DateTime.parse(json['write_datetime']).toLocal(),
       isRead: json['is_read'],
       message: json['message'],
       type: MessageType.fromText(json['type']),

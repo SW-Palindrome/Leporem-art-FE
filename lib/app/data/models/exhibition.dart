@@ -7,8 +7,10 @@ class Exhibition {
   final DateTime startDateTime;
   final DateTime endDateTime;
 
-  String get startDate =>
-      '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
+  String get startDate {
+    return '${startDateTime.year}.${startDateTime.month}.${startDateTime.day}';
+  }
+
   String get endDate =>
       '${endDateTime.year}.${endDateTime.month}.${endDateTime.day}';
 
@@ -47,8 +49,8 @@ class Exhibition {
       coverImage: json['cover_image'],
       seller: json['artist_name'],
       status: status,
-      startDateTime: DateTime.parse(json['start_date']),
-      endDateTime: DateTime.parse(json['end_date']),
+      startDateTime: DateTime.parse(json['start_date']).toLocal(),
+      endDateTime: DateTime.parse(json['end_date']).toLocal(),
     );
   }
 }
