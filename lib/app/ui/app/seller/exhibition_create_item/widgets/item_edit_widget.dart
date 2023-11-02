@@ -1239,12 +1239,12 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                           onTapOutside: (event) =>
                               FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateDescriptionController,
-                          maxLines: 5,
+                          maxLines: 3,
                           inputFormatters: [
                             TextInputFormatter.withFunction(
                                 (oldValue, newValue) {
                               int newLines = newValue.text.split('\n').length;
-                              if (newLines > 5) {
+                              if (newLines > 3) {
                                 return oldValue;
                               } else {
                                 return newValue;
