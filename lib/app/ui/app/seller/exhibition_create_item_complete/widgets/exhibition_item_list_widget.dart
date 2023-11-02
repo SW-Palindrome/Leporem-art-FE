@@ -74,7 +74,7 @@ exhibitionItemListWidget() {
       // ),
       // SizedBox(height: 24),
       NextButton(
-        text: '완료',
+        text: '미리보기',
         value: controller.isValidItemSave(),
         onTap: () {
           // TODO: 작품 등록 저장하기
