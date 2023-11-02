@@ -15,7 +15,7 @@ Widget exhibitionThumbnailInputWidget() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '기획전을 대표할 썸네일 이미지를 올려주세요.',
+          '전시전을 대표할 썸네일 이미지를 올려주세요.',
           style: TextStyle(
             color: ColorPalette.black,
             fontWeight: FontWeight.w600,
@@ -29,7 +29,6 @@ Widget exhibitionThumbnailInputWidget() {
           onTap: () {
             logAnalytics(name: "exhibition_thumbnail_select_image");
             controller.selectImages(ImageType.exhibition);
-            print('기획전 커버이미지선택');
           },
           child: _buildImageWidget(controller),
         ),

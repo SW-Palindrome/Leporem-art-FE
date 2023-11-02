@@ -15,7 +15,7 @@ exhibitionPeriodWidget(String startDate, String endDate) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '기획전 기간',
+          '전시전 기간',
           style: TextStyle(
             color: ColorPalette.black,
             fontFamily: FontPalette.pretendard,

@@ -32,7 +32,7 @@ class ExhibitionCreateExhibitionCompleteScreen
             children: [
               SizedBox(height: 20),
               Text(
-                '기획전 소개를 모두 작성했어요!\n이제 작가 소개를 작성해주세요.',
+                '전시전 소개를 모두 작성했어요!\n이제 작가 소개를 작성해주세요.',
                 style: TextStyle(
                   color: ColorPalette.black,
                   fontFamily: FontPalette.pretendard,
@@ -48,9 +48,10 @@ class ExhibitionCreateExhibitionCompleteScreen
                         element.id == Get.arguments['exhibition_id'])
                     .title,
                 imageUrl: controller.exhibitions
-                    .firstWhere((element) =>
-                        element.id == Get.arguments['exhibition_id'])
-                    .coverImage ?? 'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
+                        .firstWhere((element) =>
+                            element.id == Get.arguments['exhibition_id'])
+                        .coverImage ??
+                    'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
                 seller: controller.exhibitions
                     .firstWhere((element) =>
                         element.id == Get.arguments['exhibition_id'])

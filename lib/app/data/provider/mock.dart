@@ -535,7 +535,7 @@ class MockClient implements ApiClient {
         id: i,
         coverImage:
             'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-        title: '우유병 기획전',
+        title: '우유병 전시전',
         endDateTime: DateTime.parse('2023-10-31'),
         status: null,
         startDateTime: DateTime.parse('2023-10-24'),
@@ -550,7 +550,7 @@ class MockClient implements ApiClient {
     return Exhibition(
       id: -1,
       seller: '우유병 공방',
-      title: '할로윈 가을 기획전',
+      title: '할로윈 가을 전시전',
       coverImage:
           'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
       startDateTime: DateTime.parse('2021-10-24'),
@@ -577,7 +577,7 @@ class MockClient implements ApiClient {
     for (int i = 1; i < 10; i += 2) {
       exhibitionItems.add(ExhibitionItem(
         id: i,
-        title: '우유병 기획전',
+        title: '우유병 전시전',
         price: 10000,
         fontFamily: '1',
         description: '안녕하세요',
@@ -600,7 +600,7 @@ class MockClient implements ApiClient {
       ));
       exhibitionItems.add(ExhibitionItem(
         id: i + 1,
-        title: '우유병 기획전 비 템플릿',
+        title: '우유병 전시전 비 템플릿',
         price: 10000,
         fontFamily: '0',
         description: '안녕하세요',
@@ -663,7 +663,7 @@ class MockClient implements ApiClient {
         id: i,
         coverImage:
             'https://image.idus.com/image/files/506c18aad2a94c89925b8f109b2aea83_512.jpg',
-        title: '우유병 기획전',
+        title: '우유병 전시전',
         status: null,
         endDateTime: DateTime.parse('2023-10-31'),
         startDateTime: DateTime.parse('2023-10-24'),

@@ -13,7 +13,7 @@ emptyExhibitionWidget() {
         ),
         SizedBox(height: 24),
         Text(
-          '아직 등록된 기획전이 없어요.',
+          '아직 등록된 전시전이 없어요.',
           style: TextStyle(
             fontSize: 16,
             color: ColorPalette.grey_5,

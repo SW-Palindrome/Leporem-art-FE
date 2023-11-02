@@ -18,7 +18,7 @@ class ExhibitionPreviewScreen extends GetView<ExhibitionPreviewController> {
       appBar: MyAppBar(
         isWhite: true,
         appBarType: AppBarType.backAppBar,
-        title: '기획전 미리보기',
+        title: '전시전 미리보기',
         onTapLeadingIcon: () {
           Get.back();
         },

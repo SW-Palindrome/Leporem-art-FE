@@ -12,7 +12,7 @@ Widget exhibitionTitleInputWidget() {
       Row(
         children: [
           Text(
-            '기획전 이름을 알려주세요.',
+            '전시전 이름을 알려주세요.',
             style: TextStyle(
               color: ColorPalette.black,
               fontWeight: FontWeight.w600,

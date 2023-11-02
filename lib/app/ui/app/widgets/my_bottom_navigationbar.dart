@@ -63,7 +63,7 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       ),
-                      label: '기획전',
+                      label: '전시전',
                     ),
                     _chattingBottomNavigationBarItem(),
                     BottomNavigationBarItem(
@@ -105,7 +105,7 @@ class MyBottomNavigationBar extends GetView<MyBottomNavigationbarController> {
                         colorFilter: ColorFilter.mode(
                             ColorPalette.purple, BlendMode.srcIn),
                       ),
-                      label: '기획전',
+                      label: '전시전',
                     ),
                     _chattingBottomNavigationBarItem(),
                     BottomNavigationBarItem(

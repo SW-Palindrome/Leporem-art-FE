@@ -18,7 +18,7 @@ class BuyerExhibitionScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              '기획전',
+              '전시전',
               style: TextStyle(
                 color: ColorPalette.black,
                 fontWeight: FontWeight.w600,

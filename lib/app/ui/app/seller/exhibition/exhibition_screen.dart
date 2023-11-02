@@ -19,7 +19,7 @@ class SellerExhibitionScreen extends GetView<SellerExhibitionController> {
             children: [
               SizedBox(height: 20),
               Text(
-                '기획전',
+                '전시전',
                 style: TextStyle(
                   color: ColorPalette.black,
                   fontFamily: FontPalette.pretendard,

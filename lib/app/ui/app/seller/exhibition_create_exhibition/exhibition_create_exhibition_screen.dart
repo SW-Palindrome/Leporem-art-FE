@@ -24,7 +24,7 @@ class ExhibitionCreateExhibitionScreen
       appBar: MyAppBar(
         isWhite: true,
         appBarType: AppBarType.backAppBar,
-        title: '기획전 소개 작성',
+        title: '전시전 소개 작성',
         onTapLeadingIcon: () {
           Get.bottomSheet(
             MyBottomSheet(

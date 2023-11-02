@@ -15,7 +15,7 @@ exhibitionProcessWidget() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '기획전 등록은 아래 순서로 진행돼요!',
+            '전시전 등록은 아래 순서로 진행돼요!',
             style: TextStyle(
               color: ColorPalette.black,
               fontFamily: FontPalette.pretendard,
@@ -64,7 +64,7 @@ exhibitionProcessWidget() {
                 ),
                 SizedBox(width: 12),
                 Text(
-                  '기획전 소개 작성하기',
+                  '전시전 소개 작성하기',
                   style: TextStyle(
                     color: ColorPalette.black,
                     fontFamily: FontPalette.pretendard,

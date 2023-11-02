@@ -28,7 +28,7 @@ class SellerExhibitionController extends GetxController {
   Rx<ExhibitionArtist?> exhibitionArtist = Rx<ExhibitionArtist?>(null);
   RxList<ExhibitionItem> exhibitionItems = RxList<ExhibitionItem>([]);
 
-  // 기획전 소개
+  // 전시전 소개
   Rx<ExhibitionStatus> exhibitionStatus =
       Rx<ExhibitionStatus>(ExhibitionStatus.created);
   RxList<File> exhibitionImage = RxList<File>([]);
@@ -343,8 +343,8 @@ class SellerExhibitionController extends GetxController {
 
     if (response.statusCode != 200) {
       Get.snackbar(
-        '기획전 소개 저장 실패',
-        '기획전 소개 저장에 실패하였습니다. 다시 시도해주세요.',
+        '전시전 소개 저장 실패',
+        '전시전 소개 저장에 실패하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
@@ -376,8 +376,8 @@ class SellerExhibitionController extends GetxController {
         await repository.saveExhibitionArtistById(exhibitionId, formData);
     if (response.statusCode != 200) {
       Get.snackbar(
-        '기획전 작가정보 저장 실패',
-        '기획전 작가정보 저장에 실패하였습니다. 다시 시도해주세요.',
+        '전시전 작가정보 저장 실패',
+        '전시전 작가정보 저장에 실패하였습니다. 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
