@@ -34,7 +34,7 @@ itemImageInputWidget() {
                   if (controller.isItemSailEnabled.value == true) {
                     controller.selectImages(ImageType.itemWithTemplate);
                   } else {
-                    controller.selectImages(ImageType.itemWithNotTemplate);
+                    controller.selectImages(ImageType.itemWithoutTemplate);
                   }
                 },
                 child: DottedBorder(

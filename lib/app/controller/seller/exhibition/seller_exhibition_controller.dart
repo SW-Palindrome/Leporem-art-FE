@@ -218,7 +218,7 @@ class SellerExhibitionController extends GetxController {
         exhibitionItems.firstWhere((element) => element.id == itemId);
 
     isItemTemplateUsed.value = exhibitionItem.isUsingTemplate;
-    selectedTemplateIndex.value = exhibitionItem.template ?? 0;
+    selectedTemplateIndex.value = exhibitionItem.template ?? 1;
     isItemSailEnabled.value = exhibitionItem.isSale;
 
     if (isItemTemplateUsed.value == true) {
@@ -738,15 +738,15 @@ class SellerExhibitionController extends GetxController {
         isItemImagesLoading
             .assignAll(List.generate(pickedFiles.length, (_) => true));
         break;
-      case ImageType.itemWithNotTemplate:
+      case ImageType.itemWithoutTemplate:
         pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
         if (pickedFile == null) return;
         isItemImagesLoading.assignAll(List.generate(1, (_) => true));
         break;
       case ImageType.templateItem:
-        if (selectedTemplateIndex.value == 0 ||
-            selectedTemplateIndex.value == 1 ||
-            selectedTemplateIndex.value == 2) {
+        if (selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2 ||
+            selectedTemplateIndex.value == 3) {
           pickedFiles = await ImagePicker().pickMultiImage();
           if (pickedFiles.length > 10) {
             Get.snackbar(
@@ -815,7 +815,7 @@ class SellerExhibitionController extends GetxController {
         if (isFileLargerThanMB(totalImageSize, 4)) return;
         itemImages.assignAll(compressedImages);
         break;
-      case ImageType.itemWithNotTemplate:
+      case ImageType.itemWithoutTemplate:
         final compressedImage = await compressImage(pickedFile!);
         if (compressedImage != null) {
           final compressedFile = File('${pickedFile.path}.compressed.jpg')
@@ -827,9 +827,9 @@ class SellerExhibitionController extends GetxController {
         }
         break;
       case ImageType.templateItem:
-        if (selectedTemplateIndex.value == 0 ||
-            selectedTemplateIndex.value == 1 ||
-            selectedTemplateIndex.value == 2) {
+        if (selectedTemplateIndex.value == 1 ||
+            selectedTemplateIndex.value == 2 ||
+            selectedTemplateIndex.value == 3) {
           Map<int, File> compressedImages = {};
           // 이미지를 하나씩 압축하고 압축한 이미지를 compressedImages에 추가
           // 이미지 크기를 계산하기위해 변수생성
@@ -1082,22 +1082,22 @@ class SellerExhibitionController extends GetxController {
       if (templateTitle.value.isEmpty || templateDescription.isEmpty) {
         return false;
       }
-      if (selectedTemplateIndex.value == 0 ||
-          selectedTemplateIndex.value == 1 ||
-          selectedTemplateIndex.value == 2) {
+      if (selectedTemplateIndex.value == 1 ||
+          selectedTemplateIndex.value == 2 ||
+          selectedTemplateIndex.value == 3) {
         if (templateItemImages.isEmpty) {
           return false;
         }
-      } else if (selectedTemplateIndex.value == 3 ||
-          selectedTemplateIndex.value == 4) {
+      } else if (selectedTemplateIndex.value == 4 ||
+          selectedTemplateIndex.value == 5) {
         if (templateItemImages.length < 4) {
           return false;
         }
-      } else if (selectedTemplateIndex.value == 5 ||
-          selectedTemplateIndex.value == 6) {
+      } else if (selectedTemplateIndex.value == 6 ||
+          selectedTemplateIndex.value == 7) {
         if (templateItemImages.length < 2) {
           return false;
-        } else if (selectedTemplateIndex.value == 7) {
+        } else if (selectedTemplateIndex.value == 8) {
           if (templateItemImages.isEmpty) {
             return false;
           }
@@ -1144,7 +1144,7 @@ enum ImageType {
   exhibition,
   seller,
   itemWithTemplate,
-  itemWithNotTemplate,
+  itemWithoutTemplate,
   templateItem
 }
 
