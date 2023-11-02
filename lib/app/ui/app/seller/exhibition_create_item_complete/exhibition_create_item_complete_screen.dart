@@ -75,17 +75,52 @@ class ExhibitionCreateItemCompleteScreen
               ),
               SizedBox(height: 40),
               Obx(() => controller.isEditingItemList.value == false
-                  ? NextButton(
-                      text: '미리보기',
-                      value: true, //controller.isValidItemSave(),
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.SELLER_EXHIBITION_PREVIEW,
-                          arguments: {
-                            'exhibition_id': Get.arguments['exhibition_id'],
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.SELLER_EXHIBITION_PREVIEW,
+                              arguments: {
+                                'exhibition_id': Get.arguments['exhibition_id'],
+                              },
+                            );
                           },
-                        );
-                      },
+                          child: Container(
+                            width: Get.width * 0.3,
+                            height: Get.height * 0.06,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: ColorPalette.grey_6,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '미리보기',
+                                style: TextStyle(
+                                  color: ColorPalette.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: FontPalette.pretendard,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        NextButton(
+                          text: '완료',
+                          value: true, //controller.isValidItemSave(),
+                          onTap: () {
+                            Get.until((route) =>
+                                Get.currentRoute == Routes.SELLER_APP);
+                          },
+                          width: Get.width * 0.5,
+                        ),
+                      ],
                     )
                   : Container()),
             ],

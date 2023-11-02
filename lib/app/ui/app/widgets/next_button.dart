@@ -29,11 +29,11 @@ class NextButton extends StatelessWidget {
             ? ShapeDecoration(
                 gradient: ColorPalette.gradientPurple,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               )
             : BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
                 color: ColorPalette.grey_3,
               ),
         child: Center(
