@@ -17,7 +17,7 @@ class SellerAppBinding implements Bindings {
         repository: HomeRepository(apiClient: DioClient())));
     Get.lazyPut(() => SellerProfileController(
         repository: ProfileRepository(apiClient: DioClient())));
-    Get.lazyPut(() => SellerExhibitionController(
+    Get.put(SellerExhibitionController(
         repository: ExhibitionRepository(apiClient: DioClient())));
   }
 }
