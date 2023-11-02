@@ -654,7 +654,7 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
               ),
         SizedBox(height: 6),
         SizedBox(
-          height: Get.width * 0.56,
+          height: Get.width * 0.8,
           child: Row(
             children: [
               Expanded(
@@ -849,7 +849,7 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
               ),
         SizedBox(height: 6),
         SizedBox(
-          height: Get.width * 0.7093,
+          height: Get.width * 0.8,
           child: Row(
             children: [
               Expanded(
