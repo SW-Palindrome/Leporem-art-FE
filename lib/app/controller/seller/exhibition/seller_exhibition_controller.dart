@@ -340,6 +340,7 @@ class SellerExhibitionController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
+      await fetchExhibitionById(exhibitionId);
       await fetchSellerExhibitions();
       Get.toNamed(
         Routes.SELLER_EXHIBITION_CREATE_EXHIBITION_COMPLETE,
@@ -372,6 +373,7 @@ class SellerExhibitionController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
+      await fetchExhibitionById(exhibitionId);
       Get.toNamed(
         Routes.SELLER_EXHIBITION_CREATE_SELLER_COMPLETE,
         arguments: {'exhibition_id': Get.arguments['exhibition_id']},
@@ -525,6 +527,7 @@ class SellerExhibitionController extends GetxController {
         );
         initItemInfo();
         await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+        await fetchExhibitionById(exhibitionId);
         Get.until((route) =>
             Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
       } else {
@@ -693,6 +696,7 @@ class SellerExhibitionController extends GetxController {
       );
       initItemInfo();
       await fetchExhibitionItemsById(Get.arguments['exhibition_id']);
+      await fetchExhibitionById(exhibitionId);
       Get.until((route) =>
           Get.currentRoute == Routes.SELLER_EXHIBITION_CREATE_ITEM_COMPLETE);
     } else {
