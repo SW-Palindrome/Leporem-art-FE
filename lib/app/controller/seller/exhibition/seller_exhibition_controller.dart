@@ -188,11 +188,14 @@ class SellerExhibitionController extends GetxController {
     sellerIntroductionController.text = exhibitionArtist.value!.description;
     isSellerTemplateUsed.value = exhibitionArtist.value!.isUsingTemplate;
     selectedSellerIntroductionColor.value =
-        int.parse(exhibitionArtist.value!.backgroundColor);
+        int.tryParse(exhibitionArtist.value!.backgroundColor) ?? 0;
     selectedSellerIntroductionFont.value =
-        int.parse(exhibitionArtist.value!.fontFamily);
+        int.tryParse(exhibitionArtist.value!.fontFamily) ?? 0;
+    displayedSellerIntroductionFont.value = int.tryParse(
+        exhibitionArtist.value!.fontFamily) ?? 0;
     selectedSellerIntroductionColor.refresh();
     selectedSellerIntroductionFont.refresh();
+    displayedSellerIntroductionFont.refresh();
 
     String? imageUrl = exhibitionArtist.value!.imageUrl;
     Dio dio = Dio();
