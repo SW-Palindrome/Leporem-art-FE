@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -188,6 +189,7 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           child: isColorFontChange == true
               ? Text(
                   controller.templateDescription.value,
+                  maxLines: 5,
                   style: TextStyle(
                     color: color == ColorPalette.black
                         ? ColorPalette.white
@@ -202,6 +204,16 @@ template1EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateDescriptionController,
                   maxLines: 5,
+                  inputFormatters: [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      int newLines = newValue.text.split('\n').length;
+                      if (newLines > 5) {
+                        return oldValue;
+                      } else {
+                        return newValue;
+                      }
+                    }),
+                  ],
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: '여기에 작품에 대한 설명을 적어주세요',
@@ -347,6 +359,7 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
           child: isColorFontChange == true
               ? Text(
                   controller.templateDescription.value,
+                  maxLines: 5,
                   style: TextStyle(
                     color: color == ColorPalette.black
                         ? ColorPalette.white
@@ -361,6 +374,16 @@ template2EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       FocusManager.instance.primaryFocus?.unfocus(),
                   controller: controller.templateDescriptionController,
                   maxLines: 5,
+                  inputFormatters: [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      int newLines = newValue.text.split('\n').length;
+                      if (newLines > 5) {
+                        return oldValue;
+                      } else {
+                        return newValue;
+                      }
+                    }),
+                  ],
                   decoration: InputDecoration(
                     hintText: '여기에 작품에 대한 설명을 적어주세요',
                     hintStyle: TextStyle(
@@ -441,6 +464,7 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     controller.templateDescription.value,
+                    maxLines: 5,
                     style: TextStyle(
                       color: color == ColorPalette.black
                           ? ColorPalette.white
@@ -457,6 +481,16 @@ template3EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                   controller: controller.templateDescriptionController,
                   minLines: 1,
                   maxLines: 5,
+                  inputFormatters: [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      int newLines = newValue.text.split('\n').length;
+                      if (newLines > 5) {
+                        return oldValue;
+                      } else {
+                        return newValue;
+                      }
+                    }),
+                  ],
                   decoration: InputDecoration(
                     hintText: '여기에 작품에 대한 설명을 적어주세요',
                     hintStyle: TextStyle(
@@ -671,6 +705,7 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   controller.templateDescription.value,
+                  maxLines: 5,
                   style: TextStyle(
                     color: color == ColorPalette.black
                         ? ColorPalette.white
@@ -686,6 +721,16 @@ template4EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                     FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
+                inputFormatters: [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    int newLines = newValue.text.split('\n').length;
+                    if (newLines > 5) {
+                      return oldValue;
+                    } else {
+                      return newValue;
+                    }
+                  }),
+                ],
                 decoration: InputDecoration(
                   hintText: '여기에 작품에 대한 설명을 적어주세요',
                   hintStyle: TextStyle(
@@ -755,6 +800,7 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
         isColorFontChange == true
             ? Text(
                 controller.templateDescription.value,
+                maxLines: 5,
                 style: TextStyle(
                   color: color == ColorPalette.black
                       ? ColorPalette.white
@@ -769,6 +815,16 @@ template5EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                     FocusManager.instance.primaryFocus?.unfocus(),
                 controller: controller.templateDescriptionController,
                 maxLines: 5,
+                inputFormatters: [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    int newLines = newValue.text.split('\n').length;
+                    if (newLines > 5) {
+                      return oldValue;
+                    } else {
+                      return newValue;
+                    }
+                  }),
+                ],
                 minLines: 1,
                 decoration: InputDecoration(
                   hintText: '여기에 작품에 대한 설명을 적어주세요',
@@ -910,6 +966,7 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                     ? Center(
                         child: Text(
                           controller.templateDescription.value,
+                          maxLines: 18,
                           style: TextStyle(
                             color: color == ColorPalette.black
                                 ? ColorPalette.white
@@ -925,6 +982,16 @@ template6EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                             FocusManager.instance.primaryFocus?.unfocus(),
                         controller: controller.templateDescriptionController,
                         maxLines: 18,
+                        inputFormatters: [
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            int newLines = newValue.text.split('\n').length;
+                            if (newLines > 18) {
+                              return oldValue;
+                            } else {
+                              return newValue;
+                            }
+                          }),
+                        ],
                         decoration: InputDecoration(
                           hintText: '여기에 작품에 대한 설명을 적어주세요',
                           hintStyle: TextStyle(
@@ -1032,6 +1099,7 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       ? Center(
                           child: Text(
                             controller.templateDescription.value,
+                            maxLines: 7,
                             style: TextStyle(
                               color: color == ColorPalette.black
                                   ? ColorPalette.white
@@ -1047,6 +1115,17 @@ template7EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateDescriptionController,
                           maxLines: 7,
+                          inputFormatters: [
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
+                              int newLines = newValue.text.split('\n').length;
+                              if (newLines > 7) {
+                                return oldValue;
+                              } else {
+                                return newValue;
+                              }
+                            }),
+                          ],
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '여기에 작품에 대한 설명을 적어주세요',
@@ -1159,6 +1238,7 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                       ? Center(
                           child: Text(
                             controller.templateDescription.value,
+                            maxLines: 5,
                             style: TextStyle(
                               color: color == ColorPalette.black
                                   ? ColorPalette.white
@@ -1174,6 +1254,17 @@ template8EditWidget(Color color, String fontFamily, bool isColorFontChange) {
                               FocusManager.instance.primaryFocus?.unfocus(),
                           controller: controller.templateDescriptionController,
                           maxLines: 5,
+                          inputFormatters: [
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
+                              int newLines = newValue.text.split('\n').length;
+                              if (newLines > 5) {
+                                return oldValue;
+                              } else {
+                                return newValue;
+                              }
+                            }),
+                          ],
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: '여기에 작품에 대한 설명을 적어주세요',
