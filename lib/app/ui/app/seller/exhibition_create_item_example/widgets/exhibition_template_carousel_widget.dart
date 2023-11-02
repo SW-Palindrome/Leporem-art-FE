@@ -15,90 +15,90 @@ exhibitionTemplateCarouselWidget() {
       CarouselSlider(
         items: [
           template1Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png'
             ],
-            Color(0xffFFEADE),
-            FontPalette.pretendard,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template2Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png'
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template3Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png'
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template4Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template5Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template6Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template7Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg'
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
           template8Widget(
-            '솔방울을 머금은 술잔',
-            '추풍낙엽 속 길을 거닐며 떨어진 솔방울을 보고 명감을 받아 만든 술잔입니다.',
+            '꼬미',
+            '꼬미는 공예쁨의 마스코트입니다.',
             [
-              'https://leporem-art-media-prod.s3.ap-northeast-2.amazonaws.com/items/item_image/e29ad86f-7255-43e9-b596-f59dc4c90957.jpg',
+              'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_item_image/kkomi.png',
             ],
-            Color(0xffFFEADE),
-            FontPalette.chosun,
+            Color(0xffF8E8E0),
+            FontPalette.gmarket,
           ),
         ],
         options: CarouselOptions(

@@ -32,7 +32,7 @@ class ExhibitionCreateSellerExampleScreen
               padding: EdgeInsets.all(24),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: Color(0xFFFFF4E3),
+                color: Color(0xffF5E1E1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
