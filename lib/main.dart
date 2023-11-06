@@ -8,6 +8,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'app/configs/amplitude_config.dart';
+import 'app/configs/firebase_config.dart';
 import 'app/configs/login_config.dart';
 import 'app/controller/common/bottom_navigationbar/bottom_navigationbar_contoller.dart';
 import 'app/controller/common/user_global_info/user_global_info_controller.dart';
@@ -17,10 +20,8 @@ import 'app/ui/theme/app_theme.dart';
 import 'app/utils/notification.dart';
 
 void main() async {
-  // Sentry + GlitchTip
-  // kDebugMode는 개발모드일때 true, 배포모드일때 false
   if (kReleaseMode) {
-    await dotenv.load(fileName: 'assets/config/.env.dev');
+    await dotenv.load(fileName: 'assets/config/.env');
   } else if (kDebugMode) {
     await dotenv.load(fileName: 'assets/config/.env.dev');
   }
@@ -47,19 +48,18 @@ void main() async {
   // fcm토큰 출력
   FirebaseMessaging.instance.getToken().then((String? token) {
     assert(token != null);
-    print("Push Messaging token: $token");
   });
 
-  // if (kReleaseMode) {
-  //   await AmplitudeConfig.init();
-  //   SentryFlutter.init(
-  //     (options) {
-  //       options.dsn = dotenv.get('GLITCHTIP_DSN');
-  //       options.attachStacktrace = true;
-  //     },
-  //     appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
-  //   );
-  // }
+  if (kReleaseMode) {
+    await AmplitudeConfig.init();
+    SentryFlutter.init(
+      (options) {
+        options.dsn = dotenv.get('GLITCHTIP_DSN');
+        options.attachStacktrace = true;
+      },
+      appRunner: () => runApp(MyApp(isLoginProceed: isLoginProceed)),
+    );
+  }
   runApp(MyApp(isLoginProceed: isLoginProceed));
 }
 
@@ -74,8 +74,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       home: HomeScreen(isLoginProceed: isLoginProceed),
       navigatorObservers: [
-        // if (kReleaseMode)
-        //   FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
+        if (kReleaseMode)
+          FirebaseAnalyticsObserver(analytics: FirebaseConfig.analytics),
       ],
       getPages: AppPages.pages,
     );
