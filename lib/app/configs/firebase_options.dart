@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -49,21 +50,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB3S1RqesVqsyMc2F5-Xl7pkNPV0A0gCx4',
-    appId: '1:762662226057:android:a8e9e3d27891c823239e58',
-    messagingSenderId: '762662226057',
-    projectId: 'leporem-art-fe',
-    storageBucket: 'leporem-art-fe.appspot.com',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_ANDROID_APIKEY'),
+    appId: dotenv.get('FIREBASE_ANDROID_APPID'),
+    messagingSenderId: dotenv.get('FIREBASE_MESSAGINGSENDERID'),
+    projectId: dotenv.get('FIREBASE_PROJECTID'),
+    storageBucket: dotenv.get('FIREBASE_STORAGEBUCKET'),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDoSBTSHu8Gv4S7r3ZkHM8SV9Riqb-uWOU',
-    appId: '1:762662226057:ios:0eca3e294f3274b7239e58',
-    messagingSenderId: '762662226057',
-    projectId: 'leporem-art-fe',
-    storageBucket: 'leporem-art-fe.appspot.com',
-    iosClientId: '762662226057-7c2d19p4rbkhi2gs4cb12ot8cae55nh0.apps.googleusercontent.com',
-    iosBundleId: 'com.palindrome.leporemart',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.get('FIREBASE_IOS_APIKEY'),
+    appId: dotenv.get('FIREBASE_IOS_APPID'),
+    messagingSenderId: dotenv.get('FIREBASE_MESSAGINGSENDERID'),
+    projectId: dotenv.get('FIREBASE_PROJECTID'),
+    storageBucket: dotenv.get('FIREBASE_STORAGEBUCKET'),
+    iosClientId: dotenv.get('FIREBASE_IOS_IOSCLIENTID'),
+    iosBundleId: dotenv.get('FIREBASE_IOS_BUNDLEID'),
   );
 }
