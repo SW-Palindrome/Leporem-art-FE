@@ -420,6 +420,22 @@ class MessageDetailScreen extends GetView<MessageController> {
                       mainAxisSpacing: 16,
                       children: [
                         _messageBottomPlusIcon(
+                          '갤러리',
+                          'image',
+                          ColorPalette.pink,
+                          () async {
+                            await controller.selectImage(isGallery: true);
+                          },
+                        ),
+                        _messageBottomPlusIcon(
+                          '카메라',
+                          'camera',
+                          ColorPalette.green,
+                          () async {
+                            await controller.selectImage(isGallery: false);
+                          },
+                        ),
+                        _messageBottomPlusIcon(
                           '작품 공유',
                           'link',
                           Color(0xff4A9dff),
@@ -429,18 +445,6 @@ class MessageDetailScreen extends GetView<MessageController> {
                             });
                           },
                         ),
-                        // _messageBottomPlusIcon(
-                        //   '앨범',
-                        //   'image',
-                        //   ColorPalette.pink,
-                        //   () {},
-                        // ),
-                        // _messageBottomPlusIcon(
-                        //   '카메라',
-                        //   'camera',
-                        //   ColorPalette.green,
-                        //   () {},
-                        // ),
                         // _messageBottomPlusIcon(
                         //   '주소 공유',
                         //   'location',
