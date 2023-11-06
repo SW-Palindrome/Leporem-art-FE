@@ -1099,6 +1099,25 @@ class DioClient implements ApiClient {
   }
 
   @override
+  Future<dynamic> getMessageImagePresignedUrl(String extension) async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final response = await _dioInstance.get(
+      '/chats/messages/image/upload-url',
+      queryParameters: {'extension': extension},
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $accessToken",
+        }
+      )
+    );
+    if (response.statusCode != 200) {
+      logger.e('getMessageImagePresignedUrl error');
+    }
+    return response;
+  }
+
+  @override
   Future<List<BuyerOrder>> fetchBuyerOrders() async {
     try {
       final prefs = await SharedPreferences.getInstance();
