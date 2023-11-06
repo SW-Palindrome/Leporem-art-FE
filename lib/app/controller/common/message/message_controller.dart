@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/app/data/repositories/item_detail_repository.dart';
 import 'package:leporemart/app/data/repositories/order_list_repository.dart';
 import 'package:uuid/uuid.dart';
@@ -13,6 +16,8 @@ import '../../../data/models/profile.dart';
 import '../../../data/repositories/message_repository.dart';
 import '../../../data/repositories/profile_repository.dart';
 import '../../../utils/chatting_socket_singleton.dart';
+import '../../../utils/log_analytics.dart';
+import '../../seller/exhibition/seller_exhibition_controller.dart';
 import '../user_global_info/user_global_info_controller.dart';
 
 class MessageController extends GetxService {
@@ -35,6 +40,7 @@ class MessageController extends GetxService {
   Rx<bool> isLoading = false.obs;
   Rx<bool> isPlusButtonClicked = false.obs;
   Rx<bool> isLoadingScroll = false.obs;
+  RxList<File> imageFile = RxList<File>([]);
 
   Future<MessageController> init() async {
     await fetch();
@@ -92,6 +98,48 @@ class MessageController extends GetxService {
       );
     }
     chatRoomList.refresh();
+  }
+
+  Future<void> selectImage({bool isGallery = true}) async {
+    XFile? pickedFile;
+    pickedFile = await ImagePicker().pickImage(
+        source: isGallery ? ImageSource.gallery : ImageSource.camera);
+    if (pickedFile == null) return;
+
+    // 압축한 이미지를 저장할 공간
+    // 이미지를 압축하고 압축한 이미지를 compressedImage에 추가
+    // 이미지 크기를 계산하기위해 변수생성
+    int totalImageSize = 0;
+    final compressedImage = await compressImage(pickedFile!);
+    if (compressedImage != null) {
+      final compressedFile = File('${pickedFile.path}.compressed.jpg')
+        ..writeAsBytesSync(compressedImage);
+      totalImageSize = compressedFile.lengthSync();
+      if (isFileLargerThanMB(totalImageSize, 10)) return;
+      imageFile.assignAll([compressedFile]);
+    }
+  }
+
+  bool isFileLargerThanMB(int totalSize, int size) {
+    if (totalSize > size * 1024 * 1024) {
+      logAnalytics(name: 'size_too_big');
+      Get.snackbar(
+        '경고',
+        '파일 크기가 너무 큽니다. 다시 선택해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return true;
+    }
+    return false;
+  }
+
+  Future<Uint8List?> compressImage(XFile imageFile) async {
+    final File file = File(imageFile.path);
+    final result = await FlutterImageCompress.compressWithFile(
+      file.absolute.path,
+      quality: 30, // 이미지 품질 설정 (0 ~ 100, 기본값은 80)
+    );
+    return result;
   }
 
   sendTempMessage(String chatRoomUuid) {
@@ -213,7 +261,8 @@ class MessageController extends GetxService {
     }
     isLoadingScroll.value = true;
     final messageUuid = chatRoom.messageList.first.messageUuid;
-    List<Message> fetchMessageList = await messageRepository.fetchChatRoomMessages(chatRoomUuid, messageUuid);
+    List<Message> fetchMessageList = await messageRepository
+        .fetchChatRoomMessages(chatRoomUuid, messageUuid);
     if (fetchMessageList.isEmpty) {
       chatRoom.hasMoreMessage = false;
     }
@@ -225,12 +274,12 @@ class MessageController extends GetxService {
 
   _chatRoomMessagesScroll() async {
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+      if (scrollController.value.position.pixels ==
+          scrollController.value.position.maxScrollExtent) {
         fetchChatRoomMessages(Get.arguments['chatRoomUuid']);
       }
     });
   }
-
 
   getChatRoom(chatRoomUuid) {
     for (final chatRoom in chatRoomList.value) {
