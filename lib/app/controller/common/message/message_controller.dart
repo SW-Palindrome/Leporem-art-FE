@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:leporemart/app/data/repositories/item_detail_repository.dart';
 import 'package:leporemart/app/data/repositories/order_list_repository.dart';
@@ -17,7 +18,6 @@ import '../../../data/repositories/message_repository.dart';
 import '../../../data/repositories/profile_repository.dart';
 import '../../../utils/chatting_socket_singleton.dart';
 import '../../../utils/log_analytics.dart';
-import '../../seller/exhibition/seller_exhibition_controller.dart';
 import '../user_global_info/user_global_info_controller.dart';
 
 class MessageController extends GetxService {
@@ -111,12 +111,48 @@ class MessageController extends GetxService {
     // 이미지 크기를 계산하기위해 변수생성
     int totalImageSize = 0;
     final compressedImage = await compressImage(pickedFile!);
-    if (compressedImage != null) {
-      final compressedFile = File('${pickedFile.path}.compressed.jpg')
-        ..writeAsBytesSync(compressedImage);
-      totalImageSize = compressedFile.lengthSync();
-      if (isFileLargerThanMB(totalImageSize, 10)) return;
-      imageFile.assignAll([compressedFile]);
+
+    if (compressedImage == null) return;
+
+    final compressedFile = File('${pickedFile.path}.compressed.jpg')
+      ..writeAsBytesSync(compressedImage);
+    totalImageSize = compressedFile.lengthSync();
+    if (isFileLargerThanMB(totalImageSize, 10)) return;
+    imageFile.assignAll([compressedFile]);
+    final response = await messageRepository.getMessageImagePresignedUrl(imageFile.first.path.split('.').last);
+
+    final String presignedUrl = response.data['url'];
+    Map<String, dynamic> payload = response.data['fields'];
+    final imageUrl = payload['key'];
+    payload.addAll({
+      'file': await MultipartFile.fromFile(
+        imageFile.first.path,
+        filename: imageFile.first.path.split('/').last,
+      ),
+    });
+
+    final uploadResponse = await Dio().post(
+      presignedUrl,
+      data: FormData.fromMap(payload),
+      options: Options(
+        contentType: 'multipart/form-data',
+      ),
+    );
+    if (uploadResponse.statusCode != 204) return;
+
+    if (chatRoom.isRegistered) {
+      sendMessage(
+        Get.arguments['chatRoomUuid'],
+        '$presignedUrl$imageUrl',
+        MessageType.image,
+      );
+    } else {
+      createChatRoom(
+        Get.arguments['chatRoomUuid'],
+        chatRoom.opponentNickname,
+        '$presignedUrl$imageUrl',
+        MessageType.image
+      );
     }
   }
 
