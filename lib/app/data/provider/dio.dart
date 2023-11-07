@@ -1103,7 +1103,7 @@ class DioClient implements ApiClient {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.get(
-      '/chats/messages/image/upload-url',
+      '/chats/image/upload-url',
       queryParameters: {'extension': extension},
       options: Options(
         headers: {

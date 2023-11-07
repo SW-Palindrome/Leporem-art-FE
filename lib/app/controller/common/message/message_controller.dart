@@ -123,7 +123,7 @@ class MessageController extends GetxService {
 
     final String presignedUrl = response.data['url'];
     Map<String, dynamic> payload = response.data['fields'];
-    final shortsUrl = payload['key'];
+    final imageUrl = payload['key'];
     payload.addAll({
       'file': await MultipartFile.fromFile(
         imageFile.first.path,
@@ -138,20 +138,19 @@ class MessageController extends GetxService {
         contentType: 'multipart/form-data',
       ),
     );
-
     if (uploadResponse.statusCode != 204) return;
 
     if (chatRoom.isRegistered) {
       sendMessage(
         Get.arguments['chatRoomUuid'],
-        shortsUrl,
+        '$presignedUrl$imageUrl',
         MessageType.image,
       );
     } else {
       createChatRoom(
         Get.arguments['chatRoomUuid'],
         chatRoom.opponentNickname,
-        shortsUrl,
+        '$presignedUrl$imageUrl',
         MessageType.image
       );
     }
