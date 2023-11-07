@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../configs/firebase_options.dart';
+import '../data/models/notice.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -52,7 +55,7 @@ Future<void> fcmSetting() async {
         ?.createNotificationChannel(channel);
 
     // foreground 푸시 알림 핸들링
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
 
@@ -74,11 +77,24 @@ Future<void> fcmSetting() async {
             ));
 
         print('Message also contained a notification: ${message.notification}');
+        Notice notice = Notice(
+          date:
+              "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}",
+          title: message.notification!.title!,
+          content: message.notification!.body!,
+        );
+        print(notice);
+        final prefs = await SharedPreferences.getInstance();
+        final noticesJson = prefs.getString('notices') ?? '[]';
+        final List<dynamic> noticesList = json.decode(noticesJson);
+        noticesList.add(notice);
+        final encode = jsonEncode(noticesList);
+        await prefs.setString("notices", encode);
       }
     });
   } else if (Platform.isIOS) {
     // foreground 푸시 알림 핸들링
-    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
       if (message != null) {
         if (message.notification != null) {
           // foreground 메시지를 받으면 알림을 띄운다.
@@ -86,31 +102,70 @@ Future<void> fcmSetting() async {
           print(message.notification!.title);
           print(message.notification!.body);
           print(message.data["click_action"]);
+          Notice notice = Notice(
+            date:
+                "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}",
+            title: message.notification!.title!,
+            content: message.notification!.body!,
+          );
+          final prefs = await SharedPreferences.getInstance();
+          final noticesJson = prefs.getString('notices') ?? '[]';
+          final List<dynamic> noticesList = json.decode(noticesJson);
+          print(noticesList.length);
+          noticesList.add(notice);
+          final encode = jsonEncode(noticesList);
+          await prefs.setString("notices", encode);
         }
       }
     });
   }
 
   // background 푸시 알림 핸들링
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) async {
     if (message != null) {
       if (message.notification != null) {
         print('onMessageOpenedApp: ${message.notification!.title}');
         print(message.notification!.title);
         print(message.notification!.body);
         print(message.data["click_action"]);
+        Notice notice = Notice(
+          date:
+              "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}",
+          title: message.notification!.title!,
+          content: message.notification!.body!,
+        );
+        final prefs = await SharedPreferences.getInstance();
+        final noticesJson = prefs.getString('notices') ?? '[]';
+        final List<dynamic> noticesList = json.decode(noticesJson);
+        noticesList.add(notice);
+        final encode = jsonEncode(noticesList);
+        await prefs.setString("notices", encode);
       }
     }
   });
 
   // 앱이 종료된 상태에서 푸시 알림 핸들링
-  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+  FirebaseMessaging.instance
+      .getInitialMessage()
+      .then((RemoteMessage? message) async {
     if (message != null) {
       if (message.notification != null) {
         print('getInitialMessage: ${message.notification!.title}');
         print(message.notification!.title);
         print(message.notification!.body);
         print(message.data["click_action"]);
+        Notice notice = Notice(
+          date:
+              "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}",
+          title: message.notification!.title!,
+          content: message.notification!.body!,
+        );
+        final prefs = await SharedPreferences.getInstance();
+        final noticesJson = prefs.getString('notices') ?? '[]';
+        final List<dynamic> noticesList = json.decode(noticesJson);
+        noticesList.add(notice);
+        final encode = jsonEncode(noticesList);
+        await prefs.setString("notices", encode);
       }
     }
   });

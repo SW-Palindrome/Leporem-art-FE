@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../../controller/common/notice/notice_controller.dart';
 import '../../../../theme/app_theme.dart';
 
-noticeWidget(String date, String title, String content) {
+noticeWidget(int index) {
+  final controller = Get.find<NoticeController>();
   return Container(
     width: Get.width,
     padding: EdgeInsets.all(16),
@@ -18,7 +20,7 @@ noticeWidget(String date, String title, String content) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              date,
+              controller.notices[index].date,
               style: TextStyle(
                 color: ColorPalette.grey_5,
                 fontWeight: FontWeight.w600,
@@ -28,7 +30,7 @@ noticeWidget(String date, String title, String content) {
             ),
             SizedBox(height: 8),
             Text(
-              title,
+              controller.notices[index].title,
               style: TextStyle(
                 color: ColorPalette.black,
                 fontWeight: FontWeight.w600,
@@ -40,8 +42,13 @@ noticeWidget(String date, String title, String content) {
         ),
         Spacer(),
         GestureDetector(
+          onTap: () {
+            controller.isExpanded[index] = !controller.isExpanded[index];
+          },
           child: SvgPicture.asset(
-            'assets/icons/arrow_down.svg',
+            controller.isExpanded[index] == true
+                ? 'assets/icons/arrow_up.svg'
+                : 'assets/icons/arrow_down.svg',
             colorFilter: ColorFilter.mode(ColorPalette.grey_4, BlendMode.srcIn),
             width: 16,
             height: 16,
