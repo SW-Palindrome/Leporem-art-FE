@@ -83,13 +83,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
           ),
         ),
-        // IconButton(
-        //   onPressed: onTapSecondActionIcon,
-        //   icon: SvgPicture.asset(
-        //     './assets/icons/notice.svg',
-        //     colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
-        //   ),
-        // ),
+        IconButton(
+          onPressed: onTapSecondActionIcon,
+          icon: SvgPicture.asset(
+            './assets/icons/notice.svg',
+            colorFilter: ColorFilter.mode(ColorPalette.grey_5, BlendMode.srcIn),
+          ),
+        ),
       ],
     );
   }

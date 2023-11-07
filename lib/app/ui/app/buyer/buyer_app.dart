@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leporemart/app/controller/buyer/exhibition/buyer_exhibition_controller.dart';
+import 'package:leporemart/app/ui/app/common/notice/notice_screen.dart';
 
 import '../../../controller/buyer/home/buyer_home_controller.dart';
 import '../../../controller/buyer/profile/buyer_profile_controller.dart';
@@ -53,7 +54,9 @@ class BuyerApp extends GetView<MyBottomNavigationbarController> {
             )
           : MyAppBar(
               appBarType: AppBarType.mainPageAppBar,
-              onTapFirstActionIcon: () => Get.toNamed(Routes.BUYER_SEARCH)),
+              onTapFirstActionIcon: () => Get.toNamed(Routes.BUYER_SEARCH),
+              onTapSecondActionIcon: () => Get.toNamed(Routes.NOTICE),
+            ),
       body: BuyerHomeScreen(),
       bottomNavigationBar:
           MyBottomNavigationBar(type: MyBottomNavigationBarType.buyer),

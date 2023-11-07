@@ -10,6 +10,7 @@ abstract class Routes {
   static const MESSAGE = '/message';
   static const MESSAGE_ORDER = '/message/order';
   static const MESSAGE_SHARE = '/message/share';
+  static const NOTICE = '/notice';
   static const BUYER_APP = '/buyer';
   static const BUYER_SEARCH = '/buyer/search';
   static const BUYER_ITEM_DETAIL = '/buyer/item';
