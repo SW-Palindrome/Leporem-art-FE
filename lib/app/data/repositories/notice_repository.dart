@@ -8,4 +8,8 @@ class NoticeRepository {
   Future<List<Notice>> getNotices() async {
     return localClient.getNotices();
   }
+
+  Future<void> removeNotices() async {
+    return await localClient.removeNotices();
+  }
 }

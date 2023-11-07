@@ -20,4 +20,10 @@ class NoticeController extends GetxController {
     notices.value = await repository.getNotices();
     isExpanded.value = List<bool>.filled(notices.length, false);
   }
+
+  Future<void> removeNotices() async {
+    print('지우기');
+    await repository.removeNotices();
+    await getNotices();
+  }
 }

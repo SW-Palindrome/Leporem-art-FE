@@ -20,4 +20,9 @@ class LocalClient {
     }
     return notices;
   }
+
+  Future<void> removeNotices() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.remove("notices");
+  }
 }
