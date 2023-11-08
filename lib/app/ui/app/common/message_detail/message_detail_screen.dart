@@ -135,7 +135,7 @@ class MessageDetailScreen extends GetView<MessageController> {
       case MessageType.text:
         return _textMessageWidget(message, boxDecoration);
       case MessageType.image:
-        return _imageWidget(message, boxDecoration);
+        return Container();
       case MessageType.itemShare:
         return _itemShareWidget(message, boxDecoration);
       case MessageType.itemInquiry:
@@ -286,24 +286,6 @@ class MessageDetailScreen extends GetView<MessageController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  _imageWidget(Message message, BoxDecoration boxDecoration) {
-    return Container(
-      decoration: boxDecoration,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: Get.width * 0.6,
-          ),
-          child: CachedNetworkImage(
-            imageUrl: message.message,
-            fit: BoxFit.contain,
-          ),
-        )
       ),
     );
   }

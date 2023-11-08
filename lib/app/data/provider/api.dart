@@ -106,7 +106,6 @@ abstract class ApiClient {
   Future<List<Message>> fetchChatRoomMessages(
       String chatRoomUuid, String? messageUuid);
   Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message);
-  Future<dynamic> getMessageImagePresignedUrl(String extension);
 
   // 배송상태 변경
   Future<void> deliveryStartOrder(int orderId);

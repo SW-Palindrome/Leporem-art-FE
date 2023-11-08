@@ -25,8 +25,4 @@ class MessageRepository {
   Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message) async {
     return apiClient.readChatRoomMessages(chatRoom, message);
   }
-
-  Future<dynamic> getMessageImagePresignedUrl(String extension) async {
-    return apiClient.getMessageImagePresignedUrl(extension);
-  }
 }
