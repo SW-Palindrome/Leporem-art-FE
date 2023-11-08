@@ -22,7 +22,7 @@ class EmailController extends GetxController {
   Rx<bool> isCodeValid = false.obs;
 
   void checkEmail(String value) {
-    RegExp regExp = RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9\.]+\.[a-zA-Z\.]+');
+    RegExp regExp = RegExp(r'^[a-zA-Z0-99+\-_.]+@([a-zA-Z0-9]+\.)+(ac\.kr)$');
     isEmailValid.value = regExp.hasMatch(value);
   }
 
