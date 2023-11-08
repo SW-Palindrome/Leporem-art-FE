@@ -493,6 +493,9 @@ class MockClient implements ApiClient {
   Future<void> readChatRoomMessages(ChatRoom chatRoom, Message message) async {}
 
   @override
+  Future<dynamic> getMessageImagePresignedUrl(String extension) async {}
+
+  @override
   Future<void> deliveryStartOrder(int orderId) async {}
 
   @override
