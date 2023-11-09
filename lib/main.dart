@@ -20,11 +20,8 @@ import 'app/ui/theme/app_theme.dart';
 import 'app/utils/notification.dart';
 
 void main() async {
-  if (kReleaseMode) {
-    await dotenv.load(fileName: 'assets/config/.env');
-  } else if (kDebugMode) {
-    await dotenv.load(fileName: 'assets/config/.env.dev');
-  }
+  await dotenv.load(fileName: 'assets/config/.env');
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   // 스플래시 화면 켜기
