@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../controller/buyer/home/buyer_home_controller.dart';
 import '../../../../controller/buyer/item_creator/item_creator_controller.dart';
@@ -174,12 +176,24 @@ class ItemCreatorScreen extends GetView<ItemCreatorController> {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              controller.creatorProfile.value.description,
+            Linkify(
+              onOpen: (link) async {
+                if (!await launchUrl(Uri.parse(link.url))) {
+                  throw Exception('Could not launch ${link.url}');
+                }
+              },
+              text: controller.creatorProfile.value.description,
               style: TextStyle(
                 color: ColorPalette.black,
                 fontFamily: "PretendardVariable",
                 fontStyle: FontStyle.normal,
+                fontSize: 14.0,
+              ),
+              linkStyle: TextStyle(
+                color: ColorPalette.black,
+                fontFamily: "PretendardVariable",
+                fontWeight: FontWeight.w800,
+                decoration: TextDecoration.underline,
                 fontSize: 14.0,
               ),
             ),
