@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../controller/seller/exhibition/seller_exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
@@ -112,8 +114,13 @@ sellerIntroductionResultWidget() {
         ),
         SizedBox(height: 16),
         if (controller.displayedSellerIntroductionFont.value == 0)
-          Text(
-            controller.sellerIntroduction.value,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.sellerIntroduction.value,
             style: TextStyle(
               color: controller.selectedSellerIntroductionColor.value != 9
                   ? ColorPalette.black
@@ -121,10 +128,24 @@ sellerIntroductionResultWidget() {
               fontFamily: FontPalette.pretendard,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.pretendard,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+              fontSize: 14,
+            ),
           ),
         if (controller.displayedSellerIntroductionFont.value == 1)
-          Text(
-            controller.sellerIntroduction.value,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.sellerIntroduction.value,
             style: TextStyle(
               color: controller.selectedSellerIntroductionColor.value != 9
                   ? ColorPalette.black
@@ -132,10 +153,24 @@ sellerIntroductionResultWidget() {
               fontFamily: FontPalette.gmarket,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.gmarket,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+              fontSize: 14,
+            ),
           ),
         if (controller.displayedSellerIntroductionFont.value == 2)
-          Text(
-            controller.sellerIntroduction.value,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.sellerIntroduction.value,
             style: TextStyle(
               color: controller.selectedSellerIntroductionColor.value != 9
                   ? ColorPalette.black
@@ -143,15 +178,38 @@ sellerIntroductionResultWidget() {
               fontFamily: FontPalette.kbo,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.kbo,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+              fontSize: 14,
+            ),
           ),
         if (controller.displayedSellerIntroductionFont.value == 3)
-          Text(
-            controller.sellerIntroduction.value,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.sellerIntroduction.value,
             style: TextStyle(
               color: controller.selectedSellerIntroductionColor.value != 9
                   ? ColorPalette.black
                   : ColorPalette.white,
               fontFamily: FontPalette.chosun,
+              fontSize: 14,
+            ),
+            linkStyle: TextStyle(
+              color: controller.selectedSellerIntroductionColor.value != 9
+                  ? ColorPalette.black
+                  : ColorPalette.white,
+              fontFamily: FontPalette.chosun,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
               fontSize: 14,
             ),
           ),
