@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../controller/buyer/exhibition/buyer_exhibition_controller.dart';
 import '../../../../theme/app_theme.dart';
@@ -103,39 +105,87 @@ _sellerWithTemplateWidget() {
         ),
         SizedBox(height: 16),
         if (fontIndex == 0)
-          Text(
-            controller.exhibitionArtist.value!.description,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.exhibitionArtist.value!.description,
             style: TextStyle(
               color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
               fontFamily: FontPalette.pretendard,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
+              fontFamily: FontPalette.pretendard,
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+            ),
           ),
         if (fontIndex == 1)
-          Text(
-            controller.exhibitionArtist.value!.description,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.exhibitionArtist.value!.description,
             style: TextStyle(
               color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
               fontFamily: FontPalette.gmarket,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
+              fontFamily: FontPalette.gmarket,
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+            ),
           ),
         if (fontIndex == 2)
-          Text(
-            controller.exhibitionArtist.value!.description,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.exhibitionArtist.value!.description,
             style: TextStyle(
               color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
               fontFamily: FontPalette.kbo,
               fontSize: 14,
             ),
+            linkStyle: TextStyle(
+              color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
+              fontFamily: FontPalette.kbo,
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+            ),
           ),
         if (fontIndex == 3)
-          Text(
-            controller.exhibitionArtist.value!.description,
+          Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: controller.exhibitionArtist.value!.description,
             style: TextStyle(
               color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
               fontFamily: FontPalette.chosun,
               fontSize: 14,
+            ),
+            linkStyle: TextStyle(
+              color: colorIndex != 9 ? ColorPalette.black : ColorPalette.white,
+              fontFamily: FontPalette.chosun,
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
             ),
           ),
       ],
