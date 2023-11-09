@@ -72,6 +72,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   daum_postcode_search: ^0.0.2
   flutter_inappwebview: ^5.8.0
+  flutter_linkify: ^6.0.0
 
 
 dev_dependencies:
