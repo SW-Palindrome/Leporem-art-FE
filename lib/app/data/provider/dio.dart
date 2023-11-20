@@ -1580,15 +1580,8 @@ class DioClient implements ApiClient {
 
   @override
   Future<List<Exhibition>> fetchBuyerExhibitions() async {
-    final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString('access_token');
     final response = await _dioInstance.get(
       '/exhibitions/buyer',
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-        },
-      ),
     );
 
     if (response.statusCode != 200) {
