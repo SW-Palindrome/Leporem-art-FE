@@ -292,6 +292,9 @@ class MessageController extends GetxService {
 
   fetchChatRoomMessages(String chatRoomUuid) async {
     ChatRoom chatRoom = getChatRoom(chatRoomUuid);
+    if (!chatRoom.isRegistered) {
+      return;
+    }
     if (!chatRoom.hasMoreMessage) {
       return;
     }
