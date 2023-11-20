@@ -183,50 +183,52 @@ template1Widget(String title, String description, List<String> imageUrlList,
                 padEnds: false,
               ),
             ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: () {
-                    carouselController.previousPage();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: ColorPalette.grey_2,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/arrow_left.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    carouselController.nextPage();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: ColorPalette.grey_2,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/arrow_right.svg',
-                      width: 24,
-                      height: 24,
+            if (imageUrlList.length > 1)
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: () {
+                      carouselController.previousPage();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.grey_2,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/arrow_left.svg',
+                        width: 24,
+                        height: 24,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            if (imageUrlList.length > 1)
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      carouselController.nextPage();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: ColorPalette.grey_2,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/arrow_right.svg',
+                        width: 24,
+                        height: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
         SizedBox(height: 16),
@@ -381,34 +383,36 @@ template3Widget(String title, String description, List<String> imageUrlList,
               padEnds: false,
             ),
           ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/arrow_exhibition_left.svg',
-                  width: 24,
+          if (imageUrlList.length > 1)
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/icons/arrow_exhibition_left.svg',
+                    width: 24,
+                  ),
+                  onPressed: () {
+                    carouselController.previousPage();
+                  },
                 ),
-                onPressed: () {
-                  carouselController.previousPage();
-                },
               ),
             ),
-          ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/arrow_exhibition_right.svg',
-                  width: 24,
+          if (imageUrlList.length > 1)
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/icons/arrow_exhibition_right.svg',
+                    width: 24,
+                  ),
+                  onPressed: () {
+                    carouselController.nextPage();
+                  },
                 ),
-                onPressed: () {
-                  carouselController.nextPage();
-                },
               ),
             ),
-          ),
         ]),
       ],
     ),
