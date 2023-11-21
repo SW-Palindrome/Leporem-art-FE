@@ -57,7 +57,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>카메라 접근을 위해 허용 버튼을 눌러주세요</string>
+	<string>채팅시 사용자 간 사진 공유를 위해 허용 버튼을 눌러주세요.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>마이크 접근을 위해 허용 버튼을 눌러주세요</string>
 	<key>NSPhotoLibraryUsageDescription</key>
