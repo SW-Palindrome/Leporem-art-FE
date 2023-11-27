@@ -60,7 +60,8 @@ _exhibitionCarouselItem(
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: CachedNetworkImage(
-                imageUrl: coverImage ?? 'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
+                imageUrl: coverImage ??
+                    'https://leporem-art-media-dev.s3.ap-northeast-2.amazonaws.com/exhibitions/exhibition_cover_image/exhibition_default_cover_image.png',
                 fit: BoxFit.cover,
                 width: Get.width * 0.8,
                 height: Get.height * 0.56,
@@ -72,13 +73,16 @@ _exhibitionCarouselItem(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: ColorPalette.white,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: FontPalette.pretendard,
-                      fontSize: 18,
+                  SizedBox(
+                    width: Get.width * 0.6,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: ColorPalette.white,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: FontPalette.pretendard,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),

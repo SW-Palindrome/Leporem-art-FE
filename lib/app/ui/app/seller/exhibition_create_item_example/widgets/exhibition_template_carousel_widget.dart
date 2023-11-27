@@ -145,7 +145,6 @@ template1Widget(String title, String description, List<String> imageUrlList,
   CarouselController carouselController = CarouselController();
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     padding: EdgeInsets.fromLTRB(12, 24, 12, 0),
     child: Column(
@@ -255,7 +254,6 @@ template2Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -323,7 +321,6 @@ template3Widget(String title, String description, List<String> imageUrlList,
   CarouselController carouselController = CarouselController();
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -423,7 +420,6 @@ template4Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
@@ -540,7 +536,6 @@ template5Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     padding: EdgeInsets.all(16),
     color: color,
     child: Column(
@@ -657,7 +652,6 @@ template6Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     padding: EdgeInsets.fromLTRB(8, 8, 12, 8),
     child: Row(
@@ -738,7 +732,6 @@ template7Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     child: Column(
       children: [
@@ -813,7 +806,6 @@ template8Widget(String title, String description, List<String> imageUrlList,
     Color color, String fontFamily) {
   return Container(
     width: Get.width,
-    height: Get.width * 1.1,
     color: color,
     child: Column(
       children: [
