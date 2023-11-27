@@ -34,7 +34,7 @@ Widget exhibitionSellerInputWidget() {
         child: TextField(
           onTapOutside: (event) =>
               FocusManager.instance.primaryFocus?.unfocus(),
-          maxLength: 46,
+          maxLength: 12,
           controller: controller.sellerNameController,
           decoration: InputDecoration(
             border: InputBorder.none,

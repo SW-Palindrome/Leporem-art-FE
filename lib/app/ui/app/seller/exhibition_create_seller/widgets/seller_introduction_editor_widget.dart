@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -134,6 +135,16 @@ sellerIntroductionEditorWidget() {
                 textAlign: TextAlign.center,
                 controller: controller.sellerIntroductionController,
                 maxLines: 5,
+                inputFormatters: [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    int newLines = newValue.text.split('\n').length;
+                    if (newLines > 5) {
+                      return oldValue;
+                    } else {
+                      return newValue;
+                    }
+                  }),
+                ],
                 maxLength: 100,
                 decoration: InputDecoration(
                   hintText: '작가 소개를 입력해주세요.',
